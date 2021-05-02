@@ -10,7 +10,6 @@ import { isEmpty } from "lodash";
 
 export default function Home(props) {
   const { products, productCategories, heroCarousel, bestSeller } = props;
-  console.log(heroCarousel);
   return (
     <Layout>
       {/*Hero Carousel*/}

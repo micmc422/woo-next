@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 const Nav = ({}) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
-  // console.log(router);
   return (
     <nav className="bg-white">
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">

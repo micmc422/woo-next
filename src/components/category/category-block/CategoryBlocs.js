@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const CategoryBlocs = (props) => {
   const { category } = props;
-  //console.log(category)
   return (
     <div className="mb-5 product">
       <Link href={`/category/${category.slug}`}>

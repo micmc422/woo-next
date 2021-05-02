@@ -60,7 +60,6 @@ const LargeSlider = ({ products }) => {
       activeIndexRef.current.activeIndex =
         activeIndexRef.current.activeIndex - 1;
     }
-    // console.log(activeIndexRef.current.activeIndex);
     slideRef.current = activeIndexRef.current.activeIndex;
     setSlide(slideRef.current % products.length);
   };
@@ -84,7 +83,6 @@ const LargeSlider = ({ products }) => {
   const { image, id, name, title, slug, featuredImage, price } = products[
     activeIndex
   ];
-  //console.log(products[activeIndex]);
   return (
     <div
       onMouseEnter={() => setAutoPlay(false)}
@@ -181,7 +179,6 @@ const LargeSlider = ({ products }) => {
           >
             {emptyArray.length &&
               emptyArray.map((item, i) => {
-                console.log(slide);
                 return (
                   <RoundedCounter
                     key={uniqueId()}

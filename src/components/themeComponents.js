@@ -33,7 +33,6 @@ export const PriceParse = ({ price }) => {
   const temp = price.split("-");
   const parsedPrice = temp[0].trim();
 
-  console.log(parsedPrice);
   return (
     <div>{temp.length > 1 ? "à partir de " + parsedPrice : parsedPrice}</div>
   );

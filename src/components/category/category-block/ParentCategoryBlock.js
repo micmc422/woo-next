@@ -5,7 +5,6 @@ import Image from "next/image";
 
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
-  // console.log(category.product?.nodes);
   const imgListUrl = {
     imgSourceUrlList: [
       category?.image?.sourceUrl
@@ -26,7 +25,6 @@ const ParentCategoryBlock = (props) => {
       ...category.products.nodes.slice(1, 4).map(({ image }) => image.srcSet),
     ],
   };
-  // console.log(imgListUrl);
   return (
     <div className="mb-5 product">
       <Link href={`/category/${category.slug}`}>

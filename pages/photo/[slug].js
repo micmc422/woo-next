@@ -24,7 +24,6 @@ export default function Product(props) {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  console.log(product);
   return (
     <Layout>
       <section className="overflow-hidden text-gray-600 body-font">
