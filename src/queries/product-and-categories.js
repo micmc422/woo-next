@@ -3,84 +3,142 @@ import { gql } from "@apollo/client";
 /**
  * GraphQL categories and products query.
  */
-const PRODUCTS_AND_CATEGORIES_QUERY = gql`query {
-  heroCarousel: productCategories(where: {slug: "offers"}) {
-    nodes {
-      id
-      children {
-        nodes {
+const PRODUCTS_AND_CATEGORIES_QUERY = gql`
+  query MyQuery($after: String, $search: String) {
+    heroCarousel: posts(first: 10, where: { categoryIn: "1543" }) {
+      nodes {
+        id
+        title
+        slug
+        databaseId
+        excerpt
+        featuredImage {
           id
-          name
-          slug
-          databaseId
-          description
-          image {
-            id
-            sourceUrl
-            srcSet
+          sourceUrl
+          srcSet
+        }
+      }
+    }
+    productCategories(where: { include: [1355, 1356, 1062] }) {
+      nodes {
+        id
+        name
+        slug
+        image {
+          id
+          sourceUrl
+          srcSet
+        }
+        products(first: 3) {
+          nodes {
+            image {
+              sourceUrl
+              altText
+              srcSet
+            }
           }
         }
       }
     }
-  }
-  productCategories(first: 3) {
-    nodes {
-      id
-      name
-      slug
-      image {
+    products(
+      first: 24
+      after: $after
+      where: { search: $search, orderby: { order: ASC, field: MENU_ORDER } }
+    ) {
+      nodes {
         id
-        sourceUrl
-        srcSet
+        productId
+        averageRating
+        slug
+        description
+        image {
+          id
+          uri
+          title
+          srcSet
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+        }
+        name
+        ... on SimpleProduct {
+          price
+          regularPrice
+          id
+        }
+        ... on VariableProduct {
+          price
+          id
+          regularPrice
+        }
+        ... on ExternalProduct {
+          price
+          id
+          externalUrl
+          regularPrice
+        }
+        ... on GroupProduct {
+          id
+          products {
+            nodes {
+              ... on SimpleProduct {
+                id
+                price
+                regularPrice
+              }
+            }
+          }
+        }
       }
     }
-  }
-  products(first: 50) {
-    nodes {
-      id
-      productId
-      averageRating
-      slug
-      description
-      image {
+    bestSeller: products(first: 8, where: { categoryId: 1355 }) {
+      nodes {
         id
-        uri
-        title
-        srcSet
-        sourceUrl
-      }
-      name
-      ... on SimpleProduct {
-        price
-        regularPrice
-        id
-      }
-      ... on VariableProduct {
-        price
-        id
-        regularPrice
-      }
-      ... on ExternalProduct {
-        price
-        id
-        externalUrl
-        regularPrice
-      }
-      ... on GroupProduct {
-        id
-        products {
-          nodes {
-            ... on SimpleProduct {
-              id
-              price
-              regularPrice
+        productId
+        averageRating
+        slug
+        description
+        image {
+          id
+          uri
+          title
+          srcSet
+          sourceUrl
+        }
+        name
+        ... on SimpleProduct {
+          price
+          regularPrice
+          id
+        }
+        ... on VariableProduct {
+          price
+          id
+          regularPrice
+        }
+        ... on ExternalProduct {
+          price
+          id
+          externalUrl
+          regularPrice
+        }
+        ... on GroupProduct {
+          id
+          products {
+            nodes {
+              ... on SimpleProduct {
+                id
+                price
+                regularPrice
+              }
             }
           }
         }
       }
     }
   }
-}
 `;
 
 export default PRODUCTS_AND_CATEGORIES_QUERY;
