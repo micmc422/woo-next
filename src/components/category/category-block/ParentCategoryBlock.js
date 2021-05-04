@@ -27,7 +27,7 @@ const ParentCategoryBlock = (props) => {
   };
   return (
     <div className="mb-5 product">
-      <Link href={`/category/${category.slug}`}>
+      <Link href={`/categorie/${category.slug}`}>
         <a>
           <ImageCaroussel {...imgListUrl} i={i} />
           <div className="p-3 product-title-container">

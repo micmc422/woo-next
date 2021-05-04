@@ -4,7 +4,7 @@ const CategoryBlocs = (props) => {
   const { category } = props;
   return (
     <div className="mb-5 product">
-      <Link href={`/category/${category.slug}`}>
+      <Link href={`/categorie/${category.slug}`}>
         <a>
           <img
             className="object-cover h-40 md:h-64"

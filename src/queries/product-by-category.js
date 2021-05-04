@@ -2,8 +2,22 @@ import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_CATEGORY_SLUG = gql`
   query PRODUCT_BY_CATEGORY_SLUG($slug: ID!) {
+    cat: productCategories(first: 50, where: { parent: null }) {
+      nodes {
+        id
+        databaseId
+        name
+        slug
+        children {
+          nodes {
+            count
+          }
+        }
+      }
+    }
     productCategory(id: $slug, idType: SLUG) {
       id
+      databaseId
       name
       products(first: 50) {
         nodes {

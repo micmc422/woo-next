@@ -120,7 +120,7 @@ const HeroCarousel = ({ heroCarousel }) => {
               __html: name || title,
             }}
           ></h2>
-          <Link href={`/category/${slug}/`}>
+          <Link href={`/categorie/${slug}/`}>
             <a className="text-gray-700 banner-content__link">+ Explore</a>
           </Link>
         </motion.div>

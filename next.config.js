@@ -13,7 +13,7 @@ module.exports = {
     includePaths: [path.join(__dirname, "styles")],
   },
   images: {
-    domains: ["photo.paris"],
+    domains: ["photo.paris", "via.placeholder.com"],
   },
   i18n: {
     locales: ["fr", "en"],

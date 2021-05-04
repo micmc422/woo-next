@@ -19,9 +19,23 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
+    cat: productCategories(first: 50, where: { parent: null }) {
+      nodes {
+        id
+        databaseId
+        name
+        slug
+        children {
+          nodes {
+            count
+          }
+        }
+      }
+    }
     productCategories(where: { include: [1355, 1356, 1062] }) {
       nodes {
         id
+        databaseId
         name
         slug
         image {
@@ -45,6 +59,13 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       after: $after
       where: { search: $search, orderby: { order: ASC, field: MENU_ORDER } }
     ) {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+
       nodes {
         id
         productId
@@ -62,6 +83,20 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
             width
           }
         }
+
+        galleryImages(first: 1) {
+          nodes {
+            id
+            title
+            altText
+            mediaItemUrl
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+
         name
         ... on SimpleProduct {
           price

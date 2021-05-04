@@ -6,6 +6,10 @@ module.exports = {
   },
   purge: ["./src/components/**/*.js", "./pages/**/*.js"],
   theme: {
+    fontFamily: {
+      serif: ["Cardo", "serif"],
+      sans: ["Josefin Sans", "sans-serif"],
+    },
     extend: {
       colors: {
         brand: {

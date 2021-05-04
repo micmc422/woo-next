@@ -13,7 +13,13 @@ const animationBg = {
   exit: {},
 };
 
-export const Bouton = ({ children = "button text", action }) => {
+export const Bouton = ({
+  children = "",
+  action,
+  circleClass,
+  icon,
+  small = false,
+}) => {
   return (
     <motion.div
       whileHover="hovered"
@@ -22,9 +28,15 @@ export const Bouton = ({ children = "button text", action }) => {
     >
       <motion.div
         variants={animationBg}
-        className="absolute w-12 h-12 transition-colors rounded-full bg-brand-500"
-      ></motion.div>
-      <div className="relative pt-1">{children}</div>
+        className={`absolute  transition-colors rounded-full
+        ${circleClass ? circleClass : "bg-brand-500"} 
+        ${small ? "w-8 h-8" : "w-12 h-12"} 
+        `}
+      >
+        {icon && <div className="relative">{icon}</div>}
+      </motion.div>
+
+      <div className="relative inset-0 p-1 ">{children}</div>
     </motion.div>
   );
 };
@@ -35,5 +47,16 @@ export const PriceParse = ({ price }) => {
 
   return (
     <div>{temp.length > 1 ? "à partir de " + parsedPrice : parsedPrice}</div>
+  );
+};
+
+export const TitreDefault = () => {
+  return <div></div>;
+};
+export const TitreWidget = (props) => {
+  return (
+    <div {...props} className="p-1 text-xl text-gray-700 uppercase">
+      {props.children}
+    </div>
   );
 };
