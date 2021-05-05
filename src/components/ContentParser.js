@@ -1,57 +1,121 @@
 import parse from "html-react-parser";
 import { uniqueId } from "lodash";
 const ContentParser = ({ data }) => {
-  const parsed = parse(data).map((props) => <Parser {...props} />);
+  // console.log(data);
+  const parsed = parse(data);
 
-  return parsed;
+  return parsed.map((props) => <Parser props={props} />);
 };
 
 export default ContentParser;
 
 const Parser = ({ props }) => {
-  if (!props) {
+  if (Array.isArray(props)) {
+    console.log(props);
+    return props.map((item) => {
+      console.log(item);
+      if (item.type) {
+        return <Parser {...item} />;
+      } else {
+        return item;
+      }
+    });
+  }
+  if (!props?.props) {
+    console.log("!props");
     return null;
   }
-  const { children, className } = props;
-  if (!children || !className) {
+  //  console.log(props);
+  const {
+    props: { children, className },
+    type,
+  } = props;
+  if (!children) {
+    console.log("!children");
     return null;
   }
-  if (className.includes("vc_row") || className.includes("wpb_row")) {
-    console.log({ props });
+
+  if (className?.includes("vc_row") || className.includes("wpb_row")) {
+    // console.log({ props });
     return <MainItem {...props} />;
   }
   if (
-    className.includes("wpb_column") ||
-    className.includes("vc_column_container")
+    className?.includes("wpb_column") ||
+    className?.includes("vc_column_container")
   ) {
     return <Column {...props} />;
   }
-  console.log({ children });
 
-  return children;
-  if (!props) {
-    return null;
+  if (className?.includes("vc_column-inner")) {
+    return <Wrapper {...props} />;
   }
+  if (type === "h3") {
+    // console.log("h3");
+    return <TitreH {...props} />;
+  }
+  /*
+  if (type === "div") {
+    // console.log("h3");
+    return <Wrapper {...props} />;
+  }
+  if (className?.includes("wpb_wrapper")) {
+    return <Wrapper {...props} />;
+  }
+  if (children.type === "a") {
+    return <ALink {...props} />;
+  }
+  if (children.type === "span") {
+    return <SpanEl {...props} />;
+  }
+  if (!Array.isArray(children) && !children.type) {
+    // console.log(children);
+    return children;
+  } else {
+    if (children.type) {
+      return <Parser {...children} />;
+    }
+    //  console.log(children);
+    return Array.isArray(children) ? (
+      children.map((child) => {
+        if (child.type) {
+          console.log({ child });
+          return <Parser {...child} />;
+        }
+        return child;
+      })
+    ) : (
+      <Parser {...children} />
+    );
+  }
+  */
+  console.log(children);
+  return <Parser props={children} key={uniqueId(props.key)} />;
 
   // console.log({ props, children, className });
 };
 
-const MainItem = ({ children, className }) => {
-  // console.log({ children });
+function InnerParser(children) {
+  console.log(children);
+  return Array.isArray(children) ? (
+    children.map((props) => {
+      //  console.log(props);
+      return <Parser props={props} key={uniqueId(props.key)} />;
+    })
+  ) : (
+    <Parser props={children} />
+  );
+}
+
+const MainItem = ({ props }) => {
+  const { children, className } = props;
+  console.log({ props });
   return (
     <div className="container flex flex-row flex-wrap items-center max-w-screen-xl mx-auto">
-      {!children?.props ? (
-        children.map(({ props, key }) => {
-          console.log({ props });
-          return <Parser props={{ ...props }} key={uniqueId(key)} />;
-        })
-      ) : (
-        <Parser props={{ ...children.props }} key={uniqueId()} />
-      )}
+      {InnerParser(children)}
     </div>
   );
 };
-const Column = (props) => {
+const Column = ({ props }) => {
   const { children, className } = props;
   return (
     <div
@@ -64,24 +128,27 @@ const Column = (props) => {
       ${className.includes("vc_col-sm-12") ? "w-full" : ""}
   `}
     >
-      {!children?.props ? (
-        children.map(({ props, key }) => {
-          return <Parser props={props} key={uniqueId(key)} />;
-        })
-      ) : (
-        <Parser props={{ ...children.props }} key={uniqueId()} />
-      )}
+      {InnerParser(children)}
     </div>
   );
 };
+const Wrapper = ({ props }) => {
+  const { children, className } = props;
+  return <div className={`p-1`}>{InnerParser(children)}</div>;
+};
+const ALink = ({ props }) => {
+  const { children, className } = props;
+  const { href, target } = children.props;
+  return <a {...{ href, target }}>{InnerParser(children)}</a>;
+};
+const SpanEl = ({ children, className, href, target }) => {
+  return <span {...{ href, target }}>{InnerParser(children)}</span>;
+};
 
-const VcRow = ({ children }) => {
-  return <div className="">{children} </div>;
-};
-const VcColumnsContainer = ({ children }) => {
-  return <div className="">{children} </div>;
-};
-//modele a copier coller
-const Sample = ({ parsed }) => {
-  return <div className="">{children} </div>;
+const TitreH = ({ children, className, href, target }) => {
+  return (
+    <h2 className={`text-red-500`} {...{ href, target }}>
+      {InnerParser(children)}
+    </h2>
+  );
 };
