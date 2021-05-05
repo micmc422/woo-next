@@ -15,6 +15,7 @@ import Link from "next/link";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import BlocPrix from "../../src/components/single-product/price/BlocPrix";
 import { useEffect, useState } from "react";
+import ContentParser from "../../src/components/ContentParser";
 
 export default function Product(props) {
   const { product } = props;
@@ -62,7 +63,10 @@ export default function Product(props) {
                 <h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">
                   {product.name}
                 </h1>
-                <RateBlock rating={product?.reviews?.averageRating} reviewCount={product?.reviewCount}/>
+                <RateBlock
+                  rating={product?.reviews?.averageRating}
+                  reviewCount={product?.reviewCount}
+                />
                 <p className="leading-relaxed">
                   Fam locavore kickstarter distillery. Mixtape chillwave tumeric
                   sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
@@ -116,12 +120,15 @@ export default function Product(props) {
               <AddToCartButton product={product} />
             </div>
           </div>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: product.description,
-            }}
-            className="container mx-auto mb-5 product-description"
-          />
+          <ContentParser data={product.description}></ContentParser>
+          {false && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: product.description,
+              }}
+              className="container mx-auto mb-5 product-description"
+            />
+          )}
         </div>
       ) : (
         ""

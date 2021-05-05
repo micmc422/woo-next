@@ -1,23 +1,28 @@
+import { AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CategorieList from "./widget/CategorieList";
 import FilterSection from "./widget/FilterSection";
 import SideBarSticky from "./widget/SideBarSticky";
 
-
-const ShopLayout = ({ children, categories, pageInfo }) => {
+const ShopLayout = ({ children, categories, pageInfo, className }) => {
   const [pageLength, setPageLength] = useState(24);
   return (
-    <div className="flex flex-row">
+    <div className={`flex flex-row space-x-2 ${className ? className : ""}`}>
       <SideBarSticky>
-        <FilterSection categories={categories} />
+        <FilterSection className="w-48 m-auto" categories={categories} />
       </SideBarSticky>
-      <div className="container mx-auto">
-        {children}
-        <Pagination pageInfo={pageInfo} pageLength={pageLength} />
+      <div>
+        <div className="container max-w-screen-lg mx-auto">
+          <AnimateSharedLayout>{children}</AnimateSharedLayout>
+          <Pagination pageInfo={pageInfo} pageLength={pageLength} />
+        </div>
       </div>
       <SideBarSticky>
-        <CategorieList className="w-48 text-right" navCatData={categories} />
+        <CategorieList
+          className="w-48 m-auto text-right"
+          navCatData={categories}
+        />
       </SideBarSticky>
     </div>
   );

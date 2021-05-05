@@ -20,6 +20,12 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
       databaseId
       name
       products(first: 50) {
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
         nodes {
           id
           productId

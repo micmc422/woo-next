@@ -17,6 +17,7 @@ export default async function handler(
       exclude,
       locale = "fr",
       category = "",
+      categoryIn,
       min,
       max,
     },
@@ -31,9 +32,10 @@ export default async function handler(
       search,
       exclude,
       locale,
-      categoryIn: category ? category : null,
-      maxPrice: Number(max) === 1000 ? null : Number(max).toFixed(2),
-      minPrice: Number(min) ? null : Number(min).toFixed(2),
+      category: category ? category : null,
+      categoryIn: categoryIn ? categoryIn : null,
+      maxPrice: isNaN(Number(max)) ? null : Number(max).toFixed(2),
+      minPrice: isNaN(Number(min)) ? null : Number(min).toFixed(2),
     };
     const apolloCli = locale === "fr" ? client : clientEng;
     const { data } = await apolloCli.query({

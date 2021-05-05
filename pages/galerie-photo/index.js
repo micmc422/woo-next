@@ -11,22 +11,40 @@ import ShopLayout from "../../src/components/ShopLayout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { motion } from "framer-motion";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Home(props) {
-  const { products, productCategories, heroCarousel, bestSeller, cat } = props;
+  const {
+    products,
+    productCategories,
+    heroCarousel,
+    bestSeller,
+    cat,
+    pageInfoStatic,
+  } = props;
+
   const [filteredProducts, setFilteredProducts] = useState(products);
-  const [pageInfo, setPageInfo] = useState({});
-  const { query } = useRouter();
-  const formattedQuery = new URLSearchParams(query).toString();
-  const { data, error } = useSWR(`/api/products/?${formattedQuery}`, fetcher);
+  const [pageInfo, setPageInfo] = useState(pageInfoStatic);
+  const { query, locale } = useRouter();
+  let formattedQuery = new URLSearchParams(query).toString();
+  const { data, error } = useSWR(
+    formattedQuery.length > 0
+      ? `/api/products/?locale=${locale}&${formattedQuery}`
+      : null,
+    fetcher
+  );
+  const isLoading = !data && !error && formattedQuery.length;
   useEffect(() => {
     if (data?.products) {
-      setPageInfo(data?.products?.pageInfo || {});
+      setPageInfo(data?.products?.pageInfo);
       setFilteredProducts(data.products.nodes);
+    } else {
+      setPageInfo(pageInfoStatic);
+      setFilteredProducts(products);
     }
-  }, [data]);
+  }, [query, data, locale]);
   return (
     <Layout>
       {/*Hero Carousel*/}
@@ -43,13 +61,18 @@ export default function Home(props) {
         pageInfo={pageInfo}
         setPageInfo={setPageInfo}
       >
-        <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-          {filteredProducts.length
+        <motion.div
+          className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
+          layout
+        >
+          {!isLoading && filteredProducts.length
             ? filteredProducts.map((product) => (
                 <Product key={product.id} product={product} />
               ))
-            : ""}
-        </div>
+            : [...Array(24).keys()].map((key) => (
+                <Product key={key} product={key} />
+              ))}
+        </motion.div>
       </ShopLayout>{" "}
       {/*Categories*/}
       <div className="container px-4 mx-auto my-32 product-categories-container xl:px-0">
@@ -74,6 +97,7 @@ export async function getStaticProps({ locale }) {
         ? data.productCategories.nodes
         : [],
       products: data?.products?.nodes ? data.products.nodes : [],
+      pageInfoStatic: data?.products?.pageInfo,
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       cat: data?.cat?.nodes ? data.cat.nodes : [],
     },

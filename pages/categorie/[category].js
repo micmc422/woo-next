@@ -15,19 +15,32 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function CategorySingle(props) {
   const router = useRouter();
-  const { query } = router;
+  const { query, locale } = useRouter();
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  const { categoryName, products, cat } = props;
+  const { categoryName, products, cat, pageInfoStatic } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
-  const [pageInfo, setPageInfo] = useState({});
+  const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
-  const { data, error } = useSWR(`/api/products/?${formattedQuery}`, fetcher);
+  console.log(query);
+  const { data, error } = useSWR(
+    formattedQuery.length > 0
+      ? `/api/products/?locale=${locale}&${formattedQuery}`
+      : null,
+    fetcher
+  );
+  console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
+
+  const isLoading = !data && !error && formattedQuery.length;
+
   useEffect(() => {
     if (data?.products) {
       setPageInfo(data?.products?.pageInfo || {});
       setFilteredProducts(data.products.nodes);
+    } else {
+      setPageInfo(pageInfoStatic);
+      setFilteredProducts(products);
     }
   }, [data]);
   if (router.isFallback) {
@@ -42,13 +55,19 @@ export default function CategorySingle(props) {
         ) : (
           ""
         )}
-        <ShopLayout categories={cat}>
+        <ShopLayout
+          categories={cat}
+          pageInfo={pageInfo}
+          setPageInfo={setPageInfo}
+        >
           <div className="grid grid-cols-1 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {undefined !== products && products?.length
-              ? products.map((product) => (
+            {!isLoading && filteredProducts.length
+              ? filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />
                 ))
-              : ""}
+              : [...Array(24).keys()].map((key) => (
+                  <Product key={key} product={key} />
+                ))}
           </div>{" "}
         </ShopLayout>
       </div>
@@ -56,16 +75,17 @@ export default function CategorySingle(props) {
   );
 }
 
-export async function getStaticProps({ params: { slug }, locale }) {
+export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
-    variables: { slug },
+    variables: { slug: category },
   });
 
   return {
     props: {
       categoryName: data?.productCategory?.name || "",
+      pageInfoStatic: data?.productCategory?.products?.pageInfo,
       products: data?.productCategory?.products?.nodes || [],
       cat: data?.cat?.nodes || [],
     },
@@ -79,6 +99,7 @@ export async function getStaticPaths({}) {
   const { data } = await apolloCli.query({
     query: PRODUCT_CATEGORIES_SLUGS,
   });
+
   const { dataEn } = await apolloCliEng.query({
     query: PRODUCT_CATEGORIES_SLUGS,
   });
@@ -90,7 +111,7 @@ export async function getStaticPaths({}) {
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            slug: productCategory?.slug.toString(),
+            category: productCategory?.slug.toString(),
           },
           locale: "fr",
         });
@@ -101,7 +122,7 @@ export async function getStaticPaths({}) {
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            slug: productCategory?.slug.toString(),
+            category: productCategory?.slug.toString(),
           },
           locale: "en",
         });

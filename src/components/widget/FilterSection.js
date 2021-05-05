@@ -24,10 +24,10 @@ const animationChild = {
 };
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
-const FilterSection = ({ categories }) => {
+const FilterSection = ({ categories, className }) => {
   // console.log(router);
   return (
-    <div className="flex flex-col space-y-4">
+    <div className={`flex flex-col space-y-4 ${className ? className : ""}`}>
       <div className="flex flex-col">
         <TitreWidget>Categories</TitreWidget>
 
@@ -43,11 +43,12 @@ const FilterSection = ({ categories }) => {
 const BlocCategoriesSelector = ({ categories }) => {
   const router = useRouter();
   const [categoriesList, setCategoriesList] = useState(categories);
-  const activeCat =
-    router?.query?.category && router.query["category"].split(",")[0];
-  const activeCatId = router?.query?.slug
+  const activeCat = router?.query?.category || router?.query?.categoryIn;
+  const activeCatId = router?.query?.categoryIn
+    ? categories.find((el) => el.slug === activeCat)?.databaseId
+    : router?.query?.slug
     ? categories.find((el) => el.slug === router?.query?.slug)?.databaseId
-    : categories.find((el) => el.name === activeCat)?.databaseId;
+    : categories.find((el) => el.slug === activeCat)?.databaseId;
   const { data, error } = useSWR(
     activeCatId ? `/api/categorie/?parent=${activeCatId}` : null,
     fetcher
@@ -64,11 +65,24 @@ const BlocCategoriesSelector = ({ categories }) => {
   });
   return (
     <AnimatePresence exitBeforeEnter>
+      {true && (
+        <motion.a
+          key={`fieler-item-retour-nav`}
+          onClick={() => updateQuery(false, "categoryIn", router)}
+          className="p-1"
+          initial="initial"
+          animate="isVisible"
+          exit="isHidden"
+          variants={animationParent}
+        >
+          retour
+        </motion.a>
+      )}
       {categoriesList &&
         categoriesList.map((item) => (
           <motion.a
             key={`fieler-item-${item.name}`}
-            onClick={() => updateQuery(item.name, "category", router)}
+            onClick={() => updateQuery(item.slug, "categoryIn", router)}
             className="p-1"
             initial="initial"
             animate="isVisible"
@@ -77,7 +91,7 @@ const BlocCategoriesSelector = ({ categories }) => {
           >
             <span className={`relative inline-block`}>
               <AnimatePresence exitBeforeEnter>
-                {activeCat?.includes(item.name) && (
+                {activeCat?.includes(item.slug) && (
                   <motion.span
                     initial={{ x: 55, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -101,16 +115,41 @@ const BlocCategoriesSelector = ({ categories }) => {
 const BlocPriceRange = ({ min, max }) => {
   const router = useRouter();
   const [values, setValues] = useState({ min: 80, max: 500 });
+  const [isActive, setIsActive] = useState(false);
 
   const rangeHandler = (value) => {
     setValues(value);
-    updateQuery(value.min, "min", router);
-    updateQuery(value.max, "max", router);
+    value.min && updateQuery(value.min, "min", router);
+    value.max && updateQuery(value.max, "max", router);
+    if (!value.max && !value.min && value) {
+      updateQuery(value, "max", router);
+      updateQuery(false, "min", router);
+    }
   };
   return (
     <div className={`p-4`}>
+      <div className={`flex flex-row pb-6`}>
+        <div className="flex items-center justify-between space-x-1">
+          <div
+            className={`flex items-center w-8 h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full ${
+              values.min ? "bg-green-400" : ""
+            }`}
+            onClick={() => setValues(values?.min ? 200 : { min: 80, max: 500 })}
+          >
+            <div
+              className={`w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md ${
+                values.min ? "translate-x-2" : ""
+              }`}
+            ></div>
+          </div>
+          <h2>{values?.min ? "prix max" : "fourchette"}</h2>
+          <div onClick={() => updateQuery(null, "disablePrice", router)}>
+            reset
+          </div>
+        </div>
+      </div>
       <InputRange
-      step={5}
+        step={5}
         maxValue={max}
         minValue={min}
         formatLabel={(value) => `${value}€`}
@@ -118,74 +157,66 @@ const BlocPriceRange = ({ min, max }) => {
         onChange={(value) => {
           setValues(value);
         }}
-        onChangeStart={(value) =>
-          console.log("onChangeStart with value =", value)
-        }
         onChangeComplete={(value) => rangeHandler(value)}
       />
     </div>
-  );
-  return (
-    <>
-      <style jsx>{`
-        @media screen and (-webkit-min-device-pixel-ratio: 0) {
-          input[type="range"]::-webkit-slider-thumb {
-            width: 15px;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 15px;
-            cursor: ew-resize;
-            background: #fff;
-            box-shadow: -405px 0 0 400px #605e5c;
-            border-radius: 50%;
-          }
-        }
-      `}</style>
-      <input
-        id="pricerange"
-        class="rounded-lg overflow-hidden appearance-none bg-gray-400 h-3 w-128"
-        type="range"
-        min="1"
-        max="100"
-        step="1"
-        value="15"
-      />
-    </>
   );
 };
 const updateQuery = (name, key, router) => {
   const { query } = router;
 
-  const options = { scroll: false };
+  const options = { scroll: false, shallow: true };
   let theQuery = query;
   delete theQuery["after"];
   delete theQuery["first"];
   delete theQuery["before"];
   delete theQuery["last"];
-
-  if (theQuery[key]) {
-    if (key !== "min" && key !== "max") {
-      theQuery[key] = theQuery[key].split(",").filter((el) => el && el !== "");
-      if (theQuery[key]?.find((n) => n === name)) {
-        theQuery[key] = theQuery[key].filter((el) => el !== name);
-        theQuery[key].length < 1 && delete theQuery[key];
+  const routerAction = (theQueryAction) => {
+    delete theQuery["slug"];
+    const formattedQuery = new URLSearchParams(theQueryAction).toString();
+    router.push(
+      {
+        pathname: router.asPath.split("?")[0],
+        query: formattedQuery,
+      },
+      null,
+      options
+    );
+  };
+  if (false === name) {
+    delete theQuery[key];
+    routerAction(theQuery);
+    return;
+  }
+  if (key === "disablePrice") {
+    delete theQuery["disablePrice"];
+    delete theQuery["min"];
+    delete theQuery["max"];
+    routerAction(theQuery);
+    return;
+  }
+  if (theQuery[key] && theQuery[key] !== "disablePrice") {
+    if (key === "min" || key === "max") {
+      // theQuery[key] = theQuery[key].split(",").filter((el) => el && el !== "");
+      if (key !== "slug") theQuery[key] = name;
+      routerAction(theQuery);
+    } else {
+      if (name !== theQuery[key]) {
+        theQuery[key] = name;
+        routerAction(theQuery);
       } else {
-        theQuery[key] = [name];
+        delete theQuery[key];
+        routerAction(theQuery);
       }
+
+      routerAction(theQuery);
+      return;
     }
     // console.log(theQuery[key]);
   } else {
+    theQuery[key] = name;
+    routerAction(theQuery);
   }
-  theQuery[key] = [name];
-  const formattedQuery = new URLSearchParams(theQuery).toString();
-  router.push(
-    {
-      pathname: router.asPath.split("?")[0],
-      query: formattedQuery,
-    },
-    null,
-    options
-  );
 };
 
 export default FilterSection;
