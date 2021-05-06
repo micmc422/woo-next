@@ -1,154 +1,145 @@
-import parse from "html-react-parser";
-import { uniqueId } from "lodash";
-const ContentParser = ({ data }) => {
-  // console.log(data);
-  const parsed = parse(data);
+import parse, { domToReact } from "html-react-parser";
+import { FiInstagram, FiFacebook } from "react-icons/fi";
 
-  return parsed.map((props) => <Parser props={props} />);
+const defaultOptions = {
+  replace: ({ attribs, children, name }) => {
+    if (!attribs) {
+      return;
+    }
+    if (name === "figure") {
+      return (
+        <div className="relative">
+          <div
+            className={`absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
+          >
+            {" "}
+          </div>
+          <div className="relative">
+            {" "}
+            {domToReact(children, defaultOptions)}
+          </div>
+        </div>
+      );
+    }
+    if (name === "i" && attribs?.class?.includes("fa-instagram")) {
+      return (
+        <>
+          <div
+            style={{ backgroundColor: "#c13584", zIndex: -1 }}
+            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-red-800 ring-opacity-40`}
+          ></div>
+          <FiInstagram />
+        </>
+      );
+    }
+    if (name === "i" && attribs?.class?.includes("fa-facebook")) {
+      return (
+        <>
+          {" "}
+          <div
+            style={{ backgroundColor: "#3b5998", zIndex: -1 }}
+            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-blue-800 ring-opacity-40`}
+          ></div>
+          <FiFacebook />
+        </>
+      );
+    }
+    if (name === "h3") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <h2
+          className={`mx-auto py-16 text-4xl max-w-2xl ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </h2>
+      );
+    }
+    if (name === "h4") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <h3
+          className={`mx-auto py-8 text-2xl max-w-2xl ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </h3>
+      );
+    }
+    if (name === "p") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <p className={`mx-auto prose ${alignRigth ? "text-right" : ""}`}>
+          {domToReact(children, defaultOptions)}
+        </p>
+      );
+    }
+
+    if (
+      attribs?.class?.includes("vc_row") ||
+      attribs?.class?.includes("wpb_row")
+    ) {
+      return (
+        <div className="container flex flex-row items-center max-w-screen-xl mx-auto space-x-12">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("vc_column-inner")) {
+      return (
+        <div className="pb-16">{domToReact(children, defaultOptions)}</div>
+      );
+    }
+    if (attribs?.class?.includes("vc_btn")) {
+    //  console.log(attribs);
+      const { href, target, title } = attribs;
+
+      return href ? (
+        <a
+          href={href}
+          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200"
+        >
+          {domToReact(children, defaultOptions)}
+        </a>
+      ) : (
+        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (
+      attribs?.class?.includes("wpb_column") ||
+      attribs?.class?.includes("vc_column_container")
+    ) {
+      return (
+        <div
+          className={`${
+            attribs?.class.includes("vc_col-sm-3") ? "w-1/4" : ""
+          } ${attribs?.class.includes("vc_col-sm-4") ? "w-1/3" : ""} ${
+            attribs?.class.includes("vc_col-sm-6") ? "w-1/2 flex-shrink" : ""
+          } ${attribs?.class.includes("vc_col-sm-8") ? "w-8/12" : ""} ${
+            attribs?.class.includes("vc_col-sm-9") ? "w-3/4" : ""
+          } ${attribs?.class.includes("vc_col-sm-12") ? "w-full" : " "}
+    `}
+        >
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+  },
+};
+
+const ContentParser = ({ data, options }) => {
+  // console.log(data);
+  if (!data) {
+    return null;
+  }
+  const parsed = parse(data, { ...defaultOptions, ...options });
+
+  return parsed;
 };
 
 export default ContentParser;
-
-const Parser = ({ props }) => {
-  if (Array.isArray(props)) {
-    console.log(props);
-    return props.map((item) => {
-      console.log(item);
-      if (item.type) {
-        return <Parser {...item} />;
-      } else {
-        return item;
-      }
-    });
-  }
-  if (!props?.props) {
-    console.log("!props");
-    return null;
-  }
-  //  console.log(props);
-  const {
-    props: { children, className },
-    type,
-  } = props;
-  if (!children) {
-    console.log("!children");
-    return null;
-  }
-
-  if (className?.includes("vc_row") || className.includes("wpb_row")) {
-    // console.log({ props });
-    return <MainItem {...props} />;
-  }
-  if (
-    className?.includes("wpb_column") ||
-    className?.includes("vc_column_container")
-  ) {
-    return <Column {...props} />;
-  }
-
-  if (className?.includes("vc_column-inner")) {
-    return <Wrapper {...props} />;
-  }
-  if (type === "h3") {
-    // console.log("h3");
-    return <TitreH {...props} />;
-  }
-  /*
-  if (type === "div") {
-    // console.log("h3");
-    return <Wrapper {...props} />;
-  }
-  if (className?.includes("wpb_wrapper")) {
-    return <Wrapper {...props} />;
-  }
-  if (children.type === "a") {
-    return <ALink {...props} />;
-  }
-  if (children.type === "span") {
-    return <SpanEl {...props} />;
-  }
-  if (!Array.isArray(children) && !children.type) {
-    // console.log(children);
-    return children;
-  } else {
-    if (children.type) {
-      return <Parser {...children} />;
-    }
-    //  console.log(children);
-    return Array.isArray(children) ? (
-      children.map((child) => {
-        if (child.type) {
-          console.log({ child });
-          return <Parser {...child} />;
-        }
-        return child;
-      })
-    ) : (
-      <Parser {...children} />
-    );
-  }
-  */
-  console.log(children);
-  return <Parser props={children} key={uniqueId(props.key)} />;
-
-  // console.log({ props, children, className });
-};
-
-function InnerParser(children) {
-  console.log(children);
-  return Array.isArray(children) ? (
-    children.map((props) => {
-      //  console.log(props);
-      return <Parser props={props} key={uniqueId(props.key)} />;
-    })
-  ) : (
-    <Parser props={children} />
-  );
-}
-
-const MainItem = ({ props }) => {
-  const { children, className } = props;
-  console.log({ props });
-  return (
-    <div className="container flex flex-row flex-wrap items-center max-w-screen-xl mx-auto">
-      {InnerParser(children)}
-    </div>
-  );
-};
-const Column = ({ props }) => {
-  const { children, className } = props;
-  return (
-    <div
-      className={`
-      ${className.includes("vc_col-sm-3") ? "w-1/4" : ""}
-      ${className.includes("vc_col-sm-4") ? "w-1/3" : ""}
-      ${className.includes("vc_col-sm-6") ? "w-1/2" : ""}
-      ${className.includes("vc_col-sm-8") ? "w-8/12" : ""}
-      ${className.includes("vc_col-sm-9") ? "w-3/4" : ""}
-      ${className.includes("vc_col-sm-12") ? "w-full" : ""}
-  `}
-    >
-      {InnerParser(children)}
-    </div>
-  );
-};
-const Wrapper = ({ props }) => {
-  const { children, className } = props;
-  return <div className={`p-1`}>{InnerParser(children)}</div>;
-};
-const ALink = ({ props }) => {
-  const { children, className } = props;
-  const { href, target } = children.props;
-  return <a {...{ href, target }}>{InnerParser(children)}</a>;
-};
-const SpanEl = ({ children, className, href, target }) => {
-  return <span {...{ href, target }}>{InnerParser(children)}</span>;
-};
-
-const TitreH = ({ children, className, href, target }) => {
-  return (
-    <h2 className={`text-red-500`} {...{ href, target }}>
-      {InnerParser(children)}
-    </h2>
-  );
-};
+<FiInstagram />;

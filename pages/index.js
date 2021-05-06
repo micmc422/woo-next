@@ -7,9 +7,10 @@ import HeroCarousel from "../src/components/home/hero-carousel";
 import LargeSlider from "../src/components/sections/LargeSlider";
 
 export default function Home(props) {
-  const { products, productCategories, heroCarousel, bestSeller } = props;
+  const { products, productCategories, heroCarousel, bestSeller, menu } = props;
+  console.log(menu);
   return (
-    <Layout>
+    <Layout menu={menu}>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Categories*/}
@@ -46,6 +47,10 @@ export async function getStaticProps({ locale }) {
 
   return {
     props: {
+      menu: {
+        collection: data?.megamenuCollection?.content,
+        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
+      },
       productCategories: data?.productCategories?.nodes
         ? data.productCategories.nodes
         : [],

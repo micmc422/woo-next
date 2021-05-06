@@ -19,7 +19,7 @@ export default function CategorySingle(props) {
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  const { categoryName, products, cat, pageInfoStatic } = props;
+  const { categoryName, products, cat, pageInfoStatic, menu } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
@@ -48,7 +48,7 @@ export default function CategorySingle(props) {
   }
 
   return (
-    <Layout>
+    <Layout menu={menu}>
       <div className="px-4 mx-auto my-32 xl:px-0">
         {categoryName ? (
           <h3 className="mb-5 text-2xl uppercase">{categoryName}</h3>
@@ -84,6 +84,10 @@ export async function getStaticProps({ params: { category }, locale }) {
 
   return {
     props: {
+      menu: {
+        collection: data?.megamenuCollection?.content,
+        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
+      },
       categoryName: data?.productCategory?.name || "",
       pageInfoStatic: data?.productCategory?.products?.pageInfo,
       products: data?.productCategory?.products?.nodes || [],

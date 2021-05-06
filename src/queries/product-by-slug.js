@@ -2,7 +2,26 @@ import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query Product($slug: ID!) {
-    product(id: $slug, idType: SLUG) {
+    megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
+      id
+      content
+      uri
+      title
+    }
+    menu: menus(first: 1, where: { id: 6 }) {
+      nodes {
+        menuItems {
+          edges {
+            node {
+              label
+              title
+              url
+            }
+          }
+        }
+      }
+    }
+   product(id: $slug, idType: SLUG) {
       id
       productId
       averageRating

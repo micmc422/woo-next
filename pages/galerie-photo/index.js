@@ -23,6 +23,7 @@ export default function Home(props) {
     bestSeller,
     cat,
     pageInfoStatic,
+    menu,
   } = props;
 
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -46,7 +47,7 @@ export default function Home(props) {
     }
   }, [query, data, locale]);
   return (
-    <Layout>
+    <Layout menu={menu}>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Products*/}
@@ -93,6 +94,10 @@ export async function getStaticProps({ locale }) {
 
   return {
     props: {
+      menu: {
+        collection: data?.megamenuCollection?.content,
+        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
+      },
       productCategories: data?.productCategories?.nodes
         ? data.productCategories.nodes
         : [],

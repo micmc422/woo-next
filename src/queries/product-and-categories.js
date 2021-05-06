@@ -5,6 +5,26 @@ import { gql } from "@apollo/client";
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
   query MyQuery($after: String, $search: String) {
+    megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
+      id
+      content
+      uri
+      title
+    }
+    menu: menus(first: 1, where: { id: 6 }) {
+      nodes {
+        menuItems {
+          edges {
+            node {
+              label
+              title
+              url
+            }
+          }
+        }
+      }
+    }
+
     heroCarousel: posts(first: 10, where: { categoryIn: "1543" }) {
       nodes {
         id

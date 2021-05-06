@@ -1,9 +1,9 @@
 import Nav from "./Nav";
 
-const Header = () => {
+const Header = ({menu}) => {
 	return (
 		<div className="header">
-			<Nav/>
+			<Nav menu={menu}/>
 		</div>
 	)
 };

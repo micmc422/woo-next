@@ -2,6 +2,25 @@ import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_CATEGORY_SLUG = gql`
   query PRODUCT_BY_CATEGORY_SLUG($slug: ID!) {
+    megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
+      id
+      content
+      uri
+      title
+    }
+    menu: menus(first: 1, where: { id: 6 }) {
+      nodes {
+        menuItems {
+          edges {
+            node {
+              label
+              title
+              url
+            }
+          }
+        }
+      }
+    }
     cat: productCategories(first: 50, where: { parent: null }) {
       nodes {
         id

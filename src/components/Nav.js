@@ -2,10 +2,144 @@ import Link from "next/link";
 import CartIcon from "./cart/CartIcon";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import ContentParser from "./ContentParser";
+import { domToReact } from "html-react-parser";
 
-const Nav = ({}) => {
+const defaultOptions = {
+  replace: ({ attribs, children, name }) => {
+    if (!attribs) {
+      return;
+    }
+    if (name === "figure") {
+      return (
+        <div className="relative">
+          <div
+            className={`absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
+          >
+            {" "}
+          </div>
+          <div className="relative">
+            {" "}
+            {domToReact(children, defaultOptions)}
+          </div>
+        </div>
+      );
+    }
+    if (name === "i" && attribs?.class?.includes("fa-instagram")) {
+      return (
+        <>
+          <div
+            style={{ backgroundColor: "#c13584", zIndex: -1 }}
+            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-red-800 ring-opacity-40`}
+          ></div>
+          <FiInstagram />
+        </>
+      );
+    }
+    if (name === "i" && attribs?.class?.includes("fa-facebook")) {
+      return (
+        <>
+          {" "}
+          <div
+            style={{ backgroundColor: "#3b5998", zIndex: -1 }}
+            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-blue-800 ring-opacity-40`}
+          ></div>
+          <FiFacebook />
+        </>
+      );
+    }
+    if (name === "h3") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <h2
+          className={`mx-auto py-8 text-xl max-w-2xl ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </h2>
+      );
+    }
+    if (name === "h4") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <h3
+          className={`mx-auto py-8 text-2xl max-w-2xl ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </h3>
+      );
+    }
+    if (name === "p") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <p className={`mx-auto prose ${alignRigth ? "text-right" : ""}`}>
+          {domToReact(children, defaultOptions)}
+        </p>
+      );
+    }
+
+    if (
+      attribs?.class?.includes("vc_row") ||
+      attribs?.class?.includes("wpb_row")
+    ) {
+      return (
+        <div className="container flex flex-row items-center max-w-screen-xl mx-auto space-x-12">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("vc_column-inner")) {
+      return (
+        <div className="pb-16">{domToReact(children, defaultOptions)}</div>
+      );
+    }
+    if (attribs?.class?.includes("vc_btn")) {
+      console.log(attribs);
+      const { href, target, title } = attribs;
+
+      return href ? (
+        <a
+          href={href}
+          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200"
+        >
+          {domToReact(children, defaultOptions)}
+        </a>
+      ) : (
+        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (
+      attribs?.class?.includes("wpb_column") ||
+      attribs?.class?.includes("vc_column_container")
+    ) {
+      return (
+        <div
+          className={`${
+            attribs?.class.includes("vc_col-sm-3") ? "w-1/4" : ""
+          } ${attribs?.class.includes("vc_col-sm-4") ? "w-1/3" : ""} ${
+            attribs?.class.includes("vc_col-sm-6") ? "w-1/2 flex-shrink" : ""
+          } ${attribs?.class.includes("vc_col-sm-8") ? "w-8/12" : ""} ${
+            attribs?.class.includes("vc_col-sm-9") ? "w-3/4" : ""
+          } ${attribs?.class.includes("vc_col-sm-12") ? "w-full" : " "}
+    `}
+        >
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+  },
+};
+
+const Nav = ({ menu }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
+  console.log(menu);
+  // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   return (
     <nav className="bg-white">
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">
@@ -64,31 +198,7 @@ const Nav = ({}) => {
           } w-full overflow-hidden lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
         >
           <div className="text-sm font-medium uppercase lg:flex-grow">
-            <Link href="/galerie-photo">
-              <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
-                Galerie
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
-                Women
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
-                Kids
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
-                Home & Living
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
-                Offers
-              </a>
-            </Link>
+            <MenuBaseLvl {...menu} />
           </div>
 
           <div className="text-sm font-medium">
@@ -143,7 +253,27 @@ const Nav = ({}) => {
     </nav>
   );
 };
+const MenuBaseLvl = ({ base, collection }) => {
+  console.log({ base, collection });
 
+  return base ? (
+    base.map(({ label, title, url }) => {
+      let formattedUrl = url.replace("https://photo.paris", "");
+      formattedUrl = formattedUrl.includes("megamenu=collection")
+        ? "galerie-photo"
+        : formattedUrl;
+      return (
+        <Link href={formattedUrl}>
+          <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
+            {label}
+          </a>
+        </Link>
+      );
+    })
+  ) : (
+    <div />
+  );
+};
 const FlagFr = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

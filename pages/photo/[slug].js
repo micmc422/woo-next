@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import ContentParser from "../../src/components/ContentParser";
 
 export default function Product(props) {
-  const { product } = props;
+  const { product, menu } = props;
 
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
@@ -31,7 +31,7 @@ export default function Product(props) {
     return <div>Loading...</div>;
   }
   return (
-    <Layout>
+    <Layout menu={menu}>
       <section className="overflow-hidden text-gray-600 body-font">
         <div className="px-5 py-24 mx-auto">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
@@ -85,21 +85,22 @@ export default function Product(props) {
                     price={product.price}
                     activeVariations={activeVariations}
                   />
-                  <button className="flex px-6 py-2 ml-auto text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600">
-                    Button
-                  </button>
-                  <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
-                    <svg
-                      fill="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                    </svg>
-                  </button>
+                  <div className="flex px-6 py-2 ml-auto">
+                    {" "}
+                    <AddToCartButton product={product} />
+                    <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
+                      <svg
+                        fill="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             </AnimateSharedLayout>
@@ -107,19 +108,7 @@ export default function Product(props) {
         </div>
       </section>
       {product ? (
-        <div className="container px-4 mx-auto my-32 single-product xl:px-0">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex flex-col justify-center product-info">
-              <h4 className="text-2xl uppercase products-main-title">
-                {product.name}
-              </h4>
-              <Price
-                salesPrice={product?.price}
-                regularPrice={product?.regularPrice}
-              />
-              <AddToCartButton product={product} />
-            </div>
-          </div>
+        <div className="container px-4 mx-auto mb-32 single-product xl:px-0">
           <ContentParser data={product.description}></ContentParser>
           {false && (
             <div
@@ -149,6 +138,10 @@ export async function getStaticProps(context) {
 
   return {
     props: {
+      menu: {
+        collection: data?.megamenuCollection?.content,
+        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
+      },
       product: data?.product || {},
     },
     revalidate: 1,

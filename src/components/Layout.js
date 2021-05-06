@@ -12,6 +12,7 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const Layout = (props) => {
+  const { menu } = props;
   return (
     <AppProvider>
       <ApolloProvider client={client}>
@@ -19,7 +20,7 @@ const Layout = (props) => {
           <Head>
             <title>Woocommerce React Theme</title>
           </Head>
-          <Header />
+          <Header menu={menu} />
           {props.children}
           <Footer />
         </div>
