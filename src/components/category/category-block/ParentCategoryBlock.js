@@ -5,28 +5,38 @@ import Image from "next/image";
 
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
+  //  console.log(category);
+  // return <div />;
   const imgListUrl = {
     imgSourceUrlList: [
-      category?.image?.sourceUrl
-        ? category.image.sourceUrl
-        : category.products?.nodes
+      category.products?.nodes
         ? category.products.nodes[0].image.sourceUrl
+        : category?.image?.sourceUrl
+        ? category.image.sourceUrl
         : "",
       ...category.products.nodes
         .slice(1, 4)
         .map(({ image }) => image.sourceUrl),
     ],
     imgSourceSrcSetList: [
-      category?.image?.srcSet
-        ? category.image.srcSet
-        : category.products?.nodes
+      category.products?.nodes
         ? category.products.nodes[0].image.srcSet
+        : category?.image?.srcSet
+        ? category.image.srcSet
         : "",
       ...category.products.nodes.slice(1, 4).map(({ image }) => image.srcSet),
     ],
+    imgSourceIsPortrait:
+      category.products?.nodes &&
+      category?.products?.nodes[0].image?.mediaDetails
+        ? category.products.nodes[0].image.mediaDetails.width >
+          category.products.nodes[0].image.mediaDetails.height
+        : category?.image?.mediaDetails?.width >
+          category?.image?.mediaDetails?.height,
   };
+  //  console.log(imgListUrl.imgSourceIsPortrait);
   return (
-    <div className="mb-5 product">
+    <div className="mb-5">
       <Link href={`/categorie/${category.slug}`}>
         <a>
           <ImageCaroussel {...imgListUrl} i={i} />
@@ -47,7 +57,12 @@ const ParentCategoryBlock = (props) => {
 };
 const autoPlay = true;
 
-const ImageCaroussel = ({ imgSourceUrlList, imgSourceSrcSetList, i }) => {
+const ImageCaroussel = ({
+  imgSourceUrlList,
+  imgSourceSrcSetList,
+  imgSourceIsPortrait,
+  i,
+}) => {
   const autoPlay = true;
   const slideDuration = 3 + i / 3; // in seconds
   const activeIndexRef = useRef({ activeIndex: 0 });
@@ -89,7 +104,7 @@ const ImageCaroussel = ({ imgSourceUrlList, imgSourceSrcSetList, i }) => {
   }, []);
   return (
     <div
-      className="relative h-40 overflow-hidden md:h-64"
+      className="relative h-64 overflow-hidden md:h-64"
       srcSet={imgSourceSrcSetList[activeIndex]}
       alt="ParentCategoryBlock image"
     >
@@ -104,7 +119,8 @@ const ImageCaroussel = ({ imgSourceUrlList, imgSourceSrcSetList, i }) => {
           <Image
             src={imgSourceUrlList[activeIndex]}
             layout="fill"
-            objectFit="contain"
+            objectFit={imgSourceIsPortrait ? "scale-down" : "cover"}
+            objectPosition={imgSourceIsPortrait ? " 50% 0%" : "50% 50%"}
           />
         </motion.div>
       </AnimatePresence>

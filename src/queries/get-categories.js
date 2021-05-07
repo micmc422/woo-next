@@ -19,6 +19,38 @@ const GET_CATEGORIES_QUERY = gql`
     }
   }
 `;
+export const GET_CATEGORIES_QUERY_FULL = gql`
+  query {
+    productCategories(first: 99) {
+      nodes {
+        id
+        databaseId
+        name
+        slug
+        image {
+          sourceUrl
+          srcSet
+          mediaDetails {
+              height
+              width
+            }
+        }
+        products {
+          nodes {
+            image {
+              sourceUrl
+              srcSet
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export const GET_CATEGORIES_BASE = gql`
   query categoriesBase($parent: Int) {
     productCategories(first: 50, where: { parent: $parent }) {

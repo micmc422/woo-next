@@ -6,15 +6,25 @@ import PRODUCTS_AND_CATEGORIES_QUERY from "../src/queries/product-and-categories
 import HeroCarousel from "../src/components/home/hero-carousel";
 import LargeSlider from "../src/components/sections/LargeSlider";
 import getMenu from "../src/get-menu-fallback";
+import HomePageSection from "../src/components/home/HomePageSection";
+import { GET_PAGE_BY_URI } from "../src/queries/get-pages";
 
 export default function Home(props) {
-  const { products, productCategories, heroCarousel, bestSeller, menu } = props;
- // console.log(menu);
+  const {
+    products,
+    productCategories,
+    heroCarousel,
+    bestSeller,
+    menu,
+    homepage,
+  } = props;
+  // console.log(menu);
   return (
     <Layout menu={menu}>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Categories*/}
+      <HomePageSection homepage={homepage} products={products} />
       <div className="container px-4 mx-auto my-32 product-categories-container xl:px-0">
         <h2 className="mb-5 text-xl uppercase main-title">
           <span className="main-title-inner">Categories</span>
@@ -46,10 +56,16 @@ export async function getStaticProps({ locale }) {
     query: PRODUCTS_AND_CATEGORIES_QUERY,
     //locale !== "fr" ? 6 : 49
   });
+  const homepage = await apolloCli.query({
+    query: GET_PAGE_BY_URI,
+    variables: { uri: "/" },
+  });
+
   const menu = (await getMenu(locale)) || [];
 
   return {
     props: {
+      homepage: homepage.data.page,
       menu,
       productCategories: data?.productCategories?.nodes
         ? data.productCategories.nodes

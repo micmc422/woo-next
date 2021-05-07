@@ -2,6 +2,7 @@ import { isEmpty, isArray } from "lodash";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 
 const HeroCarousel = ({ heroCarousel }) => {
   if (isEmpty(heroCarousel) || !isArray(heroCarousel)) {
@@ -51,6 +52,7 @@ const HeroCarousel = ({ heroCarousel }) => {
   const { image, id, name, title, slug, featuredImage } = heroCarousel[
     activeIndex
   ];
+  // console.log(heroCarousel[activeIndex]);
   return (
     <div className="flex flex-col justify-between overflow-hidden banner sm:flex-row">
       <div className="banner-img sm:w-8/12">
@@ -60,12 +62,13 @@ const HeroCarousel = ({ heroCarousel }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`absolute top-0 left-0`}
+            className={`absolute inset-0`}
           >
-            <img
-              src={image ? image?.sourceUrl : featuredImage.sourceUrl}
-              srcSet={image ? image?.srcSet : featuredImage.srcSet}
-              loading="lazy"
+            <Image
+              src={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
+              srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
+              layout="fill"
+              objectfill="cover"
             />
           </motion.div>
         </AnimatePresence>

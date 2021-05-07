@@ -3,13 +3,13 @@ import Image from "next/image";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
 
 const defaultOptions = {
-  replace: ({ attribs, children, name }) => {
+  replace: ({ attribs, children, name, type }) => {
     if (!attribs) {
       return;
     }
     // console.log(attribs);
     if (name === "figure") {
-    //  console.log(children);
+      //  console.log(children);
       return (
         <div className="relative">
           <div
@@ -239,6 +239,8 @@ const defaultOptions = {
         </div>
       );
     }
+    console.log(type);
+
     return <>{domToReact(children, defaultOptions)}</>;
   },
 };

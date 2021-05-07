@@ -8,6 +8,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronToBot } from "./themeComponents";
+import { uniqueId } from "lodash";
 
 const Nav = ({ menu }) => {
   const router = useRouter();
@@ -139,7 +140,7 @@ const MenuBaseLvl = ({ base, collection }) => {
       formattedUrl = isMegaMenu ? "/galerie-photo" : formattedUrl;
       // return <MegaMenu collection={collection} />; {label || title}
       return isMegaMenu ? (
-        <Menu>
+        <Menu key={uniqueId("label-menu-")}>
           <Menu.Button>
             <div className="flex flex-row items-center px-4 py-1">
               <div className="pt-1">{label || title}</div>
@@ -151,7 +152,7 @@ const MenuBaseLvl = ({ base, collection }) => {
           </Menu.Items>
         </Menu>
       ) : (
-        <Menu>
+        <Menu key={uniqueId("label-menu-")}>
           <Menu.Items static>
             <Menu.Item>
               <Link href={formattedUrl} passHref>
