@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { motion } from "framer-motion";
+import getMenu from "../../src/get-menu-fallback";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -91,13 +92,11 @@ export async function getStaticProps({ locale }) {
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
   });
+  const menu = (await getMenu(locale)) || [];
 
   return {
     props: {
-      menu: {
-        collection: data?.megamenuCollection?.content,
-        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
-      },
+      menu,
       productCategories: data?.productCategories?.nodes
         ? data.productCategories.nodes
         : [],

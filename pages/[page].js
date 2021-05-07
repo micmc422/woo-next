@@ -3,10 +3,11 @@ import client, { clientEng } from "../src/components/ApolloClient";
 import { GET_PAGE_BY_URI, GET_PAGES_URI } from "../src/queries/get-pages";
 import { isEmpty } from "lodash";
 import ContentParser from "../src/components/ContentParser";
+import getMenu from "../src/get-menu-fallback";
 
 export default function Home(props) {
   const { page, menu } = props;
-  console.log(page);
+
   return (
     <Layout menu={menu}>
       <ContentParser data={page?.content}></ContentParser>
@@ -20,16 +21,14 @@ export async function getStaticProps({ locale, params }) {
     query: GET_PAGE_BY_URI,
     variables: { uri: params.page },
   });
+  const menu = (await getMenu(locale)) || [];
 
   return {
     props: {
-      menu: {
-        collection: data?.megamenuCollection?.content,
-        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
-      },
-      page: data?.page,
+      menu,
+      page: data?.page || [],
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 }
 

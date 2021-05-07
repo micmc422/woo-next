@@ -2,9 +2,6 @@ import { gql } from "@apollo/client";
 
 /**
  * GraphQL categories query.
- */
-export const GET_PAGE_BY_URI = gql`
-  query MyQuery($uri: ID!) {
     megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
       id
       content
@@ -23,7 +20,9 @@ export const GET_PAGE_BY_URI = gql`
           }
         }
       }
-    }
+    } */
+export const GET_PAGE_BY_URI = gql`
+  query MyQuery($uri: ID!) {
     page(id: $uri, idType: URI) {
       id
       content
@@ -33,7 +32,7 @@ export const GET_PAGE_BY_URI = gql`
 
 export const GET_PAGES_URI = gql`
   query {
-    pages(first: 5000) {
+    pages(where: { authorIn: 12 }, first: 500) {
       nodes {
         uri
       }

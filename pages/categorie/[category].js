@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import ShopLayout from "../../src/components/ShopLayout";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import getMenu from "../../src/get-menu-fallback";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -23,14 +24,13 @@ export default function CategorySingle(props) {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
-  console.log(query);
   const { data, error } = useSWR(
     formattedQuery.length > 0
       ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
     fetcher
   );
-  console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
+  // console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
 
   const isLoading = !data && !error && formattedQuery.length;
 
@@ -81,13 +81,11 @@ export async function getStaticProps({ params: { category }, locale }) {
     query: PRODUCT_BY_CATEGORY_SLUG,
     variables: { slug: category },
   });
+  const menu = (await getMenu(locale)) || [];
 
   return {
     props: {
-      menu: {
-        collection: data?.megamenuCollection?.content,
-        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
-      },
+      menu,
       categoryName: data?.productCategory?.name || "",
       pageInfoStatic: data?.productCategory?.products?.pageInfo,
       products: data?.productCategory?.products?.nodes || [],

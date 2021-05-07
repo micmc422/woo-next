@@ -5,10 +5,11 @@ import ParentCategoriesBlock from "../src/components/category/category-block/Par
 import PRODUCTS_AND_CATEGORIES_QUERY from "../src/queries/product-and-categories";
 import HeroCarousel from "../src/components/home/hero-carousel";
 import LargeSlider from "../src/components/sections/LargeSlider";
+import getMenu from "../src/get-menu-fallback";
 
 export default function Home(props) {
   const { products, productCategories, heroCarousel, bestSeller, menu } = props;
-  console.log(menu);
+ // console.log(menu);
   return (
     <Layout menu={menu}>
       {/*Hero Carousel*/}
@@ -43,14 +44,13 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
+    //locale !== "fr" ? 6 : 49
   });
+  const menu = (await getMenu(locale)) || [];
 
   return {
     props: {
-      menu: {
-        collection: data?.megamenuCollection?.content,
-        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
-      },
+      menu,
       productCategories: data?.productCategories?.nodes
         ? data.productCategories.nodes
         : [],

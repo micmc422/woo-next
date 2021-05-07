@@ -7,7 +7,6 @@ import {
   PRODUCT_SLUGS,
 } from "../../src/queries/product-by-slug";
 import { isEmpty, uniqueId } from "lodash";
-import Price from "../../src/components/single-product/price";
 import RateBlock from "../../src/components/single-product/RateBlock";
 import ColorSizeBlock from "../../src/components/single-product/ColorSizeBlock";
 import ImageContainer from "../../src/components/single-product/ImageProduct";
@@ -16,10 +15,11 @@ import { AnimateSharedLayout, motion } from "framer-motion";
 import BlocPrix from "../../src/components/single-product/price/BlocPrix";
 import { useEffect, useState } from "react";
 import ContentParser from "../../src/components/ContentParser";
+import getMenu from "../../src/get-menu-fallback";
 
 export default function Product(props) {
   const { product, menu } = props;
-
+  // console.log(menu.base);
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
     product?.variations?.nodes[0]
@@ -44,7 +44,7 @@ export default function Product(props) {
                 layout
               >
                 <h2 className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-500 title-font">
-                  {product.productCategories.nodes.map(
+                  {product?.productCategories?.nodes.map(
                     ({ name, description, slug }) => {
                       return (
                         <Link
@@ -75,11 +75,13 @@ export default function Product(props) {
                   listicle pour-over, neutra jean shorts keytar banjo tattooed
                   umami cardigan.
                 </p>
-                <ColorSizeBlock
-                  setActiveVariations={setActiveVariations}
-                  variations={product.variations.nodes}
-                  activeVariations={activeVariations}
-                />
+                {product.variations && (
+                  <ColorSizeBlock
+                    setActiveVariations={setActiveVariations}
+                    variations={product.variations.nodes}
+                    activeVariations={activeVariations}
+                  />
+                )}
                 <div className="flex">
                   <BlocPrix
                     price={product.price}
@@ -129,19 +131,19 @@ export default function Product(props) {
 export async function getStaticProps(context) {
   const {
     params: { slug },
+    locale,
   } = context;
 
-  const { data } = await client.query({
+  const apolloCli = locale === "fr" ? client : clientEng;
+  const menu = (await getMenu(locale)) || [];
+  const { data } = await apolloCli.query({
     query: PRODUCT_BY_SLUG_QUERY,
     variables: { slug },
   });
 
   return {
     props: {
-      menu: {
-        collection: data?.megamenuCollection?.content,
-        base: data.menu.nodes[0].menuItems.edges.map(({ node }) => node),
-      },
+      menu,
       product: data?.product || {},
     },
     revalidate: 1,
@@ -160,23 +162,23 @@ export async function getStaticPaths() {
 
   const pathsData = [];
 
-  data?.productCategories?.nodes &&
-    data?.productCategories?.nodes.map((productCategory) => {
-      if (!isEmpty(productCategory?.slug)) {
+  data?.products?.nodes &&
+    data?.products?.nodes.map(({ slug }) => {
+      if (!isEmpty(slug)) {
         pathsData.push({
           params: {
-            slug: productCategory?.slug.toString(),
+            slug: slug.toString(),
           },
           locale: "fr",
         });
       }
     });
-  dataEn?.productCategories?.nodes &&
-    dataEn?.productCategories?.nodes.map((productCategory) => {
-      if (!isEmpty(productCategory?.slug)) {
+  dataEn?.products?.nodes &&
+    dataEn?.products?.nodes.map(({ slug }) => {
+      if (!isEmpty(slug)) {
         pathsData.push({
           params: {
-            slug: productCategory?.slug.toString(),
+            slug: slug.toString(),
           },
           locale: "en",
         });

@@ -111,8 +111,6 @@ const VignettePhoto = ({ product }) => {
     ? product.galleryImages?.nodes[0].mediaItemUrl
     : product.image?.sourceUrl;
   const imageUrlSecondaire = product.image?.sourceUrl;
-  // console.log(product.galleryImages, product.image);
-  //  console.log(imageUrlPrimaire, imageUrlSecondaire);
   return (
     <div
       onMouseEnter={() => setHovered(true)}

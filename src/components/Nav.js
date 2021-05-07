@@ -4,141 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import ContentParser from "./ContentParser";
 import { domToReact } from "html-react-parser";
-
-const defaultOptions = {
-  replace: ({ attribs, children, name }) => {
-    if (!attribs) {
-      return;
-    }
-    if (name === "figure") {
-      return (
-        <div className="relative">
-          <div
-            className={`absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
-          >
-            {" "}
-          </div>
-          <div className="relative">
-            {" "}
-            {domToReact(children, defaultOptions)}
-          </div>
-        </div>
-      );
-    }
-    if (name === "i" && attribs?.class?.includes("fa-instagram")) {
-      return (
-        <>
-          <div
-            style={{ backgroundColor: "#c13584", zIndex: -1 }}
-            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-red-800 ring-opacity-40`}
-          ></div>
-          <FiInstagram />
-        </>
-      );
-    }
-    if (name === "i" && attribs?.class?.includes("fa-facebook")) {
-      return (
-        <>
-          {" "}
-          <div
-            style={{ backgroundColor: "#3b5998", zIndex: -1 }}
-            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-blue-800 ring-opacity-40`}
-          ></div>
-          <FiFacebook />
-        </>
-      );
-    }
-    if (name === "h3") {
-      const alignRigth = attribs?.style === "text-align: right;";
-      return (
-        <h2
-          className={`mx-auto py-8 text-xl max-w-2xl ${
-            alignRigth ? "text-right" : ""
-          }`}
-        >
-          {domToReact(children, defaultOptions)}
-        </h2>
-      );
-    }
-    if (name === "h4") {
-      const alignRigth = attribs?.style === "text-align: right;";
-      return (
-        <h3
-          className={`mx-auto py-8 text-2xl max-w-2xl ${
-            alignRigth ? "text-right" : ""
-          }`}
-        >
-          {domToReact(children, defaultOptions)}
-        </h3>
-      );
-    }
-    if (name === "p") {
-      const alignRigth = attribs?.style === "text-align: right;";
-      return (
-        <p className={`mx-auto prose ${alignRigth ? "text-right" : ""}`}>
-          {domToReact(children, defaultOptions)}
-        </p>
-      );
-    }
-
-    if (
-      attribs?.class?.includes("vc_row") ||
-      attribs?.class?.includes("wpb_row")
-    ) {
-      return (
-        <div className="container flex flex-row items-center max-w-screen-xl mx-auto space-x-12">
-          {domToReact(children, defaultOptions)}
-        </div>
-      );
-    }
-    if (attribs?.class?.includes("vc_column-inner")) {
-      return (
-        <div className="pb-16">{domToReact(children, defaultOptions)}</div>
-      );
-    }
-    if (attribs?.class?.includes("vc_btn")) {
-      console.log(attribs);
-      const { href, target, title } = attribs;
-
-      return href ? (
-        <a
-          href={href}
-          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200"
-        >
-          {domToReact(children, defaultOptions)}
-        </a>
-      ) : (
-        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
-          {domToReact(children, defaultOptions)}
-        </div>
-      );
-    }
-    if (
-      attribs?.class?.includes("wpb_column") ||
-      attribs?.class?.includes("vc_column_container")
-    ) {
-      return (
-        <div
-          className={`${
-            attribs?.class.includes("vc_col-sm-3") ? "w-1/4" : ""
-          } ${attribs?.class.includes("vc_col-sm-4") ? "w-1/3" : ""} ${
-            attribs?.class.includes("vc_col-sm-6") ? "w-1/2 flex-shrink" : ""
-          } ${attribs?.class.includes("vc_col-sm-8") ? "w-8/12" : ""} ${
-            attribs?.class.includes("vc_col-sm-9") ? "w-3/4" : ""
-          } ${attribs?.class.includes("vc_col-sm-12") ? "w-full" : " "}
-    `}
-        >
-          {domToReact(children, defaultOptions)}
-        </div>
-      );
-    }
-  },
-};
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronToBot } from "./themeComponents";
 
 const Nav = ({ menu }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
-  console.log(menu);
+  //console.log(menu);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   return (
     <nav className="bg-white">
@@ -195,10 +69,12 @@ const Nav = ({ menu }) => {
         <div
           className={`${
             isMenuVisible ? "max-h-full h-full" : "h-0"
-          } w-full overflow-hidden lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
+          } w-full lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
         >
-          <div className="text-sm font-medium uppercase lg:flex-grow">
-            <MenuBaseLvl {...menu} />
+          <div className="relative flex flex-row text-sm font-medium uppercase lg:flex-grow">
+            <AnimatePresence exitBeforeEnter>
+              <MenuBaseLvl {...menu} />
+            </AnimatePresence>
           </div>
 
           <div className="text-sm font-medium">
@@ -254,24 +130,64 @@ const Nav = ({ menu }) => {
   );
 };
 const MenuBaseLvl = ({ base, collection }) => {
-  console.log({ base, collection });
+  // console.log({ base, collection });
 
   return base ? (
     base.map(({ label, title, url }) => {
-      let formattedUrl = url.replace("https://photo.paris", "");
-      formattedUrl = formattedUrl.includes("megamenu=collection")
-        ? "galerie-photo"
-        : formattedUrl;
-      return (
-        <Link href={formattedUrl}>
-          <a className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
-            {label}
-          </a>
-        </Link>
+      let formattedUrl = url.replace("https://photo.paris/", "/");
+      const isMegaMenu = formattedUrl.includes("megamenu=collection");
+      formattedUrl = isMegaMenu ? "/galerie-photo" : formattedUrl;
+      // return <MegaMenu collection={collection} />; {label || title}
+      return isMegaMenu ? (
+        <Menu>
+          <Menu.Button>
+            <div className="flex flex-row items-center px-4 py-1">
+              <div className="pt-1">{label || title}</div>
+              <ChevronToBot />
+            </div>
+          </Menu.Button>
+          <Menu.Items>
+            <MegaMenu collection={collection} />
+          </Menu.Items>
+        </Menu>
+      ) : (
+        <Menu>
+          <Menu.Items static>
+            <Menu.Item>
+              <Link href={formattedUrl} passHref>
+                <a className="flex flex-row items-center px-4 py-1">
+                  <div className="pt-1">{label || title}</div>
+                  <div className="transform -rotate-90">
+                    <ChevronToBot />
+                  </div>
+                </a>
+              </Link>
+            </Menu.Item>
+          </Menu.Items>
+        </Menu>
       );
     })
   ) : (
     <div />
+  );
+};
+
+const MegaMenu = ({ collection }) => {
+  // console.log(collection)
+  return (
+    <Menu.Item>
+      <motion.div
+        key="collection-megamenu"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        className="absolute left-0 z-50 max-w-screen-lg px-8 bg-gray-100 top-12 w-max"
+      >
+        <div className="relative">
+          <ContentParser data={collection} options={defaultOptions} />
+        </div>
+      </motion.div>
+    </Menu.Item>
   );
 };
 const FlagFr = () => (
@@ -309,3 +225,154 @@ const FlagEn = () => (
 );
 
 export default Nav;
+
+const defaultOptions = {
+  replace: ({ attribs, children, name }) => {
+    if (!attribs) {
+      return;
+    }
+    if (name === "a") {
+      const arrayHref = attribs.href
+        .replace("https://photo.paris", "")
+        .split("?lang=");
+      const href = arrayHref[0];
+      const lang = arrayHref[1];
+      // console.log({ href, lang });
+      if (attribs?.class?.includes("block-link")) {
+        return (
+          <a className="p-1 pt-2 mx-2 rounded bg-brand-500 ring-1 ring-yellow-400 whitespace-nowrap">
+            <span className="inline-block">
+              {domToReact(children, defaultOptions)}
+            </span>
+          </a>
+        );
+      }
+      return (
+        <Link href={href} locale={lang ? lang : "fr"} passHref>
+          <a className="relative">{domToReact(children, defaultOptions)}</a>
+        </Link>
+      );
+    }
+    if (name === "figure") {
+      return (
+        <div className="relative">
+          <div
+            className={`absolute left-2 top-2 -bottom-2 -right-2 -mr-2 bg-gray-200`}
+          >
+            {" "}
+          </div>
+          <div className="relative">
+            {" "}
+            {domToReact(children, defaultOptions)}
+          </div>
+        </div>
+      );
+    }
+    if (name === "img") {
+      // console.log(attribs);
+      return (
+        <div className="relative w-full transition-transform duration-300 h-36 hover:scale-105 transform-gpu">
+          <Image src={attribs["data-src"]} layout="fill" objectFit="cover" />
+        </div>
+      );
+    }
+    if (name === "h3") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <h2
+          className={`mx-auto py-8 text-xl max-w-2xl normal-case ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </h2>
+      );
+    }
+    if (name === "h4") {
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <h3
+          className={`mx-auto py-8 text-2xl max-w-2xl ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </h3>
+      );
+    }
+    if (name === "p") {
+      console.log(attribs);
+      const alignRigth = attribs?.style === "text-align: right;";
+      return (
+        <p
+          className={`mx-auto prose normal-case p-2 ${
+            alignRigth ? "text-right" : ""
+          }`}
+        >
+          {domToReact(children, defaultOptions)}
+        </p>
+      );
+    }
+    if (
+      attribs?.class?.includes("vc_row") ||
+      attribs?.class?.includes("wpb_row")
+    ) {
+      return (
+        <div className="container relative flex flex-row items-center w-full max-w-screen-xl mx-auto space-x-4">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("ciloe-banner")) {
+      return (
+        <Menu.Item>
+          <div>{domToReact(children, defaultOptions)}</div>
+        </Menu.Item>
+      );
+    }
+    if (attribs?.class?.includes("vc_btn")) {
+      const { href, target, title } = attribs;
+
+      return href ? (
+        <a
+          href={href}
+          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200 w-max"
+        >
+          {domToReact(children, defaultOptions)}
+        </a>
+      ) : (
+        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("wpb_column")) {
+      return (
+        <div
+          className={`${
+            attribs?.class.includes("vc_col-sm-2")
+              ? "w-1/6"
+              : attribs?.class.includes("vc_col-sm-3")
+              ? "w-1/4"
+              : attribs?.class.includes("vc_col-sm-4")
+              ? "w-1/3"
+              : attribs?.class.includes("vc_col-sm-6")
+              ? "w-1/2 flex-shrink"
+              : attribs?.class.includes("vc_col-sm-8")
+              ? "w-8/12"
+              : attribs?.class.includes("vc_col-sm-9")
+              ? "w-3/4"
+              : attribs?.class.includes("vc_col-sm-12")
+              ? "w-full"
+              : "w-full"
+          }
+    `}
+        >
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+
+    return <>{domToReact(children, defaultOptions)}</>;
+  },
+};

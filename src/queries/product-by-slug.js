@@ -21,13 +21,13 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
         }
       }
     }
-   product(id: $slug, idType: SLUG) {
+    product(id: $slug, idType: SLUG) {
       id
       productId
       averageRating
       slug
       description
-	  reviewCount
+      reviewCount
       reviews {
         averageRating
       }

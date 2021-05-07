@@ -76,7 +76,7 @@ export const clientEng = new ApolloClient({
   link: middleware.concat(
     afterware.concat(
       createHttpLink({
-        uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/site/graphql?lang=en`,
+        uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/site/graphql/?lang=en`,
         fetch: fetch,
       })
     )

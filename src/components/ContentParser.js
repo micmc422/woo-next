@@ -1,4 +1,5 @@
 import parse, { domToReact } from "html-react-parser";
+import Image from "next/image";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
 
 const defaultOptions = {
@@ -6,7 +7,9 @@ const defaultOptions = {
     if (!attribs) {
       return;
     }
+    // console.log(attribs);
     if (name === "figure") {
+    //  console.log(children);
       return (
         <div className="relative">
           <div
@@ -19,6 +22,16 @@ const defaultOptions = {
             {domToReact(children, defaultOptions)}
           </div>
         </div>
+      );
+    }
+    if (name === "img") {
+      return (
+        <Image
+          src={attribs.src}
+          width={attribs.width}
+          height={attribs.height}
+          alt={attribs.alt}
+        />
       );
     }
     if (name === "i" && attribs?.class?.includes("fa-instagram")) {
@@ -44,11 +57,25 @@ const defaultOptions = {
         </>
       );
     }
+    if (name === "h1") {
+      return (
+        <h2 className={`mx-auto py-16 text-4xl max-w-2xl`}>
+          {domToReact(children, defaultOptions)}
+        </h2>
+      );
+    }
+    if (name === "h1" || name === "h2") {
+      return (
+        <h2 className={`mx-auto py-14 text-3xl max-w-2xl`}>
+          {domToReact(children, defaultOptions)}
+        </h2>
+      );
+    }
     if (name === "h3") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <h2
-          className={`mx-auto py-16 text-4xl max-w-2xl ${
+          className={`mx-auto py-12 text-2xl max-w-2xl ${
             alignRigth ? "text-right" : ""
           }`}
         >
@@ -60,7 +87,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <h3
-          className={`mx-auto py-8 text-2xl max-w-2xl ${
+          className={`mx-auto py-8 text-xl max-w-2xl ${
             alignRigth ? "text-right" : ""
           }`}
         >
@@ -68,12 +95,89 @@ const defaultOptions = {
         </h3>
       );
     }
+    if (name === "h5") {
+      return (
+        <h2 className={`mx-auto py-4 text-lg max-w-2xl`}>
+          {domToReact(children, defaultOptions)}
+        </h2>
+      );
+    }
+
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <p className={`mx-auto prose ${alignRigth ? "text-right" : ""}`}>
           {domToReact(children, defaultOptions)}
         </p>
+      );
+    }
+    if (attribs?.class?.includes("vc_cta3-style-classic")) {
+      return (
+        <div className="bg-gray-100 border border-gray-200 rounded-md">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("vc_cta3_content-container")) {
+      return (
+        <div className="flex flex-row items-center p-8 space-x-4">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("vc_cta3-content-header")) {
+      return (
+        <header className="font-thin">
+          {domToReact(children, defaultOptions)}
+        </header>
+      );
+    }
+    if (name === "a" && attribs?.href?.includes("https://vimeo.com/")) {
+      return (
+        <div
+          style={{ padding: "56.25% 0 0 0", position: "relative" }}
+          className="mt-16"
+        >
+          <iframe
+            src="https://player.vimeo.com/video/411716627"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      );
+    }
+
+    if (name === "div" && attribs?.class === "vc_cta3-content") {
+      return (
+        <div className="font-sans text-4xl font-thin flex-shrink-1">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (name === "div" && attribs?.class === "vc_cta3-actions") {
+      return (
+        <div className="flex-grow-1 w-max">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (name === "a" && attribs?.class?.includes("vc_btn3-color-turquoise")) {
+      const { href, target, title } = attribs;
+      return (
+        <a
+          href={href}
+          className="p-2 text-base rounded-md bg-brand-500 ring-brand-500 ring-opacity-50 ring-2 "
+        >
+          {domToReact(children, defaultOptions)}
+        </a>
       );
     }
 
@@ -93,13 +197,12 @@ const defaultOptions = {
       );
     }
     if (attribs?.class?.includes("vc_btn")) {
-    //  console.log(attribs);
       const { href, target, title } = attribs;
 
       return href ? (
         <a
           href={href}
-          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200"
+          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200 w-max"
         >
           {domToReact(children, defaultOptions)}
         </a>
@@ -116,27 +219,35 @@ const defaultOptions = {
       return (
         <div
           className={`${
-            attribs?.class.includes("vc_col-sm-3") ? "w-1/4" : ""
-          } ${attribs?.class.includes("vc_col-sm-4") ? "w-1/3" : ""} ${
-            attribs?.class.includes("vc_col-sm-6") ? "w-1/2 flex-shrink" : ""
-          } ${attribs?.class.includes("vc_col-sm-8") ? "w-8/12" : ""} ${
-            attribs?.class.includes("vc_col-sm-9") ? "w-3/4" : ""
-          } ${attribs?.class.includes("vc_col-sm-12") ? "w-full" : " "}
+            attribs?.class.includes("vc_col-sm-3")
+              ? "w-1/4"
+              : attribs?.class.includes("vc_col-sm-4")
+              ? "w-1/3"
+              : attribs?.class.includes("vc_col-sm-6")
+              ? "w-1/2 flex-shrink"
+              : attribs?.class.includes("vc_col-sm-8")
+              ? "w-8/12"
+              : attribs?.class.includes("vc_col-sm-9")
+              ? "w-3/4"
+              : attribs?.class.includes("vc_col-sm-12")
+              ? "w-full"
+              : ""
+          }
     `}
         >
           {domToReact(children, defaultOptions)}
         </div>
       );
     }
+    return <>{domToReact(children, defaultOptions)}</>;
   },
 };
 
-const ContentParser = ({ data, options }) => {
-  // console.log(data);
+const ContentParser = ({ data, options = defaultOptions }) => {
   if (!data) {
     return null;
   }
-  const parsed = parse(data, { ...defaultOptions, ...options });
+  const parsed = parse(data, options);
 
   return parsed;
 };

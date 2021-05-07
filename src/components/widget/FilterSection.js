@@ -25,7 +25,6 @@ const animationChild = {
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const FilterSection = ({ categories, className }) => {
-  // console.log(router);
   return (
     <div className={`flex flex-col space-y-4 ${className ? className : ""}`}>
       <div className="flex flex-col">
@@ -212,7 +211,6 @@ const updateQuery = (name, key, router) => {
       routerAction(theQuery);
       return;
     }
-    // console.log(theQuery[key]);
   } else {
     theQuery[key] = name;
     routerAction(theQuery);

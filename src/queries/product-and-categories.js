@@ -5,13 +5,7 @@ import { gql } from "@apollo/client";
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
   query MyQuery($after: String, $search: String) {
-    megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
-      id
-      content
-      uri
-      title
-    }
-    menu: menus(first: 1, where: { id: 6 }) {
+    menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {
           edges {
@@ -19,10 +13,17 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
               label
               title
               url
+              path
             }
           }
         }
       }
+    }
+    megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
+      id
+      content
+      uri
+      title
     }
 
     heroCarousel: posts(first: 10, where: { categoryIn: "1543" }) {
@@ -33,9 +34,11 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         databaseId
         excerpt
         featuredImage {
-          id
-          sourceUrl
-          srcSet
+          node {
+            id
+            sourceUrl
+            srcSet
+          }
         }
       }
     }
