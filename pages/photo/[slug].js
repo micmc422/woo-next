@@ -19,7 +19,6 @@ import getMenu from "../../src/get-menu-fallback";
 
 export default function Product(props) {
   const { product, menu } = props;
-  // console.log(menu.base);
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
     product?.variations?.nodes[0]

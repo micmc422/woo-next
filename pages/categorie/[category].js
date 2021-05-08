@@ -30,8 +30,6 @@ export default function CategorySingle(props) {
       : null,
     fetcher
   );
-  // console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
-
   const isLoading = !data && !error && formattedQuery.length;
 
   useEffect(() => {

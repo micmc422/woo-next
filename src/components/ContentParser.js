@@ -7,9 +7,7 @@ const defaultOptions = {
     if (!attribs) {
       return;
     }
-    // console.log(attribs);
     if (name === "figure") {
-      //  console.log(children);
       return (
         <div className="relative">
           <div
@@ -239,7 +237,6 @@ const defaultOptions = {
         </div>
       );
     }
-    console.log(type);
 
     return <>{domToReact(children, defaultOptions)}</>;
   },

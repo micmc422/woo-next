@@ -18,7 +18,6 @@ export default function Home(props) {
     menu,
     homepage,
   } = props;
-  // console.log(menu);
   return (
     <Layout menu={menu}>
       {/*Hero Carousel*/}

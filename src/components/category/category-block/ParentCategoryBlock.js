@@ -5,8 +5,6 @@ import Image from "next/image";
 
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
-  //  console.log(category);
-  // return <div />;
   const imgListUrl = {
     imgSourceUrlList: [
       category.products?.nodes
@@ -34,7 +32,6 @@ const ParentCategoryBlock = (props) => {
         : category?.image?.mediaDetails?.width >
           category?.image?.mediaDetails?.height,
   };
-  //  console.log(imgListUrl.imgSourceIsPortrait);
   return (
     <div className="mb-5">
       <Link href={`/categorie/${category.slug}`}>

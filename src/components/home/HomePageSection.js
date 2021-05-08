@@ -10,9 +10,7 @@ const HomePageSection = ({ homepage, products }) => {
       if (!attribs) {
         return;
       }
-      // console.log(attribs);
       if (attribs["data-vc-parallax-image"]) {
-        console.log(attribs);
         return (
           <div className="relative">
             <Image
@@ -26,7 +24,6 @@ const HomePageSection = ({ homepage, products }) => {
         );
       }
       if (name === "figure") {
-        //  console.log(children);
         return (
           <div className="relative">
             <div
@@ -297,7 +294,6 @@ const HomePageSection = ({ homepage, products }) => {
         attribs?.class?.includes("container") &&
         parent?.attribs?.class?.includes("ciloe-single-product")
       ) {
-        console.log(children);
         return (
           <div className="relative px-16 mb-2 prose bg-gray-50">
             {domToReact(children, defaultOptions)}
@@ -305,7 +301,6 @@ const HomePageSection = ({ homepage, products }) => {
         );
       }
       if (attribs?.class?.includes("product-price-wrap")) {
-        console.log(children);
         return (
           <div className="text-2xl">{domToReact(children, defaultOptions)}</div>
         );
@@ -368,7 +363,6 @@ const HomePageSection = ({ homepage, products }) => {
       return <>{domToReact(children, defaultOptions)}</>;
     },
   };
-  // console.log(homepage);
   return (
     <div>
       <ContentParser

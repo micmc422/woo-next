@@ -13,7 +13,6 @@ import { uniqueId } from "lodash";
 const Nav = ({ menu }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
-  //console.log(menu);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   return (
     <nav className="bg-white">
@@ -131,8 +130,6 @@ const Nav = ({ menu }) => {
   );
 };
 const MenuBaseLvl = ({ base, collection }) => {
-  // console.log({ base, collection });
-
   return base ? (
     base.map(({ label, title, url }) => {
       let formattedUrl = url.replace("https://photo.paris/", "/");
@@ -174,7 +171,6 @@ const MenuBaseLvl = ({ base, collection }) => {
 };
 
 const MegaMenu = ({ collection }) => {
-  // console.log(collection)
   return (
     <Menu.Item>
       <motion.div
@@ -238,7 +234,6 @@ const defaultOptions = {
         .split("?lang=");
       const href = arrayHref[0];
       const lang = arrayHref[1];
-      // console.log({ href, lang });
       if (attribs?.class?.includes("block-link")) {
         return (
           <a className="p-1 pt-2 mx-2 rounded bg-brand-500 ring-1 ring-yellow-400 whitespace-nowrap">
@@ -270,7 +265,6 @@ const defaultOptions = {
       );
     }
     if (name === "img") {
-      // console.log(attribs);
       return (
         <div className="relative w-full transition-transform duration-300 h-36 hover:scale-105 transform-gpu">
           <Image src={attribs["data-src"]} layout="fill" objectFit="cover" />
@@ -302,7 +296,6 @@ const defaultOptions = {
       );
     }
     if (name === "p") {
-      console.log(attribs);
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <p
