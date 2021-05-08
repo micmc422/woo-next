@@ -30,7 +30,7 @@ const HomePageSection = ({ homepage, products }) => {
         return (
           <div className="relative">
             <div
-              className={`absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
+              className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
             >
               {" "}
             </div>
@@ -181,7 +181,7 @@ const HomePageSection = ({ homepage, products }) => {
       if (name === "p") {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
-          <p className={`mx-auto prose ${alignRigth ? "text-right" : ""}`}>
+          <p className={`md:mx-auto prose ${alignRigth ? "text-right" : ""}`}>
             {domToReact(children, defaultOptions)}
           </p>
         );
@@ -190,7 +190,7 @@ const HomePageSection = ({ homepage, products }) => {
         attribs?.class?.includes("vc_message_box-outline vc_message_box-round")
       ) {
         return (
-          <div className="flex flex-row items-center my-12 mr-2 text-gray-400 transition-colors duration-300 rounded hover:text-black hover:bg-gray-200">
+          <div className="flex flex-row items-center justify-start mr-2 text-gray-400 transition-colors duration-300 rounded md:my-12 hover:text-black hover:bg-gray-200">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -210,7 +210,7 @@ const HomePageSection = ({ homepage, products }) => {
       }
       if (attribs?.class?.includes("vc_cta3_content-container")) {
         return (
-          <div className="flex flex-row items-center p-8 space-x-4">
+          <div className="flex flex-row items-center p-8 md:space-x-4">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -259,7 +259,7 @@ const HomePageSection = ({ homepage, products }) => {
         attribs?.class?.includes("vc_inner ")
       ) {
         return (
-          <div className="container flex flex-row items-center max-w-screen-xl mx-auto space-x-12">
+          <div className="container flex flex-col items-center max-w-screen-xl mx-auto md:space-x-12 lg:flex-row">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -270,7 +270,7 @@ const HomePageSection = ({ homepage, products }) => {
         !attribs?.class?.includes("vc_inner ")
       ) {
         return (
-          <div className="flex flex-row items-center py-1 space-x-12">
+          <div className="flex flex-col items-center py-1 md:flex-row md:space-x-12">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -281,7 +281,7 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("ciloe-single-product")) {
         return (
-          <div className="flex flex-row max-w-6xl py-32 mx-auto">
+          <div className="flex flex-col max-w-6xl py-32 mx-auto md:flex-row">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -324,12 +324,12 @@ const HomePageSection = ({ homepage, products }) => {
         return href ? (
           <a
             href={href}
-            className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200 w-max"
+            className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 md:space-x-2 w-max"
           >
             {domToReact(children, defaultOptions)}
           </a>
         ) : (
-          <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
+          <div className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 md:space-x-2">
             {domToReact(children, defaultOptions)}
           </div>
         );

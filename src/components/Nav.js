@@ -70,7 +70,7 @@ const Nav = ({ menu }) => {
         <div
           className={`${
             isMenuVisible ? "max-h-full h-full" : "h-0"
-          } w-full lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
+          } hidden w-full lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
         >
           <div className="relative flex flex-row text-sm font-medium uppercase lg:flex-grow">
             <AnimatePresence exitBeforeEnter>
@@ -258,7 +258,7 @@ const defaultOptions = {
       return (
         <div className="relative">
           <div
-            className={`absolute left-2 top-2 -bottom-2 -right-2 -mr-2 bg-gray-200`}
+            className={`hidden md:absolute left-2 top-2 -bottom-2 -right-2 -mr-2 bg-gray-200`}
           >
             {" "}
           </div>
@@ -319,7 +319,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container relative flex flex-row items-center w-full max-w-screen-xl mx-auto space-x-4">
+        <div className="container relative flex flex-row items-center w-full max-w-screen-xl mx-auto md:space-x-4">
           {domToReact(children, defaultOptions)}
         </div>
       );
