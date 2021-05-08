@@ -4,7 +4,10 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  purge: ["./src/components/**/*.js", "./pages/**/*.js"],
+  purge: {
+    content: ["./src/components/**/*.js", "./pages/**/*.js"],
+    option: { safelist: ["flex", "lg:flex-row", "flex-col"] },
+  },
   theme: {
     fontFamily: {
       serif: ["Cardo", "serif"],

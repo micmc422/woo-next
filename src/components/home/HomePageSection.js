@@ -256,7 +256,7 @@ const HomePageSection = ({ homepage, products }) => {
         attribs?.class?.includes("vc_inner ")
       ) {
         return (
-          <div className="container flex flex-col items-center max-w-screen-xl mx-auto md:space-x-12 lg:flex-row">
+          <div className="container flex flex-col items-center max-w-screen-xl mx-auto lg:flex-row md:space-x-12">
             {domToReact(children, defaultOptions)}
           </div>
         );
