@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
  * GraphQL categories and products query.
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
-  query MyQuery($after: String, $search: String) {
+  query MyQuery($after: String, $search: String, $first: Int) {
     menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {
@@ -78,7 +78,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       }
     }
     products(
-      first: 24
+      first: $first
       after: $after
       where: { search: $search, orderby: { order: ASC, field: MENU_ORDER } }
     ) {

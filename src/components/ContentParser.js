@@ -13,7 +13,7 @@ const defaultOptions = {
       return (
         <div className="relative">
           <div
-            className={`absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
+            className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
           >
             {" "}
           </div>
@@ -59,14 +59,14 @@ const defaultOptions = {
     }
     if (name === "h1") {
       return (
-        <h2 className={`mx-auto py-16 text-4xl max-w-2xl`}>
+        <h2 className={`px-4 md:px-0 mx-auto py-16 text-4xl max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
     }
     if (name === "h1" || name === "h2") {
       return (
-        <h2 className={`mx-auto py-14 text-3xl max-w-2xl`}>
+        <h2 className={`px-3 md:px-0 mx-auto py-14 text-3xl max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
@@ -75,7 +75,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <h2
-          className={`mx-auto py-12 text-2xl max-w-2xl ${
+          className={`px-2 md:px-0 mx-auto py-12 text-2xl max-w-2xl ${
             alignRigth ? "text-right" : ""
           }`}
         >
@@ -87,7 +87,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <h3
-          className={`mx-auto py-8 text-xl max-w-2xl ${
+          className={`px-2 md:px-0 mx-auto py-8 text-xl max-w-2xl ${
             alignRigth ? "text-right" : ""
           }`}
         >
@@ -97,7 +97,7 @@ const defaultOptions = {
     }
     if (name === "h5") {
       return (
-        <h2 className={`mx-auto py-4 text-lg max-w-2xl`}>
+        <h2 className={`px-2 md:px-0 mx-auto py-4 text-lg max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
@@ -106,7 +106,7 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p className={`mx-auto prose ${alignRigth ? "text-right" : ""}`}>
+        <p className={`px-2 md:px-0 mx-auto prose ${alignRigth ? "text-right" : ""}`}>
           {domToReact(children, defaultOptions)}
         </p>
       );
@@ -120,7 +120,7 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_cta3_content-container")) {
       return (
-        <div className="flex flex-row items-center p-8 space-x-4">
+        <div className="flex flex-col items-center p-8 sm:flex-row sm:space-x-4">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -164,7 +164,7 @@ const defaultOptions = {
     }
     if (name === "div" && attribs?.class === "vc_cta3-actions") {
       return (
-        <div className="flex-grow-1 w-max">
+        <div className="flex-grow-1 md:w-max">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -186,7 +186,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-row items-center max-w-screen-xl mx-auto space-x-12">
+        <div className="container flex flex-col items-center max-w-screen-xl mx-auto sm:flex-row sm:space-x-12">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -202,12 +202,12 @@ const defaultOptions = {
       return href ? (
         <a
           href={href}
-          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200 w-max"
+          className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 sm:space-x-2 w-max"
         >
           {domToReact(children, defaultOptions)}
         </a>
       ) : (
-        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
+        <div className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 sm:space-x-2">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -220,15 +220,15 @@ const defaultOptions = {
         <div
           className={`${
             attribs?.class.includes("vc_col-sm-3")
-              ? "w-1/4"
+              ? "sm:w-1/4"
               : attribs?.class.includes("vc_col-sm-4")
-              ? "w-1/3"
+              ? "sm:w-1/3"
               : attribs?.class.includes("vc_col-sm-6")
-              ? "w-1/2 flex-shrink"
+              ? "sm:w-1/2 flex-shrink"
               : attribs?.class.includes("vc_col-sm-8")
-              ? "w-8/12"
+              ? "sm:w-8/12"
               : attribs?.class.includes("vc_col-sm-9")
-              ? "w-3/4"
+              ? "sm:w-3/4"
               : attribs?.class.includes("vc_col-sm-12")
               ? "w-full"
               : ""

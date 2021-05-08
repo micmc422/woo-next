@@ -38,7 +38,7 @@ export default function Home(props) {
         <h2 className="mb-5 text-xl uppercase products-main-title main-title">
           <span className="main-title-inner">Products</span>
         </h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {products.length
             ? products.map((product) => (
                 <Product key={product.id} product={product} />
@@ -54,6 +54,7 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
+    variables: { first: 8 },
     //locale !== "fr" ? 6 : 49
   });
   const homepage = await apolloCli.query({
