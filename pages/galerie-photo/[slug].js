@@ -109,7 +109,7 @@ export default function Product(props) {
         </div>
       </section>
       {product ? (
-        <div className="container px-4 mx-auto mb-32 single-product xl:px-0">
+        <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
           <ContentParser data={product.description}></ContentParser>
           {false && (
             <div

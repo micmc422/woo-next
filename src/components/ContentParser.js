@@ -4,7 +4,7 @@ import { FiInstagram, FiFacebook } from "react-icons/fi";
 import { Bouton } from "./themeComponents";
 
 const defaultOptions = {
-  replace: ({ attribs, children, name, type }) => {
+  replace: ({ attribs, children, name, type, data }) => {
     if (!attribs) {
       return;
     }
@@ -191,7 +191,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-col items-center max-w-screen-xl mx-auto sm:flex-row sm:space-x-12">
+        <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto sm:flex-row">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -245,7 +245,14 @@ const defaultOptions = {
         </div>
       );
     }
-
+    const cleanCildren = children
+      .map(({ data }) => data?.trim())
+      .filter((node) => node && node !== "");
+    if (cleanCildren.length > 0) {
+      
+    //  console.log(cleanCildren);
+      return <p class="px-2 md:px-0 mx-auto prose ">{cleanCildren}</p>;
+    }
     return <>{domToReact(children, defaultOptions)}</>;
   },
 };

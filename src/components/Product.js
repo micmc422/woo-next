@@ -27,7 +27,7 @@ const Product = (props) => {
       variants={productCardAnimationContainer}
       layoutId={`product-layout-card-${product.id || product}`}
     >
-      <Link href={product.slug ? `/photo/${product.slug}` : "./"} passHref>
+      <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"} passHref>
         <a className="relative block h-48 md:h-64">
           {!isEmpty(product.image) ? (
             <VignettePhoto product={product} />
