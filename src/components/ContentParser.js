@@ -170,7 +170,7 @@ const defaultOptions = {
     }
     if (name === "a" && attribs?.class?.includes("vc_btn3-color-turquoise")) {
       const { href, target, title } = attribs;
-      const parsedHref = href.replace("https://photo.paris", "")
+      const parsedHref = href?.replace("https://photo.paris", "")
       return (
         <a
           href={parsedHref}
@@ -198,7 +198,7 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_btn")) {
       const { href, target, title } = attribs;
-      const parsedHref = href.replace("https://photo.paris", "")
+      const parsedHref = href?.replace("https://photo.paris", "")
 
       return parsedHref ? (
         <a

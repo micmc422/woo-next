@@ -121,7 +121,7 @@ const Nav = ({ menu }) => {
 const MenuBaseLvl = ({ base, collection }) => {
   return base ? (
     base.map(({ label, title, url }) => {
-      let formattedUrl = url.replace("https://photo.paris/", "/");
+      let formattedUrl = url?.replace("https://photo.paris/", "/");
       const isMegaMenu = formattedUrl.includes("megamenu=collection");
       formattedUrl = isMegaMenu ? "/galerie-photo" : formattedUrl;
       // return <MegaMenu collection={collection} />; {label || title}
@@ -228,7 +228,7 @@ const defaultOptions = {
     }
     if (name === "a") {
       const arrayHref = attribs.href
-        .replace("https://photo.paris", "")
+        ?.replace("https://photo.paris", "")
         .split("?lang=");
       const href = arrayHref[0];
       const lang = arrayHref[1];
@@ -324,7 +324,7 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_btn")) {
       const { href, target, title } = attribs;
-      const parsedHref = href.replace("https://photo.paris", "")
+      const parsedHref = href?.replace("https://photo.paris", "");
 
       return parsedHref ? (
         <a

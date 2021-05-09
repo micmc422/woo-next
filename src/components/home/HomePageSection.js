@@ -240,7 +240,7 @@ const HomePageSection = ({ homepage, products }) => {
           attribs?.class?.includes("shop-now-link"))
       ) {
         const { href, target, title } = attribs;
-        const parsedHref = href.replace("https://photo.paris", "")
+        const parsedHref = href?.replace("https://photo.paris", "")
         return (
           <div className="py-4 mx-auto max-w-prose">
             <Bouton>
@@ -258,7 +258,7 @@ const HomePageSection = ({ homepage, products }) => {
           parent.attribs?.class?.includes("banner-title")
       ) {
         const { href, target, title } = attribs;
-        const parsedHref = href.replace("https://photo.paris", "")
+        const parsedHref = href?.replace("https://photo.paris", "")
         return (
           <div className="px-4 py-4 mx-auto md:py-0 max-w-prose">
             <Bouton>
@@ -334,7 +334,7 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("vc_btn")) {
         const { href, target, title } = attribs;
-        const parsedHref = href.replace("https://photo.paris", "")
+        const parsedHref = href?.replace("https://photo.paris", "")
 
         return parsedHref ? (
           <a
