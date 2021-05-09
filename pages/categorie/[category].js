@@ -11,6 +11,7 @@ import ShopLayout from "../../src/components/ShopLayout";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import getMenu from "../../src/get-menu-fallback";
+import { motion } from "framer-motion";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -49,7 +50,15 @@ export default function CategorySingle(props) {
     <Layout menu={menu}>
       <div className="container px-4 mx-auto my-8 xl:px-0">
         {categoryName ? (
-          <h3 className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl">{categoryName}</h3>
+          <motion.h3
+            key={categoryName}
+            initial={{ x: -200 }}
+            animate={{ x: 0 }}
+            exit={{ x: -300 }}
+            className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
+          >
+            {categoryName}
+          </motion.h3>
         ) : (
           ""
         )}
@@ -59,7 +68,7 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {!isLoading && filteredProducts.length
+            {!isLoading && filteredProducts?.length
               ? filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />
                 ))
