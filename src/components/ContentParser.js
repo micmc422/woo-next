@@ -1,6 +1,7 @@
 import parse, { domToReact } from "html-react-parser";
 import Image from "next/image";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
+import { Bouton } from "./themeComponents";
 
 const defaultOptions = {
   replace: ({ attribs, children, name, type }) => {
@@ -63,9 +64,10 @@ const defaultOptions = {
       );
     }
     if (name === "h1" || name === "h2") {
-      
       return (
-        <h2 className={`px-3 md:px-0 mx-auto py-14 text-3xl max-w-2xl`}>
+        <h2
+          className={`px-3 md:px-0 mx-auto p-4 md:p-6 lg:p-8 text-3xl max-w-2xl`}
+        >
           {domToReact(children, defaultOptions)}
         </h2>
       );
@@ -75,7 +77,7 @@ const defaultOptions = {
       return (
         <h2
           className={`px-2 md:px-0 mx-auto py-12 text-2xl max-w-2xl ${
-            alignRigth ? "text-right" : ""
+            alignRigth ? "md:text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
@@ -87,7 +89,7 @@ const defaultOptions = {
       return (
         <h3
           className={`px-2 md:px-0 mx-auto py-8 text-xl max-w-2xl ${
-            alignRigth ? "text-right" : ""
+            alignRigth ? "md:text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
@@ -105,21 +107,25 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p className={`px-2 md:px-0 mx-auto prose ${alignRigth ? "text-right" : ""}`}>
+        <p
+          className={`px-2 md:px-0 mx-auto prose ${
+            alignRigth ? "md:text-right" : ""
+          }`}
+        >
           {domToReact(children, defaultOptions)}
         </p>
       );
     }
     if (attribs?.class?.includes("vc_cta3-style-classic")) {
       return (
-        <div className="bg-gray-100 border border-gray-200 rounded-md">
+        <div className="p-4 m-4 bg-gray-100 border border-gray-200 rounded-md bg-gradient-to-br from-gray-100 to-gray-200">
           {domToReact(children, defaultOptions)}
         </div>
       );
     }
     if (attribs?.class?.includes("vc_cta3_content-container")) {
       return (
-        <div className="flex flex-col items-center p-8 sm:flex-row sm:space-x-4">
+        <div className="flex flex-col items-center sm:flex-row sm:space-x-4">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -170,14 +176,13 @@ const defaultOptions = {
     }
     if (name === "a" && attribs?.class?.includes("vc_btn3-color-turquoise")) {
       const { href, target, title } = attribs;
-      const parsedHref = href?.replace("https://photo.paris", "")
+      const parsedHref = href?.replace("https://photo.paris", "");
       return (
-        <a
-          href={parsedHref}
-          className="p-2 text-base rounded-md bg-brand-500 ring-brand-500 ring-opacity-50 ring-2 "
-        >
-          {domToReact(children, defaultOptions)}
-        </a>
+        <Bouton>
+          <a href={parsedHref} className="p-2 text-base">
+            {domToReact(children, defaultOptions)}
+          </a>
+        </Bouton>
       );
     }
 
@@ -198,17 +203,17 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_btn")) {
       const { href, target, title } = attribs;
-      const parsedHref = href?.replace("https://photo.paris", "")
+      const parsedHref = href?.replace("https://photo.paris", "");
 
       return parsedHref ? (
         <a
           href={parsedHref}
-          className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 sm:space-x-2 w-max"
+          className="relative flex flex-row items-center mx-auto text-2xl sm:space-x-2 w-max"
         >
           {domToReact(children, defaultOptions)}
         </a>
       ) : (
-        <div className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 sm:space-x-2">
+        <div className="relative flex flex-row items-center mx-auto text-2xl sm:space-x-2">
           {domToReact(children, defaultOptions)}
         </div>
       );

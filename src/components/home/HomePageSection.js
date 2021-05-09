@@ -339,12 +339,12 @@ const HomePageSection = ({ homepage, products }) => {
         return parsedHref ? (
           <a
             href={parsedHref}
-            className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 md:space-x-2 w-max"
+            className="relative flex flex-row items-center mx-auto text-2xl md:space-x-2 w-max"
           >
             {domToReact(children, defaultOptions)}
           </a>
         ) : (
-          <div className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 md:space-x-2">
+          <div className="relative flex flex-row items-center mx-auto text-2xl md:space-x-2">
             {domToReact(children, defaultOptions)}
           </div>
         );

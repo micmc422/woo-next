@@ -47,9 +47,9 @@ export default function CategorySingle(props) {
 
   return (
     <Layout menu={menu}>
-      <div className="px-4 mx-auto my-32 xl:px-0">
+      <div className="container px-4 mx-auto my-8 xl:px-0">
         {categoryName ? (
-          <h3 className="mb-5 text-2xl uppercase">{categoryName}</h3>
+          <h3 className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl">{categoryName}</h3>
         ) : (
           ""
         )}

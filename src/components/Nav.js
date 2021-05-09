@@ -329,12 +329,12 @@ const defaultOptions = {
       return parsedHref ? (
         <a
           href={parsedHref}
-          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200 w-max"
+          className="relative flex flex-row items-center mx-auto space-x-2 text-2xl w-max"
         >
           {domToReact(children, defaultOptions)}
         </a>
       ) : (
-        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200">
+        <div className="relative flex flex-row items-center mx-auto space-x-2 text-2xl">
           {domToReact(children, defaultOptions)}
         </div>
       );

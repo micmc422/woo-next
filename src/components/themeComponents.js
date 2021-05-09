@@ -24,7 +24,7 @@ export const Bouton = ({
     <motion.div
       whileHover="hovered"
       variants={animationParent}
-      className="relative block h-12"
+      className="relative block"
     >
       <motion.div
         variants={animationBg}

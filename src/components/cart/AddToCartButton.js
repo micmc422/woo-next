@@ -110,7 +110,7 @@ const AddToCart = (props) => {
   };
 
   return (
-    <div>
+    <div className={` cursor-pointer `}>
       {/* Add To Cart Loading*/}
       {addToCartLoading && <p>Adding to Cart...</p>}
 
@@ -125,9 +125,9 @@ const AddToCart = (props) => {
         </a>
       ) : (
         <Bouton>
-          <span onClick={handleAddToCartClick}>
+          <div onClick={handleAddToCartClick}>
             {children ? children : "Add to cart"}
-          </span>
+          </div>
         </Bouton>
       )}
       {showViewCart ? (

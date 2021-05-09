@@ -8,15 +8,13 @@ import SideBarSticky from "./widget/SideBarSticky";
 const ShopLayout = ({ children, categories, pageInfo, className }) => {
   const [pageLength, setPageLength] = useState(24);
   return (
-    <div className={`flex flex-row space-x-2 ${className ? className : ""}`}>
+    <div className={`flex flex-row lg:space-x-2 ${className ? className : ""}`}>
       <SideBarSticky>
         <FilterSection className="w-48 m-auto" categories={categories} />
       </SideBarSticky>
-      <div>
-        <div className="container max-w-screen-lg mx-auto">
-          <AnimateSharedLayout>{children}</AnimateSharedLayout>
-          <Pagination pageInfo={pageInfo} pageLength={pageLength} />
-        </div>
+      <div className="container max-w-screen-lg mx-auto">
+        <AnimateSharedLayout>{children}</AnimateSharedLayout>
+        <Pagination pageInfo={pageInfo} pageLength={pageLength} />
       </div>
       <SideBarSticky>
         <CategorieList
