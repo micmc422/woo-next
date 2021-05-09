@@ -25,16 +25,21 @@ export default function CategorySingle(props) {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
+  const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
+  const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
-    formattedQuery.length > 0
+    formattedQuery?.length > 0
       ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
     fetcher
   );
-  const isLoading = !data && !error && formattedQuery.length;
+  const isLoading = !data && !error && formattedQuery?.length;
 
   useEffect(() => {
-    if (data?.products) {
+    console.log(data?.products?.length);
+    console.log(query);
+    console.log(categoryIn);
+    if (data?.products?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
       setFilteredProducts(data.products.nodes);
     } else {
@@ -57,7 +62,8 @@ export default function CategorySingle(props) {
             exit={{ x: -300 }}
             className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
           >
-            {categoryName}
+            {categoryName} {categoryName && categoryIn && " & "}
+            {categoryIn ? categoryIn : null}
           </motion.h3>
         ) : (
           ""
@@ -68,13 +74,19 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {!isLoading && filteredProducts?.length
-              ? filteredProducts.map((product) => (
+            {!isLoading ? (
+              filteredProducts?.length > 0 ? (
+                filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />
                 ))
-              : [...Array(24).keys()].map((key) => (
-                  <Product key={key} product={key} />
-                ))}
+              ) : (
+                <div> aucun résultat</div>
+              )
+            ) : (
+              [...Array(24).keys()].map((key) => (
+                <Product key={key} product={key} />
+              ))
+            )}
           </div>{" "}
         </ShopLayout>
       </div>
@@ -86,7 +98,7 @@ export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
-    variables: { slug: category },
+    variables: { slug: category[category.length - 1] },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -120,7 +132,7 @@ export async function getStaticPaths({}) {
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            category: productCategory?.slug.toString(),
+            category: [productCategory?.slug.toString()],
           },
           locale: "fr",
         });
@@ -131,7 +143,7 @@ export async function getStaticPaths({}) {
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            category: productCategory?.slug.toString(),
+            category: [productCategory?.slug.toString()],
           },
           locale: "en",
         });

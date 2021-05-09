@@ -29,25 +29,31 @@ const FilterSection = ({ categories, className }) => {
     <div className={`flex flex-col space-y-4 ${className ? className : ""}`}>
       <div className="flex flex-col">
         <TitreWidget>Categories</TitreWidget>
-
         <BlocCategoriesSelector categories={categories} />
         <TitreWidget>Prix</TitreWidget>
         <BlocPriceRange min={15} max={1000} />
       </div>
-      <div>Prix</div>
       <div>A venir</div>
     </div>
   );
 };
 const BlocCategoriesSelector = ({ categories }) => {
   const router = useRouter();
-  const [categoriesList, setCategoriesList] = useState(categories);
-  const activeCat = router?.query?.category || router?.query?.categoryIn;
+  const [categoriesList, setCategoriesList] = useState(
+    categories.filter((item) =>
+      router?.query?.category?.length
+        ? item.slug !==
+          router?.query?.category[router?.query?.category?.length - 1]
+        : true
+    )
+  );
+  const activeCat = router?.query?.categoryIn;
   const activeCatId = router?.query?.categoryIn
     ? categories.find((el) => el.slug === activeCat)?.databaseId
     : router?.query?.slug
     ? categories.find((el) => el.slug === router?.query?.slug)?.databaseId
-    : categories.find((el) => el.slug === activeCat)?.databaseId;
+    : categories.find((el) => el.databaseId === activeCat)?.databaseId;
+  console.log(activeCatId);
   const { data, error } = useSWR(
     activeCatId ? `/api/categorie/?parent=${activeCatId}` : null,
     fetcher
@@ -57,11 +63,19 @@ const BlocCategoriesSelector = ({ categories }) => {
       data?.productCategories?.nodes &&
       data?.productCategories?.nodes.length > 2
     ) {
-      setCategoriesList(data?.productCategories?.nodes);
+      setCategoriesList(
+        data?.productCategories?.nodes.filter((item) =>
+          router?.query?.category?.length
+            ? item.slug !==
+              router?.query?.category[router?.query?.category?.length - 1]
+            : true
+        )
+      );
     } else {
       if (!activeCat) setCategoriesList(categories);
     }
-  });
+  }, [router?.query?.category, data?.productCategories?.nodes]);
+
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (
@@ -182,6 +196,9 @@ const updateQuery = (name, key, router) => {
       options
     );
   };
+  if (key === "category") {
+    return null;
+  }
   if (false === name) {
     delete theQuery[key];
     routerAction(theQuery);

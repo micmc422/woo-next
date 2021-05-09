@@ -39,14 +39,17 @@ export default function Home(props) {
   );
   const isLoading = !data && !error && formattedQuery.length;
   useEffect(() => {
-    if (data?.products) {
+    if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo);
       setFilteredProducts(data.products.nodes);
     } else {
       setPageInfo(pageInfoStatic);
       setFilteredProducts(products);
     }
-  }, [query, data, locale]);
+    console.log(data?.products?.nodes);
+    console.log(products);
+    console.log(filteredProducts);
+  }, [query, data?.products?.nodes, locale]);
   return (
     <Layout menu={menu}>
       {/*Hero Carousel*/}
@@ -67,13 +70,19 @@ export default function Home(props) {
           className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
           layout
         >
-          {!isLoading && filteredProducts.length
-            ? filteredProducts.map((product) => (
-                <Product key={product.id} product={product} />
+          {!isLoading ? (
+            filteredProducts?.length > 0 ? (
+              filteredProducts.map((product) => (
+                <Product key={product?.id} product={product} />
               ))
-            : [...Array(24).keys()].map((key) => (
-                <Product key={key} product={key} />
-              ))}
+            ) : (
+              <div> aucun résultat</div>
+            )
+          ) : (
+            [...Array(24).keys()].map((key) => (
+              <Product key={key} product={key} />
+            ))
+          )}
         </motion.div>
       </ShopLayout>{" "}
       {/*Categories*/}

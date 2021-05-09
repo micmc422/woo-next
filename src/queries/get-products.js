@@ -10,6 +10,7 @@ const GET_PRODUCTS_QUERY = gql`
     $after: String
     $before: String
     $search: String
+    $category: String
     $categoryIn: [String]
     $maxPrice: Float
     $minPrice: Float
@@ -22,6 +23,7 @@ const GET_PRODUCTS_QUERY = gql`
       where: {
         search: $search
         orderby: { order: ASC, field: MENU_ORDER }
+        category: $category
         categoryIn: $categoryIn
         maxPrice: $maxPrice
         minPrice: $minPrice

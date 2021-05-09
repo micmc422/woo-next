@@ -13,13 +13,13 @@ export default async function handler(
 
   try {
     const params = {
-      parent,
+      parent: isNaN(Number(parent)) ? null : +parent,
       locale,
     };
     const apolloCli = locale === "fr" ? client : clientEng;
     const { data } = await apolloCli.query({
       query: GET_CATEGORIES_BASE,
-      variables: params
+      variables: params,
     });
 
     res.status(200).json({ ...data });

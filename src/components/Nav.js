@@ -58,7 +58,7 @@ const Nav = ({ menu }) => {
         <div
           className={`${
             isMenuVisible ? "max-h-full h-full" : "h-0"
-          } w-full lg:h-full flex-grow flex lg:items-center lg:w-auto overflow-hidden`}
+          } w-full lg:h-full flex-grow flex lg:items-center lg:w-auto overflow-hidden  md:overflow-visible`}
         >
           <div className="relative flex flex-col text-sm font-medium uppercase md:flex-row lg:flex-grow">
             <AnimatePresence exitBeforeEnter>
