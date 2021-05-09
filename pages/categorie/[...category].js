@@ -36,17 +36,17 @@ export default function CategorySingle(props) {
   const isLoading = !data && !error && formattedQuery?.length;
 
   useEffect(() => {
-    console.log(data?.products?.length);
-    console.log(query);
+    console.log(data?.products.nodes);
+    console.log(formattedQuery);
     console.log(categoryIn);
-    if (data?.products?.length > 0) {
+    if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
       setFilteredProducts(data.products.nodes);
     } else {
       setPageInfo(pageInfoStatic);
       setFilteredProducts(products);
     }
-  }, [data]);
+  }, [formattedQuery, data?.products]);
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
