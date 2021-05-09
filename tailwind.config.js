@@ -6,7 +6,11 @@ module.exports = {
   },
   purge: {
     content: ["./src/components/**/*.js", "./pages/**/*.js"],
-    option: { safelist: ["flex", "lg:flex-row", "flex-col"] },
+    option: {
+      safelist: {
+        greedy: ["/safe$/"],
+      },
+    },
   },
   theme: {
     fontFamily: {

@@ -58,7 +58,7 @@ export default function CategorySingle(props) {
           pageInfo={pageInfo}
           setPageInfo={setPageInfo}
         >
-          <div className="grid grid-cols-1 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
             {!isLoading && filteredProducts.length
               ? filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />

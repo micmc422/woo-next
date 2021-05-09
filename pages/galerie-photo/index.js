@@ -77,7 +77,7 @@ export default function Home(props) {
         </motion.div>
       </ShopLayout>{" "}
       {/*Categories*/}
-      <div className="container px-4 mx-auto my-32 product-categories-container xl:px-0">
+      <div className="container px-4 mx-auto my-8 md:my-32 product-categories-container xl:px-0">
         <h2 className="mb-5 text-xl uppercase main-title">
           <span className="main-title-inner">Categories</span>
         </h2>

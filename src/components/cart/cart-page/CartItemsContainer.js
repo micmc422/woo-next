@@ -108,14 +108,14 @@ const CartItemsContainer = () => {
 	}
 
 	return (
-		<div className="cart product-cart-container container mx-auto my-32 px-4 xl:px-0">
+		<div className="container px-4 mx-auto my-32 cart product-cart-container xl:px-0">
 			{ cart ? (
-				<div className="woo-next-cart-wrapper container">
-					<div className="cart-header grid grid-cols-2 gap-4">
-						<h1 className="text-2xl mb-5 uppercase">Cart</h1>
+				<div className="container woo-next-cart-wrapper">
+					<div className="grid grid-cols-2 gap-4 cart-header">
+						<h1 className="mb-5 text-2xl uppercase">Cart</h1>
 						{/*Clear entire cart*/}
-						<div className="clear-cart text-right">
-							<button className="px-4 py-1 bg-gray-500 text-white rounded-sm w-auto" onClick={ ( event ) => handleClearCart( event ) } disabled={ clearCartProcessing }>
+						<div className="text-right clear-cart">
+							<button className="w-auto px-4 py-1 text-white bg-gray-500 rounded-sm" onClick={ ( event ) => handleClearCart( event ) } disabled={ clearCartProcessing }>
 								<span className="woo-next-cart">Clear Cart</span>
 								<i className="fa fa-arrow-alt-right"/>
 							</button>
@@ -123,8 +123,8 @@ const CartItemsContainer = () => {
 							{ updateCartProcessing ? <p>Updating...</p> : null }
 						</div>
 					</div>
-					<div className="grid grid-cols-1 xl:grid-cols-4 gap-0 xl:gap-4 mb-5">
-						<table className="cart-products table-auto col-span-3 mb-5">
+					<div className="grid grid-cols-2 gap-0 mb-5 xl:grid-cols-4 xl:gap-4">
+						<table className="col-span-3 mb-5 table-auto cart-products">
 								<thead className="text-left">
 								<tr className="woo-next-cart-head-container">
 									<th className="woo-next-cart-heading-el" scope="col"/>
@@ -152,14 +152,14 @@ const CartItemsContainer = () => {
 							</table>
 
 						{/*Cart Total*/ }
-						<div className="row woo-next-cart-total-container border p-5 bg-gray-200">
+						<div className="p-5 bg-gray-200 border row woo-next-cart-total-container">
 							<div className="">
 								{/* <h2 className="text-2xl">Cart Total</h2> */}
-								<table className="table table-hover mb-5">
+								<table className="table mb-5 table-hover">
 									<tbody>
-									<tr className="table-light flex flex-col">
-										<td className="woo-next-cart-element-total text-2xl font-normal">Subtotal</td>
-										<td className="woo-next-cart-element-amt text-2xl font-bold">{ ( 'string' !== typeof cart.totalProductsPrice ) ? cart.totalProductsPrice.toFixed(2) : cart.totalProductsPrice }</td>
+									<tr className="flex flex-col table-light">
+										<td className="text-2xl font-normal woo-next-cart-element-total">Subtotal</td>
+										<td className="text-2xl font-bold woo-next-cart-element-amt">{ ( 'string' !== typeof cart.totalProductsPrice ) ? cart.totalProductsPrice.toFixed(2) : cart.totalProductsPrice }</td>
 									</tr>
 									{/* <tr className="table-light">
 										<td className="woo-next-cart-element-total">Total</td>
@@ -168,7 +168,7 @@ const CartItemsContainer = () => {
 									</tbody>
 								</table>
 								<Link href="/checkout">
-									<button className="bg-purple-600 text-white px-5 py-3 rounded-sm w-auto xl:w-full">
+									<button className="w-auto px-5 py-3 text-white bg-purple-600 rounded-sm xl:w-full">
 										<span className="woo-next-cart-checkout-txt">Proceed to Checkout</span>
 										<i className="fas fa-long-arrow-alt-right"/>
 									</button>
@@ -178,13 +178,13 @@ const CartItemsContainer = () => {
 					</div>
 
 					{/* Display Errors if any */}
-					{ requestError ? <div className="row woo-next-cart-total-container mt-5"> { requestError } </div> : '' }
+					{ requestError ? <div className="mt-5 row woo-next-cart-total-container"> { requestError } </div> : '' }
 				</div>
 			) : (
-				<div className="container mx-auto my-32 px-4 xl:px-0">
-					<h2 className="text-2xl mb-5">No items in the cart</h2>
+				<div className="container px-4 mx-auto my-32 xl:px-0">
+					<h2 className="mb-5 text-2xl">No items in the cart</h2>
 					<Link href="/">
-						<button className="bg-purple-600 text-white px-5 py-3 rounded-sm">
+						<button className="px-5 py-3 text-white bg-purple-600 rounded-sm">
 							<span className="woo-next-cart-checkout-txt">Add New Products</span>
 							<i className="fas fa-long-arrow-alt-right"/>
 						</button>

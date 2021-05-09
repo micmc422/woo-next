@@ -32,20 +32,9 @@ const Nav = ({ menu }) => {
       </div>
       <div className="container flex flex-wrap items-center justify-between p-4 mx-auto">
         <div className="flex items-center flex-shrink-0 mr-20 text-black">
-          <svg
-            className="w-8 h-8 mr-2 fill-current"
-            width="54"
-            height="54"
-            viewBox="0 0 54 54"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
-          </svg>
-          <span className="text-xl font-semibold tracking-tight">
-            <Link href="/">
-              <a className="">WooNext</a>
-            </Link>
-          </span>
+          <Link href="/">
+            <img src={"/logo@2x.png"} width={120} height={50} />
+          </Link>
         </div>
 
         {/*Menu button*/}
@@ -69,9 +58,9 @@ const Nav = ({ menu }) => {
         <div
           className={`${
             isMenuVisible ? "max-h-full h-full" : "h-0"
-          } hidden w-full lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
+          } w-full lg:h-full flex-grow flex lg:items-center lg:w-auto overflow-hidden`}
         >
-          <div className="relative flex flex-row text-sm font-medium uppercase lg:flex-grow">
+          <div className="relative flex flex-col text-sm font-medium uppercase md:flex-row lg:flex-grow">
             <AnimatePresence exitBeforeEnter>
               <MenuBaseLvl {...menu} />
             </AnimatePresence>
@@ -138,12 +127,21 @@ const MenuBaseLvl = ({ base, collection }) => {
       // return <MegaMenu collection={collection} />; {label || title}
       return isMegaMenu ? (
         <Menu key={uniqueId("label-menu-")}>
-          <Menu.Button>
-            <div className="flex flex-row items-center px-4 py-1">
-              <div className="pt-1">{label || title}</div>
-              <ChevronToBot />
-            </div>
-          </Menu.Button>
+          <div className="hidden md:block">
+            <Menu.Button>
+              <div className="flex flex-row items-center px-4 py-1">
+                <div className="pt-1 text-left">{label || title}</div>
+                <div className="hidden md:block">
+                  <ChevronToBot />
+                </div>
+              </div>
+            </Menu.Button>
+          </div>
+          <div className="flex flex-row items-center px-4 py-1 md:hidden">
+            <Link href={formattedUrl} passHref>
+              <a className="pt-1 text-left">{label || title}</a>
+            </Link>
+          </div>
           <Menu.Items>
             <MegaMenu collection={collection} />
           </Menu.Items>
@@ -155,7 +153,7 @@ const MenuBaseLvl = ({ base, collection }) => {
               <Link href={formattedUrl} passHref>
                 <a className="flex flex-row items-center px-4 py-1">
                   <div className="pt-1">{label || title}</div>
-                  <div className="transform -rotate-90">
+                  <div className="hidden transform -rotate-90 md:block">
                     <ChevronToBot />
                   </div>
                 </a>
@@ -312,7 +310,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container relative flex flex-row items-center w-full max-w-screen-xl mx-auto md:space-x-4">
+        <div className="container relative flex flex-col items-center w-full max-w-screen-xl mx-auto md:flex-row md:space-x-4">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -326,10 +324,11 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_btn")) {
       const { href, target, title } = attribs;
+      const parsedHref = href.replace("https://photo.paris", "")
 
-      return href ? (
+      return parsedHref ? (
         <a
-          href={href}
+          href={parsedHref}
           className="relative flex flex-row items-center mx-auto space-x-2 text-2xl text-gray-200 w-max"
         >
           {domToReact(children, defaultOptions)}
@@ -347,7 +346,7 @@ const defaultOptions = {
             attribs?.class.includes("vc_col-sm-2")
               ? "w-1/6"
               : attribs?.class.includes("vc_col-sm-3")
-              ? "w-1/4"
+              ? "md:w-1/4"
               : attribs?.class.includes("vc_col-sm-4")
               ? "w-1/3"
               : attribs?.class.includes("vc_col-sm-6")

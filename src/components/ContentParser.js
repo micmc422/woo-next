@@ -63,6 +63,7 @@ const defaultOptions = {
       );
     }
     if (name === "h1" || name === "h2") {
+      
       return (
         <h2 className={`px-3 md:px-0 mx-auto py-14 text-3xl max-w-2xl`}>
           {domToReact(children, defaultOptions)}
@@ -169,9 +170,10 @@ const defaultOptions = {
     }
     if (name === "a" && attribs?.class?.includes("vc_btn3-color-turquoise")) {
       const { href, target, title } = attribs;
+      const parsedHref = href.replace("https://photo.paris", "")
       return (
         <a
-          href={href}
+          href={parsedHref}
           className="p-2 text-base rounded-md bg-brand-500 ring-brand-500 ring-opacity-50 ring-2 "
         >
           {domToReact(children, defaultOptions)}
@@ -196,10 +198,11 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_btn")) {
       const { href, target, title } = attribs;
+      const parsedHref = href.replace("https://photo.paris", "")
 
-      return href ? (
+      return parsedHref ? (
         <a
-          href={href}
+          href={parsedHref}
           className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 sm:space-x-2 w-max"
         >
           {domToReact(children, defaultOptions)}

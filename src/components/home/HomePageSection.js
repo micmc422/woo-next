@@ -31,7 +31,7 @@ const HomePageSection = ({ homepage, products }) => {
             >
               {" "}
             </div>
-            <div className="relative">
+            <div className="relative text-center">
               {" "}
               {domToReact(children, defaultOptions)}
             </div>
@@ -145,9 +145,10 @@ const HomePageSection = ({ homepage, products }) => {
       }
       if (name === "h3") {
         const alignRigth = attribs?.style === "text-align: right;";
+        console.log(children)
         return (
           <h2
-            className={`mx-auto py-12 text-2xl max-w-2xl ${
+            className={`mx-auto py-6 md:py-12 text-2xl max-w-2xl ${
               alignRigth ? "text-right" : ""
             }`}
           >
@@ -187,7 +188,7 @@ const HomePageSection = ({ homepage, products }) => {
         attribs?.class?.includes("vc_message_box-outline vc_message_box-round")
       ) {
         return (
-          <div className="flex flex-row items-center justify-start mr-2 text-gray-400 transition-colors duration-300 rounded md:my-12 hover:text-black hover:bg-gray-200">
+          <div className="flex flex-row items-center justify-start mr-2 text-gray-400 transition-colors duration-300 rounded lg:my-12 hover:text-black hover:bg-gray-200">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -195,7 +196,7 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("vc_message_box-icon")) {
         return (
-          <div className="p-4">{domToReact(children, defaultOptions)}</div>
+          <div className="px-4 md:py-4">{domToReact(children, defaultOptions)}</div>
         );
       }
       if (attribs?.class?.includes("vc_cta3-style-classic")) {
@@ -239,10 +240,11 @@ const HomePageSection = ({ homepage, products }) => {
           attribs?.class?.includes("shop-now-link"))
       ) {
         const { href, target, title } = attribs;
+        const parsedHref = href.replace("https://photo.paris", "")
         return (
           <div className="py-4 mx-auto max-w-prose">
             <Bouton>
-              <a href={href} className="p-2 text-2xl">
+              <a href={parsedHref} className="p-2 text-2xl">
                 {domToReact(children, defaultOptions)}
               </a>
             </Bouton>
@@ -251,12 +253,29 @@ const HomePageSection = ({ homepage, products }) => {
       }
 
       if (
+        name === "a" &&
+        
+          parent.attribs?.class?.includes("banner-title")
+      ) {
+        const { href, target, title } = attribs;
+        const parsedHref = href.replace("https://photo.paris", "")
+        return (
+          <div className="px-4 py-4 mx-auto md:py-0 max-w-prose">
+            <Bouton>
+              <a href={parsedHref} className="p-2 text-2xl">
+                {domToReact(children, defaultOptions)}
+              </a>
+            </Bouton>
+          </div>
+        );
+      }
+      if (
         (attribs?.class?.includes("vc_row") ||
           attribs?.class?.includes("wpb_row")) &&
         attribs?.class?.includes("vc_inner ")
       ) {
         return (
-          <div className="container flex flex-col items-center max-w-screen-xl mx-auto lg:flex-row md:space-x-12">
+          <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto safe md:flex-row xl:flex-nowrap lg:space-x-12">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -267,7 +286,7 @@ const HomePageSection = ({ homepage, products }) => {
         !attribs?.class?.includes("vc_inner ")
       ) {
         return (
-          <div className="flex flex-col items-center py-1 md:flex-row md:space-x-12">
+          <div className="flex flex-col items-center px-4 md:flex-row md:space-x-12">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -295,7 +314,7 @@ const HomePageSection = ({ homepage, products }) => {
         parent?.attribs?.class?.includes("ciloe-single-product")
       ) {
         return (
-          <div className="relative px-16 mb-2 prose bg-gray-50">
+          <div className="relative px-8 mb-2 prose safe md:px-16 bg-gray-50">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -315,10 +334,11 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("vc_btn")) {
         const { href, target, title } = attribs;
+        const parsedHref = href.replace("https://photo.paris", "")
 
-        return href ? (
+        return parsedHref ? (
           <a
-            href={href}
+            href={parsedHref}
             className="relative flex flex-row items-center mx-auto text-2xl text-gray-200 md:space-x-2 w-max"
           >
             {domToReact(children, defaultOptions)}
@@ -337,13 +357,13 @@ const HomePageSection = ({ homepage, products }) => {
           <div
             className={`${
               attribs?.class.includes("vc_col-sm-12 vc_col-lg-3 vc_col-md-3")
-                ? "w-full md:w-1/4 "
+                ? "w-full lg:w-1/4 md:w-1/2 "
                 : attribs?.class.includes("vc_col-sm-3")
-                ? "sm:w-1/4 w-full"
+                ? "lg:w-1/4 md:w-1/2 w-full"
                 : attribs?.class.includes(
                     "vc_col-sm-12 vc_col-lg-4 vc_col-md-6"
                   )
-                ? "w-full md:1/2 lg:w-1/4 "
+                ? "w-full md:1/2 lg:w-1/3 "
                 : attribs?.class.includes("vc_col-sm-8")
                 ? "w-8/12 "
                 : attribs?.class.includes("vc_col-sm-9")

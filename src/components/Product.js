@@ -28,7 +28,7 @@ const Product = (props) => {
       layoutId={`product-layout-card-${product.id || product}`}
     >
       <Link href={product.slug ? `/photo/${product.slug}` : "./"} passHref>
-        <a className="relative block h-96 md:h-64">
+        <a className="relative block h-48 md:h-64">
           {!isEmpty(product.image) ? (
             <VignettePhoto product={product} />
           ) : !isEmpty(clientConfig.productImagePlaceholder) ? (

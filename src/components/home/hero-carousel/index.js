@@ -110,7 +110,7 @@ const HeroCarousel = ({ heroCarousel }) => {
       </div>
       <AnimatePresence exitBeforeEnter>
         <motion.div
-          className="px-10 pt-10 banner-content sm:pt-0 sm:w-4/12"
+          className="px-4 pt-10 md:px-10 banner-content sm:pt-0 sm:w-4/12"
           key={`titre-slider-${slug}-${id}`}
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}

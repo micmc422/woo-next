@@ -24,7 +24,7 @@ export default function Home(props) {
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Categories*/}
       <HomePageSection homepage={homepage} products={products} />
-      <div className="container px-4 mx-auto my-32 product-categories-container xl:px-0">
+      <div className="container px-4 mx-auto my-8 md:my-32 product-categories-container xl:px-0">
         <h2 className="mb-5 text-xl uppercase main-title">
           <span className="main-title-inner">Categories</span>
         </h2>
@@ -37,7 +37,7 @@ export default function Home(props) {
         <h2 className="mb-5 text-xl uppercase products-main-title main-title">
           <span className="main-title-inner">Products</span>
         </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {products.length
             ? products.map((product) => (
                 <Product key={product.id} product={product} />

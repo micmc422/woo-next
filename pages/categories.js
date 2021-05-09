@@ -9,7 +9,7 @@ export default function Categories(props) {
   return (
     <Layout>
       {/*Categories*/}
-      <div className="container px-4 mx-auto my-32 categories product-categories-container xl:px-0">
+      <div className="container px-4 mx-auto my-8 md:my-32 categories product-categories-container xl:px-0">
         <h2 className="mb-5 text-2xl uppercase">Categories</h2>
         <ParentCategoriesBlock productCategories={productCategories} />
       </div>
