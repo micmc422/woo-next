@@ -46,9 +46,6 @@ export default function Home(props) {
       setPageInfo(pageInfoStatic);
       setFilteredProducts(products);
     }
-    console.log(data?.products?.nodes);
-    console.log(products);
-    console.log(filteredProducts);
   }, [query, data?.products?.nodes, locale]);
   return (
     <Layout menu={menu}>

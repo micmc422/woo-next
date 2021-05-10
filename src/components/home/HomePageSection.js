@@ -145,7 +145,6 @@ const HomePageSection = ({ homepage, products }) => {
       }
       if (name === "h3") {
         const alignRigth = attribs?.style === "text-align: right;";
-        console.log(children)
         return (
           <h2
             className={`mx-auto py-6 md:py-12 text-2xl max-w-2xl ${

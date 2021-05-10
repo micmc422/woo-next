@@ -214,7 +214,6 @@ const defaultOptions = {
       const { href, target, title } = attribs;
       const parsedHref = href?.replace("https://photo.paris", "");
       if (attribs?.href?.includes("facebook.com/galerieparisestunephoto")) {
-        console.log("facebook");
         return (
           <Bouton circleClass="bg-facebook">
             <a className="flex" href={attribs?.href}>
@@ -226,7 +225,6 @@ const defaultOptions = {
       if (
         attribs?.href?.includes("https://www.instagram.com/parisestunephoto")
       ) {
-        console.log("instagram");
         return (
           <Bouton circleClass="bg-instagram">
             <a className="flex" href={attribs?.href}>

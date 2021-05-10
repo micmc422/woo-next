@@ -185,7 +185,6 @@ const updateQuery = (name, key, router) => {
   delete theQuery["before"];
   delete theQuery["last"];
   const routerAction = (theQueryAction, path = router.asPath.split("?")[0]) => {
-    console.log(router.asPath.split("?")[0]);
     // delete theQuery["slug"];
     const formattedQuery = new URLSearchParams(theQueryAction).toString();
     router.push(
