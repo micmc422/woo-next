@@ -36,9 +36,6 @@ export default function CategorySingle(props) {
   const isLoading = !data && !error && formattedQuery?.length;
 
   useEffect(() => {
-    console.log(data?.products.nodes);
-    console.log(formattedQuery);
-    console.log(categoryIn);
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
       setFilteredProducts(data.products.nodes);

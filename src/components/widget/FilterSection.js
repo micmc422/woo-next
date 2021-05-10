@@ -50,10 +50,10 @@ const BlocCategoriesSelector = ({ categories }) => {
   const activeCat = router?.query?.categoryIn;
   const activeCatId = router?.query?.categoryIn
     ? categories.find((el) => el.slug === activeCat)?.databaseId
-    : router?.query?.slug
-    ? categories.find((el) => el.slug === router?.query?.slug)?.databaseId
+    : router?.query?.category?.length
+    ? categories.find((el) => el.slug === router?.query?.category[0])
+        ?.databaseId
     : categories.find((el) => el.databaseId === activeCat)?.databaseId;
-  console.log(activeCatId);
   const { data, error } = useSWR(
     activeCatId ? `/api/categorie/?parent=${activeCatId}` : null,
     fetcher
@@ -72,9 +72,9 @@ const BlocCategoriesSelector = ({ categories }) => {
         )
       );
     } else {
-      if (!activeCat) setCategoriesList(categories);
+      !router?.query?.categoryIn && setCategoriesList(categories);
     }
-  }, [router?.query?.category, data?.productCategories?.nodes]);
+  }, [router?.query?.asPath, data?.productCategories?.nodes]);
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -184,19 +184,28 @@ const updateQuery = (name, key, router) => {
   delete theQuery["first"];
   delete theQuery["before"];
   delete theQuery["last"];
-  const routerAction = (theQueryAction) => {
-    delete theQuery["slug"];
+  const routerAction = (theQueryAction, path = router.asPath.split("?")[0]) => {
+    console.log(router.asPath.split("?")[0]);
+    // delete theQuery["slug"];
     const formattedQuery = new URLSearchParams(theQueryAction).toString();
     router.push(
       {
-        pathname: router.asPath.split("?")[0],
+        pathname: path,
         query: formattedQuery,
       },
       null,
       options
     );
   };
-  if (key === "category") {
+  if (key === "categoryIn" && false === name && !theQuery["categoryIn"]) {
+    delete theQuery["category"];
+    delete theQuery["categoryIn"];
+    routerAction(theQuery, "/galerie-photo");
+    return null;
+  }
+  if (key === "categoryIn" && false === name) {
+    delete theQuery["categoryIn"];
+    routerAction(theQuery);
     return null;
   }
   if (false === name) {
