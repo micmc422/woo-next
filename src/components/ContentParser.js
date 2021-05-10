@@ -116,6 +116,17 @@ const defaultOptions = {
         </p>
       );
     }
+    if (name === "ul") {
+      return (
+        <ul className="mx-auto prose">
+          {" "}
+          {domToReact(children, defaultOptions)}
+        </ul>
+      );
+    }
+    if (name === "li") {
+      return <li> {domToReact(children, defaultOptions)}</li>;
+    }
     if (attribs?.class?.includes("vc_cta3-style-classic")) {
       return (
         <div className="p-4 m-4 bg-gray-100 border border-gray-200 rounded-md bg-gradient-to-br from-gray-100 to-gray-200">
@@ -245,14 +256,36 @@ const defaultOptions = {
         </div>
       );
     }
+    if (name === "a") {
+      if (
+        "https://www.facebook.com/galerieparisestunephoto/" === children[0].data
+      ) {
+        return (
+          <Bouton circleClass="bg-facebook bg-opacity-75">
+            <a href={children[0].data}>Facebook</a>
+          </Bouton>
+        );
+      }
+      if ("https://www.instagram.com/parisestunephoto" === children[0].data) {
+        return (
+          <Bouton circleClass="bg-instagram bg-opacity-75">
+            <a href={children[0].data}>Instagram</a>
+          </Bouton>
+        );
+      }
+      return <a href={children[0].data}>{children[0].data}</a>;
+    }
+    /*
+    console.log(children);
     const cleanCildren = children
       .map(({ data }) => data?.trim())
       .filter((node) => node && node !== "");
     if (cleanCildren.length > 0) {
-      
-    //  console.log(cleanCildren);
-      return <p class="px-2 md:px-0 mx-auto prose ">{cleanCildren}</p>;
+      // console.log(cleanCildren);
+
+      return <>{cleanCildren}</>;
     }
+*/
     return <>{domToReact(children, defaultOptions)}</>;
   },
 };

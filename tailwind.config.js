@@ -31,6 +31,8 @@ module.exports = {
           800: "#7f6c4d",
           900: "#635a4f",
         },
+        facebook: "#3b5998",
+        instagram: "#e1306c",
       },
     },
   },

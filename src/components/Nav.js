@@ -19,16 +19,11 @@ const Nav = ({ menu }) => {
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">
         <div>contact</div>
         <div>annonce</div>
-        <div
-          className="self-end w-5 h-5"
-          onClick={() => {
-            router.push(router.pathname, router.pathname, {
-              locale: router.locale === "fr" ? "en" : "fr",
-            });
-          }}
-        >
-          <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
-        </div>
+        <Link href="/" locale={router.locale === "fr" ? "en" : "fr"}>
+          <div className="self-end w-5 h-5">
+            <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
+          </div>
+        </Link>
       </div>
       <div className="container flex flex-wrap items-center justify-between p-4 mx-auto">
         <div className="flex items-center flex-shrink-0 mr-20 text-black">
