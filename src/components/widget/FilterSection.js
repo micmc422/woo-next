@@ -48,12 +48,12 @@ const BlocCategoriesSelector = ({ categories }) => {
     )
   );
   const activeCat = router?.query?.categoryIn;
-  const activeCatId = router?.query?.categoryIn
+  const activeCatId = activeCat
     ? categories.find((el) => el.slug === activeCat)?.databaseId
     : router?.query?.category?.length
     ? categories.find((el) => el.slug === router?.query?.category[0])
         ?.databaseId
-    : categories.find((el) => el.databaseId === activeCat)?.databaseId;
+    : null;
   const { data, error } = useSWR(
     activeCatId ? `/api/categorie/?parent=${activeCatId}` : null,
     fetcher
