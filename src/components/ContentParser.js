@@ -103,17 +103,28 @@ const defaultOptions = {
         </h2>
       );
     }
+    if (attribs?.class === "container") {
+      return (
+        <div className="px-2 mx-auto prose md:px-0">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p className={` ${alignRigth ? "md:text-right" : ""}`}>
+        <p className={`px-2 mx-auto prose md:px-0 ${alignRigth ? "md:text-right" : ""}`}>
           {domToReact(children, defaultOptions)}
         </p>
       );
     }
     if (name === "ul") {
       return (
-        <ul className="mx-auto"> {domToReact(children, defaultOptions)}</ul>
+        <ul className="mx-auto prose">
+          {" "}
+          {domToReact(children, defaultOptions)}
+        </ul>
       );
     }
     if (name === "li") {
@@ -288,7 +299,7 @@ const ContentParser = ({ data, options = defaultOptions }) => {
   }
   const parsed = parse(data, options);
 
-  return parsed;
+  return  parsed;
 };
 
 export default ContentParser;
