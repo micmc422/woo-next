@@ -59,7 +59,12 @@ const BlocCategoriesSelector = ({ categories }) => {
     fetcher
   );
   useEffect(() => {
+    if (!router?.query?.categoryIn && !router?.query?.category) {
+      setCategoriesList(categories);
+      return null;
+    }
     if (
+      (router?.query?.categoryIn || router?.query?.category) &&
       data?.productCategories?.nodes &&
       data?.productCategories?.nodes.length > 2
     ) {
@@ -74,7 +79,11 @@ const BlocCategoriesSelector = ({ categories }) => {
     } else {
       !router?.query?.categoryIn && setCategoriesList(categories);
     }
-  }, [router?.query?.asPath, data?.productCategories?.nodes]);
+  }, [
+    router?.query?.categoryIn,
+    router?.query?.asPath,
+    data?.productCategories?.nodes,
+  ]);
 
   return (
     <AnimatePresence exitBeforeEnter>
