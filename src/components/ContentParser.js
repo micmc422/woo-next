@@ -36,10 +36,6 @@ const defaultOptions = {
     if (name === "i" && attribs?.class?.includes("fa-instagram")) {
       return (
         <>
-          <div
-            style={{ backgroundColor: "#c13584", zIndex: -1 }}
-            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-red-800 ring-opacity-40`}
-          ></div>
           <FiInstagram />
         </>
       );
@@ -47,11 +43,6 @@ const defaultOptions = {
     if (name === "i" && attribs?.class?.includes("fa-facebook")) {
       return (
         <>
-          {" "}
-          <div
-            style={{ backgroundColor: "#3b5998", zIndex: -1 }}
-            className={`absolute inset-0 -mr-2 rounded-md ring-2 ring-blue-800 ring-opacity-40`}
-          ></div>
           <FiFacebook />
         </>
       );
@@ -114,7 +105,11 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p className={`px-2 mx-auto prose md:px-0 ${alignRigth ? "md:text-right" : ""}`}>
+        <p
+          className={`px-2 mx-auto prose md:px-0 ${
+            alignRigth ? "md:text-right" : ""
+          }`}
+        >
           {domToReact(children, defaultOptions)}
         </p>
       );
@@ -218,6 +213,28 @@ const defaultOptions = {
     if (attribs?.class?.includes("vc_btn")) {
       const { href, target, title } = attribs;
       const parsedHref = href?.replace("https://photo.paris", "");
+      if (attribs?.href?.includes("facebook.com/galerieparisestunephoto")) {
+        console.log("facebook");
+        return (
+          <Bouton circleClass="bg-facebook">
+            <a className="flex" href={attribs?.href}>
+              {domToReact(children, defaultOptions)}
+            </a>
+          </Bouton>
+        );
+      }
+      if (
+        attribs?.href?.includes("https://www.instagram.com/parisestunephoto")
+      ) {
+        console.log("instagram");
+        return (
+          <Bouton circleClass="bg-instagram">
+            <a className="flex" href={attribs?.href}>
+              {domToReact(children, defaultOptions)}
+            </a>
+          </Bouton>
+        );
+      }
 
       return parsedHref ? (
         <a
@@ -272,11 +289,12 @@ const defaultOptions = {
       if ("https://www.instagram.com/parisestunephoto" === children[0].data) {
         return (
           <Bouton circleClass="bg-instagram bg-opacity-75">
-            <a href={children[0].data}>Instagram</a>
+            <a href={children[0].data}>
+              {domToReact(children, defaultOptions)}
+            </a>
           </Bouton>
         );
       }
-      return <a href={children[0].data}>{children[0].data}</a>;
     }
     /*
     console.log(children);
@@ -299,7 +317,7 @@ const ContentParser = ({ data, options = defaultOptions }) => {
   }
   const parsed = parse(data, options);
 
-  return  parsed;
+  return parsed;
 };
 
 export default ContentParser;
