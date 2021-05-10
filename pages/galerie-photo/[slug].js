@@ -110,7 +110,10 @@ export default function Product(props) {
       </section>
       {product ? (
         <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
-          <ContentParser data={product.description}></ContentParser>
+          <div className="px-2 mx-auto prose md:px-0">
+            <ContentParser data={product.description}></ContentParser>
+          </div>
+
           {false && (
             <div
               dangerouslySetInnerHTML={{

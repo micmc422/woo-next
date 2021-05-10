@@ -103,25 +103,17 @@ const defaultOptions = {
         </h2>
       );
     }
-
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p
-          className={`px-2 md:px-0 mx-auto prose ${
-            alignRigth ? "md:text-right" : ""
-          }`}
-        >
+        <p className={` ${alignRigth ? "md:text-right" : ""}`}>
           {domToReact(children, defaultOptions)}
         </p>
       );
     }
     if (name === "ul") {
       return (
-        <ul className="mx-auto prose">
-          {" "}
-          {domToReact(children, defaultOptions)}
-        </ul>
+        <ul className="mx-auto"> {domToReact(children, defaultOptions)}</ul>
       );
     }
     if (name === "li") {
