@@ -30,10 +30,10 @@ const SideBarSticky = ({ children, isRight }) => {
             isRight
               ? isOpen
                 ? "translate-y-0"
-                : "translate-y-full"
+                : "translate-y-screen"
               : isOpen
               ? "translate-x-0"
-              : " -translate-x-screen"
+              : " -translate-x-full"
           }`}
           onClick={() => setIsOpen(false)}
         >
