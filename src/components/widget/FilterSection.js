@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { AnimatePresence, motion } from "framer-motion";
 
 import InputRange from "react-input-range";
+import Link from "next/link";
 
 const animationParent = {
   initial: { x: 0, opacity: 0 },
@@ -84,52 +85,59 @@ const BlocCategoriesSelector = ({ categories }) => {
     router?.query?.asPath,
     data?.productCategories?.nodes,
   ]);
-
+  console.log(categoriesList);
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (
-        <motion.a
-          key={`fieler-item-retour-nav`}
-          onClick={() => updateQuery(false, "categoryIn", router)}
-          className="p-1"
-          initial="initial"
-          animate="isVisible"
-          exit="isHidden"
-          variants={animationParent}
-        >
-          retour
-        </motion.a>
-      )}
-      {categoriesList &&
-        categoriesList.map((item) => (
+        <Link href={"/galerie-photo"} passHref>
           <motion.a
-            key={`fieler-item-${item.name}`}
-            onClick={() => updateQuery(item.slug, "categoryIn", router)}
+            key={`fieler-item-retour-nav`}
+            //  onClick={() => updateQuery(false, "categoryIn", router)}
             className="p-1"
             initial="initial"
             animate="isVisible"
             exit="isHidden"
             variants={animationParent}
           >
-            <span className={`relative inline-block`}>
-              <AnimatePresence exitBeforeEnter>
-                {activeCat?.includes(item.slug) && (
-                  <motion.span
-                    initial={{ x: 55, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 25, opacity: 0 }}
-                    className={`bg-gray-300 absolute inset-1 rounded-full`}
-                  ></motion.span>
-                )}
-              </AnimatePresence>
-              <motion.span
-                variants={animationChild}
-                className="relative inline-block"
-              >
-                {item.name}
-              </motion.span>
-            </span>
+            retour
           </motion.a>
+        </Link>
+      )}
+      {categoriesList &&
+        categoriesList.map((item) => (
+          <Link
+            href={item.uri || "../"}
+            passHref
+            key={`fieler-item-${item.name}`}
+          >
+            <motion.a
+              // onClick={() => updateQuery(item.slug, "categoryIn", router)}
+              className="p-1"
+              initial="initial"
+              animate="isVisible"
+              exit="isHidden"
+              variants={animationParent}
+            >
+              <span className={`relative inline-block`}>
+                <AnimatePresence exitBeforeEnter>
+                  {activeCat?.includes(item.slug) && (
+                    <motion.span
+                      initial={{ x: 55, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: 25, opacity: 0 }}
+                      className={`bg-gray-300 absolute inset-1 rounded-full`}
+                    ></motion.span>
+                  )}
+                </AnimatePresence>
+                <motion.span
+                  variants={animationChild}
+                  className="relative inline-block"
+                >
+                  {item.name}
+                </motion.span>
+              </span>
+            </motion.a>
+          </Link>
         ))}
     </AnimatePresence>
   );

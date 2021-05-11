@@ -11,6 +11,7 @@ const GET_CATEGORIES_QUERY = gql`
         databaseId
         name
         slug
+        uri
         image {
           sourceUrl
           srcSet
@@ -27,6 +28,7 @@ export const GET_CATEGORIES_QUERY_FULL = gql`
         databaseId
         name
         slug
+        uri
         image {
           sourceUrl
           srcSet
@@ -59,6 +61,7 @@ export const GET_CATEGORIES_BASE = gql`
         databaseId
         name
         slug
+        uri
         children {
           nodes {
             count

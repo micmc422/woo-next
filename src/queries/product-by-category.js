@@ -27,6 +27,7 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         databaseId
         name
         slug
+        uri
         children {
           nodes {
             count
@@ -111,10 +112,11 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
 
 export const PRODUCT_CATEGORIES_SLUGS = gql`
   query PRODUCT_CATEGORIES_SLUGS {
-    productCategories {
+    productCategories(first: 1000) {
       nodes {
         id
         slug
+        uri
       }
     }
   }

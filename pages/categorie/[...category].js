@@ -125,10 +125,14 @@ export async function getStaticPaths({}) {
 
   data?.productCategories?.nodes &&
     data?.productCategories?.nodes.map((productCategory) => {
+      /// console.log(data?.productCategories?.nodes);
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            category: [productCategory?.slug.toString()],
+            category: productCategory?.uri
+              .split("/")
+              .filter((e) => e !== "")
+              .slice(1, 99),
           },
           locale: "fr",
         });
@@ -139,7 +143,10 @@ export async function getStaticPaths({}) {
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            category: [productCategory?.slug.toString()],
+            category: productCategory?.uri
+              .split("/")
+              .filter((e) => e !== "")
+              .slice(1, 99),
           },
           locale: "en",
         });

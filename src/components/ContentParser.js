@@ -200,7 +200,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto sm:flex-row">
+        <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto sm:flex-row md:space-x-8 md:flex-nowrap">
           {domToReact(children, defaultOptions)}
         </div>
       );
