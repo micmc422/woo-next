@@ -18,6 +18,9 @@ module.exports = {
       sans: ["Josefin Sans", "sans-serif"],
     },
     extend: {
+      translate: {
+        screen: "100vh",
+      },
       colors: {
         brand: {
           50: "#fef7df",

@@ -27,7 +27,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const FilterSection = ({ categories, className }) => {
   return (
-    <div className={`flex flex-col space-y-4 ${className ? className : ""}`}>
+    <div className={`flex flex-col space-y-4 ${className ? className : ""} bg-white`}>
       <div className="flex flex-col">
         <TitreWidget>Categories</TitreWidget>
         <BlocCategoriesSelector categories={categories} />
@@ -144,17 +144,13 @@ const BlocCategoriesSelector = ({ categories }) => {
 };
 const BlocPriceRange = ({ min, max }) => {
   const router = useRouter();
-  const [values, setValues] = useState({ min: 80, max: 500 });
+  const [values, setValues] = useState(500);
   const [isActive, setIsActive] = useState(false);
 
   const rangeHandler = (value) => {
     setValues(value);
-    value.min && updateQuery(value.min, "min", router);
+    //  value.min && updateQuery(value.min, "min", router);
     value.max && updateQuery(value.max, "max", router);
-    if (!value.max && !value.min && value) {
-      updateQuery(value, "max", router);
-      updateQuery(false, "min", router);
-    }
   };
   return (
     <div className={`p-4`}>
@@ -164,7 +160,7 @@ const BlocPriceRange = ({ min, max }) => {
             className={`flex items-center w-8 h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full ${
               values.min ? "bg-green-400" : ""
             }`}
-            onClick={() => setValues(values?.min ? 200 : { min: 80, max: 500 })}
+            onClick={() => setValues(500)}
           >
             <div
               className={`w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md ${
@@ -172,7 +168,7 @@ const BlocPriceRange = ({ min, max }) => {
               }`}
             ></div>
           </div>
-          <h2>{values?.min ? "prix max" : "fourchette"}</h2>
+          <h2>{"prix max"}</h2>
           <div onClick={() => updateQuery(null, "disablePrice", router)}>
             reset
           </div>
@@ -181,7 +177,7 @@ const BlocPriceRange = ({ min, max }) => {
       <InputRange
         step={5}
         maxValue={max}
-        minValue={min}
+        //  minValue={min}
         formatLabel={(value) => `${value}€`}
         value={values}
         onChange={(value) => {

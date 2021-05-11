@@ -24,7 +24,7 @@ const CategorieList = ({ navCatData, className }) => {
   // ...
 
   return (
-    <div className={`${className ? className : ""}`}>
+    <div className={`flex bg-white float-right flex-col space-y-4 ${className ? className : ""}`}>
       <TitreWidget onClick={() => setCheck((prevCheck) => !prevCheck)}>
         Catégories
       </TitreWidget>

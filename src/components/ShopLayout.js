@@ -16,7 +16,7 @@ const ShopLayout = ({ children, categories, pageInfo, className }) => {
         <AnimateSharedLayout>{children}</AnimateSharedLayout>
         <Pagination pageInfo={pageInfo} pageLength={pageLength} />
       </div>
-      <SideBarSticky>
+      <SideBarSticky isRight={true}>
         <CategorieList
           className="w-48 m-auto text-right"
           navCatData={categories}

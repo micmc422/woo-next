@@ -49,45 +49,46 @@ export default function Home(props) {
   }, [query, data?.products?.nodes, locale]);
   return (
     <Layout menu={menu}>
-      {/*Hero Carousel*/}
-      <HeroCarousel heroCarousel={heroCarousel} />
-      {/*Products*/}
-      <LargeSlider products={bestSeller} />
-      <div className="container px-4 mx-auto my-32 products xl:px-0">
-        <h2 className="mb-5 text-xl uppercase products-main-title main-title">
-          <span className="main-title-inner">Products</span>
-        </h2>
-      </div>
-      <ShopLayout
-        categories={cat}
-        pageInfo={pageInfo}
-        setPageInfo={setPageInfo}
-      >
-        <motion.div
-          className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
-          layout
+      <div className="container px-4 mx-auto my-8 xl:px-0">
+        <motion.h3
+          initial={{ x: -200 }}
+          animate={{ x: 0 }}
+          exit={{ x: -300 }}
+          className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
         >
-          {!isLoading ? (
-            filteredProducts?.length > 0 ? (
-              filteredProducts.map((product) => (
-                <Product key={product?.id} product={product} />
-              ))
+          PARIS EST UNE PHOTO
+        </motion.h3>
+        <ShopLayout
+          categories={cat}
+          pageInfo={pageInfo}
+          setPageInfo={setPageInfo}
+        >
+          <motion.div
+            className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
+            layout
+          >
+            {!isLoading ? (
+              filteredProducts?.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <Product key={product?.id} product={product} />
+                ))
+              ) : (
+                <div> aucun résultat</div>
+              )
             ) : (
-              <div> aucun résultat</div>
-            )
-          ) : (
-            [...Array(24).keys()].map((key) => (
-              <Product key={key} product={key} />
-            ))
-          )}
-        </motion.div>
-      </ShopLayout>{" "}
-      {/*Categories*/}
-      <div className="container px-4 mx-auto my-8 md:my-32 product-categories-container xl:px-0">
-        <h2 className="mb-5 text-xl uppercase main-title">
-          <span className="main-title-inner">Categories</span>
-        </h2>
-        <ParentCategoriesBlock productCategories={productCategories} />
+              [...Array(24).keys()].map((key) => (
+                <Product key={key} product={key} />
+              ))
+            )}
+          </motion.div>
+        </ShopLayout>{" "}
+        {/*Categories*/}
+        <div className="container px-4 mx-auto my-8 md:my-32 product-categories-container xl:px-0">
+          <h2 className="mb-5 text-xl uppercase main-title">
+            <span className="main-title-inner">Categories</span>
+          </h2>
+          <ParentCategoriesBlock productCategories={productCategories} />
+        </div>
       </div>
     </Layout>
   );
