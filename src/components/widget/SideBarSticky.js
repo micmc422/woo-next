@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { uniqueId } from "lodash";
 import { useState } from "react";
+import { opacity } from "tailwindcss/defaulttheme";
 const animateMenu = {
   initial: (isRight) => ({ x: isRight ? "100%" : "-100%" }),
   animate: { x: 0 },
@@ -13,21 +14,50 @@ const animateMenu = {
         */
 const SideBarSticky = ({ children, isRight }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const setHidden = (state) => {
+    console.log(document.body.style.overflow);
+    if (document.body.style.overflow !== "hidden") {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  };
+
   return (
     <>
-      <div className={`flex-grow lg:hidden block w-0 z-50`}>
-        <div
-          className={`sticky  top-10 bg-black rounded-full w-16 h-16 ${
-            isRight ? "float-right" : "float-left"
-          }`}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          open
-        </div>
+      <div
+        className={`flex-grow lg:hidden  w-0 z-50 ${
+          isRight ? "hidden" : "block"
+        }`}
+      >
+        <AnimatePresence>
+          <div
+            className={`sticky top-0 overflow-hidden ${
+              isRight ? "float-right right-0" : "float-left"
+            }`}
+          >
+            {!isOpen && (
+              <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={animateMenu}
+                custom={isRight}
+                className={`bg-white ring-2 ring-brand-500 shadow-md rounded-full w-12 h-12 m-1`}
+                onClick={() => {
+                  setHidden();
+                  setIsOpen(!isOpen);
+                }}
+              >
+                open
+              </motion.div>
+            )}
+          </div>
+        </AnimatePresence>
       </div>
       <div className={`hidden lg:block flex-grow w-0 lg:w-auto relative`}>
         <div
-          className={`sticky top-0 block ring-2 ring-white z-40 ${
+          className={`sticky top-0 block z-40 ${
             isRight ? "float-right" : "float-left"
           }`}
           onClick={() => setIsOpen(false)}
@@ -38,6 +68,18 @@ const SideBarSticky = ({ children, isRight }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.7 }}
+            exit={{ opacity: 0 }}
+            onClick={() => {
+              setHidden(false);
+              setIsOpen(false);
+            }}
+            className={`fixed inset-0 bg-white opacity-50 z-10`}
+          ></motion.div>
+        )}
+        {isOpen && (
+          <motion.div
             key={uniqueId()}
             className={`lg:hidden block flex-grow w-0 lg:w-auto`}
             initial="initial"
@@ -45,14 +87,17 @@ const SideBarSticky = ({ children, isRight }) => {
             exit="exit"
           >
             <div
-              className={`sticky top-0 block ring-2 ring-white z-40 overflow-hidden ${
+              className={`sticky top-0 block z-40 overflow-hidden ${
                 isRight ? "float-right right-0" : "float-left"
               }`}
             >
               <motion.div
                 variants={animateMenu}
                 custom={isRight}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setHidden(false);
+                  setIsOpen(false);
+                }}
               >
                 {children}
               </motion.div>

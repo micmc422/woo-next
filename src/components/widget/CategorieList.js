@@ -24,7 +24,7 @@ const CategorieList = ({ navCatData, className }) => {
   // ...
 
   return (
-    <div className={`flex bg-white float-right flex-col space-y-4 ${className ? className : ""}`}>
+    <div className={`flex bg-white float-right flex-col lg:h-auto lg:min-h-0 min-h-screen space-y-4 ${className ? className : ""}`}>
       <TitreWidget onClick={() => setCheck((prevCheck) => !prevCheck)}>
         Catégories
       </TitreWidget>
@@ -41,7 +41,6 @@ const CategorieList = ({ navCatData, className }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="border-2 border-gray-600 w-36"></div>
     </div>
   );
 };
