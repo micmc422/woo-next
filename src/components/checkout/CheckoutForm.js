@@ -9,9 +9,16 @@ import { getFormattedCart, createCheckoutData } from "../../functions";
 import OrderSuccess from "./OrderSuccess";
 import GET_CART from "../../queries/get-cart";
 import CHECKOUT_MUTATION from "../../mutations/checkout";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import StripeCheckoutForm from "./StripeCheckout";
+
+const promise = loadStripe(
+  "pk_test_51HtCQlFIWeEGR1HAQFSJNZfBTbohYe6xZ8P3M4ftO5pbOUVodzBr9DNDCnlYL16wxRRy3UWEevPAXuTWhwhrnmMB007Xq5lzWP"
+);
 
 const CheckoutForm = () => {
-  const initialState = {
+  const defaultCustomerInfo = {
     firstName: "",
     lastName: "",
     company: "",
@@ -25,10 +32,9 @@ const CheckoutForm = () => {
     email: "",
     createAccount: false,
     orderNotes: "",
-    paymentMethod: "",
+    paymentMethod: "STRIPE",
     errors: null,
   };
-
   // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
   // const initialState = {
   // 	firstName: 'Imran',
@@ -47,11 +53,24 @@ const CheckoutForm = () => {
   // 	paymentMethod: 'cod',
   // 	errors: null
   // };
-
+  const initialState = {
+    billing: {
+      ...defaultCustomerInfo,
+    },
+    shipping: {
+      ...defaultCustomerInfo,
+    },
+    createAccount: false,
+    orderNotes: "",
+    billingDifferentThanShipping: false,
+    paymentMethod: "Stripe",
+  };
+  const [isValid, setIsValid] = useState(false);
   const [cart, setCart] = useContext(AppContext);
   const [input, setInput] = useState(initialState);
   const [orderData, setOrderData] = useState(null);
   const [requestError, setRequestError] = useState(null);
+  // console.log(input);
 
   // Get Cart Data.
   const { loading, error, data, refetch } = useQuery(GET_CART, {
@@ -67,44 +86,6 @@ const CheckoutForm = () => {
       setCart(updatedCart);
     },
   });
-
-  // Checkout or CreateOrder Mutation.
-  const [
-    checkout,
-    { data: checkoutResponse, loading: checkoutLoading, error: checkoutError },
-  ] = useMutation(CHECKOUT_MUTATION, {
-    variables: {
-      input: orderData,
-    },
-    onCompleted: () => {
-      // console.warn( 'completed CHECKOUT_MUTATION' );
-      refetch();
-    },
-    onError: (error) => {
-      if (error) {
-        setRequestError(error.graphQLErrors[0].message);
-      }
-    },
-  });
-
-  /*
-   * Handle form submit.
-   *
-   * @param {Object} event Event Object.
-   *
-   * @return {void}
-   */
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const result = validateAndSanitizeCheckoutForm(input);
-    if (!result.isValid) {
-      setInput({ ...input, errors: result.errors });
-      return;
-    }
-    const checkOutData = createCheckoutData(input);
-    setOrderData(checkOutData);
-    setRequestError(null);
-  };
 
   /*
    * Handle onchange input.
@@ -126,51 +107,79 @@ const CheckoutForm = () => {
   useEffect(() => {
     if (null !== orderData) {
       // Call the checkout mutation when the value for orderData changes/updates.
-      checkout();
+      // checkout();
+      // console.log(orderData);
     }
   }, [orderData]);
 
+  useEffect(() => {
+    if (null !== input) {
+      const result = validateAndSanitizeCheckoutForm(input);
+      setIsValid(result.isValid);
+      if (result.isValid) {
+        const checkOutData = createCheckoutData(input);
+        setOrderData(checkOutData);
+        setRequestError(null);
+      }
+    }
+    //console.log(orderData);
+  }, [input]);
+  // console.log(orderData);
   return (
     <>
       {cart ? (
-        <form onSubmit={handleFormSubmit} className="woo-next-checkout-form">
-          <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
-            {/*Billing Details*/}
-            <div className="billing-details">
-              <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
-              <Billing input={input} handleOnChange={handleOnChange} />
+        <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
+          <form className="woo-next-checkout-form">
+            <div>
+              {/*Billing Details*/}
+              <div className="billing-details">
+                <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
+                <Billing input={input} handleOnChange={handleOnChange} />
+              </div>
+              {/* Order & Payments*/}
             </div>
-            {/* Order & Payments*/}
+          </form>
+          <div>
+            {" "}
             <div className="your-orders">
               {/*	Order*/}
               <h2 className="mb-4 text-xl font-medium">Your Order</h2>
               <YourOrder cart={cart} />
-
-              {/*Payment*/}
-              <PaymentModes input={input} handleOnChange={handleOnChange} />
-              <div className="mt-5 woo-next-place-order-btn-wrap">
+              <div className="max-w-md mx-auto">
+                {" "}
+                {isValid && orderData ? (
+                  <Elements stripe={promise}>
+                    <StripeCheckoutForm
+                      amount={cart.totalProductsPrice
+                        .replace("€", "")
+                        .replace(",", ".")}
+                      orderData={orderData}
+                      cart={cart}
+                    />
+                  </Elements>
+                ) : (
+                  <div>Info manquantes</div>
+                )}
+              </div>
+              {/*Payment              <PaymentModes input={input} handleOnChange={handleOnChange} />   
+              <div className="max-w-md mx-auto">
                 <button
-                  className="w-auto px-5 py-3 text-white bg-purple-600 rounded-sm xl:w-full"
+                  className="w-auto px-5 py-3 text-white rounded-sm bg-brand-600 xl:w-full"
                   type="submit"
                 >
                   Place Order
                 </button>
-              </div>
-
+              </div>  */}
               {/* Checkout Loading*/}
-              {checkoutLoading && <p>Processing Order...</p>}
               {requestError && (
                 <p>Error : {requestError} :( Please try again</p>
               )}
             </div>
           </div>
-        </form>
+        </div>
       ) : (
         ""
       )}
-
-      {/*	Show message if Order Sucess*/}
-      <OrderSuccess response={checkoutResponse} />
     </>
   );
 };

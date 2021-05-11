@@ -110,36 +110,42 @@ const AddToCart = (props) => {
   };
 
   return (
-    <div className={` cursor-pointer `}>
-      {/* Add To Cart Loading*/}
-      {addToCartLoading && <p>Adding to Cart...</p>}
-
-      {/*	Check if its an external product then put its external buy link */}
-      {"ExternalProduct" === product.__typename ? (
-        <a
-          href={product.externalUrl}
-          target="_blank"
-          className="inline-block px-3 py-1 mr-3 text-sm border border-current border-solid rounded-sm hover:bg-purple-600 hover:text-white hover:border-purple-600"
-        >
-          Buy now
-        </a>
-      ) : (
-        <Bouton>
+    <Bouton>
+      <div className={` cursor-pointer `}>
+        {/* Add To Cart Loading*/}
+        {addToCartLoading ? (
+          <div> Ajout en cour {children ? children : ""}</div>
+        ) : (
           <div onClick={handleAddToCartClick}>
-            {children ? children : "Add to cart"}
+            {" "}
+            Ajouter au panier
+            {children ? children : ""}
           </div>
-        </Bouton>
-      )}
-      {showViewCart ? (
-        <Link href="/cart">
-          <button className="inline-block px-3 py-1 text-sm border border-current border-solid rounded-sm hover:bg-purple-600 hover:text-white hover:border-purple-600">
-            View Cart
-          </button>
-        </Link>
-      ) : (
-        ""
-      )}
-    </div>
+        )}
+
+        {/*	Check if its an external product then put its external buy link */}
+        {"ExternalProduct" === product.__typename && (
+          <a
+            href={product.externalUrl}
+            target="_blank"
+            className="inline-block px-3 py-1 mr-3 text-sm border border-current border-solid rounded-sm hover:bg-purple-600 hover:text-white hover:border-purple-600"
+          >
+            Buy now
+          </a>
+        )}
+        {showViewCart ? (
+          <Bouton>
+            <Link href="/cart">
+              <button className="inline-block px-3 py-1 text-sm border border-current border-solid rounded-sm hover:bg-purple-600 hover:text-white hover:border-purple-600">
+                View Cart
+              </button>
+            </Link>{" "}
+          </Bouton>
+        ) : (
+          ""
+        )}
+      </div>
+    </Bouton>
   );
 };
 

@@ -27,7 +27,10 @@ const Product = (props) => {
       variants={productCardAnimationContainer}
       layoutId={`product-layout-card-${product.id || product}`}
     >
-      <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"} passHref>
+      <Link
+        href={product.slug ? `/galerie-photo/${product.slug}` : "./"}
+        passHref
+      >
         <a className="relative block h-48 md:h-64">
           {!isEmpty(product.image) ? (
             <VignettePhoto product={product} />
@@ -47,7 +50,6 @@ const Product = (props) => {
             <>
               <AddToCartButton product={product}>
                 <div className="pt-2">
-                  Ajouter au pannier
                   <Price
                     salesPrice={product?.price}
                     regularPrice={product?.regularPrice}
