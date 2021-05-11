@@ -33,6 +33,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         slug
         databaseId
         excerpt
+        uri
         featuredImage {
           node {
             id
@@ -48,6 +49,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         databaseId
         name
         slug
+        uri
         children {
           nodes {
             count
@@ -61,6 +63,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         databaseId
         name
         slug
+        uri
         image {
           id
           sourceUrl
