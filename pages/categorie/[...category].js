@@ -99,10 +99,10 @@ export default function CategorySingle(props) {
 
 export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
-  console.log({ category });
+ // console.log({ category });
   const queryPath = `/categorie/${category[category.length - 1]}/`;
   const queryMenuPath = `/categorie/${category[0]}/`;
-  console.log({ queryPath, queryMenuPath });
+ // console.log({ queryPath, queryMenuPath });
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
     variables: {

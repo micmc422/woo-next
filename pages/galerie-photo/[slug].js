@@ -23,7 +23,7 @@ export default function Product(props) {
   const { product, menu } = props;
   const seoData = product?.seo?.fullHead && parse(product?.seo?.fullHead);
 
-  console.log(product?.seo.fullHead);
+//  console.log(product?.seo.fullHead);
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
     product?.variations?.nodes[0]
