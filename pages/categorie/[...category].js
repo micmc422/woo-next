@@ -35,6 +35,7 @@ export default function CategorySingle(props) {
   // console.log({ cat, catBase, query });
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
+  delete query.category;
   const formattedQuery = new URLSearchParams(query).toString();
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
@@ -83,7 +84,7 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {!isLoading
+            {isLoading
               ? filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />
                 ))
@@ -99,10 +100,10 @@ export default function CategorySingle(props) {
 
 export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
- // console.log({ category });
+  // console.log({ category });
   const queryPath = `/categorie/${category[category.length - 1]}/`;
   const queryMenuPath = `/categorie/${category[0]}/`;
- // console.log({ queryPath, queryMenuPath });
+  // console.log({ queryPath, queryMenuPath });
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
     variables: {
