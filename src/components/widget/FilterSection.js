@@ -44,7 +44,7 @@ const FilterSection = ({ categories, className }) => {
 };
 const BlocCategoriesSelector = ({ categories }) => {
   const router = useRouter();
-  const activeCat = router?.query?.category.toString();
+  const activeCat = router?.query?.category?.toString();
   /*
   const { locale } = router;
   const [categoriesList, setCategoriesList] = useState(

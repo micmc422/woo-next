@@ -34,7 +34,7 @@ export default function Home(props) {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const { query, locale } = useRouter();
-  let formattedQuery = new URLSearchParams(query).toString();
+  let formattedQuery = new URLSearchParams(query)?.toString();
   const { data, error } = useSWR(
     formattedQuery.length > 0
       ? `/api/products/?locale=${locale}&${formattedQuery}`

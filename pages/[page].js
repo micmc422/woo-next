@@ -53,7 +53,7 @@ export async function getStaticPaths() {
       if (!isEmpty(uri)) {
         pathsData.push({
           params: {
-            page: uri.toString(),
+            page: uri?.toString(),
           },
           locale: "fr",
         });
@@ -64,7 +64,7 @@ export async function getStaticPaths() {
       if (!isEmpty(productCategory?.slug)) {
         pathsData.push({
           params: {
-            page: uri.toString(),
+            page: uri?.toString(),
           },
           locale: "en",
         });
