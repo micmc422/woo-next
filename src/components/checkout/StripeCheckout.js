@@ -4,9 +4,7 @@ import client from "../../components/ApolloClient";
 import { PUSH_ORDER_MUTATION } from "../../mutations/checkout";
 
 async function pushOrder(input) {
-  console.log(input);
   const { clientMutationId, shipping, lineItems } = input;
-  console.log({ clientMutationId, shipping, lineItems });
   try {
     const { data } = await client.mutate({
       mutation: PUSH_ORDER_MUTATION,
@@ -25,7 +23,6 @@ async function pushOrder(input) {
       data,
     };
   } catch (error) {
-    console.log(error);
     return error;
   }
   /*
@@ -67,7 +64,6 @@ export default function StripeCheckoutForm({ amount, orderData, cart }) {
   }, [amount]);
 
   useEffect(() => {
-    console.log(cart?.products);
     const orderToPush = {
       ...orderData,
       lineItems: cart?.products.map((item) => {

@@ -85,7 +85,6 @@ const BlocCategoriesSelector = ({ categories }) => {
     router?.query?.asPath,
     data?.productCategories?.nodes,
   ]);
-  console.log(categoriesList);
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (

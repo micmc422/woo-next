@@ -15,7 +15,6 @@ const animateMenu = {
 const SideBarSticky = ({ children, isRight }) => {
   const [isOpen, setIsOpen] = useState(false);
   const setHidden = (state) => {
-    console.log(document.body.style.overflow);
     if (document.body.style.overflow !== "hidden") {
       document.body.style.overflow = "hidden";
     } else {
