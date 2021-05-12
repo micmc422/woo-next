@@ -27,7 +27,11 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const FilterSection = ({ categories, className }) => {
   return (
-    <div className={`flex flex-col space-y-4 ${className ? className : ""} bg-white`}>
+    <div
+      className={`flex flex-col space-y-4 ${
+        className ? className : ""
+      } bg-white`}
+    >
       <div className="flex flex-col">
         <TitreWidget>Categories</TitreWidget>
         <BlocCategoriesSelector categories={categories} />
@@ -38,8 +42,11 @@ const FilterSection = ({ categories, className }) => {
     </div>
   );
 };
-const BlocCategoriesSelector = ({ categories, locale }) => {
+const BlocCategoriesSelector = ({ categories }) => {
   const router = useRouter();
+  const activeCat = router?.query?.category.toString();
+  /*
+  const { locale } = router;
   const [categoriesList, setCategoriesList] = useState(
     categories.filter((item) =>
       router?.query?.category?.length
@@ -48,7 +55,6 @@ const BlocCategoriesSelector = ({ categories, locale }) => {
         : true
     )
   );
-  const activeCat = router?.query?.categoryIn;
   const activeCatId = activeCat
     ? categories.find((el) => el.slug === activeCat)?.databaseId
     : router?.query?.category?.length
@@ -56,35 +62,12 @@ const BlocCategoriesSelector = ({ categories, locale }) => {
         ?.databaseId
     : null;
   const { data, error } = useSWR(
-    activeCatId ? `/api/categorie/?locale=${locale}&$parent=${activeCatId}` : null,
+    activeCatId
+      ? `/api/categorie/?locale=${locale}&parent=${activeCatId}`
+      : null,
     fetcher
   );
-  useEffect(() => {
-    if (!router?.query?.categoryIn && !router?.query?.category) {
-      setCategoriesList(categories);
-      return null;
-    }
-    if (
-      (router?.query?.categoryIn || router?.query?.category) &&
-      data?.productCategories?.nodes &&
-      data?.productCategories?.nodes.length > 2
-    ) {
-      setCategoriesList(
-        data?.productCategories?.nodes.filter((item) =>
-          router?.query?.category?.length
-            ? item.slug !==
-              router?.query?.category[router?.query?.category?.length - 1]
-            : true
-        )
-      );
-    } else {
-      !router?.query?.categoryIn && setCategoriesList(categories);
-    }
-  }, [
-    router?.query?.categoryIn,
-    router?.query?.asPath,
-    data?.productCategories?.nodes,
-  ]);
+  */
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (
@@ -102,8 +85,8 @@ const BlocCategoriesSelector = ({ categories, locale }) => {
           </motion.a>
         </Link>
       )}
-      {categoriesList &&
-        categoriesList.map((item) => (
+      {categories &&
+        categories.map((item) => (
           <Link
             href={item.uri.replace("https://photo.paris", "") || "../"}
             passHref

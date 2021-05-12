@@ -5,7 +5,7 @@ import CategorieList from "./widget/CategorieList";
 import FilterSection from "./widget/FilterSection";
 import SideBarSticky from "./widget/SideBarSticky";
 
-const ShopLayout = ({ children, categories, pageInfo, className }) => {
+const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
   const [pageLength, setPageLength] = useState(24);
   return (
     <div className={`flex flex-row lg:space-x-2 ${className ? className : ""}`}>
@@ -19,7 +19,7 @@ const ShopLayout = ({ children, categories, pageInfo, className }) => {
       <SideBarSticky isRight={true}>
         <CategorieList
           className="w-48 m-auto text-right"
-          navCatData={categories}
+          navCatData={catBase}
         />
       </SideBarSticky>
     </div>

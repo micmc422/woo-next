@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_CATEGORY_SLUG = gql`
-  query PRODUCT_BY_CATEGORY_SLUG($uri: ID!) {
+  query PRODUCT_BY_CATEGORY_SLUG($uri: ID!, $uriMenu: ID!) {
     megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
       id
       content
@@ -21,7 +21,17 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         }
       }
     }
-    cat: productCategories(first: 50, where: { parent: null }) {
+    cat: productCategory(id: $uriMenu, idType: URI) {
+      children(first: 50) {
+        nodes {
+          id
+          name
+          slug
+          uri
+        }
+      }
+    }
+    catBase: productCategories(first: 50, where: { parent: null }) {
       nodes {
         id
         databaseId
@@ -35,6 +45,7 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         }
       }
     }
+
     seo: category(id: $uri, idType: URI) {
       seo {
         fullHead

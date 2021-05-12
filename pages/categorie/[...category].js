@@ -23,7 +23,7 @@ export default function CategorySingle(props) {
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  const { categoryName, products, cat, pageInfoStatic, menu, seoHead } = props;
+  const { categoryName, products, cat, catBase, pageInfoStatic, menu, seoHead } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
@@ -70,6 +70,7 @@ export default function CategorySingle(props) {
         )}
         <ShopLayout
           categories={cat}
+          catBase={catBase}
           pageInfo={pageInfo}
           setPageInfo={setPageInfo}
         >
@@ -96,7 +97,10 @@ export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
-    variables: { uri: `/categorie/${category.join("/")}/` },
+    variables: {
+      uri: `/categorie/${category.pop()}/`,
+      uriMenu: `/categorie/${category[0]}/`,
+    },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -104,10 +108,11 @@ export async function getStaticProps({ params: { category }, locale }) {
     props: {
       menu,
       categoryName: data?.productCategory?.name || "",
-      pageInfoStatic: data?.productCategory?.products?.pageInfo,
+      pageInfoStatic: data?.productCategory?.products?.pageInfo || {},
       products: data?.productCategory?.products?.nodes || [],
-      cat: data?.cat?.nodes || [],
-      seoHead: data?.seo.seo.fullHead,
+      cat: data?.cat?.children?.nodes || [],
+      catBase: data?.catBase?.nodes || [],
+      seoHead: data?.seo?.seo?.fullHead || "",
     },
     revalidate: 1,
   };
