@@ -44,7 +44,8 @@ const FilterSection = ({ categories, className }) => {
 };
 const BlocCategoriesSelector = ({ categories }) => {
   const router = useRouter();
-  const activeCat = router?.query?.category?.toString();
+  const activeCat =
+    router?.query?.category && router?.query?.category[0]?.toString();
   /*
   const { locale } = router;
   const [categoriesList, setCategoriesList] = useState(
@@ -68,6 +69,7 @@ const BlocCategoriesSelector = ({ categories }) => {
     fetcher
   );
   */
+ console.log(categories)
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (

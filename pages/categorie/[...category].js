@@ -23,12 +23,21 @@ export default function CategorySingle(props) {
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  const { categoryName, products, cat, catBase, pageInfoStatic, menu, seoHead } = props;
+  const {
+    categoryName,
+    products,
+    cat,
+    catBase,
+    pageInfoStatic,
+    menu,
+    seoHead,
+  } = props;
+  // console.log({ cat, catBase, query });
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
-  const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
+  //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
     formattedQuery?.length > 0
       ? `/api/products/?locale=${locale}&${formattedQuery}`
@@ -62,8 +71,7 @@ export default function CategorySingle(props) {
             exit={{ x: -300 }}
             className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
           >
-            {categoryName} {categoryName && categoryIn && " & "}
-            {categoryIn ? categoryIn : null}
+            {categoryName}
           </motion.h3>
         ) : (
           ""
@@ -75,11 +83,7 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {!query?.categoryIn
-              ? filteredProducts.map((product) => (
-                  <Product key={product?.id} product={product} />
-                ))
-              : !isLoading
+            {!isLoading
               ? filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />
                 ))
@@ -95,11 +99,15 @@ export default function CategorySingle(props) {
 
 export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
+  console.log({ category });
+  const queryPath = `/categorie/${category[category.length - 1]}/`;
+  const queryMenuPath = `/categorie/${category[0]}/`;
+  console.log({ queryPath, queryMenuPath });
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
     variables: {
-      uri: `/categorie/${category.pop()}/`,
-      uriMenu: `/categorie/${category[0]}/`,
+      uri: queryPath,
+      uriMenu: queryMenuPath,
     },
   });
   const menu = (await getMenu(locale)) || [];
@@ -110,7 +118,9 @@ export async function getStaticProps({ params: { category }, locale }) {
       categoryName: data?.productCategory?.name || "",
       pageInfoStatic: data?.productCategory?.products?.pageInfo || {},
       products: data?.productCategory?.products?.nodes || [],
-      cat: data?.cat?.children?.nodes || [],
+      cat: data?.cat?.children?.nodes.length
+        ? data?.cat?.children?.nodes
+        : data?.catBase?.nodes || [],
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
     },

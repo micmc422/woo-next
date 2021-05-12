@@ -24,6 +24,7 @@ export default function Home(props) {
     productCategories,
     heroCarousel,
     bestSeller,
+    catBase,
     cat,
     pageInfoStatic,
     menu,
@@ -67,6 +68,7 @@ export default function Home(props) {
           categories={cat}
           pageInfo={pageInfo}
           setPageInfo={setPageInfo}
+          catBase={catBase}
         >
           <motion.div
             className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
@@ -103,7 +105,7 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
-    variables: { uri: "/galerie-photo/" },
+    variables: { uri: "/galerie-photo/", uriMenu: "/categorie/" },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -117,6 +119,7 @@ export async function getStaticProps({ locale }) {
       pageInfoStatic: data?.products?.pageInfo,
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       cat: data?.cat?.nodes ? data.cat.nodes : [],
+      catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo.seo.fullHead,
     },
     revalidate: 1,

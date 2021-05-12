@@ -38,7 +38,7 @@ const ImageContainer = ({ imgarray }) => {
 };
 
 const Vignettes = ({ imgarray, setSelected }) => {
-  console.log(imgarray);
+ // console.log(imgarray);
   return (
     <div className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2`}>
       {imgarray.map(

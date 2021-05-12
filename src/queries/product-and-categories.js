@@ -57,6 +57,21 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
+    catBase: productCategories(first: 50, where: { parent: null }) {
+      nodes {
+        id
+        databaseId
+        name
+        slug
+        uri
+        children {
+          nodes {
+            count
+          }
+        }
+      }
+    }
+
     seo: page(id: $uri, idType: URI) {
       seo {
         fullHead
