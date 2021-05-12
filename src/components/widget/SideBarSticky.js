@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { uniqueId } from "lodash";
 import { useState } from "react";
-import { opacity } from "tailwindcss/defaulttheme";
+
 const animateMenu = {
   initial: (isRight) => ({ x: isRight ? "100%" : "-100%" }),
   animate: { x: 0 },
