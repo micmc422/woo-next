@@ -17,7 +17,7 @@ export default async function handler(
       exclude,
       locale = "fr",
       category = "",
-      categoryIn,
+     // categoryIn,
       min,
       max,
     },
