@@ -44,10 +44,10 @@ export default function Product(props) {
               >
                 <h2 className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-500 title-font">
                   {product?.productCategories?.nodes.map(
-                    ({ name, description, slug }) => {
+                    ({ name, description, uri }) => {
                       return (
                         <Link
-                          href={`/categorie/${slug}`}
+                          href={`${uri}`}
                           passHref
                           key={uniqueId()}
                         >
