@@ -16,9 +16,14 @@ import BlocPrix from "../../src/components/single-product/price/BlocPrix";
 import { useEffect, useState } from "react";
 import ContentParser from "../../src/components/ContentParser";
 import getMenu from "../../src/get-menu-fallback";
+import Head from "next/head";
+import parse from "html-react-parser";
 
 export default function Product(props) {
   const { product, menu } = props;
+  const seoData = product?.seo?.fullHead && parse(product?.seo?.fullHead);
+
+  console.log(product?.seo.fullHead);
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
     product?.variations?.nodes[0]
@@ -31,6 +36,7 @@ export default function Product(props) {
   }
   return (
     <Layout menu={menu}>
+      <Head>{seoData ? seoData : ""}</Head>
       <section className="overflow-hidden text-gray-600 body-font">
         <div className="px-5 py-24 mx-auto">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
@@ -46,11 +52,7 @@ export default function Product(props) {
                   {product?.productCategories?.nodes.map(
                     ({ name, description, uri }) => {
                       return (
-                        <Link
-                          href={`${uri}`}
-                          passHref
-                          key={uniqueId()}
-                        >
+                        <Link href={`${uri}`} passHref key={uniqueId()}>
                           <a className="transition-colors hover:text-gray-800">
                             {name}
                           </a>
@@ -110,7 +112,7 @@ export default function Product(props) {
       </section>
       {product ? (
         <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
-            <ContentParser data={product.description}></ContentParser>
+          <ContentParser data={product.description}></ContentParser>
 
           {false && (
             <div

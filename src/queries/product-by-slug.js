@@ -62,6 +62,14 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           width
         }
       }
+      seo {
+        breadcrumbs {
+          text
+          url
+        }
+        fullHead
+      }
+
       name
       ... on SimpleProduct {
         price

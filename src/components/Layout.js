@@ -6,6 +6,7 @@ import client from "./ApolloClient";
 import Router from "next/router";
 import NProgress from "nprogress";
 import { ApolloProvider } from "@apollo/client";
+import { AnimateSharedLayout } from "framer-motion";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -21,7 +22,9 @@ const Layout = (props) => {
             <title>Woocommerce React Theme</title>
           </Head>
           <Header menu={menu} />
-          {props.children}
+          <AnimateSharedLayout type="crossfade">
+            {props.children}
+          </AnimateSharedLayout>
           <Footer />
         </div>
       </ApolloProvider>

@@ -25,7 +25,15 @@ export const GET_PAGE_BY_URI = gql`
   query MyQuery($uri: ID!) {
     page(id: $uri, idType: URI) {
       id
+      title
       content
+      seo {
+        breadcrumbs {
+          text
+          url
+        }
+        fullHead
+      }
     }
   }
 `;

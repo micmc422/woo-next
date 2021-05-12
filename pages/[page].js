@@ -4,13 +4,17 @@ import { GET_PAGE_BY_URI, GET_PAGES_URI } from "../src/queries/get-pages";
 import { isEmpty } from "lodash";
 import ContentParser from "../src/components/ContentParser";
 import getMenu from "../src/get-menu-fallback";
+import Head from "next/head";
+import parse from "html-react-parser";
 
 export default function Home(props) {
   const { page, menu } = props;
-
+  const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   return (
     <Layout menu={menu}>
-        <ContentParser data={page?.content}></ContentParser>
+      <Head>{seoData ? seoData : " "}</Head>
+
+      <ContentParser data={page?.content}></ContentParser>
     </Layout>
   );
 }

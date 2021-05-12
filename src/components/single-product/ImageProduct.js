@@ -27,25 +27,28 @@ const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(0);
   return (
     <div className="w-full lg:w-1/2">
-      <AnimateSharedLayout type="crossfade">
         <motion.div layout className="relative max-h-screen">
           {imgarray.map(
             (item, i) => selected === i && <ImageProduct {...item} key={i} />
           )}
         </motion.div>
-      </AnimateSharedLayout>
       <Vignettes imgarray={imgarray} setSelected={setSelected} />
     </div>
   );
 };
 
 const Vignettes = ({ imgarray, setSelected }) => {
+  console.log(imgarray);
   return (
     <div className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2`}>
       {imgarray.map(
-        ({ sourceUrl, mediaItemUrl, mediaDetails: { height, width } }, i) => {
+        (
+          { id, sourceUrl, mediaItemUrl, mediaDetails: { height, width } },
+          i
+        ) => {
           return (
-            <div
+            <motion.div
+              layoutId={`image-principale-${id}`}
               className={` w-24 h-24 relative ring-2 ring-brand-500 ring-opacity-60 rounded-md`}
               onClick={() => setSelected(i)}
               key={uniqueId()}
@@ -56,7 +59,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
                 alt="Product Image"
                 layout="fill"
               />
-            </div>
+            </motion.div>
           );
         }
       )}

@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { motion } from "framer-motion";
 import getMenu from "../../src/get-menu-fallback";
+import Head from "next/head";
+import parse from "html-react-parser";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -25,7 +27,9 @@ export default function Home(props) {
     cat,
     pageInfoStatic,
     menu,
+    seoHead,
   } = props;
+  const seoData = seoHead && parse(seoHead);
 
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
@@ -49,6 +53,7 @@ export default function Home(props) {
   }, [query, data?.products?.nodes, locale]);
   return (
     <Layout menu={menu}>
+      <Head>{seoData ? seoData : ""}</Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
         <motion.h3
           initial={{ x: -200 }}
@@ -98,6 +103,7 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
+    variables: { uri: "/galerie-photo/" },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -111,6 +117,7 @@ export async function getStaticProps({ locale }) {
       pageInfoStatic: data?.products?.pageInfo,
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       cat: data?.cat?.nodes ? data.cat.nodes : [],
+      seoHead: data?.seo.seo.fullHead,
     },
     revalidate: 1,
   };

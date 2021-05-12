@@ -127,6 +127,7 @@ const VignettePhoto = ({ product }) => {
       <AnimatePresence>
         {hovered ? (
           <motion.div
+
             key={`image-un`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -136,6 +137,7 @@ const VignettePhoto = ({ product }) => {
               src={imageUrlPrimaire}
               alt="Product image"
               layout="fill"
+              layoutId={`image-principale-${product.galleryImages?.nodes[0].id}`}
               objectFit={orientation}
             />
           </motion.div>

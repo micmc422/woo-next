@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
  * GraphQL categories and products query.
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
-  query MyQuery($after: String, $search: String, $first: Int) {
+  query MyQuery($after: String, $search: String, $first: Int, $uri: ID!) {
     menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {
@@ -57,6 +57,12 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
+    seo: page(id: $uri, idType: URI) {
+      seo {
+        fullHead
+      }
+    }
+
     productCategories(where: { include: [1355, 1356, 1062] }) {
       nodes {
         id

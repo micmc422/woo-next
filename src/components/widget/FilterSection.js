@@ -38,7 +38,7 @@ const FilterSection = ({ categories, className }) => {
     </div>
   );
 };
-const BlocCategoriesSelector = ({ categories }) => {
+const BlocCategoriesSelector = ({ categories, locale }) => {
   const router = useRouter();
   const [categoriesList, setCategoriesList] = useState(
     categories.filter((item) =>
@@ -56,7 +56,7 @@ const BlocCategoriesSelector = ({ categories }) => {
         ?.databaseId
     : null;
   const { data, error } = useSWR(
-    activeCatId ? `/api/categorie/?parent=${activeCatId}` : null,
+    activeCatId ? `/api/categorie/?locale=${locale}&$parent=${activeCatId}` : null,
     fetcher
   );
   useEffect(() => {
@@ -105,7 +105,7 @@ const BlocCategoriesSelector = ({ categories }) => {
       {categoriesList &&
         categoriesList.map((item) => (
           <Link
-            href={item.uri || "../"}
+            href={item.uri.replace("https://photo.paris", "") || "../"}
             passHref
             key={`fieler-item-${item.name}`}
           >

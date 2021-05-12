@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_CATEGORY_SLUG = gql`
-  query PRODUCT_BY_CATEGORY_SLUG($slug: ID!) {
+  query PRODUCT_BY_CATEGORY_SLUG($uri: ID!) {
     megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
       id
       content
@@ -35,7 +35,12 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         }
       }
     }
-    productCategory(id: $slug, idType: SLUG) {
+    seo: category(id: $uri, idType: URI) {
+      seo {
+        fullHead
+      }
+    }
+    productCategory(id: $uri, idType: URI) {
       id
       databaseId
       name

@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import getMenu from "../../src/get-menu-fallback";
 import { motion } from "framer-motion";
+import Head from "next/head";
+import parse from "html-react-parser";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -21,7 +23,7 @@ export default function CategorySingle(props) {
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  const { categoryName, products, cat, pageInfoStatic, menu } = props;
+  const { categoryName, products, cat, pageInfoStatic, menu, seoHead } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
@@ -47,9 +49,10 @@ export default function CategorySingle(props) {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-
+  const seoData = seoHead && parse(seoHead);
   return (
     <Layout menu={menu}>
+      <Head>{seoData ? seoData : ""}</Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
         {categoryName ? (
           <motion.h3
@@ -93,7 +96,7 @@ export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
-    variables: { slug: category[category.length - 1] },
+    variables: { uri: `/categorie/${category.join("/")}/` },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -104,6 +107,7 @@ export async function getStaticProps({ params: { category }, locale }) {
       pageInfoStatic: data?.productCategory?.products?.pageInfo,
       products: data?.productCategory?.products?.nodes || [],
       cat: data?.cat?.nodes || [],
+      seoHead: data?.seo.seo.fullHead,
     },
     revalidate: 1,
   };

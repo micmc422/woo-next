@@ -8,6 +8,8 @@ import LargeSlider from "../src/components/sections/LargeSlider";
 import getMenu from "../src/get-menu-fallback";
 import HomePageSection from "../src/components/home/HomePageSection";
 import { GET_PAGE_BY_URI } from "../src/queries/get-pages";
+import Head from "next/head";
+import parse from "html-react-parser";
 
 export default function Home(props) {
   const {
@@ -17,9 +19,12 @@ export default function Home(props) {
     bestSeller,
     menu,
     homepage,
+    seoHead,
   } = props;
+  const seoData = seoHead && parse(seoHead);
   return (
     <Layout menu={menu}>
+      <Head>{seoData ? seoData : ""}</Head>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Categories*/}
@@ -53,7 +58,7 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
-    variables: { first: 8 },
+    variables: { first: 8, uri: "/" },
     //locale !== "fr" ? 6 : 49
   });
   const homepage = await apolloCli.query({
@@ -73,6 +78,7 @@ export async function getStaticProps({ locale }) {
       products: data?.products?.nodes ? data.products.nodes : [],
       heroCarousel: data?.heroCarousel?.nodes ? data.heroCarousel.nodes : [],
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
+      seoHead: data?.seo.seo.fullHead,
     },
     revalidate: 1,
   };
