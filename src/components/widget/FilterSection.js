@@ -69,7 +69,7 @@ const BlocCategoriesSelector = ({ categories }) => {
     fetcher
   );
   */
- console.log(categories)
+ // console.log(categories)
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (
