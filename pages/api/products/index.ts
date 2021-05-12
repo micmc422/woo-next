@@ -33,7 +33,7 @@ export default async function handler(
       exclude,
       locale,
       category: category ? category : null,
-      categoryIn: categoryIn ? categoryIn : category ? category : null,
+      // categoryIn: categoryIn ? categoryIn : category ? category : null,
       maxPrice: isNaN(Number(max)) ? null : Number(max).toFixed(2),
       minPrice: isNaN(Number(min)) ? null : Number(min).toFixed(2),
     };

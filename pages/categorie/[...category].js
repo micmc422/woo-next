@@ -35,13 +35,16 @@ export default function CategorySingle(props) {
   // console.log({ cat, catBase, query });
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
+  const catName = query?.category?.length
+    ? query.category[query.category.length - 1]
+    : "";
   delete query.category;
   const formattedQuery = new URLSearchParams(query).toString();
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
     formattedQuery?.length > 0
-      ? `/api/products/?locale=${locale}&${formattedQuery}`
+      ? `/api/products/?locale=${locale}&category=${catName}&${formattedQuery}`
       : null,
     fetcher
   );
@@ -55,7 +58,7 @@ export default function CategorySingle(props) {
       setPageInfo(pageInfoStatic);
       setFilteredProducts(products);
     }
-  }, [formattedQuery, data?.products]);
+  }, [formattedQuery, data?.products, products]);
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
