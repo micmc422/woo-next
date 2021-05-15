@@ -31,7 +31,7 @@ const GET_PRODUCTS_QUERY = gql`
     ) {
       nodes {
         id
-        productId
+        productId: databaseId
         averageRating
         slug
         description
