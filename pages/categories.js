@@ -17,8 +17,9 @@ export default function Categories(props) {
   );
 }
 
-export async function getStaticProps() {
-  const { data } = await client.query({
+export async function getStaticProps({ locale }) {
+  const apolloCli = locale === "fr" ? client : clientEng;
+  const { data } = await apolloCli.query({
     query: GET_CATEGORIES_QUERY_FULL,
   });
 

@@ -3,6 +3,7 @@ import Image from "../../../image";
 import { DEFAULT_CATEGORY_IMG_URL } from "../../../constants/urls";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
@@ -20,17 +21,21 @@ const ParentCategoryBlock = (props) => {
   if (category?.image) {
     images.push(category?.image?.sourceUrl);
   }
-      console.log(images);
+  let timer = false;
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveImage((activeImage + 1) % images.length);
-    }, delay);
-    return () => {
-      window.clearInterval(timer);
-    };
-  }, [images]);
+    if (inView) {
+      timer = window.setInterval(() => {
+        setActiveImage((activeImage + 1) % images.length);
+      }, delay);
+      return () => window.clearInterval(timer);
+    }
+  }, [images, inView]);
   return (
-    <div className="mb-5 product">
+    <div className="mb-5 product" ref={ref}>
       <Link href={`/category/${category?.slug}`}>
         <a>
           <div className="relative block w-full h-64 md:h-96">
