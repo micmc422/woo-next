@@ -44,7 +44,7 @@ export const GET_PAGE_BY_URI = gql`
 
 export const GET_PAGES_URI = gql`
   query {
-    pages(where: { authorIn: 12 }, first: 500) {
+    pages(where: { notIn: ["7414", " 5751"] }, first: 500) {
       nodes {
         uri
       }
