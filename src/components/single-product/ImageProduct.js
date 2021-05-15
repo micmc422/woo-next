@@ -4,13 +4,14 @@ import Image from "next/image";
 import { useState } from "react";
 
 const ImageProduct = ({
+  slug,
   sourceUrl,
   mediaItemUrl,
   mediaDetails: { height, width },
 }) => {
   return (
     <motion.div
-      layoutId={`product-image-active`}
+      layoutId={`image-principale-${slug}`}
       className="relative max-h-screen"
     >
       <Image
@@ -27,18 +28,18 @@ const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(0);
   return (
     <div className="w-full lg:w-1/2">
-        <motion.div layout className="relative max-h-screen">
-          {imgarray.map(
-            (item, i) => selected === i && <ImageProduct {...item} key={i} />
-          )}
-        </motion.div>
+      <motion.div layout className="relative max-h-screen">
+        {imgarray.map(
+          (item, i) => selected === i && <ImageProduct {...item} key={i} />
+        )}
+      </motion.div>
       <Vignettes imgarray={imgarray} setSelected={setSelected} />
     </div>
   );
 };
 
 const Vignettes = ({ imgarray, setSelected }) => {
- // console.log(imgarray);
+  // console.log(imgarray);
   return (
     <div className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2`}>
       {imgarray.map(
@@ -47,8 +48,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
           i
         ) => {
           return (
-            <motion.div
-              layoutId={`image-principale-${id}`}
+            <div
               className={` w-24 h-24 relative ring-2 ring-brand-500 ring-opacity-60 rounded-md`}
               onClick={() => setSelected(i)}
               key={uniqueId()}
@@ -59,7 +59,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
                 alt="Product Image"
                 layout="fill"
               />
-            </motion.div>
+            </div>
           );
         }
       )}

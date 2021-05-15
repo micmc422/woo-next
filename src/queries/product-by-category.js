@@ -70,6 +70,19 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
               width
             }
           }
+
+          galleryImages(first: 1) {
+            nodes {
+              id
+              title
+              altText
+              mediaItemUrl
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
           name
           ... on SimpleProduct {
             price

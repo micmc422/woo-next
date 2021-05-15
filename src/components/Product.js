@@ -115,7 +115,7 @@ const VignettePhoto = ({ product }) => {
       product.image.mediaDetails.width > product.image.mediaDetails.height
     ? "cover"
     : "contain";
-  const imageUrlPrimaire = product.galleryImages?.nodes[0]
+    const imageUrlPrimaire = product.galleryImages?.nodes[0]
     ? product.galleryImages?.nodes[0].mediaItemUrl
     : product.image?.sourceUrl;
   const imageUrlSecondaire = product.image?.sourceUrl;
@@ -135,9 +135,9 @@ const VignettePhoto = ({ product }) => {
           >
             <ImageWithFallback
               src={imageUrlPrimaire}
+              slug={product.slug}
               alt="Product image"
               layout="fill"
-              layoutId={`image-principale-${product.galleryImages?.nodes[0].id}`}
               objectFit={orientation}
             />
           </motion.div>
@@ -150,6 +150,7 @@ const VignettePhoto = ({ product }) => {
           >
             <ImageWithFallback
               src={imageUrlSecondaire}
+              slug={product.slug}
               alt="Product image"
               layout="fill"
               objectFit={orientation}
