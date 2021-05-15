@@ -33,7 +33,7 @@ export default function CategorySingle(props) {
     pageInfoStatic,
     menu,
     seoHead,
-    page,
+    catData,
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
@@ -63,6 +63,7 @@ export default function CategorySingle(props) {
     }
   }, [formattedQuery, data?.products, products]);
   if (router.isFallback) {
+    console.log("fallback");
     return <div>Loading...</div>;
   }
   const seoData = seoHead && parse(seoHead);
@@ -131,6 +132,7 @@ export async function getStaticProps({ params: { category }, locale }) {
         : data?.catBase?.nodes || [],
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
+      catData: data?.productCategory,
       ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
     },
     revalidate: 1,
@@ -168,7 +170,6 @@ export async function getStaticPaths({}) {
   dataEn?.data?.productCategories?.nodes &&
     dataEn?.data?.productCategories?.nodes.map((productCategory) => {
       if (!isEmpty(productCategory?.uri)) {
-
         pathsData.push({
           params: {
             category: productCategory?.uri
@@ -181,7 +182,7 @@ export async function getStaticPaths({}) {
         });
       }
     });
-  pathsData.map((item) => console.log(item.params.category));
+  // pathsData.map((item) => console.log(item.params.category));
   return {
     paths: pathsData,
     fallback: true,

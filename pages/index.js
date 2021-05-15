@@ -24,7 +24,7 @@ export default function Home(props) {
   } = props;
   const seoData = seoHead && parse(seoHead);
   return (
-    <Layout menu={menu} translations={homepage?.translations}>
+    <Layout menu={menu}>
       <Head>{seoData ? seoData : ""}</Head>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
