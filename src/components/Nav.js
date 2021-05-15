@@ -14,6 +14,7 @@ const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
+  console.log(translations[0].href);
   return (
     <nav className="bg-white">
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">
@@ -22,7 +23,7 @@ const Nav = ({ menu, translations }) => {
         <Link
           href={
             translations && translations[0]
-              ? translations[0].href.replace("http://photo.paris")
+              ? translations[0].href.replace(/^http(s):\/\/photo.paris/i, "")
               : router.asPath
           }
           locale={router.locale === "fr" ? "en" : "fr"}
