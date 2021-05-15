@@ -13,10 +13,10 @@ import { uniqueId } from "lodash";
 const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
-  
+
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
-  if(translations) {
-    console.log(translations)
+  if (translations) {
+    console.log(translations);
   }
   return (
     <nav className="bg-white">
@@ -27,7 +27,9 @@ const Nav = ({ menu, translations }) => {
           href={
             translations && translations[0]
               ? translations[0].href.replace(/^http(s):\/\/photo.paris/i, "")
-              : router.asPath
+              : !router.asPath.includes("/galerie-photo/")
+              ? router.asPath
+              : "/galerie-photo/"
           }
           locale={router.locale === "fr" ? "en" : "fr"}
           passHref
