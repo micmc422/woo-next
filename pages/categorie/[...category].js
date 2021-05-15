@@ -63,7 +63,6 @@ export default function CategorySingle(props) {
     }
   }, [formattedQuery, data?.products, products]);
   if (router.isFallback) {
-    console.log("fallback");
     return <div>Loading...</div>;
   }
   const seoData = seoHead && parse(seoHead);

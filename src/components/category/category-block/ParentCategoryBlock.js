@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "framer-motion";
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
   const [activeImage, setActiveImage] = useState(0);
-  console.log(i);
   let images = [];
   const delay = 1500 + ((300 * i) % 3000);
   if (category.products.nodes) {
@@ -17,13 +16,9 @@ const ParentCategoryBlock = (props) => {
     });
   }
   if (category?.image) {
-    console.log(category?.image);
     images.push(category?.image?.sourceUrl);
   }
   useEffect(() => {
-    /*
-    console.log(i);
-    */
     const timer = window.setInterval(() => {
       setActiveImage((activeImage + 1) % images.length);
     }, delay);
