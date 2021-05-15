@@ -165,11 +165,35 @@ export async function getStaticPaths({}) {
               .slice(1, 99),
           },
         });
+        pathsData.push({
+          params: {
+            category: productCategory?.uri
+              .replace("https://photo.paris", "")
+              .split("/")
+              .filter(
+                (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
+              )
+              .slice(1, 99),
+          },
+          locale: "en",
+        });
       }
     });
   dataEn?.data?.productCategories?.nodes &&
     dataEn?.data?.productCategories?.nodes.map((productCategory) => {
       if (!isEmpty(productCategory?.uri)) {
+        pathsData.push({
+          params: {
+            category: productCategory?.uri
+              .replace("https://photo.paris", "")
+              .split("/")
+              .filter(
+                (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
+              )
+              .slice(1, 99),
+          },
+        });
+
         pathsData.push({
           params: {
             category: productCategory?.uri
