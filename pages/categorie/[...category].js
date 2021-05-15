@@ -144,7 +144,7 @@ export async function getStaticPaths({}) {
     query: PRODUCT_CATEGORIES_SLUGS,
   });
 
-  const { dataEn } = await apolloCliEng.query({
+  const dataEn = await apolloCliEng.query({
     query: PRODUCT_CATEGORIES_SLUGS,
   });
 
@@ -158,27 +158,29 @@ export async function getStaticPaths({}) {
           params: {
             category: productCategory?.uri
               .split("/")
-              .filter((e) => e !== "")
+              .filter((e) => e !== "" && !e.includes("?lang="))
               .slice(1, 99),
           },
           locale: "fr",
         });
       }
     });
-  dataEn?.productCategories?.nodes &&
-    dataEn?.productCategories?.nodes.map((productCategory) => {
-      if (!isEmpty(productCategory?.slug)) {
+  dataEn?.data?.productCategories?.nodes &&
+    dataEn?.data?.productCategories?.nodes.map((productCategory) => {
+      if (!isEmpty(productCategory?.uri)) {
         pathsData.push({
           params: {
             category: productCategory?.uri
               .split("/")
-              .filter((e) => e !== "")
+              .filter((e) => e !== "" && !e.includes("?lang="))
               .slice(1, 99),
           },
           locale: "en",
         });
       }
     });
+  pathsData.map((item) => console.log(item.params.category));
+  console.log({ ...pathsData });
   return {
     paths: pathsData,
     fallback: true,
