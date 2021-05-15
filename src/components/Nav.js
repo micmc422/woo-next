@@ -10,19 +10,28 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
 
-const Nav = ({ menu }) => {
+const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
+  console.log(translations);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   return (
     <nav className="bg-white">
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">
         <div>contact</div>
         <div>annonce</div>
-        <Link href="/" locale={router.locale === "fr" ? "en" : "fr"}>
-          <div className="self-end w-5 h-5">
+        <Link
+          href={
+            translations && translations[0]
+              ? translations[0].href
+              : router.asPath
+          }
+          locale={router.locale === "fr" ? "en" : "fr"}
+          passHref
+        >
+          <a className="self-end w-5 h-5">
             <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
-          </div>
+          </a>
         </Link>
       </div>
       <div className="container flex flex-wrap items-center justify-between p-4 mx-auto">

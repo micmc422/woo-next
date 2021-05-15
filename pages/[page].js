@@ -8,10 +8,11 @@ import Head from "next/head";
 import parse from "html-react-parser";
 
 export default function Home(props) {
+  console.log(props)
   const { page, menu } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} translations={page?.translations}>
       <Head>{seoData ? seoData : " "}</Head>
 
       <ContentParser data={page?.content}></ContentParser>
@@ -37,12 +38,10 @@ export async function getStaticProps({ locale, params }) {
 }
 
 export async function getStaticPaths() {
-  const apolloCli = client;
-  const apolloCliEng = clientEng;
-  const { data } = await apolloCli.query({
+  const { data } = await client.query({
     query: GET_PAGES_URI,
   });
-  const { dataEn } = await apolloCliEng.query({
+  const { dataEn } = await clientEng.query({
     query: GET_PAGES_URI,
   });
 

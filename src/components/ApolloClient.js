@@ -35,6 +35,10 @@ export const middleware = new ApolloLink((operation, forward) => {
  */
 export const afterware = new ApolloLink((operation, forward) => {
   return forward(operation).map((response) => {
+    if (!process.browser) {
+      return response;
+    }
+
     /**
      * Check for session header and update session in local storage accordingly.
      */

@@ -20,10 +20,11 @@ export default function Home(props) {
     menu,
     homepage,
     seoHead,
+    data,
   } = props;
   const seoData = seoHead && parse(seoHead);
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} translations={homepage?.translations}>
       <Head>{seoData ? seoData : ""}</Head>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
@@ -58,18 +59,20 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
-    variables: { first: 8, uri: "/" },
+    variables: { first: 8, uri: "/", uriMenu: "/" },
     //locale !== "fr" ? 6 : 49
   });
   const homepage = await apolloCli.query({
     query: GET_PAGE_BY_URI,
     variables: { uri: "/" },
   });
-
+  /*
+   */
   const menu = (await getMenu(locale)) || [];
 
   return {
     props: {
+      data,
       homepage: homepage.data.page,
       menu,
       productCategories: data?.productCategories?.nodes
@@ -78,7 +81,7 @@ export async function getStaticProps({ locale }) {
       products: data?.products?.nodes ? data.products.nodes : [],
       heroCarousel: data?.heroCarousel?.nodes ? data.heroCarousel.nodes : [],
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
-      seoHead: data?.seo.seo.fullHead,
+      seoHead: data?.seo?.seo?.fullHead || "",
     },
     revalidate: 1,
   };

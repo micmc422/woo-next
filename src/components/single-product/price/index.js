@@ -1,65 +1,47 @@
-import { isEmpty } from "lodash";
+import {isEmpty} from "lodash";
 
 const Price = ({ regularPrice = 0, salesPrice }) => {
-  if (isEmpty(salesPrice)) {
-    return null;
-  }
 
-  /**
-   * Get discount percent.
-   *
-   * @param {String} regularPrice
-   * @param {String} salesPrice
-   */
-  const discountPercent = (regularPrice, salesPrice) => {
-    if (isEmpty(regularPrice) || isEmpty(salesPrice)) {
-      return null;
+    if ( isEmpty( salesPrice ) ) {
+    	return null;
     }
 
-    const formattedRegularPrice = parseInt(regularPrice?.substring(1));
-    const formattedSalesPrice = parseInt(salesPrice?.substring(1));
+    /**
+     * Get discount percent.
+     *
+     * @param {String} regularPrice
+     * @param {String} salesPrice
+     */
+    const discountPercent = ( regularPrice, salesPrice ) => {
+        if( isEmpty( regularPrice ) || isEmpty(salesPrice) ) {
+            return null;
+        }
 
-    const discountPercent =
-      ((formattedRegularPrice - formattedSalesPrice) / formattedRegularPrice) *
-      100;
+        const formattedRegularPrice = parseInt( regularPrice?.substring(1) );
+        const formattedSalesPrice = parseInt( salesPrice?.substring(1) );
 
-    return {
-      discountPercent:
-        formattedSalesPrice !== formattedRegularPrice
-          ? `(${discountPercent.toFixed(2)}%) OFF`
-          : null,
-      strikeThroughClass:
-        formattedSalesPrice < formattedRegularPrice
-          ? "product-regular-price mr-2 line-through text-sm text-gray-600 font-normal"
-          : "",
-    };
-  };
+        const discountPercent = ( ( formattedRegularPrice - formattedSalesPrice ) / formattedRegularPrice ) * 100;
 
-  const productMeta = discountPercent(regularPrice, salesPrice);
-  const formattedPrice = regularPrice.split(" - ")[0];
-  const useFormattedPrice = regularPrice.split(" - ")[1];
-  return (
-    <h6 className="mb-5 mr-3 font-semibold text-gray-800 product-price">
-      {/* Regular price */}
-      {productMeta?.discountPercent ? (
-        <span className="mr-2 product-price">{salesPrice}</span>
-      ) : null}
+        return {
+            discountPercent: formattedSalesPrice !== formattedRegularPrice ? `(${discountPercent.toFixed(2)}%) OFF` : null,
+            strikeThroughClass: formattedSalesPrice < formattedRegularPrice ? 'product-regular-price mr-2 line-through text-sm text-gray-600 font-normal' : ''
+        }
+    }
 
-      {/* Discounted price */}
-      {useFormattedPrice ? (
-        <span className={productMeta?.strikeThroughClass}>
-          à partir de {formattedPrice}
-        </span>
-      ) : (
-        <span className={productMeta?.strikeThroughClass}>{regularPrice}</span>
-      )}
+    const productMeta = discountPercent( regularPrice, salesPrice );
 
-      {/* Discount percent */}
-      <span className="text-sm font-normal font-bold text-green-600 product-discount">
-        {productMeta?.discountPercent}
-      </span>
-    </h6>
-  );
-};
+    return (
+        <h6 className="product-price text-gray-800 font-semibold mr-3 mb-5">
+            {/* Regular price */}
+            { productMeta?.discountPercent ? <span className="product-price mr-2">{salesPrice}</span> : null }
 
-export default Price;
+            {/* Discounted price */}
+            <span className={productMeta?.strikeThroughClass}>{ regularPrice }</span>
+
+            {/* Discount percent */}
+            <span className="product-discount text-green-600 font-bold text-sm font-normal">{productMeta?.discountPercent}</span>
+        </h6>
+    )
+}
+
+export default Price

@@ -1,187 +1,270 @@
-import { useState, useContext, useEffect } from "react";
-import Billing from "./Billing";
+import {useState, useContext, useEffect} from 'react';
+import {useMutation, useQuery} from '@apollo/client';
+
 import YourOrder from "./YourOrder";
 import PaymentModes from "./PaymentModes";
-import { AppContext } from "../context/AppContext";
-import validateAndSanitizeCheckoutForm from "../../validator/checkout";
-import { useMutation, useQuery } from "@apollo/client";
-import { getFormattedCart, createCheckoutData } from "../../functions";
+import {AppContext} from "../context/AppContext";
+import validateAndSanitizeCheckoutForm from '../../validator/checkout';
+import {getFormattedCart, createCheckoutData} from "../../functions";
 import OrderSuccess from "./OrderSuccess";
 import GET_CART from "../../queries/get-cart";
 import CHECKOUT_MUTATION from "../../mutations/checkout";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import StripeCheckoutForm from "./StripeCheckout";
+import Address from "./Address";
+import {
+    handleBillingDifferentThanShipping,
+    handleCreateAccount,
+    setStatesForCountry
+} from "../../utils/checkout";
+import CheckboxField from "./form-elements/CheckboxField";
 
-const promise = loadStripe(
-  "pk_test_51HtCQlFIWeEGR1HAQFSJNZfBTbohYe6xZ8P3M4ftO5pbOUVodzBr9DNDCnlYL16wxRRy3UWEevPAXuTWhwhrnmMB007Xq5lzWP"
-);
+// Use this for testing purposes, so you dont have to fill the checkout form over an over again.
+// const defaultCustomerInfo = {
+// 	firstName: 'Imran',
+// 	lastName: 'Sayed',
+// 	address1: '123 Abc farm',
+// 	address2: 'Hill Road',
+// 	city: 'Mumbai',
+// 	country: 'IN',
+// 	state: 'Maharastra',
+// 	postcode: '221029',
+// 	email: 'codeytek.academy@gmail.com',
+// 	phone: '9883778278',
+// 	company: 'The Company',
+// 	errors: null
+// }
 
-const CheckoutForm = () => {
-  const defaultCustomerInfo = {
-    firstName: "",
-    lastName: "",
-    company: "",
-    country: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    postcode: "",
-    phone: "",
-    email: "",
-    createAccount: false,
-    orderNotes: "",
-    paymentMethod: "STRIPE",
-    errors: null,
-  };
-  // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
-  // const initialState = {
-  // 	firstName: 'Imran',
-  // 	lastName: 'Sayed',
-  // 	address1: '109 Hills Road Valley',
-  // 	address2: 'Station Road',
-  // 	city: 'Pune',
-  // 	state: 'Maharastra',
-  // 	country: 'ID',
-  // 	postcode: '400298',
-  // 	phone: '9959338989',
-  // 	email: 'imran@gmail.com',
-  // 	company: 'Tech',
-  // 	createAccount: false,
-  // 	orderNotes: '',
-  // 	paymentMethod: 'cod',
-  // 	errors: null
-  // };
-  const initialState = {
-    billing: {
-      ...defaultCustomerInfo,
-    },
-    shipping: {
-      ...defaultCustomerInfo,
-    },
-    createAccount: false,
-    orderNotes: "",
-    billingDifferentThanShipping: false,
-    paymentMethod: "Stripe",
-  };
-  const [isValid, setIsValid] = useState(false);
-  const [cart, setCart] = useContext(AppContext);
-  const [input, setInput] = useState(initialState);
-  const [orderData, setOrderData] = useState(null);
-  const [requestError, setRequestError] = useState(null);
-  // console.log(input);
+const defaultCustomerInfo = {
+    firstName: '',
+    lastName: '',
+    address1: '',
+    address2: '',
+    city: '',
+    country: '',
+    state: '',
+    postcode: '',
+    email: '',
+    phone: '',
+    company: '',
+    errors: null
+}
 
-  // Get Cart Data.
-  const { loading, error, data, refetch } = useQuery(GET_CART, {
-    notifyOnNetworkStatusChange: true,
-    onCompleted: () => {
-      // console.warn( 'completed GET_CART' );
+const CheckoutForm = ({countriesData}) => {
 
-      // Update cart in the localStorage.
-      const updatedCart = getFormattedCart(data);
-      localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
+    const {billingCountries, shippingCountries} = countriesData || {}
 
-      // Update cart data in React Context.
-      setCart(updatedCart);
-    },
-  });
+    const initialState = {
+        billing: {
+            ...defaultCustomerInfo,
+        },
+        shipping: {
+            ...defaultCustomerInfo
+        },
+        createAccount: false,
+        orderNotes: '',
+        billingDifferentThanShipping: false,
+        paymentMethod: 'cod',
+    };
 
-  /*
-   * Handle onchange input.
-   *
-   * @param {Object} event Event Object.
-   *
-   * @return {void}
-   */
-  const handleOnChange = (event) => {
-    if ("createAccount" === event.target.name) {
-      const newState = { ...input, [event.target.name]: !input.createAccount };
-      setInput(newState);
-    } else {
-      const newState = { ...input, [event.target.name]: event.target.value };
-      setInput(newState);
-    }
-  };
+    const [cart, setCart] = useContext(AppContext);
+    const [input, setInput] = useState(initialState);
+    const [orderData, setOrderData] = useState(null);
+    const [requestError, setRequestError] = useState(null);
+    const [theShippingStates, setTheShippingStates] = useState([]);
+    const [isFetchingShippingStates, setIsFetchingShippingStates] = useState(false);
+    const [theBillingStates, setTheBillingStates] = useState([]);
+    const [isFetchingBillingStates, setIsFetchingBillingStates] = useState(false);
 
-  useEffect(() => {
-    if (null !== orderData) {
-      // Call the checkout mutation when the value for orderData changes/updates.
-      // checkout();
-      // console.log(orderData);
-    }
-  }, [orderData]);
+    // Get Cart Data.
+    const {data} = useQuery(GET_CART, {
+        notifyOnNetworkStatusChange: true,
+        onCompleted: () => {
+            // Update cart in the localStorage.
+            const updatedCart = getFormattedCart(data);
+            localStorage.setItem('woo-next-cart', JSON.stringify(updatedCart));
 
-  useEffect(() => {
-    if (null !== input) {
-      const result = validateAndSanitizeCheckoutForm(input);
-      setIsValid(result.isValid);
-      if (result.isValid) {
+            // Update cart data in React Context.
+            setCart(updatedCart);
+        }
+    });
+
+    // Create New order: Checkout Mutation.
+    const [checkout, {
+        data: checkoutResponse,
+        loading: checkoutLoading,
+    }] = useMutation(CHECKOUT_MUTATION, {
+        variables: {
+            input: orderData
+        },
+        onError: (error) => {
+            if (error) {
+                setRequestError(error?.graphQLErrors?.[0]?.message ?? '');
+            }
+        }
+    });
+
+    /*
+     * Handle form submit.
+     *
+     * @param {Object} event Event Object.
+     *
+     * @return {void}
+     */
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+
+        /**
+         * Validate Billing and Shipping Details
+         *
+         * Note:
+         * 1. If billing is different than shipping address, only then validate billing.
+         * 2. We are passing theBillingStates?.length and theShippingStates?.length, so that
+         * the respective states should only be mandatory, if a country has states.
+         */
+        const billingValidationResult = input?.billingDifferentThanShipping ? validateAndSanitizeCheckoutForm(input?.billing, theBillingStates?.length) : {errors: null, isValid: true};
+        const shippingValidationResult = validateAndSanitizeCheckoutForm(input?.shipping, theShippingStates?.length);
+
+        if (!shippingValidationResult.isValid || !billingValidationResult.isValid) {
+            setInput({
+                ...input,
+                billing: {...input.billing, errors: billingValidationResult.errors},
+                shipping: {...input.shipping, errors: shippingValidationResult.errors}
+            });
+
+            return;
+        }
+
         const checkOutData = createCheckoutData(input);
-        setOrderData(checkOutData);
         setRequestError(null);
-      }
+        /**
+         *  When order data is set, checkout mutation will automatically be called,
+         *  because 'orderData' is added in useEffect as a dependency.
+         */
+        setOrderData(checkOutData);
+    };
+
+    /*
+     * Handle onchange input.
+     *
+     * @param {Object} event Event Object.
+     * @param {bool} isShipping If this is false it means it is billing.
+     * @param {bool} isBillingOrShipping If this is false means its standard input and not billing or shipping.
+     *
+     * @return {void}
+     */
+    const handleOnChange = async (event, isShipping = false, isBillingOrShipping = false) => {
+
+        const {target} = event || {};
+
+        if ('createAccount' === target.name) {
+            handleCreateAccount(input, setInput, target)
+        } else if ('billingDifferentThanShipping' === target.name) {
+            handleBillingDifferentThanShipping(input, setInput, target);
+        } else if (isBillingOrShipping) {
+            if (isShipping) {
+                await handleShippingChange(target)
+            } else {
+                await handleBillingChange(target)
+            }
+        } else {
+            const newState = {...input, [target.name]: target.value};
+            setInput(newState);
+        }
+    };
+
+    const handleShippingChange = async (target) => {
+        const newState = {...input, shipping: {...input?.shipping, [target.name]: target.value}};
+        setInput(newState);
+        await setStatesForCountry(target, setTheShippingStates, setIsFetchingShippingStates);
     }
-    //console.log(orderData);
-  }, [input]);
-  // console.log(orderData);
-  return (
-    <>
-      {cart ? (
-        <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
-          <form className="woo-next-checkout-form">
-            <div>
-              {/*Billing Details*/}
-              <div className="billing-details">
-                <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
-                <Billing input={input} handleOnChange={handleOnChange} />
-              </div>
-              {/* Order & Payments*/}
-            </div>
-          </form>
-          <div>
-            {" "}
-            <div className="your-orders">
-              {/*	Order*/}
-              <h2 className="mb-4 text-xl font-medium">Your Order</h2>
-              <YourOrder cart={cart} />
-              <div className="max-w-md mx-auto">
-                {" "}
-                {isValid && orderData ? (
-                  <Elements stripe={promise}>
-                    <StripeCheckoutForm
-                      amount={cart.totalProductsPrice
-                        .replace("€", "")
-                        .replace(",", ".")}
-                      orderData={orderData}
-                      cart={cart}
-                    />
-                  </Elements>
-                ) : (
-                  <div>Info manquantes</div>
-                )}
-              </div>
-              {/*Payment              <PaymentModes input={input} handleOnChange={handleOnChange} />   
-              <div className="max-w-md mx-auto">
-                <button
-                  className="w-auto px-5 py-3 text-white rounded-sm bg-brand-600 xl:w-full"
-                  type="submit"
-                >
-                  Place Order
-                </button>
-              </div>  */}
-              {/* Checkout Loading*/}
-              {requestError && (
-                <p>Error : {requestError} :( Please try again</p>
-              )}
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-    </>
-  );
+
+    const handleBillingChange = async (target) => {
+        const newState = {...input, billing: {...input?.billing, [target.name]: target.value}};
+        setInput(newState);
+        await setStatesForCountry(target, setTheBillingStates, setIsFetchingBillingStates);
+    }
+
+    useEffect(async () => {
+
+        if (null !== orderData) {
+            // Call the checkout mutation when the value for orderData changes/updates.
+            await checkout();
+        }
+
+    }, [orderData]);
+
+    return (
+        <>
+            {cart ? (
+                <form onSubmit={handleFormSubmit} className="woo-next-checkout-form">
+                    <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
+                        <div>
+                            {/*Shipping Details*/}
+                            <div className="billing-details">
+                                <h2 className="mb-4 text-xl font-medium">Shipping Details</h2>
+                                <Address
+                                    states={theShippingStates}
+                                    countries={shippingCountries}
+                                    input={input?.shipping}
+                                    handleOnChange={(event) => handleOnChange(event, true, true)}
+                                    isFetchingStates={isFetchingShippingStates}
+                                    isShipping
+                                    isBillingOrShipping
+                                />
+                            </div>
+                            <div>
+                                <CheckboxField
+                                    name="billingDifferentThanShipping"
+                                    type="checkbox"
+                                    checked={input?.billingDifferentThanShipping}
+                                    handleOnChange={handleOnChange}
+                                    label="Billing different than shipping"
+                                    containerClassNames="mb-4 pt-4"
+                                />
+                            </div>
+                            {/*Billing Details*/}
+                            {input?.billingDifferentThanShipping ? (
+                                <div className="billing-details">
+                                    <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
+                                    <Address
+                                        states={theBillingStates}
+                                        countries={billingCountries}
+                                        input={input?.billing}
+                                        handleOnChange={(event) => handleOnChange(event, false, true)}
+                                        isFetchingStates={isFetchingBillingStates}
+                                        isShipping={false}
+                                        isBillingOrShipping
+                                    />
+                                </div>
+                            ) : null}
+
+                        </div>
+                        {/* Order & Payments*/}
+                        <div className="your-orders">
+                            {/*	Order*/}
+                            <h2 className="mb-4 text-xl font-medium">Your Order</h2>
+                            <YourOrder cart={cart}/>
+
+                            {/*Payment*/}
+                            <PaymentModes input={input} handleOnChange={handleOnChange}/>
+                            <div className="mt-5 woo-next-place-order-btn-wrap">
+                                <button className="w-auto px-5 py-3 text-white rounded-sm bg-brand-600 xl:w-full"
+                                        type="submit">
+                                    Place Order
+                                </button>
+                            </div>
+
+                            {/* Checkout Loading*/}
+                            {checkoutLoading && <p>Processing Order...</p>}
+                            {requestError && <p>Error : {requestError} :( Please try again</p>}
+                        </div>
+                    </div>
+                </form>
+            ) : ''}
+
+            {/*	Show message if Order Success*/}
+            <OrderSuccess response={checkoutResponse}/>
+        </>
+    );
 };
 
 export default CheckoutForm;

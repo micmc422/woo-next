@@ -38,23 +38,13 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         name
         slug
         uri
-        children {
-          nodes {
-            count
-          }
-        }
       }
     }
 
-    seo: category(id: $uri, idType: URI) {
-      seo {
-        fullHead
-      }
-    }
     productCategory(id: $uri, idType: URI) {
       id
-      databaseId
       name
+      uri
       products(first: 50) {
         pageInfo {
           endCursor
@@ -64,7 +54,8 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         }
         nodes {
           id
-          productId
+          productId: databaseId
+
           averageRating
           slug
           description
@@ -77,18 +68,6 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
             mediaDetails {
               height
               width
-            }
-          }
-          galleryImages(first: 1) {
-            nodes {
-              id
-              title
-              altText
-              mediaItemUrl
-              mediaDetails {
-                height
-                width
-              }
             }
           }
           name

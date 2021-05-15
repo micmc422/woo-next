@@ -13,15 +13,15 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const Layout = (props) => {
-  const { menu } = props;
+  const { menu, translations } = props;
   return (
     <AppProvider>
       <ApolloProvider client={client}>
         <div>
           <Head>
-            <title>Woocommerce React Theme</title>
+            <title>Galerie paris est une photo</title>
           </Head>
-          <Header menu={menu} />
+          <Header menu={menu}  translations={translations}/>
           <AnimateSharedLayout type="crossfade">
             {props.children}
           </AnimateSharedLayout>

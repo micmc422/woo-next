@@ -294,17 +294,6 @@ const defaultOptions = {
         );
       }
     }
-    /*
-    console.log(children);
-    const cleanCildren = children
-      .map(({ data }) => data?.trim())
-      .filter((node) => node && node !== "");
-    if (cleanCildren.length > 0) {
-      // console.log(cleanCildren);
-
-      return <>{cleanCildren}</>;
-    }
-*/
     return <>{domToReact(children, defaultOptions)}</>;
   },
 };

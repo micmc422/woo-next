@@ -2,54 +2,15 @@ import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query Product($slug: ID!) {
-    megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
-      id
-      content
-      uri
-      title
-    }
-    menu: menus(first: 1, where: { id: 6 }) {
-      nodes {
-        menuItems {
-          edges {
-            node {
-              label
-              title
-              url
-            }
-          }
-        }
-      }
-    }
     product(id: $slug, idType: SLUG) {
       id
-      productId
+      productId: databaseId
       averageRating
       slug
       description
-      reviewCount
-      reviews {
-        averageRating
-      }
-      galleryImages {
-        nodes {
-          id
-          title
-          altText
-          mediaItemUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-      }
-      productCategories {
-        nodes {
-          slug
-          name
-          description
-          uri
-        }
+      name
+      seo {
+        fullHead
       }
       image {
         id
@@ -62,15 +23,17 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           width
         }
       }
-      seo {
-        breadcrumbs {
-          text
-          url
+      galleryImages {
+        nodes {
+          sourceUrl
+          mediaItemUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
         }
-        fullHead
       }
-
-      name
       ... on SimpleProduct {
         price
         id
@@ -80,23 +43,19 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
         price
         id
         regularPrice
-        variations {
+        variations(where: { orderby: { field: PRICE, order: DESC } }) {
           nodes {
+            productId: databaseId
             name
-            price
-            manageStock
-            regularPrice
-            salePrice
-            stockQuantity
-            status
-            variationId
             id
+            price
           }
         }
       }
       ... on ExternalProduct {
         price
         id
+        productId: databaseId
         regularPrice
         externalUrl
       }

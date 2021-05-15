@@ -52,6 +52,8 @@ const HeroCarousel = ({ heroCarousel }) => {
   const { image, id, name, title, slug, featuredImage } = heroCarousel[
     activeIndex
   ];
+//  console.log(heroCarousel[activeIndex]);
+  // return null;
   return (
     <div className="flex flex-col justify-between overflow-hidden banner sm:flex-row">
       <div className="banner-img sm:w-8/12">

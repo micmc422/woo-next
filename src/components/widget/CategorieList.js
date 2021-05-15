@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TitreWidget } from "../themeComponents";
 
 const animationParent = {
@@ -22,11 +23,16 @@ const animationChild = {
 const CategorieList = ({ navCatData, className }) => {
   const [check, setCheck] = useState(true);
   // ...
+  const { t } = useTranslation("shop");
 
   return (
-    <div className={`flex bg-white float-right flex-col lg:h-auto lg:min-h-0 min-h-screen space-y-4 ${className ? className : ""}`}>
+    <div
+      className={`flex bg-white float-right flex-col lg:h-auto lg:min-h-0 min-h-screen space-y-4 ${
+        className ? className : ""
+      }`}
+    >
       <TitreWidget onClick={() => setCheck((prevCheck) => !prevCheck)}>
-        Catégories
+        {t("categories")}
       </TitreWidget>
       <AnimatePresence exitBeforeEnter>
         {check && (
@@ -46,8 +52,8 @@ const CategorieList = ({ navCatData, className }) => {
 };
 
 const SideNavRoot = ({ navCatData }) => {
-  return navCatData.map((item) => (
-    <motion.div variants={animationChild}>
+  return navCatData.map((item, i) => (
+    <motion.div variants={animationChild} key={`side-nav-item-${i}`}>
       <NavRootItem {...item}></NavRootItem>
     </motion.div>
   ));

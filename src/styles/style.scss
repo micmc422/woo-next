@@ -1,7 +1,3 @@
-
-@import "./input-range/scss/index.scss";
-@import "./stripe.scss";
-
 .product {
   img {
     width: 100%;
@@ -84,12 +80,6 @@
 .woo-next-cart-total-container {
   max-height: 200px;
   height: 100%;
-}
-
-.woo-next-checkout-form {
-  label {
-    display: block;
-  }
 }
 
 .main-title {

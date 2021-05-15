@@ -1,3 +1,4 @@
+const { i18n } = require("./next-i18next.config");
 const path = require("path");
 module.exports = {
   trailingSlash: true,
@@ -15,8 +16,5 @@ module.exports = {
   images: {
     domains: ["photo.paris", "via.placeholder.com"],
   },
-  i18n: {
-    locales: ["fr", "en"],
-    defaultLocale: "fr",
-  },
+  i18n,
 };

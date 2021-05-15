@@ -14,6 +14,9 @@ import getMenu from "../../src/get-menu-fallback";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import parse from "html-react-parser";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18nextConfig from "../../next-i18next.config";
+import { GET_PAGE_BY_URI } from "../../src/queries/get-pages";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -31,6 +34,7 @@ export default function CategorySingle(props) {
     pageInfoStatic,
     menu,
     seoHead,
+    page,
   } = props;
   // console.log({ cat, catBase, query });
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -114,6 +118,8 @@ export async function getStaticProps({ params: { category }, locale }) {
       uriMenu: queryMenuPath,
     },
   });
+  console.log(`categorie/${category.join("/")}`);
+
   const menu = (await getMenu(locale)) || [];
 
   return {
@@ -127,6 +133,7 @@ export async function getStaticProps({ params: { category }, locale }) {
         : data?.catBase?.nodes || [],
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
+      ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
     },
     revalidate: 1,
   };
@@ -148,7 +155,7 @@ export async function getStaticPaths({}) {
   data?.productCategories?.nodes &&
     data?.productCategories?.nodes.map((productCategory) => {
       /// console.log(data?.productCategories?.nodes);
-      if (!isEmpty(productCategory?.slug)) {
+      if (!isEmpty(productCategory?.uri)) {
         pathsData.push({
           params: {
             category: productCategory?.uri

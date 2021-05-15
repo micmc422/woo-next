@@ -7,9 +7,11 @@ import { v4 } from "uuid";
 import GET_CART from "../../queries/get-cart";
 import ADD_TO_CART from "../../mutations/add-to-cart";
 import { Bouton } from "../themeComponents";
+import { useTranslation } from "next-i18next";
 
 const AddToCart = (props) => {
   const { product, children } = props;
+  const { t } = useTranslation("shop");
 
   const productQryInput = {
     clientMutationId: v4(), // Generate a unique id.
@@ -62,7 +64,7 @@ const AddToCart = (props) => {
   const { loading, error, data, refetch } = useQuery(GET_CART, {
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-      // console.warn( 'completed GET_CART' );
+    //  console.warn( 'completed GET_CART' );
 
       // Update cart in the localStorage.
       const updatedCart = getFormattedCart(data);
@@ -108,7 +110,6 @@ const AddToCart = (props) => {
     setRequestError(null);
     addToCart();
   };
-
   return (
     <Bouton>
       <div className={` cursor-pointer `}>
@@ -118,7 +119,7 @@ const AddToCart = (props) => {
         ) : (
           <div onClick={handleAddToCartClick}>
             {" "}
-            Ajouter au panier
+            {t("ajouter-au-panier")}
             {children ? children : ""}
           </div>
         )}

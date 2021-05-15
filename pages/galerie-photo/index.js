@@ -2,10 +2,10 @@ import Layout from "src/components/Layout";
 import Product from "src/components/Product";
 import client, { clientEng } from "src/components/ApolloClient";
 import PRODUCTS_AND_CATEGORIES_QUERY from "src/queries/product-and-categories";
-import HeroCarousel from "src/components/home/hero-carousel";
-import CategoryBlocs from "../../src/components/category/category-block/CategoryBlocs";
 import ParentCategoriesBlock from "../../src/components/category/category-block/ParentCategoriesBlock";
-import LargeSlider from "../../src/components/sections/LargeSlider";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import nextI18NextConfig from "../../next-i18next.config.js";
 
 import ShopLayout from "../../src/components/ShopLayout";
 import { useEffect, useState } from "react";
@@ -22,8 +22,6 @@ export default function Home(props) {
   const {
     products,
     productCategories,
-    heroCarousel,
-    bestSeller,
     catBase,
     cat,
     pageInfoStatic,
@@ -105,7 +103,7 @@ export async function getStaticProps({ locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: PRODUCTS_AND_CATEGORIES_QUERY,
-    variables: { uri: "/galerie-photo/", uriMenu: "/categorie/" },
+    variables: { uri: "/galerie-photo/", uriMenu: "/categorie/", first: 24 },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -116,11 +114,12 @@ export async function getStaticProps({ locale }) {
         ? data.productCategories.nodes
         : [],
       products: data?.products?.nodes ? data.products.nodes : [],
-      pageInfoStatic: data?.products?.pageInfo,
+      pageInfoStatic: data?.products?.pageInfo || {},
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       cat: data?.cat?.nodes ? data.cat.nodes : [],
       catBase: data?.catBase?.nodes || [],
-      seoHead: data?.seo.seo.fullHead,
+      seoHead: data?.seo?.seo?.fullHead || "",
+      ...(await serverSideTranslations(locale, ["shop"], nextI18NextConfig)),
     },
     revalidate: 1,
   };

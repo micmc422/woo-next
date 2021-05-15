@@ -22,8 +22,6 @@ import parse from "html-react-parser";
 export default function Product(props) {
   const { product, menu } = props;
   const seoData = product?.seo?.fullHead && parse(product?.seo?.fullHead);
-
-//  console.log(product?.seo.fullHead);
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
     product?.variations?.nodes[0]
@@ -40,9 +38,7 @@ export default function Product(props) {
       <section className="overflow-hidden text-gray-600 body-font">
         <div className="px-5 py-24 mx-auto">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
-            <ImageContainer
-              imgarray={[product?.image, ...product?.galleryImages.nodes]}
-            />
+            <ImageContainer imgarray={[product?.image]} />
             <AnimateSharedLayout>
               <motion.div
                 className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0"
@@ -90,7 +86,7 @@ export default function Product(props) {
                   />
                   <div className="flex px-6 py-2 ml-auto">
                     {" "}
-                    <AddToCartButton product={product} />
+                    <AddToCartButton product={activeVariations || product} />
                     <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
                       <svg
                         fill="currentColor"

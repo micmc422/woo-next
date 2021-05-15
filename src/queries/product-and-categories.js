@@ -25,7 +25,6 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       uri
       title
     }
-
     heroCarousel: posts(first: 10, where: { categoryIn: "1543" }) {
       nodes {
         id
@@ -71,13 +70,11 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
-
     seo: page(id: $uri, idType: URI) {
       seo {
         fullHead
       }
     }
-
     productCategories(where: { include: [1355, 1356, 1062] }) {
       nodes {
         id
@@ -112,10 +109,9 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         hasPreviousPage
         startCursor
       }
-
       nodes {
         id
-        productId
+        productId: databaseId
         averageRating
         slug
         description
@@ -130,7 +126,6 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
             width
           }
         }
-
         galleryImages(first: 1) {
           nodes {
             id
@@ -143,7 +138,6 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
             }
           }
         }
-
         name
         ... on SimpleProduct {
           price
@@ -153,6 +147,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         ... on VariableProduct {
           price
           id
+          productId: databaseId
           regularPrice
         }
         ... on ExternalProduct {
@@ -175,10 +170,14 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
-    bestSeller: products(first: 8, where: { categoryId: 1355 }) {
+    bestSeller: products(
+      first: 8
+      where: { orderby: { field: TOTAL_SALES }, categoryIdNotIn: 1063 }
+    ) {
       nodes {
         id
-        productId
+        productId: databaseId
+
         averageRating
         slug
         description

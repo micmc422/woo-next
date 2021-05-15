@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import InputRange from "react-input-range";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const animationParent = {
   initial: { x: 0, opacity: 0 },
@@ -26,6 +27,7 @@ const animationChild = {
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const FilterSection = ({ categories, className }) => {
+  const { t } = useTranslation("shop");
   return (
     <div
       className={`flex flex-col space-y-4 ${
@@ -33,9 +35,9 @@ const FilterSection = ({ categories, className }) => {
       } bg-white`}
     >
       <div className="flex flex-col">
-        <TitreWidget>Categories</TitreWidget>
+        <TitreWidget>{t("categories")}</TitreWidget>
         <BlocCategoriesSelector categories={categories} />
-        <TitreWidget>Prix</TitreWidget>
+        <TitreWidget>{t("prix")}</TitreWidget>
         <BlocPriceRange min={15} max={1000} />
       </div>
       <div>A venir</div>
@@ -43,9 +45,11 @@ const FilterSection = ({ categories, className }) => {
   );
 };
 const BlocCategoriesSelector = ({ categories }) => {
+  const { t } = useTranslation("shop");
   const router = useRouter();
   const activeCat =
     router?.query?.category && router?.query?.category[0]?.toString();
+
   /*
   const { locale } = router;
   const [categoriesList, setCategoriesList] = useState(
@@ -69,7 +73,6 @@ const BlocCategoriesSelector = ({ categories }) => {
     fetcher
   );
   */
- // console.log(categories)
   return (
     <AnimatePresence exitBeforeEnter>
       {true && (
@@ -83,50 +86,53 @@ const BlocCategoriesSelector = ({ categories }) => {
             exit="isHidden"
             variants={animationParent}
           >
-            retour
+            {t("retour")}
           </motion.a>
         </Link>
       )}
       {categories &&
-        categories.map((item) => (
-          <Link
-            href={item.uri.replace("https://photo.paris", "") || "../"}
-            passHref
-            key={`fieler-item-${item.name}`}
-          >
-            <motion.a
-              // onClick={() => updateQuery(item.slug, "categoryIn", router)}
-              className="p-1"
-              initial="initial"
-              animate="isVisible"
-              exit="isHidden"
-              variants={animationParent}
+        categories.map((item) => {
+          return (
+            <Link
+              href={item.uri.replace("https://photo.paris", "")}
+              passHref
+              key={`fieler-item-${item.name}`}
             >
-              <span className={`relative inline-block`}>
-                <AnimatePresence exitBeforeEnter>
-                  {activeCat?.includes(item.slug) && (
-                    <motion.span
-                      initial={{ x: 55, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      exit={{ x: 25, opacity: 0 }}
-                      className={`bg-gray-300 absolute inset-1 rounded-full`}
-                    ></motion.span>
-                  )}
-                </AnimatePresence>
-                <motion.span
-                  variants={animationChild}
-                  className="relative inline-block"
-                >
-                  {item.name}
-                </motion.span>
-              </span>
-            </motion.a>
-          </Link>
-        ))}
+              <motion.a
+                // onClick={() => updateQuery(item.slug, "categoryIn", router)}
+                className="p-1"
+                initial="initial"
+                animate="isVisible"
+                exit="isHidden"
+                variants={animationParent}
+              >
+                <span className={`relative inline-block`}>
+                  <AnimatePresence exitBeforeEnter>
+                    {activeCat?.includes(item.slug) && (
+                      <motion.span
+                        initial={{ x: 55, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: 25, opacity: 0 }}
+                        className={`bg-gray-300 absolute inset-1 rounded-full`}
+                      ></motion.span>
+                    )}
+                  </AnimatePresence>
+                  <motion.span
+                    variants={animationChild}
+                    className="relative inline-block"
+                  >
+                    {item.name}
+                  </motion.span>
+                </span>
+              </motion.a>
+            </Link>
+          );
+        })}
     </AnimatePresence>
   );
 };
 const BlocPriceRange = ({ min, max }) => {
+  const { t } = useTranslation("shop");
   const router = useRouter();
   const [values, setValues] = useState(500);
   const [isActive, setIsActive] = useState(false);
@@ -152,7 +158,7 @@ const BlocPriceRange = ({ min, max }) => {
               }`}
             ></div>
           </div>
-          <h2>{"prix max"}</h2>
+          <h2>{t("prix-filter")}</h2>
           <div onClick={() => updateQuery(null, "disablePrice", router)}>
             reset
           </div>
