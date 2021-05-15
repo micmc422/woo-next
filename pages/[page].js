@@ -48,10 +48,10 @@ export async function getStaticPaths() {
 
   data?.pages?.nodes &&
     data?.pages?.nodes.map(({ uri }) => {
-      if (!isEmpty(uri)) {
+      if (!isEmpty(uri) && !uri.includes("contact")) {
         pathsData.push({
           params: {
-            page: uri?.toString(),
+            page: uri,
           },
           locale: "fr",
         });
@@ -59,10 +59,10 @@ export async function getStaticPaths() {
     });
   dataEn?.pages?.nodes &&
     dataEn?.pages?.nodes.map(({ uri }) => {
-      if (!isEmpty(productCategory?.slug)) {
+      if (!isEmpty(uri) && !uri.includes("contact")) {
         pathsData.push({
           params: {
-            page: uri?.toString(),
+            page: uri,
           },
           locale: "en",
         });
