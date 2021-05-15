@@ -15,9 +15,6 @@ const Nav = ({ menu, translations }) => {
   const [isMenuVisible, setMenuVisibility] = useState(false);
 
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
-  if (translations) {
-    console.log(translations);
-  }
   return (
     <nav className="bg-white">
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">

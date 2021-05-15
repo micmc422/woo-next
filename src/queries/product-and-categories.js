@@ -89,6 +89,11 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
         products(first: 3) {
           nodes {
+            galleryImages {
+              nodes {
+                sourceUrl
+              }
+            }
             image {
               sourceUrl
               altText
