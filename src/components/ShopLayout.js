@@ -54,6 +54,7 @@ const Pagination = ({ pageInfo = {}, pageLength }) => {
 };
 const replaceQuery = (name, key, router, pageLength) => {
   const { query } = router;
+    delete theQuery["lang"];
   let theQuery = query;
   theQuery[key] = name;
   if (key === "after") {

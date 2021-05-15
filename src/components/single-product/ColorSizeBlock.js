@@ -4,7 +4,6 @@ const ColorSizeBlock = ({
   activeVariations,
   colors,
 }) => {
-  console.log(activeVariations);
   return (
     <div className="flex items-center pb-5 mt-6 mb-5 border-b-2 border-gray-100">
       {colors && (

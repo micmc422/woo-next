@@ -1,6 +1,6 @@
+import GET_CATEGORIES_BASE from 'src/queries/get-categories';
 import { NextApiRequest, NextApiResponse } from "next";
 import client, { clientEng } from "src/components/ApolloClient";
-import { GET_CATEGORIES_BASE } from "src/queries/get-categories";
 
 export default async function handler(
   req: NextApiRequest,

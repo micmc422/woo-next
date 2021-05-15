@@ -16,7 +16,6 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
-import { GET_PAGE_BY_URI } from "../../src/queries/get-pages";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -36,7 +35,6 @@ export default function CategorySingle(props) {
     seoHead,
     page,
   } = props;
-  // console.log({ cat, catBase, query });
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const catName = query?.category?.length
@@ -44,6 +42,7 @@ export default function CategorySingle(props) {
     : "";
   delete query.category;
   const formattedQuery = new URLSearchParams(query).toString();
+  delete query.lang;
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
@@ -118,7 +117,6 @@ export async function getStaticProps({ params: { category }, locale }) {
       uriMenu: queryMenuPath,
     },
   });
-  console.log(`categorie/${category.join("/")}`);
 
   const menu = (await getMenu(locale)) || [];
 

@@ -13,7 +13,6 @@ import { uniqueId } from "lodash";
 const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
-  console.log(translations);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   return (
     <nav className="bg-white">

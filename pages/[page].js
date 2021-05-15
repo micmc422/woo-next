@@ -8,7 +8,6 @@ import Head from "next/head";
 import parse from "html-react-parser";
 
 export default function Home(props) {
-  console.log(props)
   const { page, menu } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   return (

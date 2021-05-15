@@ -18,7 +18,6 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { amount }: { amount: number } = req.body;
-    //  console.log(amount);
 
     try {
       // Validate the amount that was passed from the client.
