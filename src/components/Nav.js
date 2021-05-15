@@ -22,7 +22,7 @@ const Nav = ({ menu, translations }) => {
         <Link
           href={
             translations && translations[0]
-              ? translations[0].href
+              ? translations[0].href.replace("http://photo.paris")
               : router.asPath
           }
           locale={router.locale === "fr" ? "en" : "fr"}
