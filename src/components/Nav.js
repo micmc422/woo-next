@@ -14,7 +14,6 @@ const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
-  console.log(translations[0].href);
   return (
     <nav className="bg-white">
       <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">

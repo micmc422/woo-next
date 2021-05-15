@@ -62,7 +62,7 @@ const SideNavRoot = ({ navCatData }) => {
 const NavRootItem = ({ name, slug, id, children }) => {
   return (
     <Link href={`/categorie/${slug}`} key={id} passHref>
-      <a className={`p-1 block`}>{name}</a>
+      <a className={`p-1 block leading-4`}>{name}</a>
     </Link>
   );
 };

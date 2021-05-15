@@ -48,7 +48,9 @@ const BlocCategoriesSelector = ({ categories }) => {
   const { t } = useTranslation("shop");
   const router = useRouter();
   const activeCat =
-    router?.query?.category && router?.query?.category[0]?.toString();
+    router?.query?.category?.length > 0
+      ? router?.query?.category[0]?.toString()
+      : router?.asPath;
 
   /*
   const { locale } = router;
@@ -92,6 +94,7 @@ const BlocCategoriesSelector = ({ categories }) => {
       )}
       {categories &&
         categories.map((item) => {
+          console.log(activeCat, router);
           return (
             <Link
               href={item.uri.replace("https://photo.paris", "")}
@@ -119,7 +122,7 @@ const BlocCategoriesSelector = ({ categories }) => {
                   </AnimatePresence>
                   <motion.span
                     variants={animationChild}
-                    className="relative inline-block"
+                    className="relative inline-block leading-4"
                   >
                     {item.name}
                   </motion.span>
