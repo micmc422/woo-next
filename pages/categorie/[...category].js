@@ -157,20 +157,22 @@ export async function getStaticPaths({}) {
         pathsData.push({
           params: {
             category: productCategory?.uri
+              .replace("https://photo.paris", "")
               .split("/")
               .filter((e) => e !== "" && !e.includes("?lang="))
               .slice(1, 99),
           },
-          locale: "fr",
         });
       }
     });
   dataEn?.data?.productCategories?.nodes &&
     dataEn?.data?.productCategories?.nodes.map((productCategory) => {
       if (!isEmpty(productCategory?.uri)) {
+
         pathsData.push({
           params: {
             category: productCategory?.uri
+              .replace("https://photo.paris", "")
               .split("/")
               .filter((e) => e !== "" && !e.includes("?lang="))
               .slice(1, 99),
@@ -180,7 +182,6 @@ export async function getStaticPaths({}) {
       }
     });
   pathsData.map((item) => console.log(item.params.category));
-  console.log({ ...pathsData });
   return {
     paths: pathsData,
     fallback: true,
