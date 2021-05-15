@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AddToCartButton from "../components/cart/AddToCartButton";
 import clientConfig from "../../client-config";
-import { isEmpty } from "lodash";
+import { isEmpty, uniqueId } from "lodash";
 import Price from "./single-product/price";
 import Image from "next/image";
 import { useState } from "react";
@@ -115,7 +115,7 @@ const VignettePhoto = ({ product }) => {
       product.image.mediaDetails.width > product.image.mediaDetails.height
     ? "cover"
     : "contain";
-    const imageUrlPrimaire = product.galleryImages?.nodes[0]
+  const imageUrlPrimaire = product.galleryImages?.nodes[0]
     ? product.galleryImages?.nodes[0].mediaItemUrl
     : product.image?.sourceUrl;
   const imageUrlSecondaire = product.image?.sourceUrl;
@@ -127,8 +127,7 @@ const VignettePhoto = ({ product }) => {
       <AnimatePresence>
         {hovered ? (
           <motion.div
-
-            key={`image-un`}
+            key={uniqueId(product.id)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -143,7 +142,7 @@ const VignettePhoto = ({ product }) => {
           </motion.div>
         ) : (
           <motion.div
-            key={`image-deux`}
+            key={uniqueId(product.id)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
