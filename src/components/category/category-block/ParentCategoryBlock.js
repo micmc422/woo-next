@@ -11,13 +11,16 @@ const ParentCategoryBlock = (props) => {
   const delay = 1500 + ((300 * i) % 3000);
   if (category.products.nodes) {
     category.products.nodes.map((product) => {
-      product?.galleryImages?.nodes[0]?.sourceUrl;
-      images.push(product.galleryImages.nodes[0].sourceUrl);
+      product?.galleryImages?.nodes[0]?.sourceUrl &&
+        images.push(product?.galleryImages?.nodes[0]?.sourceUrl);
+      product?.galleryImages?.nodes[0]?.mediaItemUrl &&
+        images.push(product?.galleryImages?.nodes[0]?.mediaItemUrl);
     });
   }
   if (category?.image) {
     images.push(category?.image?.sourceUrl);
   }
+      console.log(images);
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActiveImage((activeImage + 1) % images.length);
