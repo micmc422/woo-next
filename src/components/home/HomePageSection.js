@@ -1,5 +1,6 @@
 import { domToReact } from "html-react-parser";
 import Image from "next/image";
+import Link from "next/link";
 import ContentParser from "../ContentParser";
 import LargeSlider from "../sections/LargeSlider";
 import { Bouton } from "../themeComponents";
@@ -147,7 +148,7 @@ const HomePageSection = ({ homepage, products }) => {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
           <h2
-            className={`mx-auto py-6 md:py-12 text-2xl max-w-2xl ${
+            className={`mx-auto py-3 md:py-5 text-2xl max-w-2xl ${
               alignRigth ? "text-right" : ""
             }`}
           >
@@ -195,7 +196,9 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("vc_message_box-icon")) {
         return (
-          <div className="px-4 md:py-4">{domToReact(children, defaultOptions)}</div>
+          <div className="px-4 md:py-4">
+            {domToReact(children, defaultOptions)}
+          </div>
         );
       }
       if (attribs?.class?.includes("vc_cta3-style-classic")) {
@@ -239,31 +242,40 @@ const HomePageSection = ({ homepage, products }) => {
           attribs?.class?.includes("shop-now-link"))
       ) {
         const { href, target, title } = attribs;
-        const parsedHref = href?.replace("https://photo.paris", "")
+        const parsedHref = href?.replace("https://photo.paris", "");
         return (
           <div className="py-4 mx-auto max-w-prose">
             <Bouton>
-              <a href={parsedHref} className="p-2 text-2xl">
-                {domToReact(children, defaultOptions)}
-              </a>
+              <Link href={parsedHref} passHref>
+                <a className="p-2 text-2xl">
+                  {domToReact(children, defaultOptions)}
+                </a>
+              </Link>
             </Bouton>
           </div>
         );
       }
-
-      if (
-        name === "a" &&
-        
-          parent.attribs?.class?.includes("banner-title")
-      ) {
+      if (name === "a" && attribs?.class?.includes("media_thumb")) {
         const { href, target, title } = attribs;
-        const parsedHref = href?.replace("https://photo.paris", "")
+        const parsedHref = href?.replace("https://photo.paris", "");
+        return (
+          <Link href={parsedHref} passHref>
+            <a className="">{domToReact(children, defaultOptions)}</a>
+          </Link>
+        );
+      }
+
+      if (name === "a" && parent.attribs?.class?.includes("banner-title")) {
+        const { href, target, title } = attribs;
+        const parsedHref = href?.replace("https://photo.paris", "");
         return (
           <div className="px-4 py-4 mx-auto md:py-0 max-w-prose">
             <Bouton>
-              <a href={parsedHref} className="p-2 text-2xl">
-                {domToReact(children, defaultOptions)}
-              </a>
+              <Link href={parsedHref} passHref>
+                <a className="pt-1 text-2xl leading-4">
+                  {domToReact(children, defaultOptions)}
+                </a>
+              </Link>
             </Bouton>
           </div>
         );
@@ -333,7 +345,7 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("vc_btn")) {
         const { href, target, title } = attribs;
-        const parsedHref = href?.replace("https://photo.paris", "")
+        const parsedHref = href?.replace("https://photo.paris", "");
 
         return parsedHref ? (
           <a

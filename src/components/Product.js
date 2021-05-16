@@ -142,7 +142,7 @@ const VignettePhoto = ({ product }) => {
           </motion.div>
         ) : (
           <motion.div
-            key={uniqueId(product.id)}
+            key={uniqueId(product.id + "-alt")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

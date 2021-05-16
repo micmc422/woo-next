@@ -12,16 +12,13 @@ const ImageWithFallback = (props) => {
   } = props;
   const [imgSrc, setImgSrc] = useState(src);
   return (
-    <motion.div layoutId={`image-principale-${slug}`}>
-      {" "}
-      <Image
-        {...rest}
-        src={imgSrc}
-        onError={() => {
-          setImgSrc(fallbackSrc);
-        }}
-      />
-    </motion.div>
+    <Image
+      {...rest}
+      src={imgSrc}
+      onError={() => {
+        setImgSrc(fallbackSrc);
+      }}
+    />
   );
 };
 

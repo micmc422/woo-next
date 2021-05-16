@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { Facebook, Instagram, Twitter, Youtube } from "./icons";
 
 const Footer = ({ footer }) => {
   const { t } = useTranslation("common");
+  const {locale}=useRouter()
 
   return (
     <div className="p-6 text-white bg-gray-800 footer">
@@ -12,7 +14,7 @@ const Footer = ({ footer }) => {
         <div className="items-center justify-between flex-none footer-text md:flex">
           <div className="flex flex-col flex-shrink-0 mr-20 text-white">
             <div>
-              <Link href="/">
+              <Link href="/" locale={locale}>
                 <Image src={"/logo-light@2x.png"} width={120} height={50} />
               </Link>
             </div>
