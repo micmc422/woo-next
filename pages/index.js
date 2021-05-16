@@ -10,6 +10,7 @@ import HomePageSection from "../src/components/home/HomePageSection";
 import { GET_PAGE_BY_URI } from "../src/queries/get-pages";
 import Head from "next/head";
 import parse from "html-react-parser";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Home(props) {
   const {
@@ -20,11 +21,11 @@ export default function Home(props) {
     menu,
     homepage,
     seoHead,
-    data,
+    footer,
   } = props;
   const seoData = seoHead && parse(seoHead);
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} footer={footer}>
       <Head>{seoData ? seoData : ""}</Head>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
@@ -72,6 +73,7 @@ export async function getStaticProps({ locale }) {
 
   return {
     props: {
+      footer: data?.getFooter,
       data,
       homepage: homepage.data.page,
       menu,
@@ -82,6 +84,7 @@ export async function getStaticProps({ locale }) {
       heroCarousel: data?.heroCarousel?.nodes ? data.heroCarousel.nodes : [],
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       seoHead: data?.seo?.seo?.fullHead || "",
+      ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },
     revalidate: 1,
   };

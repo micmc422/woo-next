@@ -13,7 +13,7 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const Layout = (props) => {
-  const { menu, translations } = props;
+  const { menu, translations, footer } = props;
   return (
     <AppProvider>
       <ApolloProvider client={client}>
@@ -25,7 +25,7 @@ const Layout = (props) => {
           <AnimateSharedLayout type="crossfade">
             {props.children}
           </AnimateSharedLayout>
-          <Footer />
+          <Footer footer={footer} />
         </div>
       </ApolloProvider>
     </AppProvider>

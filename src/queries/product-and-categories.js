@@ -5,6 +5,10 @@ import { gql } from "@apollo/client";
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
   query MyQuery($after: String, $search: String, $first: Int, $uri: ID!) {
+    getFooter {
+      sidebarOne
+      sidebarTwo
+    }
     menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {

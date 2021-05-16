@@ -39,7 +39,7 @@ const Nav = ({ menu, translations }) => {
       <div className="container flex flex-wrap items-center justify-between p-4 mx-auto">
         <div className="flex items-center flex-shrink-0 mr-20 text-black">
           <Link href="/">
-            <img src={"/logo@2x.png"} width={120} height={50} />
+            <Image src={"/logo@2x.png"} width={120} height={50} />
           </Link>
         </div>
 
