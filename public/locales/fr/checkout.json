@@ -1,0 +1,16 @@
+{
+  "pagedecommande": "Validation de votre commande",
+  "livraison": "Informations de livraison",
+  "commande": "Votre commande",
+  "nom": "nom",
+  "prenom": "prénom",
+  "societe": "société",
+  "adresse1": "adresse",
+  "adresse2": "adresse (suite)",
+  "ville": "ville",
+  "codepostal": "code postal",
+  "telephone": "téléphone",
+  "email": "Courriel",
+  "etat": "état",
+  "facturedifferentlivraison": "Adresse de livraison différentes de l'adresse de facturation."
+}

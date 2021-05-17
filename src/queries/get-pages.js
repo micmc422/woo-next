@@ -27,10 +27,6 @@ export const GET_PAGE_BY_URI = gql`
       id
       title
       content
-      translations {
-        locale
-        href
-      }
       seo {
         fullHead
         breadcrumbs {

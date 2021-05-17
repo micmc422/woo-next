@@ -1,0 +1,14 @@
+{
+  "panier": "Cart",
+  "vidageencour": "Clearing...",
+  "miseajour": "Updating...",
+  "photo": "Photo",
+  "quantite": "Quantity",
+  "total": "Total",
+  "pinsupprimer": "remove the photo",
+  "soustotal": "Subtotal",
+  "viderpanier": "Clear cart",
+  "pasdephoto": "No photo in the cart.",
+  "ajouterphoto": "Add New Photo.",
+  "finalisercommande": "Proceed to checkout"
+}

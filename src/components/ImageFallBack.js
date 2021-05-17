@@ -7,19 +7,12 @@ const ImageWithFallback = (props) => {
   const {
     src,
     slug,
+    objectfit,
     fallbackSrc = clientConfig.productImagePlaceholder,
     ...rest
   } = props;
   const [imgSrc, setImgSrc] = useState(src);
-  return (
-    <Image
-      {...rest}
-      src={imgSrc}
-      onError={() => {
-        setImgSrc(fallbackSrc);
-      }}
-    />
-  );
+  return <Image objectFit={objectfit} src={imgSrc} layout="fill" />;
 };
 
 export default ImageWithFallback;

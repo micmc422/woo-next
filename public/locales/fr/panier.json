@@ -1,0 +1,14 @@
+{
+  "panier": "Panier",
+  "vidageencour": "Le panier se vide",
+  "miseajour": "Mise à jour du panier",
+  "photo": "Photo",
+  "quantite": "Quantité",
+  "total": "Total",
+  "pinsupprimer": "Retirer la photo",
+  "soustotal": "Sous-total",
+  "viderpanier": "Vider le panier",
+  "pasdephoto": "Auncune photo dans votre panier pour le moment.",
+  "ajouterphoto": "Parcourir la galerie.",
+  "finalisercommande": "Finaliser la commande"
+}

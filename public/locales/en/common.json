@@ -1,5 +1,8 @@
 {
   "telephone": "Add to Cart",
   "adresse": "55 Passage Jouffroy \n 75009 Paris \n Métro Grands Boulevards",
-  "num-tel": "(+33)1 56 92 04 47"
+  "num-tel": "(+33)1 56 92 04 47",
+  "profil": "profil",
+  "wishlist": "wishlist",
+  "panier": "panier"
 }

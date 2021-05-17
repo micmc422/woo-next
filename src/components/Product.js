@@ -17,6 +17,7 @@ const productCardAnimationContainer = {
 };
 const Product = (props) => {
   const { product } = props;
+  // console.log(product)
   return (
     // @TODO Need to handle Group products differently.
     <motion.div
@@ -137,7 +138,7 @@ const VignettePhoto = ({ product }) => {
               slug={product.slug}
               alt="Product image"
               layout="fill"
-              objectFit={orientation}
+              objectfit={orientation}
             />
           </motion.div>
         ) : (
@@ -152,7 +153,7 @@ const VignettePhoto = ({ product }) => {
               slug={product.slug}
               alt="Product image"
               layout="fill"
-              objectFit={orientation}
+              objectfit={orientation}
             />
           </motion.div>
         )}

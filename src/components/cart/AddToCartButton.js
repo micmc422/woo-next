@@ -17,7 +17,6 @@ const AddToCart = (props) => {
     clientMutationId: v4(), // Generate a unique id.
     productId: product.productId,
   };
-
   const [cart, setCart] = useContext(AppContext);
   const [showViewCart, setShowViewCart] = useState(false);
   const [requestError, setRequestError] = useState(null);
@@ -64,11 +63,12 @@ const AddToCart = (props) => {
   const { loading, error, data, refetch } = useQuery(GET_CART, {
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-    //  console.warn( 'completed GET_CART' );
+      console.warn("completed GET_CART");
 
       // Update cart in the localStorage.
       const updatedCart = getFormattedCart(data);
       localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
+      //  console.warn(localStorage);
 
       // Update cart data in React Context.
       setCart(updatedCart);
@@ -88,7 +88,10 @@ const AddToCart = (props) => {
 
       // If error.
       if (addToCartError) {
-        setRequestError(addToCartError.graphQLErrors[0].message);
+        setRequestError(
+          addToCartError.graphQLErrors[0]?.message ||
+            "même pas de message d'erreur..."
+        );
       }
 
       // On Success:
@@ -100,7 +103,9 @@ const AddToCart = (props) => {
     },
     onError: (error) => {
       if (error) {
-        setRequestError(error.graphQLErrors[0].message);
+        setRequestError(
+          error.graphQLErrors[0]?.message || "même pas de message d'erreur..."
+        );
       }
     },
   });
@@ -110,6 +115,7 @@ const AddToCart = (props) => {
     setRequestError(null);
     addToCart();
   };
+  // console.log({ productQryInput, requestError });
   return (
     <Bouton>
       <div className={` cursor-pointer `}>

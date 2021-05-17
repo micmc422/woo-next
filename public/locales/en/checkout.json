@@ -1,0 +1,16 @@
+{
+  "pagedecommande": "CHECKOUT PAGE",
+  "livraison": "Shipping Details",
+  "commande": "Your Order",
+  "nom": "First name",
+  "prenom": "Last name",
+  "societe": "Company Name (Optional)",
+  "adresse1": "Street address",
+  "adresse2": "Street address line two",
+  "ville": "Town/City",
+  "codepostal": "Post code",
+  "telephone": "Phone",
+  "email": "Email",
+  "etat": "State/County",
+  "facturedifferentlivraison": "Billing different than shipping"
+}

@@ -16,13 +16,14 @@ export const middleware = new ApolloLink((operation, forward) => {
    * If session data exist in local storage, set value as session header.
    */
   const session = process.browser ? localStorage.getItem("woo-session") : null;
-
   if (session) {
-    operation.setContext(({ headers = {} }) => ({
-      headers: {
-        "woocommerce-session": `Session ${session}`,
-      },
-    }));
+    operation.setContext(({ headers = {} }) => {
+      return {
+        headers: {
+          "woocommerce-session": `Session ${session}`,
+        },
+      };
+    });
   }
 
   return forward(operation);
@@ -46,6 +47,7 @@ export const afterware = new ApolloLink((operation, forward) => {
     const {
       response: { headers },
     } = context;
+
     const session = headers.get("woocommerce-session");
 
     if (session) {
@@ -69,7 +71,8 @@ const client = new ApolloClient({
     afterware.concat(
       createHttpLink({
         uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/site/graphql`,
-        fetch: fetch,
+        // fetch: fetch,
+        // credentials: "include",
       })
     )
   ),
@@ -81,7 +84,8 @@ export const clientEng = new ApolloClient({
     afterware.concat(
       createHttpLink({
         uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/site/graphql/?lang=en`,
-        fetch: fetch,
+        //  fetch: fetch,
+        //  credentials: "include",
       })
     )
   ),

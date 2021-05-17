@@ -9,32 +9,40 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
+  const { t } = useTranslation("common");
 
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
-  return (
-    <nav className="bg-white">
-      <div className="flex flex-row justify-between px-4 py-1 text-gray-100 bg-gray-900">
-        <div>contact</div>
-        <div>annonce</div>
-        <Link
-          href={
-            translations && translations[0]
+  /*
+ //TODO attente de correction du bug graphQL WPML
+             translations && translations[0]
               ? translations[0].href.replace(/^http(s):\/\/photo.paris/i, "")
               : !router.asPath.includes("/galerie-photo/")
               ? router.asPath
               : "/galerie-photo/"
-          }
-          locale={router.locale === "fr" ? "en" : "fr"}
-          passHref
-        >
-          <a className="self-end w-5 h-5">
-            <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
-          </a>
-        </Link>
+
+ */
+
+  return (
+    <nav className="bg-white">
+      <div className="px-4 py-1 text-gray-100 bg-gray-900 ">
+        <div className="container flex flex-row justify-between mx-auto">
+          <div>contact</div>
+          <div>annonce</div>
+          <Link
+            href={"/galerie-photo/"}
+            locale={router.locale === "fr" ? "en" : "fr"}
+            passHref
+          >
+            <a className="self-end w-5 h-5">
+              <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
+            </a>
+          </Link>
+        </div>
       </div>
       <div className="container flex flex-wrap items-center justify-between p-4 mx-auto">
         <div className="flex items-center flex-shrink-0 mr-20 text-black">
@@ -93,7 +101,7 @@ const Nav = ({ menu, translations }) => {
                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                 />
               </svg>
-              Profile
+              {t('profil')}
             </a>
             <a
               href="#responsive-header"
@@ -115,7 +123,7 @@ const Nav = ({ menu, translations }) => {
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                 />
               </svg>
-              Wishlist
+              {t('wishlist')}
             </a>
             <CartIcon />
           </div>
