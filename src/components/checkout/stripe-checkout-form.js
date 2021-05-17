@@ -6,7 +6,6 @@ import Router from "next/router";
 import {CARD_OPTIONS} from "../../constants/stripe";
 
 const StripeCheckoutForm = ({orderData}) => {
-    console.log( 'orderData', orderData );
     const { orderId, total, currency } = orderData || {};
     const [isProcessing, setProcessingTo] = useState(false);
     const [checkoutError, setCheckoutError] = useState();

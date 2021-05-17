@@ -63,7 +63,7 @@ const AddToCart = (props) => {
   const { loading, error, data, refetch } = useQuery(GET_CART, {
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
-      console.warn("completed GET_CART");
+      //console.warn("completed GET_CART");
 
       // Update cart in the localStorage.
       const updatedCart = getFormattedCart(data);

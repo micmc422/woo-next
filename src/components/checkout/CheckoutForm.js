@@ -97,7 +97,6 @@ const CheckoutForm = ({ countriesData }) => {
       input: orderData,
     },
     onError: (error) => {
-        console.log(orderData)
       if (error) {
         setRequestError(error?.graphQLErrors?.[0]?.message ?? "");
       }

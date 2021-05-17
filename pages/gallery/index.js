@@ -29,7 +29,6 @@ export default function Home(props) {
     seoHead,
   } = props;
   const seoData = seoHead && parse(seoHead);
-  console.log(seoData);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const { query, locale } = useRouter();

@@ -66,7 +66,7 @@ const Product = (props) => {
                       fill="none"
                       viewBox="0 0 24 24"
                       width="18"
-                      height="auto"
+                      height="100%"
                       stroke="currentColor"
                     >
                       <path
