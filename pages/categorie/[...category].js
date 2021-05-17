@@ -155,24 +155,28 @@ export async function getStaticPaths({}) {
     data?.productCategories?.nodes.map((productCategory) => {
       /// console.log(data?.productCategories?.nodes);
       if (!isEmpty(productCategory?.uri)) {
+        const category = productCategory?.uri
+          .replace("https://photo.paris", "")
+          .split("/")
+          .filter(
+            (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
+          )
+          .slice(1, 99);
+        if (category.length > 1) {
+          pathsData.push({
+            params: {
+              category: [category[category.length - 1]],
+            },
+          });
+        }
         pathsData.push({
           params: {
-            category: productCategory?.uri
-              .replace("https://photo.paris", "")
-              .split("/")
-              .filter((e) => e !== "" && !e.includes("?lang="))
-              .slice(1, 99),
+            category,
           },
         });
         pathsData.push({
           params: {
-            category: productCategory?.uri
-              .replace("https://photo.paris", "")
-              .split("/")
-              .filter(
-                (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
-              )
-              .slice(1, 99),
+            category,
           },
           locale: "en",
         });
@@ -181,25 +185,29 @@ export async function getStaticPaths({}) {
   dataEn?.data?.productCategories?.nodes &&
     dataEn?.data?.productCategories?.nodes.map((productCategory) => {
       if (!isEmpty(productCategory?.uri)) {
+        const category = productCategory?.uri
+          .replace("https://photo.paris", "")
+          .split("/")
+          .filter(
+            (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
+          )
+          .slice(1, 99);
+        if (category.length > 1) {
+          pathsData.push({
+            params: {
+              category: [category[category.length - 1]],
+            },
+          });
+        }
         pathsData.push({
           params: {
-            category: productCategory?.uri
-              .replace("https://photo.paris", "")
-              .split("/")
-              .filter(
-                (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
-              )
-              .slice(1, 99),
+            category,
           },
         });
 
         pathsData.push({
           params: {
-            category: productCategory?.uri
-              .replace("https://photo.paris", "")
-              .split("/")
-              .filter((e) => e !== "" && !e.includes("?lang="))
-              .slice(1, 99),
+            category,
           },
           locale: "en",
         });
