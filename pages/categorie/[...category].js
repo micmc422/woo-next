@@ -171,6 +171,12 @@ export async function getStaticPaths({}) {
         }
         pathsData.push({
           params: {
+            category: [category[category.length - 1]],
+            locale: "en",
+          },
+        });
+        pathsData.push({
+          params: {
             category,
           },
         });
@@ -196,6 +202,12 @@ export async function getStaticPaths({}) {
           pathsData.push({
             params: {
               category: [category[category.length - 1]],
+            },
+          });
+          pathsData.push({
+            params: {
+              category: [category[category.length - 1]],
+              locale: "en",
             },
           });
         }
