@@ -14,7 +14,7 @@ const CartIcon = () => {
 
   return (
     <Link href="/cart">
-      <a className="relative block mt-2 text-center text-black lg:mt-0 hover:text-black">
+      <a className="relative block mt-2 text-center text-gray-600 hover:text-black lg:mt-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="inline-block w-6 h-6"
@@ -30,7 +30,7 @@ const CartIcon = () => {
           />
         </svg>
         {productsCount ? (
-          <div class=" text-xs absolute top-0 right-0 -mt-2 -mr-3 w-4 h-4 bg-brand-500 text-white rounded-full">
+          <div class=" text-xs absolute top-0 right-0 -mt-2 mr-4 md:-mr-3 w-4 h-4 bg-brand-500 text-white rounded-full">
             <span className="">{productsCount}</span>
           </div>
         ) : (

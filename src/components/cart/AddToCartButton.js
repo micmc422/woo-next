@@ -120,14 +120,24 @@ const AddToCart = (props) => {
     <Bouton>
       <div className={` cursor-pointer `}>
         {/* Add To Cart Loading*/}
-        {addToCartLoading ? (
-          <div> Ajout en cour {children ? children : ""}</div>
+        {!showViewCart ? (
+          addToCartLoading ? (
+            <div> Ajout en cour {children ? children : ""}</div>
+          ) : (
+            <div onClick={handleAddToCartClick}>
+              {" "}
+              {t("ajouter-au-panier")}
+              {children ? children : ""}
+            </div>
+          )
         ) : (
-          <div onClick={handleAddToCartClick}>
-            {" "}
-            {t("ajouter-au-panier")}
-            {children ? children : ""}
-          </div>
+          <Bouton>
+            <Link href="/cart">
+              <button className="inline-block px-3 py-1 text-sm border border-current border-solid rounded-sm hover:bg-brand-500 hover:text-white hover:border-brand-500">
+              {t("voirpanier")}
+              </button>
+            </Link>{" "}
+          </Bouton>
         )}
 
         {/*	Check if its an external product then put its external buy link */}
@@ -139,17 +149,6 @@ const AddToCart = (props) => {
           >
             Buy now
           </a>
-        )}
-        {showViewCart ? (
-          <Bouton>
-            <Link href="/cart">
-              <button className="inline-block px-3 py-1 text-sm border border-current border-solid rounded-sm hover:bg-purple-600 hover:text-white hover:border-purple-600">
-                View Cart
-              </button>
-            </Link>{" "}
-          </Bouton>
-        ) : (
-          ""
         )}
       </div>
     </Bouton>

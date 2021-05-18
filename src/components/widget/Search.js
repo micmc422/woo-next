@@ -25,7 +25,7 @@ const Search = () => {
               animate={{ width: "auto", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               key="search"
-              className={`absolute -top-2 z-50 p-2 pr-6 text-sm bg-white rounded-lg right-8 ring-2 ring-yellow-500 ring-opacity-25 focus:outline-none`}
+              className={`absolute -top-2 z-50 p-2 pr-6 text-sm bg-white rounded-lg right-8 ring-2 ring-brand-500 ring-opacity-25 focus:outline-none`}
               type="search"
               name="search"
               placeholder="Search"
@@ -36,7 +36,7 @@ const Search = () => {
         {opened && searchQuery !== "" && (
           <>
             <motion.div
-              className="absolute right-0 z-40 w-64 p-1 bg-white rounded ring-2 ring-yellow-500 ring-opacity-25 top-10"
+              className="absolute right-0 z-40 w-64 p-1 bg-white rounded ring-2 ring-brand-500 ring-opacity-25 top-10"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}

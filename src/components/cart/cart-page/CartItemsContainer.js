@@ -135,21 +135,39 @@ const CartItemsContainer = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-0 mb-5 xl:grid-cols-4 xl:gap-4">
-            <table className="col-span-3 mb-5 table-auto cart-products">
+            <table className="w-full text-left whitespace-no-wrap table-auto">
               <thead className="text-left">
                 <tr className="woo-next-cart-head-container">
-                  <th className="woo-next-cart-heading-el" scope="col" />
-                  <th className="woo-next-cart-heading-el" scope="col" />
-                  <th className="woo-next-cart-heading-el" scope="col">
+                  <th
+                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tl rounded-bl title-font"
+                    scope="col"
+                  />
+                  <th
+                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font hidden md:table"
+                    scope="col"
+                  />
+                  <th
+                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font hidden md:table"
+                    scope="col"
+                  >
                     {t("photo")}
                   </th>
-                  <th className="woo-next-cart-heading-el" scope="col">
+                  <th
+                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font"
+                    scope="col"
+                  >
                     {t("prix")}
                   </th>
-                  <th className="woo-next-cart-heading-el" scope="col">
+                  <th
+                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font"
+                    scope="col"
+                  >
                     {t("quantite")}
                   </th>
-                  <th className="woo-next-cart-heading-el" scope="col">
+                  <th
+                    className="text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tr rounded-br title-font"
+                    scope="col"
+                  >
                     {t("total")}
                   </th>
                 </tr>
@@ -173,7 +191,7 @@ const CartItemsContainer = () => {
             <div className="p-5 bg-gray-200 border row woo-next-cart-total-container">
               <div className="">
                 {/* <h2 className="text-2xl">Cart Total</h2> */}
-                <table className="table mb-5 table-hover">
+                <table className="table mb-5 table-auto table-hover">
                   <tbody>
                     <tr className="flex flex-col table-light">
                       <td className="text-2xl font-normal woo-next-cart-element-total">
@@ -194,7 +212,7 @@ const CartItemsContainer = () => {
                   </tbody>
                 </table>
                 <Link href="/checkout">
-                  <button className="w-auto px-5 py-3 text-white bg-purple-600 rounded-sm xl:w-full">
+                  <button className="w-auto px-5 py-3 text-white rounded-sm bg-brand-500 xl:w-full">
                     <span className="woo-next-cart-checkout-txt">
                       {t("finalisercommande")}
                     </span>
@@ -219,9 +237,9 @@ const CartItemsContainer = () => {
         <div className="container px-4 mx-auto my-32 xl:px-0">
           <h2 className="mb-5 text-2xl">{t("pasdephoto")}</h2>
           <Link href="/">
-            <button className="px-5 py-3 text-white bg-purple-600 rounded-sm">
+            <button className="px-5 py-3 text-white rounded-sm bg-brand-500">
               <span className="woo-next-cart-checkout-txt">
-			  {t("ajouterphoto")}
+                {t("ajouterphoto")}
               </span>
               <i className="fas fa-long-arrow-alt-right" />
             </button>

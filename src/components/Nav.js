@@ -89,7 +89,7 @@ const Nav = ({ menu, translations }) => {
             </AnimatePresence>
           </div>
 
-          <div className="flex flex-row text-sm font-medium space-x-4">
+          <div className="flex flex-row space-x-4 text-sm font-medium">
             <Search />
             <a
               href="#responsive-header"
@@ -221,7 +221,7 @@ const MobileMenuBaseLvl = ({ base, setMenuVisibility }) => {
       <div className="flex flex-col w-8 py-6 justify-evenly">
         <motion.div variants={animationChild}>
           <svg
-            className="w-4 h-4 text-gray-600 fill-current"
+            className="w-4 h-4 mx-1 text-gray-600 fill-current hover:text-black"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             version="1.1"
