@@ -10,6 +10,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
+import Search from "./widget/Search";
 
 const Nav = ({ menu, translations }) => {
   const router = useRouter();
@@ -82,29 +83,8 @@ const Nav = ({ menu, translations }) => {
             </AnimatePresence>
           </div>
 
-          <div className="text-sm font-medium">
-            <a
-              href="#responsive-header"
-              className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="hidden m-auto lg:block"
-                fill="none"
-                viewBox="0 0 24 24"
-                width="18"
-                height="100%"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-              {t("profil")}
-            </a>
+          <div className="flex flex-row text-sm font-medium">
+            <Search />
             <a
               href="#responsive-header"
               className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black"

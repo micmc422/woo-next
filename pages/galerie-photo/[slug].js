@@ -38,7 +38,10 @@ export default function Product(props) {
       <section className="overflow-hidden text-gray-600 body-font">
         <div className="px-5 py-24 mx-auto">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
-            <ImageContainer imgarray={[product?.image]} slug={product.slug} />
+            <ImageContainer
+              imgarray={[...product.galleryImages.nodes, product?.image]}
+              slug={product.slug}
+            />
             <AnimateSharedLayout>
               <motion.div
                 className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0"

@@ -17,7 +17,7 @@ export default async function handler(
       exclude,
       locale = "fr",
       category = "",
-     // categoryIn,
+      // categoryIn,
       min,
       max,
     },
@@ -25,7 +25,7 @@ export default async function handler(
 
   try {
     const params = {
-      first: !before ? first : null,
+      first: !before ? Number(first) : null,
       last: before ? first || last : null,
       after,
       before,
