@@ -7,6 +7,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       productId: databaseId
       averageRating
       slug
+      shortDescription
       description
       name
       seo {

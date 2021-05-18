@@ -89,19 +89,17 @@ const Nav = ({ menu, translations }) => {
             </AnimatePresence>
           </div>
 
-          <div className="flex flex-row text-sm font-medium">
+          <div className="flex flex-row text-sm font-medium space-x-4">
             <Search />
             <a
               href="#responsive-header"
-              className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black"
+              className="block mt-2 text-black lg:inline-block lg:mt-0 hover:text-black"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="hidden m-auto lg:block"
+                className="inline-block w-6 h-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                width="18"
-                height="100%"
                 stroke="currentColor"
               >
                 <path
@@ -111,7 +109,6 @@ const Nav = ({ menu, translations }) => {
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                 />
               </svg>
-              {t("wishlist")}
             </a>
             <div className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
               <CartIcon />

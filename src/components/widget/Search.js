@@ -9,7 +9,7 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="relative h-10 pt-2 mx-auto text-gray-600">
+    <div className="relative mx-auto text-gray-600">
       <AnimatePresence>
         {opened && (
           <>
@@ -25,7 +25,7 @@ const Search = () => {
               animate={{ width: "auto", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               key="search"
-              className="relative z-50 h-10 px-5 pr-16 text-sm bg-white rounded-lg ring-2 ring-yellow-500 ring-opacity-25 focus:outline-none"
+              className={`absolute -top-2 z-50 p-2 pr-6 text-sm bg-white rounded-lg right-8 ring-2 ring-yellow-500 ring-opacity-25 focus:outline-none`}
               type="search"
               name="search"
               placeholder="Search"
@@ -36,7 +36,7 @@ const Search = () => {
         {opened && searchQuery !== "" && (
           <>
             <motion.div
-              className="absolute right-0 z-40 w-64 p-2 bg-white rounded top-14 ring-2 ring-yellow-500 ring-opacity-25"
+              className="absolute right-0 z-40 w-64 p-1 bg-white rounded ring-2 ring-yellow-500 ring-opacity-25 top-10"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
@@ -48,38 +48,23 @@ const Search = () => {
       </AnimatePresence>
       <button
         onClick={() => setOpened(!opened)}
-        className={`absolute mt-5 mr-4 transition-all focus:outline-none ${
-          opened ? "top-0 right-0" : "-top-2 right-0 pr-5"
-        }`}
+        className={`transition-all focus:outline-none`}
       >
         <svg
-          className="w-4 h-4 text-gray-600 fill-current"
           xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          version="1.1"
-          id="Capa_1"
-          x="0px"
-          y="0px"
-          viewBox="0 0 56.966 56.966"
-          xmlSpace="preserve"
-          width="512px"
-          height="512px"
+          className="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
         </svg>
-        {!opened && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            key="search-text"
-            className="absolute right-0 -bottom-8"
-          >
-            Chercher
-          </motion.div>
-        )}
       </button>
-      <AnimatePresence></AnimatePresence>
     </div>
   );
 };
