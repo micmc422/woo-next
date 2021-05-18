@@ -7,11 +7,7 @@ const animateMenu = {
   animate: { x: 0 },
   exit: (isRight) => ({ x: isRight ? "100%" : "-100%" }),
 };
-/*
- ${
-          isOpen ? "z-40" : "hidden"
-        }
-        */
+
 const SideBarSticky = ({ children, isRight }) => {
   const [isOpen, setIsOpen] = useState(false);
   const setHidden = (state) => {
@@ -25,7 +21,7 @@ const SideBarSticky = ({ children, isRight }) => {
   return (
     <>
       <div
-        className={`flex-grow lg:hidden  w-0 z-50 ${
+        className={`flex-grow lg:hidden  w-0 z-30 ${
           isRight ? "hidden" : "block"
         }`}
       >
@@ -56,7 +52,7 @@ const SideBarSticky = ({ children, isRight }) => {
       </div>
       <div className={`hidden lg:block flex-grow w-0 lg:w-auto relative`}>
         <div
-          className={`sticky top-0 block z-40 ${
+          className={`sticky top-0 block z-30 ${
             isRight ? "float-right" : "float-left"
           }`}
           onClick={() => setIsOpen(false)}
@@ -86,7 +82,7 @@ const SideBarSticky = ({ children, isRight }) => {
             exit="exit"
           >
             <div
-              className={`sticky top-0 block z-40 overflow-hidden ${
+              className={`sticky top-0 block z-30 overflow-hidden ${
                 isRight ? "float-right right-0" : "float-left"
               }`}
             >

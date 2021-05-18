@@ -18,6 +18,7 @@ import ContentParser from "../../src/components/ContentParser";
 import getMenu from "../../src/get-menu-fallback";
 import Head from "next/head";
 import parse from "html-react-parser";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Product(props) {
   const { product, menu } = props;
@@ -36,7 +37,7 @@ export default function Product(props) {
     <Layout menu={menu}>
       <Head>{seoData ? seoData : ""}</Head>
       <section className="overflow-hidden text-gray-600 body-font">
-        <div className="px-5 py-24 mx-auto">
+        <div className="px-5 py-4 mx-auto md:py-24">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
             <ImageContainer
               imgarray={[...product.galleryImages.nodes, product?.image]}
@@ -146,6 +147,7 @@ export async function getStaticProps(context) {
     props: {
       menu,
       product: data?.product || {},
+      ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },
     revalidate: 1,
   };

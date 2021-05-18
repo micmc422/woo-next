@@ -12,17 +12,38 @@ const Search = () => {
     <div className="relative h-10 pt-2 mx-auto text-gray-600">
       <AnimatePresence>
         {opened && (
-          <motion.input
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "auto", opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            key="search"
-            className="h-10 px-5 pr-16 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
-            type="search"
-            name="search"
-            placeholder="Search"
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          <>
+            <motion.div
+              onClick={() => setOpened(false)}
+              initial={{ opacity: 0, x: 0 }}
+              animate={{ opacity: 0.25, x: 0 }}
+              exit={{ opacity: 0, x: 0 }}
+              className="fixed inset-0 z-40 w-screen h-screen bg-black opacity-25"
+            ></motion.div>
+            <motion.input
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "auto", opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              key="search"
+              className="relative z-50 h-10 px-5 pr-16 text-sm bg-white rounded-lg ring-2 ring-yellow-500 ring-opacity-25 focus:outline-none"
+              type="search"
+              name="search"
+              placeholder="Search"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </>
+        )}
+        {opened && searchQuery !== "" && (
+          <>
+            <motion.div
+              className="absolute right-0 z-40 w-64 p-2 bg-white rounded top-14 ring-2 ring-yellow-500 ring-opacity-25"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+            >
+              <QueryResponse search={searchQuery} />
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
       <button
@@ -58,18 +79,7 @@ const Search = () => {
           </motion.div>
         )}
       </button>
-      <AnimatePresence>
-        {opened && searchQuery !== "" && (
-          <motion.div
-            className="absolute right-0 w-64 p-2 bg-white top-12"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-          >
-            <QueryResponse search={searchQuery} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AnimatePresence></AnimatePresence>
     </div>
   );
 };
@@ -103,7 +113,10 @@ const QueryResponse = ({ search }) => {
     <div>
       <ul className="flex flex-col space-y-2">
         {data.products.nodes.map((product) => (
-          <li className="transition-all transform hover:translate-x-1 hover:text-black">
+          <li
+            className="transition-all transform hover:translate-x-1 hover:text-black"
+            key={product.id}
+          >
             <Link href={`/galerie-photo/${product.slug}`} passHref>
               <a>{product.name}</a>
             </Link>

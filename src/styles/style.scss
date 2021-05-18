@@ -16,7 +16,9 @@
     object-position: 50% 50%;
   }
 }
-
+#nprogress .bar {
+  background-color: #f5cc26;
+}
 .banner-img-container {
   transition: opacity 500ms linear 0s;
 }
