@@ -30,7 +30,6 @@ export default async function getMenu(locale = "fr") {
         url: item.url,
       });
   });
-  console.log(collection);
   return {
     base,
     collection:
