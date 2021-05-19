@@ -148,7 +148,4 @@ const VignettePhoto = ({ product }) => {
     </div>
   );
 };
-/*
-					<div className="text-sm text-gray-700 product-description" dangerouslySetInnerHTML={{ __html: (product?.description)}}/>
-*/
 export default Product;

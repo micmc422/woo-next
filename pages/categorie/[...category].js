@@ -158,9 +158,7 @@ export async function getStaticPaths({}) {
         const category = productCategory?.uri
           .replace("https://photo.paris", "")
           .split("/")
-          .filter(
-            (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
-          )
+          .filter((e) => e !== "" && !e.includes("?lang="))
           .slice(1, 99);
         if (category.length > 1) {
           pathsData.push({
@@ -203,7 +201,7 @@ export async function getStaticPaths({}) {
         if (category.length > 1) {
           pathsData.push({
             params: {
-              category: [category[category.length - 1]],
+              category: [...category],
               locale: "en",
             },
           });
