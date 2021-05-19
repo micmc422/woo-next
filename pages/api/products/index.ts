@@ -25,19 +25,21 @@ export default async function handler(
 
   try {
     const params = {
-      first: !before ? Number(first) : null,
-      last: before ? first || last : null,
+      first: !before ? first : undefined,
+      last: before ? first || last : undefined,
       after,
       before,
       search,
       exclude,
       locale,
-      category: category ? category : null,
+      category: category ? category : undefined,
       // categoryIn: categoryIn ? categoryIn : category ? category : null,
-      maxPrice: isNaN(Number(max)) ? null : Number(max).toFixed(2),
-      minPrice: isNaN(Number(min)) ? null : Number(min).toFixed(2),
+      maxPrice: isNaN(Number(max)) ? undefined : Number(max).toFixed(2),
+      minPrice: isNaN(Number(min)) ? undefined : Number(min).toFixed(2),
+      order: !before && !after,
     };
     const apolloCli = locale === "fr" ? client : clientEng;
+    console.log(params);
     const { data } = await apolloCli.query({
       query: GET_PRODUCTS_QUERY,
       variables: params,

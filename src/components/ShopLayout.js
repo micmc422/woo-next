@@ -28,6 +28,7 @@ const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
 const Pagination = ({ pageInfo = {}, pageLength }) => {
   const { hasNextPage, hasPreviousPage } = pageInfo;
   const router = useRouter();
+
   return (
     <div className={`flex flex-row justify-around`}>
       <button></button>
@@ -54,8 +55,8 @@ const Pagination = ({ pageInfo = {}, pageLength }) => {
 };
 const replaceQuery = (name, key, router, pageLength) => {
   const { query } = router;
-    delete theQuery["lang"];
   let theQuery = query;
+  delete theQuery["lang"];
   theQuery[key] = name;
   if (key === "after") {
     delete theQuery["first"];

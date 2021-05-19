@@ -22,7 +22,6 @@ const GET_PRODUCTS_QUERY = gql`
       before: $before
       where: {
         search: $search
-        orderby: { order: ASC, field: MENU_ORDER }
         category: $category
         categoryIn: $categoryIn
         maxPrice: $maxPrice

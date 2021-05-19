@@ -39,6 +39,8 @@ export default function Home(props) {
       : null,
     fetcher
   );
+  console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
+  console.log(data?.products?.nodes);
   const isLoading = !data && !error && formattedQuery.length;
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
