@@ -44,7 +44,7 @@ const Product = (props) => {
       </Link>
       <div className="text-center cursor-pointer product-info">
         <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
-          <h3 className="pb-2 mt-3 font-serif text-xl text-center text-gray-600 hover:text-gray-800">
+          <h3 className="pb-2 mt-3 font-thin text-xl text-center text-gray-600 hover:text-gray-800">
             {product.name ? product.name : "Chargement..."}
           </h3>
         </Link>

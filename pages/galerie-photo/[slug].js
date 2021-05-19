@@ -11,7 +11,6 @@ import RateBlock from "../../src/components/single-product/RateBlock";
 import ColorSizeBlock from "../../src/components/single-product/ColorSizeBlock";
 import ImageContainer from "../../src/components/single-product/ImageProduct";
 import Link from "next/link";
-import { AnimateSharedLayout, motion } from "framer-motion";
 import BlocPrix from "../../src/components/single-product/price/BlocPrix";
 import { useEffect, useState } from "react";
 import ContentParser from "../../src/components/ContentParser";
@@ -43,10 +42,9 @@ export default function Product(props) {
               imgarray={[...product.galleryImages.nodes, product?.image]}
               slug={product.slug}
             />
-            <AnimateSharedLayout>
-              <motion.div
+              <div
                 className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0"
-                layout
+                
               >
                 <h2 className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-500 title-font">
                   {product?.productCategories?.nodes.map(
@@ -103,8 +101,7 @@ export default function Product(props) {
                     </button>
                   </div>
                 </div>
-              </motion.div>
-            </AnimateSharedLayout>
+              </div>
           </div>
         </div>
       </section>

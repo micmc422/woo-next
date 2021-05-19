@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import clientConfig from "../../client-config";
-import { motion } from "framer-motion";
 
 const ImageWithFallback = (props) => {
   const {
