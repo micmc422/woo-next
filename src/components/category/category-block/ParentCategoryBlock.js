@@ -36,7 +36,7 @@ const ParentCategoryBlock = (props) => {
   }, [images, inView]);
   return (
     <div className="mb-5 product" ref={ref}>
-      <Link href={`/category/${category?.slug}`}>
+      <Link href={`/categorie/${category?.slug}`}>
         <a>
           <div className="relative block w-full h-64 md:h-96">
             {" "}

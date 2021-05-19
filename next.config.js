@@ -1,5 +1,6 @@
 const { i18n } = require("./next-i18next.config");
 const path = require("path");
+
 module.exports = {
   trailingSlash: true,
   webpackDevMiddleware: (config) => {
@@ -10,6 +11,9 @@ module.exports = {
     return config;
   },
   /*
+  future: {
+    webpack5: false,
+  },
    */
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
@@ -18,7 +22,14 @@ module.exports = {
     domains: ["photo.paris", "via.placeholder.com"],
   },
   i18n,
-  future: {
-    webpack5: false,
+  async Rewrites() {
+    console.log("redirects called");
+    return [
+      {
+        source: "/category/:category*",
+        destination: "/categorie/:category*",
+        permanent: true,
+      },
+    ];
   },
 };
