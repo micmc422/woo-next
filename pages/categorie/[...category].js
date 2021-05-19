@@ -165,7 +165,7 @@ export async function getStaticPaths({}) {
         if (category.length > 1) {
           pathsData.push({
             params: {
-              category: [category[category.length - 1]],
+              category: [...category],
             },
           });
         }
