@@ -10,19 +10,19 @@ import { useTranslation } from "react-i18next";
 
 const animationParent = {
   initial: { x: 0, opacity: 0 },
-  isVisible: {
+  animate: {
     x: 0,
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.05,
     },
   },
-  isHidden: { x: 0, opacity: 0 },
+  exit: { x: 0, opacity: 0 },
 };
 const animationChild = {
   initial: { opacity: 0, x: 75 },
-  isVisible: { opacity: 1, x: 0 },
-  isHidden: { opacity: 0, x: 75 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: 75 },
 };
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -81,12 +81,8 @@ const BlocCategoriesSelector = ({ categories }) => {
         <Link href={"/galerie-photo"} passHref>
           <motion.a
             key={`fieler-item-retour-nav`}
-            //  onClick={() => updateQuery(false, "categoryIn", router)}
             className="p-1"
-            initial="initial"
-            animate="isVisible"
-            exit="isHidden"
-            variants={animationParent}
+            variants={animationChild}
           >
             {t("retour")}
           </motion.a>
@@ -94,28 +90,22 @@ const BlocCategoriesSelector = ({ categories }) => {
       )}
       {categories &&
         categories.map((item) => {
-         // console.log(activeCat, router);
+          // console.log(activeCat, router);
           return (
             <Link
               href={item.uri.replace("https://photo.paris", "")}
               passHref
               key={`fieler-item-${item.name}`}
             >
-              <motion.a
+              <a
                 // onClick={() => updateQuery(item.slug, "categoryIn", router)}
                 className="p-1"
-                initial="initial"
-                animate="isVisible"
-                exit="isHidden"
-                variants={animationParent}
               >
                 <span className={`relative inline-block`}>
                   <AnimatePresence exitBeforeEnter>
                     {activeCat?.includes(item.slug) && (
                       <motion.span
-                        initial={{ x: 55, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: 25, opacity: 0 }}
+                        variants={animationChild}
                         className={`bg-gray-300 absolute inset-1 rounded-full`}
                       ></motion.span>
                     )}
@@ -127,7 +117,7 @@ const BlocCategoriesSelector = ({ categories }) => {
                     {item.name}
                   </motion.span>
                 </span>
-              </motion.a>
+              </a>
             </Link>
           );
         })}

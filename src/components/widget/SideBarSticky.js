@@ -4,7 +4,16 @@ import { useState } from "react";
 
 const animateMenu = {
   initial: (isRight) => ({ x: isRight ? "100%" : "-100%" }),
-  animate: { x: 0 },
+  animate: {
+    x: 0,
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.2,
+      staggerChildren: 0.1,
+    },
+    when: "beforeChildren",
+  },
   exit: (isRight) => ({ x: isRight ? "100%" : "-100%" }),
 };
 
