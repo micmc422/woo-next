@@ -86,7 +86,7 @@ const QueryResponse = ({ search }) => {
       </div>
     );
   }
-  if (!data) {
+  if (!data?.products?.nodes) {
     return (
       <div className="absolute right-0 w-full h-24 p-2 bg-red-500 top-12">
         Loading...

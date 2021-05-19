@@ -11,12 +11,13 @@ import { ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 import Search from "./widget/Search";
+import { Spin as Hamburger, Spin } from "hamburger-react";
 
 const Nav = ({ menu, translations }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const { t } = useTranslation("common");
-
+  const [isOpen, setOpen] = useState(false);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   /*
  //TODO attente de correction du bug graphQL WPML
@@ -58,16 +59,9 @@ const Nav = ({ menu, translations }) => {
         <div className="block lg:hidden">
           <button
             onClick={() => setMenuVisibility(!isMenuVisible)}
-            className="flex items-center px-3 py-2 text-black border border-black rounded hover:text-black hover:border-black"
+            className="flex items-center p-1 text-black"
           >
-            <svg
-              className="w-3 h-3 fill-current"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
+            <Spin toggled={isOpen} toggle={setOpen} size={20} />
           </button>
         </div>
         <AnimatePresence>
@@ -91,25 +85,6 @@ const Nav = ({ menu, translations }) => {
 
           <div className="flex flex-row space-x-4 text-sm font-medium">
             <Search />
-            <a
-              href="#responsive-header"
-              className="block mt-2 text-black lg:inline-block lg:mt-0 hover:text-black"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="inline-block w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                />
-              </svg>
-            </a>
             <div className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
               <CartIcon />
             </div>
@@ -218,24 +193,7 @@ const MobileMenuBaseLvl = ({ base, setMenuVisibility }) => {
           );
         })}
       </ul>
-      <div className="flex flex-col w-8 py-6 justify-evenly">
-        <motion.div variants={animationChild}>
-          <svg
-            className="w-4 h-4 mx-1 text-gray-600 fill-current hover:text-black"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            version="1.1"
-            id="Capa_1"
-            x="0px"
-            y="0px"
-            viewBox="0 0 56.966 56.966"
-            xmlSpace="preserve"
-            width="512px"
-            height="512px"
-          >
-            <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-          </svg>
-        </motion.div>
+      <div className="flex flex-col w-8 py-6 mr-3 justify-evenly">
         <motion.div variants={animationChild}>
           <CartIcon />
         </motion.div>

@@ -12,6 +12,12 @@ const animationBg = {
   hovered: { x: "50%", scale: 1.2 },
   exit: {},
 };
+const animationText = {
+  initial: { x: -10, scale: 1 },
+  animate: { x: 0, x: 0, scale: 1 },
+  hovered: { x: 10, scale: 1 },
+  exit: {},
+};
 
 export const Bouton = ({
   children = "",
@@ -29,14 +35,16 @@ export const Bouton = ({
       <motion.div
         variants={animationBg}
         className={`absolute  transition-colors rounded-full
-        ${circleClass ? circleClass : "bg-brand-500"} 
+        ${circleClass ? circleClass : "bg-gray-200 shadow-lg"} 
         ${small ? "w-8 h-8" : "w-12 h-12"} 
         `}
       >
         {icon && <div className="relative">{icon}</div>}
       </motion.div>
 
-      <div className="relative inset-0 p-1 ">{children}</div>
+      <motion.div variants={animationText} className="relative inset-0 p-1 ">
+        {children}
+      </motion.div>
     </motion.div>
   );
 };

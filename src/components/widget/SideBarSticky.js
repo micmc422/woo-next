@@ -28,7 +28,7 @@ const SideBarSticky = ({ children, isRight }) => {
         <AnimatePresence>
           <div
             className={`sticky top-0 overflow-hidden ${
-              isRight ? "float-right right-0" : "float-left"
+              isRight ? "float-right -right-8" : "float-left"
             }`}
           >
             {!isOpen && (
@@ -38,13 +38,26 @@ const SideBarSticky = ({ children, isRight }) => {
                 exit="exit"
                 variants={animateMenu}
                 custom={isRight}
-                className={`bg-white ring-2 ring-brand-500 shadow-md rounded-full w-12 h-12 m-1`}
+                className={`bg-white shadow-xl rounded-full w-8 h-8 m-1 flex items-center justify-center`}
                 onClick={() => {
                   setHidden();
                   setIsOpen(!isOpen);
                 }}
               >
-                open
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 8h16M4 16h16"
+                  />
+                </svg>
               </motion.div>
             )}
           </div>

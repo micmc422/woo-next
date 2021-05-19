@@ -25,8 +25,8 @@ export default async function handler(
 
   try {
     const params = {
-      first: !before ? first : undefined,
-      last: before ? first || last : undefined,
+      first: !before ? Number(first) : undefined,
+      last: before ? Number(first) || Number(last) : undefined,
       after,
       before,
       search,

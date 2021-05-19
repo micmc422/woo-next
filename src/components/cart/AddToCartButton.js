@@ -124,8 +124,10 @@ const AddToCart = (props) => {
           addToCartLoading ? (
             <div> Ajout en cour {children ? children : ""}</div>
           ) : (
-            <div onClick={handleAddToCartClick}>
-              {" "}
+            <div
+              onClick={handleAddToCartClick}
+              className="text-brand-500 hover:text-brand-700"
+            >
               {t("ajouter-au-panier")}
               {children ? children : ""}
             </div>
@@ -134,7 +136,7 @@ const AddToCart = (props) => {
           <Bouton>
             <Link href="/cart">
               <button className="inline-block px-3 py-1 text-sm border border-current border-solid rounded-sm hover:bg-brand-500 hover:text-white hover:border-brand-500">
-              {t("voirpanier")}
+                {t("voirpanier")}
               </button>
             </Link>{" "}
           </Bouton>

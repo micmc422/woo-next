@@ -376,7 +376,7 @@ const HomePageSection = ({ homepage, products }) => {
                   )
                 ? "w-full md:1/2 lg:w-1/3 "
                 : attribs?.class.includes("vc_col-sm-8")
-                ? "w-8/12 "
+                ? "sm:w-8/12 "
                 : attribs?.class.includes("vc_col-sm-9")
                 ? "w-3/4 "
                 : attribs?.class.includes("vc_col-sm-12")

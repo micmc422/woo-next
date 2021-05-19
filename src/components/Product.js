@@ -42,10 +42,12 @@ const Product = (props) => {
           ) : null}
         </a>
       </Link>
-      <div className="text-center product-info">
-        <h3 className="mt-3 font-medium text-gray-800 product-title">
-          {product.name ? product.name : "Chargement..."}
-        </h3>
+      <div className="text-center cursor-pointer product-info">
+        <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
+          <h3 className="pb-2 mt-3 font-serif text-xl text-center text-gray-600 hover:text-gray-800">
+            {product.name ? product.name : "Chargement..."}
+          </h3>
+        </Link>
         <div className="flex flex-row flex-wrap items-center justify-around space-x-2">
           {product.name && (
             <>
@@ -58,22 +60,28 @@ const Product = (props) => {
                 </div>
               </AddToCartButton>
               <div className="flex flex-row md:flex-col">
-                <div className="hidden m-auto my-1 lg:block">
-                  <Bouton className={"bg-gray-300"} small={true}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                <div className="hidden m-auto my-1 cursor-pointer lg:block">
+                  <Bouton circleClass={"bg-brand-500"} small={true}>
+                    <Link
+                      href={
+                        product.slug ? `/galerie-photo/${product.slug}` : "./"
+                      }
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </Link>
                   </Bouton>
                 </div>
               </div>

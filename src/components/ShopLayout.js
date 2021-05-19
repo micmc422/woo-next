@@ -1,4 +1,3 @@
-import { AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CategorieList from "./widget/CategorieList";
@@ -13,7 +12,7 @@ const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
         <FilterSection className="w-48 m-auto" categories={categories} />
       </SideBarSticky>
       <div className="container max-w-screen-lg mx-auto">
-        <AnimateSharedLayout>{children}</AnimateSharedLayout>
+        {children}
         <Pagination pageInfo={pageInfo} pageLength={pageLength} />
       </div>
       <SideBarSticky isRight={true}>
