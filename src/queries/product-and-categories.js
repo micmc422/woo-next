@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
  * GraphQL categories and products query.
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
-  query MyQuery($after: String, $search: String, $first: Int, $uri: ID!) {
+  query MyQuery($search: String, $uri: ID!) {
     getFooter {
       sidebarOne
       sidebarTwo
@@ -111,9 +111,14 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       }
     }
     products(
-      first: $first
-      after: $after
-      where: { search: $search, orderby: { order: ASC, field: MENU_ORDER } }
+      first: 24
+      after: ""
+      where: {
+        search: $search
+        orderby: { order: ASC, field: MENU_ORDER }
+        status: "publish"
+        visibility: VISIBLE
+      }
     ) {
       pageInfo {
         endCursor

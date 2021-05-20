@@ -52,9 +52,10 @@ export default function CategorySingle(props) {
       : null,
     fetcher
   );
-  const isLoading = !data && !error;
+  const isLoading = !data && !error && formattedQuery.length;
 
   useEffect(() => {
+    console.log(data?.products?.nodes);
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
       setFilteredProducts(data.products.nodes);
@@ -94,13 +95,19 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {isLoading
-              ? filteredProducts.map((product) => (
+            {!isLoading ? (
+              filteredProducts?.length > 0 ? (
+                filteredProducts.map((product) => (
                   <Product key={product?.id} product={product} />
                 ))
-              : [...Array(24).keys()].map((key) => (
-                  <Product key={key} product={key} />
-                ))}
+              ) : (
+                <div> aucun résultat</div>
+              )
+            ) : (
+              [...Array(24).keys()].map((key) => (
+                <Product key={key} product={key} />
+              ))
+            )}
           </div>{" "}
         </ShopLayout>
       </div>

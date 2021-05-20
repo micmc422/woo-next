@@ -5,7 +5,6 @@ import { gql } from "@apollo/client";
  */
 const GET_PRODUCTS_QUERY = gql`
   query getProduct(
-    $first: Int
     $last: Int
     $after: String
     $before: String
@@ -16,16 +15,19 @@ const GET_PRODUCTS_QUERY = gql`
     $minPrice: Float
   ) {
     products(
-      first: $first
+      first: 24
       last: $last
       after: $after
       before: $before
       where: {
+        status: "publish"
+        visibility: VISIBLE
         search: $search
         category: $category
         categoryIn: $categoryIn
         maxPrice: $maxPrice
         minPrice: $minPrice
+        orderby: { order: ASC, field: MENU_ORDER }
       }
     ) {
       nodes {

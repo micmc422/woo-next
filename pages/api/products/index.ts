@@ -16,7 +16,7 @@ export default async function handler(
       search,
       exclude,
       locale = "fr",
-      category = "",
+      category,
       // categoryIn,
       min,
       max,

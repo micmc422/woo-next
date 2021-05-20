@@ -45,7 +45,15 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
       id
       name
       uri
-      products(first: 50) {
+      products(
+        first: 24
+        after: ""
+        where: {
+          orderby: { order: ASC, field: MENU_ORDER }
+          status: "publish"
+          visibility: VISIBLE
+        }
+      ) {
         pageInfo {
           endCursor
           hasNextPage
