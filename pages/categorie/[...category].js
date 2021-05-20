@@ -153,14 +153,14 @@ export async function getStaticPaths({}) {
 
   data?.productCategories?.nodes &&
     data?.productCategories?.nodes.map((productCategory) => {
-      /// console.log(data?.productCategories?.nodes);
       if (!isEmpty(productCategory?.uri)) {
         const category = productCategory?.uri
           .replace("https://photo.paris", "")
           .split("/")
           .filter((e) => e !== "" && !e.includes("?lang="))
           .slice(1, 99);
-        if (category.length > 1) {
+        console.log(category);
+        if (category.length > 0) {
           pathsData.push({
             params: {
               category: [...category],

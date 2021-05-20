@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "svg": "svgr -d src/components/icons src/components/icons/svgs"
   },
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "install": "^0.13.0",
+    "next-sitemap": "^1.6.57",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.2",
     "postcss-preset-env": "^6.7.0",
