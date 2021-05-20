@@ -6,7 +6,7 @@ import client from "./ApolloClient";
 import Router from "next/router";
 import NProgress from "nprogress";
 import { ApolloProvider } from "@apollo/client";
-import { AnimateSharedLayout } from "framer-motion";
+import ScrollToTop from "react-scroll-to-top";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -21,10 +21,9 @@ const Layout = (props) => {
           <Head>
             <title>Galerie paris est une photo</title>
           </Head>
-          <Header menu={menu}  translations={translations}/>
-          <AnimateSharedLayout type="crossfade">
-            {props.children}
-          </AnimateSharedLayout>
+          <ScrollToTop smooth className="rounded-full bg-brand-500" />
+          <Header menu={menu} translations={translations} />
+          {props.children}
           <Footer footer={footer} />
         </div>
       </ApolloProvider>

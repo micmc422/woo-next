@@ -4,9 +4,6 @@ import client, { clientEng } from "src/components/ApolloClient";
 import PRODUCTS_AND_CATEGORIES_QUERY from "src/queries/product-and-categories";
 import ParentCategoriesBlock from "../../src/components/category/category-block/ParentCategoriesBlock";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import nextI18NextConfig from "../../next-i18next.config.js";
-
 import ShopLayout from "../../src/components/ShopLayout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -15,6 +12,7 @@ import { motion } from "framer-motion";
 import getMenu from "../../src/get-menu-fallback";
 import Head from "next/head";
 import parse from "html-react-parser";
+import nextI18nextConfig from "../../next-i18next.config.js";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -71,9 +69,7 @@ export default function Home(props) {
           setPageInfo={setPageInfo}
           catBase={catBase}
         >
-          <div
-            className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
-          >
+          <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             {!isLoading ? (
               filteredProducts?.length > 0 ? (
                 filteredProducts.map((product) => (
@@ -124,7 +120,11 @@ export async function getStaticProps({ locale }) {
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
       seoSchema: data?.seo?.seo?.schema?.raw || "",
-      ...(await serverSideTranslations(locale, ["shop", "common"], nextI18nextConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ["shop", "common"],
+        nextI18nextConfig
+      )),
     },
     revalidate: 86400,
   };
