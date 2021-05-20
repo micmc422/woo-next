@@ -12,7 +12,7 @@ const ImageProduct = ({
   return (
     <div className="relative max-h-screen">
       <Image
-        className="object-cover object-center w-full rounded lg:w-4/5 lg:h-auto"
+        className="object-cover object-center w-full rounded lg:w-4/5 lg:max-h-screen"
         src={sourceUrl ? sourceUrl : mediaItemUrl}
         alt="Product Image"
         height={height}

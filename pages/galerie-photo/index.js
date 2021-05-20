@@ -57,14 +57,14 @@ export default function Home(props) {
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
-        <motion.h3
+        <motion.h1
           initial={{ x: -200 }}
           animate={{ x: 0 }}
           exit={{ x: -300 }}
           className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
         >
           PARIS EST UNE PHOTO
-        </motion.h3>
+        </motion.h1>
         <ShopLayout
           categories={cat}
           pageInfo={pageInfo}

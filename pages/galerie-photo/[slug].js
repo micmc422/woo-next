@@ -18,6 +18,7 @@ import getMenu from "../../src/get-menu-fallback";
 import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import ProductCard from "../../src/components/Product";
 
 export default function Product(props) {
   const { product, menu } = props;
@@ -106,6 +107,9 @@ export default function Product(props) {
           </div>
         </div>
       </section>
+      <div className="container grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+        <Upsell products={product?.upsell?.nodes} />
+      </div>
       {product ? (
         <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
           <ContentParser data={product.description}></ContentParser>
@@ -125,6 +129,12 @@ export default function Product(props) {
     </Layout>
   );
 }
+
+const Upsell = ({ products }) => {
+  return (
+    products && products.map((product) => <ProductCard product={product} />)
+  );
+};
 
 export async function getStaticProps(context) {
   const {

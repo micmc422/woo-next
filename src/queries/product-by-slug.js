@@ -38,6 +38,16 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           }
         }
       }
+      upsell {
+        nodes {
+          name
+          image {
+            sourceUrl
+            altText
+          }
+          slug
+        }
+      }
       ... on SimpleProduct {
         price
         id
