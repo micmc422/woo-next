@@ -8,14 +8,12 @@ export default async function getMenu(locale = "fr") {
       ? `https://photo.paris/wp-json/wp/v2/menu`
       : `https://photo.paris/wp-json/wp/v2/menu?lang=en`
   ).catch((e) => {
-    console.log(e);
   });
   const megamenuList = await fetch(
     locale === "fr"
       ? `https://photo.paris/wp-json/wp/v2/megamenu`
       : `https://photo.paris/wp-json/wp/v2/megamenu?lang=en`
   ).catch((e) => {
-    console.log(e);
   });
   let collection = await megamenuList.json();
   if (collection?.code === "rest_no_route") {

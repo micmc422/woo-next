@@ -12,6 +12,9 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       name
       seo {
         fullHead
+        schema {
+          raw
+        }
       }
       image {
         id

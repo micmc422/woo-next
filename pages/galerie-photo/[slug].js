@@ -22,6 +22,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 export default function Product(props) {
   const { product, menu } = props;
   const seoData = product?.seo?.fullHead && parse(product?.seo?.fullHead);
+  const seoSchema = product?.seo?.schema?.raw;
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
     product?.variations?.nodes[0]
@@ -34,7 +35,10 @@ export default function Product(props) {
   }
   return (
     <Layout menu={menu}>
-      <Head>{seoData ? seoData : ""}</Head>
+      <Head>
+        {seoData ? seoData : ""}
+        <script type="application/ld+json">{`${seoSchema}`}</script>
+      </Head>
       <section className="overflow-hidden text-gray-600 body-font">
         <div className="px-5 py-4 mx-auto md:py-24">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
@@ -42,66 +46,63 @@ export default function Product(props) {
               imgarray={[...product.galleryImages.nodes, product?.image]}
               slug={product.slug}
             />
-              <div
-                className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0"
-                
-              >
-                <h2 className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-500 title-font">
-                  {product?.productCategories?.nodes.map(
-                    ({ name, description, uri }) => {
-                      return (
-                        <Link href={`${uri}`} passHref key={uniqueId()}>
-                          <a className="transition-colors hover:text-gray-800">
-                            {name}
-                          </a>
-                        </Link>
-                      );
-                    }
-                  )}
-                </h2>
-                <h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">
-                  {product.name}
-                </h1>
-                <RateBlock
-                  rating={product?.reviews?.averageRating}
-                  reviewCount={product?.reviewCount}
-                />
-                <div
-                  className="leading-relaxed"
-                  dangerouslySetInnerHTML={{
-                    __html: product?.shortDescription,
-                  }}
-                />
-                {product.variations && (
-                  <ColorSizeBlock
-                    setActiveVariations={setActiveVariations}
-                    variations={product.variations.nodes}
-                    activeVariations={activeVariations}
-                  />
+            <div className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
+              <h2 className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-500 title-font">
+                {product?.productCategories?.nodes.map(
+                  ({ name, description, uri }) => {
+                    return (
+                      <Link href={`${uri}`} passHref key={uniqueId()}>
+                        <a className="transition-colors hover:text-gray-800">
+                          {name}
+                        </a>
+                      </Link>
+                    );
+                  }
                 )}
-                <div className="flex">
-                  <BlocPrix
-                    price={product.price}
-                    activeVariations={activeVariations}
-                  />
-                  <div className="flex px-6 py-2 ml-auto">
-                    {" "}
-                    <AddToCartButton product={activeVariations || product} />
-                    <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
-                      <svg
-                        fill="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                      </svg>
-                    </button>
-                  </div>
+              </h2>
+              <h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">
+                {product.name}
+              </h1>
+              <RateBlock
+                rating={product?.reviews?.averageRating}
+                reviewCount={product?.reviewCount}
+              />
+              <div
+                className="leading-relaxed"
+                dangerouslySetInnerHTML={{
+                  __html: product?.shortDescription,
+                }}
+              />
+              {product.variations && (
+                <ColorSizeBlock
+                  setActiveVariations={setActiveVariations}
+                  variations={product.variations.nodes}
+                  activeVariations={activeVariations}
+                />
+              )}
+              <div className="flex">
+                <BlocPrix
+                  price={product.price}
+                  activeVariations={activeVariations}
+                />
+                <div className="flex px-6 py-2 ml-auto">
+                  {" "}
+                  <AddToCartButton product={activeVariations || product} />
+                  <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
+                    <svg
+                      fill="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                    </svg>
+                  </button>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </section>

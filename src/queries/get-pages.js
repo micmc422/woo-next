@@ -33,6 +33,9 @@ export const GET_PAGE_BY_URI = gql`
           text
           url
         }
+        schema {
+          raw
+        }
       }
     }
   }

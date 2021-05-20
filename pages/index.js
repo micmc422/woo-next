@@ -21,12 +21,14 @@ export default function Home(props) {
     menu,
     homepage,
     seoHead,
+    seoSchema,
     footer,
   } = props;
   const seoData = seoHead && parse(seoHead);
   return (
     <Layout menu={menu} footer={footer}>
       <Head>{seoData ? seoData : ""}</Head>
+      <script type="application/ld+json">{`${seoSchema}`}</script>
       {/*Hero Carousel*/}
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Categories*/}
@@ -84,6 +86,7 @@ export async function getStaticProps({ locale }) {
       heroCarousel: data?.heroCarousel?.nodes ? data.heroCarousel.nodes : [],
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       seoHead: data?.seo?.seo?.fullHead || "",
+      seoSchema: data?.seo?.seo?.schema?.raw || "",
       ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },
     revalidate: 1,

@@ -27,6 +27,7 @@ export default function Home(props) {
     pageInfoStatic,
     menu,
     seoHead,
+    seoSchema,
   } = props;
   const seoData = seoHead && parse(seoHead);
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -39,8 +40,6 @@ export default function Home(props) {
       : null,
     fetcher
   );
-  console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
-  console.log(data?.products?.nodes);
   const isLoading = !data && !error && formattedQuery.length;
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
@@ -53,7 +52,10 @@ export default function Home(props) {
   }, [query, data?.products?.nodes, locale]);
   return (
     <Layout menu={menu}>
-      <Head>{seoData ? seoData : ""}</Head>
+      <Head>
+        {seoData ? seoData : ""}{" "}
+        <script type="application/ld+json">{`${seoSchema}`}</script>
+      </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
         <motion.h3
           initial={{ x: -200 }}
@@ -122,6 +124,7 @@ export async function getStaticProps({ locale }) {
       cat: data?.cat?.nodes ? data.cat.nodes : [],
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
+      seoSchema: data?.seo?.seo?.schema?.raw || "",
       ...(await serverSideTranslations(locale, ["shop"], nextI18NextConfig)),
     },
     revalidate: 1,

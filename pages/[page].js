@@ -10,9 +10,11 @@ import parse from "html-react-parser";
 export default function Home(props) {
   const { page, menu } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
+  const seoSchema = page?.seo?.schema?.raw;
   return (
     <Layout menu={menu} translations={page?.translations}>
-      <Head>{seoData ? seoData : " "}</Head>
+      <Head>{seoData ? seoData : " "}      <script type="application/ld+json">{`${seoSchema}`}</script>
+</Head>
 
       <ContentParser data={page?.content}></ContentParser>
     </Layout>

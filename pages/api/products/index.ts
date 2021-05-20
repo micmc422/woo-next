@@ -39,7 +39,6 @@ export default async function handler(
       order: !before && !after,
     };
     const apolloCli = locale === "fr" ? client : clientEng;
-    console.log(params);
     const { data } = await apolloCli.query({
       query: GET_PRODUCTS_QUERY,
       variables: params,

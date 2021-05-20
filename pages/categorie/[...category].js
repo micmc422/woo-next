@@ -34,6 +34,7 @@ export default function CategorySingle(props) {
     menu,
     seoHead,
     catData,
+    seoSchema,
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
@@ -68,7 +69,10 @@ export default function CategorySingle(props) {
   const seoData = seoHead && parse(seoHead);
   return (
     <Layout menu={menu}>
-      <Head>{seoData ? seoData : ""}</Head>
+      <Head>
+        {seoData ? seoData : ""}{" "}
+        <script type="application/ld+json">{`${seoSchema}`}</script>
+      </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
         {categoryName ? (
           <motion.h3
@@ -131,6 +135,7 @@ export async function getStaticProps({ params: { category }, locale }) {
         : data?.catBase?.nodes || [],
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
+      seoSchema: data?.seo?.seo?.schema?.raw || "",
       catData: data?.productCategory,
       ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
     },

@@ -71,7 +71,6 @@ const Search = () => {
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const QueryResponse = ({ search }) => {
-  console.log(search);
   const { locale } = useRouter();
   const { data, error } = useSWR(
     search?.length > 0
@@ -93,7 +92,6 @@ const QueryResponse = ({ search }) => {
       </div>
     );
   }
-  console.log(data);
   return (
     <div>
       <ul className="flex flex-col space-y-2">

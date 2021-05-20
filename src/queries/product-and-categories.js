@@ -77,6 +77,9 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
     seo: page(id: $uri, idType: URI) {
       seo {
         fullHead
+        schema {
+          raw
+        }
       }
     }
     productCategories(where: { include: [1355, 1356, 1062] }) {
