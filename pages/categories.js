@@ -27,6 +27,6 @@ export async function getStaticProps({ locale }) {
     props: {
       productCategories: data?.productCategories?.nodes || [],
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 }

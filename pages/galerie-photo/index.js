@@ -127,6 +127,6 @@ export async function getStaticProps({ locale }) {
       seoSchema: data?.seo?.seo?.schema?.raw || "",
       ...(await serverSideTranslations(locale, ["shop"], nextI18NextConfig)),
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 }

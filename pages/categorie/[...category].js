@@ -139,7 +139,7 @@ export async function getStaticProps({ params: { category }, locale }) {
       catData: data?.productCategory,
       ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 }
 

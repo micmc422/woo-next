@@ -89,6 +89,6 @@ export async function getStaticProps({ locale }) {
       seoSchema: data?.seo?.seo?.schema?.raw || "",
       ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 }

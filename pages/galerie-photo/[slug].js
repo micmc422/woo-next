@@ -145,7 +145,7 @@ export async function getStaticProps(context) {
       product: data?.product || {},
       ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 }
 
