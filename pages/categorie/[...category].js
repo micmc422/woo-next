@@ -164,7 +164,6 @@ export async function getStaticPaths({}) {
           .split("/")
           .filter((e) => e !== "" && !e.includes("?lang="))
           .slice(1, 99);
-        console.log(category);
         if (category.length > 0) {
           pathsData.push({
             params: {

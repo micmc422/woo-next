@@ -59,7 +59,7 @@ const Nav = ({ menu, translations }) => {
         <div className="block lg:hidden">
           <button
             onClick={() => setMenuVisibility(!isMenuVisible)}
-            className="flex items-center p-1 text-black"
+            className="flex items-center p-1 text-black focus:outline-none"
           >
             <Spin toggled={isOpen} toggle={setOpen} size={20} />
           </button>
