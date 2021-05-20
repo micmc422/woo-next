@@ -23,7 +23,7 @@ const Layout = (props) => {
           </Head>
           <ScrollToTop
             smooth
-            className="fixed z-40 w-12 h-12 p-1 text-white rounded-full bg-brand-500 bottom-12 right-12 focus:outline-none"
+            className="fixed z-40 w-8 h-8 p-1 text-white rounded-full md:w-12 md:h-12 bg-brand-500 bottom-6 md:bottom-12 right-6 md:right-12 focus:outline-none"
             component={<ArrowSvg />}
           />
           <Header menu={menu} translations={translations} />
@@ -39,7 +39,7 @@ const ArrowSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="w-10 h-10"
+      className="w-6 h-6 md:w-10 md:h-10"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
