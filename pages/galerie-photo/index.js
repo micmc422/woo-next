@@ -71,9 +71,8 @@ export default function Home(props) {
           setPageInfo={setPageInfo}
           catBase={catBase}
         >
-          <motion.div
+          <div
             className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
-            layout
           >
             {!isLoading ? (
               filteredProducts?.length > 0 ? (
@@ -88,7 +87,7 @@ export default function Home(props) {
                 <Product key={key} product={key} />
               ))
             )}
-          </motion.div>
+          </div>
         </ShopLayout>{" "}
         {/*Categories*/}
         <div className="container px-4 mx-auto my-8 md:my-32 product-categories-container xl:px-0">
@@ -125,7 +124,7 @@ export async function getStaticProps({ locale }) {
       catBase: data?.catBase?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
       seoSchema: data?.seo?.seo?.schema?.raw || "",
-      ...(await serverSideTranslations(locale, ["shop"], nextI18NextConfig)),
+      ...(await serverSideTranslations(locale, ["shop", "common"], nextI18nextConfig)),
     },
     revalidate: 86400,
   };

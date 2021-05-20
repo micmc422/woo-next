@@ -6,6 +6,8 @@ import ContentParser from "../src/components/ContentParser";
 import getMenu from "../src/get-menu-fallback";
 import Head from "next/head";
 import parse from "html-react-parser";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18nextConfig from "../next-i18next.config";
 
 export default function Home(props) {
   const { page, menu } = props;
@@ -13,8 +15,10 @@ export default function Home(props) {
   const seoSchema = page?.seo?.schema?.raw;
   return (
     <Layout menu={menu} translations={page?.translations}>
-      <Head>{seoData ? seoData : " "}      <script type="application/ld+json">{`${seoSchema}`}</script>
-</Head>
+      <Head>
+        {seoData ? seoData : " "}{" "}
+        <script type="application/ld+json">{`${seoSchema}`}</script>
+      </Head>
 
       <ContentParser data={page?.content}></ContentParser>
     </Layout>
@@ -33,6 +37,11 @@ export async function getStaticProps({ locale, params }) {
     props: {
       menu,
       page: data?.page || [],
+      ...(await serverSideTranslations(
+        locale,
+        ["shop", "common"],
+        nextI18nextConfig
+      )),
     },
     revalidate: 86400,
   };
