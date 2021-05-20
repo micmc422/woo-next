@@ -48,7 +48,7 @@ export default function CategorySingle(props) {
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
     formattedQuery?.length > 0
-      ? `/api/products/?locale=${locale}&category=${catName}&${formattedQuery}`
+      ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
     fetcher
   );
