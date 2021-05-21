@@ -123,6 +123,7 @@ const VignettePhoto = ({ product }) => {
       <AnimatePresence>
         {hovered ? (
           <motion.div
+            className="absolute inset-0"
             key={uniqueId(product.id)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -138,6 +139,7 @@ const VignettePhoto = ({ product }) => {
           </motion.div>
         ) : (
           <motion.div
+            className="absolute inset-0"
             key={uniqueId(product.id + "-alt")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
