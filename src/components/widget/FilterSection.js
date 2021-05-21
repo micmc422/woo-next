@@ -76,7 +76,7 @@ const BlocCategoriesSelector = ({ categories }) => {
   );
   */
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence>
       {true && (
         <Link href={"/galerie-photo"} passHref>
           <motion.a
