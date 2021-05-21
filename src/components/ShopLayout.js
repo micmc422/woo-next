@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bouton } from "./themeComponents";
 import CategorieList from "./widget/CategorieList";
 import FilterSection from "./widget/FilterSection";
@@ -7,14 +8,24 @@ import SideBarSticky from "./widget/SideBarSticky";
 
 const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
   const [pageLength, setPageLength] = useState(24);
+  const toShop = useRef(null);
+  const executeScroll = () => toShop.current.scrollIntoView();
   return (
     <div className={`flex flex-row lg:space-x-2 ${className ? className : ""}`}>
       <SideBarSticky>
         <FilterSection className="w-48 m-auto" categories={categories} />
       </SideBarSticky>
-      <div className="container max-w-screen-lg mx-auto">
+      <div
+        className="container max-w-screen-lg mx-auto"
+        id="top-shop"
+        ref={toShop}
+      >
         {children}
-        <Pagination pageInfo={pageInfo} pageLength={pageLength} />
+        <Pagination
+          pageInfo={pageInfo}
+          pageLength={pageLength}
+          executeScroll={executeScroll}
+        />
       </div>
       <SideBarSticky isRight={true}>
         <CategorieList
@@ -25,10 +36,9 @@ const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
     </div>
   );
 };
-const Pagination = ({ pageInfo = {}, pageLength }) => {
+const Pagination = ({ pageInfo = {}, pageLength, executeScroll }) => {
   const { hasNextPage, hasPreviousPage } = pageInfo;
   const router = useRouter();
-
   return (
     <div className={`flex flex-row justify-around`}>
       {hasPreviousPage && (
@@ -51,7 +61,13 @@ const Pagination = ({ pageInfo = {}, pageLength }) => {
           <button
             className={`focus:outline-none`}
             onClick={() =>
-              replaceQuery(pageInfo.startCursor, "before", router, pageLength)
+              replaceQuery(
+                pageInfo.startCursor,
+                "before",
+                router,
+                pageLength,
+                executeScroll
+              )
             }
           >
             précédent
@@ -77,7 +93,13 @@ const Pagination = ({ pageInfo = {}, pageLength }) => {
         >
           <button
             onClick={() =>
-              replaceQuery(pageInfo.endCursor, "after", router, pageLength)
+              replaceQuery(
+                pageInfo.endCursor,
+                "after",
+                router,
+                pageLength,
+                executeScroll
+              )
             }
             className={`focus:outline-none`}
           >
@@ -88,8 +110,9 @@ const Pagination = ({ pageInfo = {}, pageLength }) => {
     </div>
   );
 };
-const replaceQuery = (name, key, router, pageLength) => {
+const replaceQuery = (name, key, router, pageLength, executeScroll) => {
   const { query } = router;
+  executeScroll();
   let theQuery = query;
   delete theQuery["lang"];
   theQuery[key] = name;
