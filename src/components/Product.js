@@ -20,7 +20,7 @@ const Product = (props) => {
   // console.log(product)
   return (
     // @TODO Need to handle Group products differently.
-    <div className="w-full mb-5 product">
+    <div className="w-full product">
       <motion.div
         initial="initial"
         animate="animate"
@@ -36,7 +36,7 @@ const Product = (props) => {
               <VignettePhoto product={product} />
             ) : !isEmpty(clientConfig.productImagePlaceholder) ? (
               <div className="relative overflow-hidden">
-                <Skeleton height={250} width={250} />
+                <Skeleton height={192} width={250} />
               </div>
             ) : null}
           </a>
@@ -44,7 +44,7 @@ const Product = (props) => {
         {!noName && (
           <div className="text-center cursor-pointer product-info">
             <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
-              <h3 className="pb-2 mt-3 text-xl font-thin text-center text-gray-600 hover:text-gray-800">
+              <h3 className="pb-2 mt-3 text-sm font-thin text-center text-gray-600 md:overflow-ellipsis max-h-10 md:max-h-full overflow-hidden ... md:text-xl hover:text-gray-800 ">
                 {product.name ? product.name : "Chargement..."}
               </h3>
             </Link>
