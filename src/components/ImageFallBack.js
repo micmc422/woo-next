@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import clientConfig from "../../client-config";
 import { useAnimation, motion } from "framer-motion";
+import Skeleton from "react-loading-skeleton";
 
 const animationVariants = {
   loaded: { opacity: 1 },
@@ -37,7 +38,14 @@ const ImageWithFallback = (props) => {
         objectFit={objectfit}
         src={imgSrc}
         layout="fill"
-        onLoad={() => setLoaded(true)}
+        onLoad={(event) => {
+          const target = event.target;
+
+          // next/image use an 1x1 px git as placeholder. We only want the onLoad event on the actual image
+          if (target.src.indexOf("data:image/gif;base64") < 0) {
+            setLoaded(true);
+          }
+        }}
       />
     </motion.div>
   );
