@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import UPDATE_CART from "../../../mutations/update-cart";
 import GET_CART from "../../../queries/get-cart";
 import CLEAR_CART_MUTATION from "../../../mutations/clear-cart";
-import { isEmpty } from "lodash";
+import { isEmpty, uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 
 const CartItemsContainer = () => {
@@ -29,6 +29,7 @@ const CartItemsContainer = () => {
       setCart(updatedCart);
     },
   });
+  console.log(cart);
 
   // Update Cart Mutation.
   const [
@@ -116,6 +117,26 @@ const CartItemsContainer = () => {
 
   return (
     <div className="container px-4 mx-auto my-32 cart product-cart-container xl:px-0">
+      <style jsx>{`
+        html,
+        body {
+          height: 100%;
+        }
+
+        @media (min-width: 640px) {
+          table {
+            display: inline-table !important;
+          }
+
+          thead tr:not(:first-child) {
+            display: none;
+          }
+        }
+
+        td:not(:last-child) {
+          border-bottom: 0;
+        }
+      `}</style>
       {cart ? (
         <div className="container woo-next-cart-wrapper">
           <div className="grid grid-cols-2 gap-4 cart-header">
@@ -134,49 +155,31 @@ const CartItemsContainer = () => {
               {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-0 mb-5 xl:grid-cols-4 xl:gap-4">
-            <table className="w-full text-left whitespace-no-wrap table-auto">
+          <div className="grid grid-cols-1 gap-2 mb-5 xl:grid-cols-3 xl:gap-4 ">
+            <table className="w-full col-span-2 text-left whitespace-no-wrap table-auto">
               <thead className="text-left">
-                <tr className="woo-next-cart-head-container">
-                  <th
-                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tl rounded-bl title-font"
-                    scope="col"
-                  />
-                  <th
-                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font hidden md:table"
-                    scope="col"
-                  />
-                  <th
-                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font hidden md:table"
-                    scope="col"
-                  >
+                <tr className="flex flex-col mb-2 rounded-l-lg bg-brand-400 flex-no wrap sm:table-row sm:rounded-none sm:mb-0">
+                  <th className="p-3" scope="col" />
+                  <th className="p-3" scope="col" />
+                  <th className="p-3" scope="col">
                     {t("photo")}
                   </th>
-                  <th
-                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font"
-                    scope="col"
-                  >
-                    {t("prix")}
-                  </th>
-                  <th
-                    className="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font"
-                    scope="col"
-                  >
+                  <th className="p-3" scope="col">
                     {t("quantite")}
                   </th>
-                  <th
-                    className="text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tr rounded-br title-font"
-                    scope="col"
-                  >
+                  <th className="p-3" scope="col">
+                    {t("prix")}
+                  </th>
+                  <th className="p-3" scope="col">
                     {t("total")}
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="flex-1 sm:flex-none">
                 {cart.products.length &&
                   cart.products.map((item) => (
                     <CartItem
-                      key={item.productId}
+                      key={uniqueId(item.productId)}
                       item={item}
                       updateCartProcessing={updateCartProcessing}
                       products={cart.products}
@@ -186,7 +189,6 @@ const CartItemsContainer = () => {
                   ))}
               </tbody>
             </table>
-
             {/*Cart Total*/}
             <div className="p-5 bg-gray-200 border row woo-next-cart-total-container">
               <div className="">

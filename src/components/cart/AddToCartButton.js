@@ -10,12 +10,12 @@ import { Bouton } from "../themeComponents";
 import { useTranslation } from "next-i18next";
 
 const AddToCart = (props) => {
-  const { product, children } = props;
+  const { product, children, variation } = props;
   const { t } = useTranslation("shop");
-
   const productQryInput = {
     clientMutationId: v4(), // Generate a unique id.
     productId: product.productId,
+    variationId: variation?.productId,
   };
   const [cart, setCart] = useContext(AppContext);
   const [showViewCart, setShowViewCart] = useState(false);

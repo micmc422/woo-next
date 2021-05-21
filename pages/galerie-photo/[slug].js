@@ -19,14 +19,20 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
+import { Bouton } from "../../src/components/themeComponents";
 
 export default function Product(props) {
   const { product, menu } = props;
+  const tmp = product?.variations?.nodes.slice();
+  const orderredVariations = tmp.sort(
+    (a, b) => +a?.price?.replace(",00€", "") - +b?.price?.replace(",00€", "")
+  );
+
   const seoData = product?.seo?.fullHead && parse(product?.seo?.fullHead);
   const seoSchema = product?.seo?.schema?.raw;
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
-    product?.variations?.nodes[0]
+    orderredVariations[0] || 0
   );
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -77,7 +83,7 @@ export default function Product(props) {
               {product.variations && (
                 <ColorSizeBlock
                   setActiveVariations={setActiveVariations}
-                  variations={product.variations.nodes}
+                  variations={orderredVariations}
                   activeVariations={activeVariations}
                 />
               )}
@@ -88,7 +94,10 @@ export default function Product(props) {
                 />
                 <div className="flex px-6 py-2 ml-auto">
                   {" "}
-                  <AddToCartButton product={activeVariations || product} />
+                  <AddToCartButton
+                    product={product}
+                    variation={activeVariations}
+                  />
                   <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
                     <svg
                       fill="currentColor"
@@ -107,7 +116,12 @@ export default function Product(props) {
           </div>
         </div>
       </section>
-      <div className="container grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+      <div className="max-w-screen-md pb-8 mx-auto">
+        <Bouton>
+          <div className="text-4xl md:text-8xl">à découvrir</div>
+        </Bouton>
+      </div>
+      <div className="grid max-w-screen-lg grid-cols-2 gap-4 px-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <Upsell products={product?.upsell?.nodes} />
       </div>
       {product ? (
@@ -132,7 +146,8 @@ export default function Product(props) {
 
 const Upsell = ({ products }) => {
   return (
-    products && products.map((product) => <ProductCard product={product} />)
+    products &&
+    products.map((product) => <ProductCard product={product} noName />)
   );
 };
 

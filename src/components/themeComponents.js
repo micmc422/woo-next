@@ -7,15 +7,15 @@ const animationParent = {
   exit: {},
 };
 const animationBg = {
-  initial: { y: -50, scale: 0 },
-  animate: { y: 0, x: 0, scale: 1 },
-  hovered: { x: "50%", scale: 1.2 },
+  initial: { y: -50 },
+  animate: { y: 0, x: 0 },
+  hovered: { x: "15%" },
   exit: {},
 };
 const animationText = {
-  initial: { x: -10, scale: 1 },
-  animate: { x: 0, x: 0, scale: 1 },
-  hovered: { x: 10, scale: 1 },
+  initial: { x: -10 },
+  animate: { x: 0, x: 0 },
+  hovered: { x: "10%" },
   exit: {},
 };
 
@@ -36,7 +36,7 @@ export const Bouton = ({
         variants={animationBg}
         className={`absolute  transition-colors rounded-full
         ${circleClass ? circleClass : "bg-gray-200 shadow-lg"} 
-        ${small ? "w-8 h-8" : "w-12 h-12"} 
+        ${small ? "w-8 h-8" : "h-12 w-12"} 
         `}
       >
         {icon && <div className="relative">{icon}</div>}
