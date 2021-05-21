@@ -1,7 +1,12 @@
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { uniqueId } from "lodash";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const animationVariants = {
+  loaded: { opacity: 1 },
+  notLoaded: { opacity: 0 },
+};
 
 const ImageProduct = ({
   slug,
@@ -9,16 +14,36 @@ const ImageProduct = ({
   mediaItemUrl,
   mediaDetails: { height, width },
 }) => {
+  const [loaded, setLoaded] = useState(false);
+  const animationControls = useAnimation();
+  useEffect(() => {
+    if (loaded) {
+      animationControls.start("loaded");
+    }
+  }, [loaded]);
+
   return (
-    <div className="relative max-h-screen">
+    <motion.div
+      initial={"notLoaded"}
+      animate={animationControls}
+      variants={animationVariants}
+      transition={{ ease: "easeOut", duration: 1 }}
+      className="relative max-h-screen"
+    >
       <Image
         className="object-cover object-center w-full rounded lg:w-4/5 lg:max-h-screen"
         src={sourceUrl ? sourceUrl : mediaItemUrl}
         alt="Product Image"
         height={height}
         width={width}
+        onLoad={(event) => {
+          const target = event.target;
+          if (target.src.indexOf("data:image/gif;base64") < 0) {
+            setLoaded(true);
+          }
+        }}
       />
-    </div>
+    </motion.div>
   );
 };
 const ImageContainer = ({ imgarray }) => {
@@ -44,8 +69,20 @@ const Vignettes = ({ imgarray, setSelected }) => {
           { id, sourceUrl, mediaItemUrl, mediaDetails: { height, width } },
           i
         ) => {
+          const [loaded, setLoaded] = useState(false);
+          const animationControls = useAnimation();
+          useEffect(() => {
+            if (loaded) {
+              animationControls.start("loaded");
+            }
+          }, [loaded]);
+
           return (
-            <div
+            <motion.div
+              initial={"notLoaded"}
+              animate={animationControls}
+              variants={animationVariants}
+              transition={{ ease: "easeOut", duration: 1 }}
               className={` w-24 h-24 relative ring-2 ring-brand-500 ring-opacity-60 rounded-md`}
               onClick={() => setSelected(i)}
               key={uniqueId()}
@@ -55,8 +92,14 @@ const Vignettes = ({ imgarray, setSelected }) => {
                 src={sourceUrl ? sourceUrl : mediaItemUrl}
                 alt="Product Image"
                 layout="fill"
+                onLoad={(event) => {
+                  const target = event.target;
+                  if (target.src.indexOf("data:image/gif;base64") < 0) {
+                    setLoaded(true);
+                  }
+                }}
               />
-            </div>
+            </motion.div>
           );
         }
       )}
