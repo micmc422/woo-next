@@ -24,7 +24,7 @@ import { Bouton } from "../../src/components/themeComponents";
 export default function Product(props) {
   const { product, menu } = props;
   const tmp = product?.variations?.nodes.slice();
-  const orderredVariations = tmp.sort(
+  const orderredVariations = tmp?.sort(
     (a, b) => +a?.price?.replace(",00€", "") - +b?.price?.replace(",00€", "")
   );
 
@@ -32,7 +32,7 @@ export default function Product(props) {
   const seoSchema = product?.seo?.schema?.raw;
   const router = useRouter();
   const [activeVariations, setActiveVariations] = useState(
-    orderredVariations[0] || 0
+    orderredVariations ? orderredVariations[0] : null
   );
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
