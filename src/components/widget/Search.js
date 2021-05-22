@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
-import { height } from "tailwindcss/defaulttheme";
 import { Result } from "../../../pages/recherche";
 
 const Search = () => {
