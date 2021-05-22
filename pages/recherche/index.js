@@ -11,13 +11,16 @@ import client, { clientEng } from "../../src/components/ApolloClient";
 import { GET_CATEGORIES_LIST } from "../../src/queries/get-categories";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
+import { Bouton } from "../../src/components/themeComponents";
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const Recherche = ({ menu, cat }) => {
   return (
     <Layout menu={menu}>
       <div className="container w-full px-4 mx-auto my-16 ">
-        <h1 className="mb-5 text-4xl font-black uppercase md:text-6xl">Recherche</h1>
+        <h1 className="mb-5 text-4xl font-black uppercase md:text-6xl">
+          Recherche
+        </h1>
         <SearchContainer cat={cat} />
       </div>
     </Layout>
@@ -164,14 +167,18 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-const Result = ({ resList }) => {
+export const Result = ({ resList, noCol = false }) => {
   console.log(resList);
   return (
     <motion.div
       variants={container}
       initial="hidden"
       animate="show"
-      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}
+      className={`grid ${
+        noCol
+          ? "grid-cols-1"
+          : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+      } gap-4`}
     >
       {resList.map((item) => (
         <ResItem {...item} />
@@ -187,6 +194,7 @@ const ResItem = ({
   averageRating,
   galleryImages,
   reviewCount,
+  productCategories,
 }) => {
   const orientation = galleryImages?.nodes[0]
     ? galleryImages?.nodes[0].mediaDetails.width >
@@ -205,21 +213,39 @@ const ResItem = ({
     <motion.div variants={item}>
       <Link href={`/galerie-photo/${slug}`} passHref>
         <a
-          className={`flex flex-row items-center space-x-4 py-1 cursor-pointer transform hover:-translate-y-1 transition-transform rounded bg-gray-100 shadow`}
+          className={`flex flex-row items-center space-x-4 cursor-pointer transform hover:shadow-xl transition-all rounded bg-gray-100 shadow overflow-hidden`}
         >
-          <div className={`relative w-24 h-16`}>
+          <div className={`relative w-24 self-stretch flex-shrink-0`}>
             <ImageWithFallback
               src={imageUrlPrimaire}
               slug={slug}
               alt="Product image"
               layout="fill"
-              objectfit={orientation}
+              objectfit={"cover"}
             />
           </div>
-          <div className="">
-            <h2>{name}</h2>
-            <div>{price}</div>
-            <StarComp averageRating={averageRating} reviewCount={reviewCount} />
+          <div className="flex-grow py-1">
+            <Bouton>
+              <h2 className="pb-2 leading-4 text-gray-800">{name}</h2>
+            </Bouton>
+            <div className="relative flex -mx-1 justify-items-end flex-nowrap">
+              <div className="flex flex-wrap flex-grow flex-shrink">
+                {productCategories?.nodes?.map(({ name, slug, uri }) => (
+                  <Link href={uri.replace("https://photo.paris")} passHref>
+                    <a className="px-1 m-px text-xs text-gray-400 transition-all rounded-full hover:shadow bg-gray-50">
+                      {name}{" "}
+                    </a>
+                  </Link>
+                ))}
+              </div>
+              <div className="flex flex-col self-end flex-shrink-0 pr-1">
+                <div className="text-sm text-right text-blue-400">{price}</div>
+                <StarComp
+                  averageRating={averageRating}
+                  reviewCount={reviewCount}
+                />
+              </div>
+            </div>
           </div>
         </a>
       </Link>
@@ -232,37 +258,40 @@ const StarComp = ({ averageRating, reviewCount }) => {
   console.log(arrrayOfStar, averageRating, reviewCount);
   return (
     averageRating !== 0 && (
-      <span class="flex items-center">
-        {arrrayOfStar.map((star, i) => {
-          console.log({ i, averageRating });
-          return i < averageRating ? (
-            <svg
-              fill="currentColor"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-brand-500"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-          ) : (
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-brand-500"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-          );
-        })}
-
-        <span class="text-gray-600 ml-3">{reviewCount} Reviews</span>
+      <span class="flex flex-col items-end">
+        <span class="flex items-center text-right">
+          {arrrayOfStar.map((star, i) => {
+            console.log({ i, averageRating });
+            return i < averageRating ? (
+              <svg
+                fill="currentColor"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-4 h-4 text-brand-500"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+            ) : (
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-4 h-4 text-brand-500"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+            );
+          })}
+        </span>
+        <span class="text-gray-300 ml-3 text-xs leading-3">
+          {reviewCount} vote{reviewCount > 1 ? "s" : ""}
+        </span>
       </span>
     )
   );

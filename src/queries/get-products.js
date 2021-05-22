@@ -37,6 +37,13 @@ const GET_PRODUCTS_QUERY = gql`
         reviewCount
         slug
         description
+        productCategories {
+          nodes {
+            name
+            slug
+            uri
+          }
+        }
         image {
           id
           uri

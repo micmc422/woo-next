@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
+import { Result } from "../../../pages/recherche";
 
 const Search = () => {
   const [opened, setOpened] = useState(false);
@@ -36,7 +37,7 @@ const Search = () => {
         {opened && searchQuery !== "" && (
           <>
             <motion.div
-              className="absolute right-0 z-40 w-64 p-1 bg-white rounded ring-2 ring-brand-500 ring-opacity-25 top-10"
+              className="absolute right-0 z-40 w-screen max-w-screen-sm p-1 bg-white rounded ring-2 ring-brand-500 ring-opacity-25 top-10 max-h-96 overflow-y-scroll shadow-2xl"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
@@ -95,16 +96,18 @@ const QueryResponse = ({ search }) => {
   return (
     <div>
       <ul className="flex flex-col space-y-2">
-        {data.products.nodes.map((product) => (
-          <li
-            className="transition-all transform hover:translate-x-1 hover:text-black"
-            key={product.id}
-          >
-            <Link href={`/galerie-photo/${product.slug}`} passHref>
-              <a>{product.name}</a>
-            </Link>
-          </li>
-        ))}
+        <Result resList={data.products.nodes} noCol={true} />
+        {false &&
+          data.products.nodes.map((product) => (
+            <li
+              className="transition-all transform hover:translate-x-1 hover:text-black"
+              key={product.id}
+            >
+              <Link href={`/galerie-photo/${product.slug}`} passHref>
+                <a>{product.name}</a>
+              </Link>
+            </li>
+          ))}
       </ul>
     </div>
   );
