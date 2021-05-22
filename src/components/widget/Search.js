@@ -37,7 +37,7 @@ const Search = () => {
         {opened && searchQuery !== "" && (
           <>
             <motion.div
-              className="absolute right-0 z-40 w-screen max-w-screen-sm p-1 bg-white rounded ring-2 ring-brand-500 ring-opacity-25 top-10 max-h-96 overflow-y-scroll shadow-2xl"
+              className="absolute right-0 z-40 w-screen max-w-screen-sm p-1 overflow-y-scroll bg-white rounded shadow-2xl safe ring-2 ring-brand-500 ring-opacity-25 top-10 max-h-96"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
