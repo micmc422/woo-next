@@ -46,8 +46,8 @@ export default function Product(props) {
         {seoData ? seoData : ""}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-      <section className="overflow-hidden text-gray-600 body-font">
-        <div className="px-5 py-4 mx-auto md:py-24">
+      <section className="px-5 py-4 mx-auto text-gray-600 body-font md:py-24">
+        <div className="">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
             <ImageContainer
               imgarray={[...product.galleryImages.nodes, product?.image]}

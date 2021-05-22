@@ -74,7 +74,7 @@ export default function CategorySingle(props) {
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-      <div className="container px-4 mx-auto my-8 xl:px-0">
+      <div className="container px-4 mx-auto my-8">
         {categoryName ? (
           <motion.h3
             key={categoryName}

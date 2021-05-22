@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-const CartIcon = () => {
+const CartIcon = ({props}) => {
   const { t } = useTranslation("common");
 
   const [cart] = useContext(AppContext);
@@ -14,7 +14,7 @@ const CartIcon = () => {
 
   return (
     <Link href="/cart">
-      <a className="relative block mt-2 text-center text-gray-600 hover:text-black lg:mt-0">
+      <a {...props} className="relative block mt-2 text-center text-gray-600 hover:text-black lg:mt-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="inline-block w-6 h-6"

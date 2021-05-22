@@ -16,8 +16,8 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 const Recherche = ({ menu, cat }) => {
   return (
     <Layout menu={menu}>
-      <div className="container px-4 mx-auto my-16 checkout xl:px-0">
-        <h1 className="mb-5 text-6xl font-black uppercase">Recherche</h1>
+      <div className="container w-full px-4 mx-auto my-16 ">
+        <h1 className="mb-5 text-4xl font-black uppercase md:text-6xl">Recherche</h1>
         <SearchContainer cat={cat} />
       </div>
     </Layout>
@@ -54,7 +54,7 @@ const SearchContainer = ({ cat }) => {
     }
   }, [data]);
   return (
-    <div className="flex flex-col space-y-8 sm:-mx-3">
+    <div className="flex flex-col space-y-8">
       <InputField
         name="search"
         inputValue={search}
