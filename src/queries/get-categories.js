@@ -68,5 +68,16 @@ export const GET_CATEGORIES_QUERY_FULL = gql`
     }
   }
 `;
+export const GET_CATEGORIES_LIST = gql`
+  query {
+    productCategories(where: { parent: null }) {
+      nodes {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
 
 export default GET_CATEGORIES_QUERY;
