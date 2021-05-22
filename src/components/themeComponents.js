@@ -9,13 +9,13 @@ const animationParent = {
 const animationBg = {
   initial: { y: -50 },
   animate: { y: 0, x: 0 },
-  hovered: { x: "15%" },
+  hovered: { x: 25 },
   exit: {},
 };
 const animationText = {
   initial: { x: -10 },
   animate: { x: 0, x: 0 },
-  hovered: { x: "10%" },
+  hovered: { x: 12.5 },
   exit: {},
 };
 
