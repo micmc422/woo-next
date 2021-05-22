@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR from "swr";
+import { height } from "tailwindcss/defaulttheme";
 import { Result } from "../../../pages/recherche";
 
 const Search = () => {
@@ -37,7 +38,12 @@ const Search = () => {
         {opened && searchQuery !== "" && (
           <>
             <motion.div
-              className="absolute right-0 z-40 w-screen max-w-screen-sm p-1 overflow-y-scroll bg-white rounded shadow-2xl safe ring-2 ring-brand-500 ring-opacity-25 top-10 max-h-96"
+              className="absolute right-0 z-40 p-1 overflow-y-scroll bg-white rounded shadow-2xl ring-2 ring-brand-500 ring-opacity-25 top-10 "
+              style={{
+                width: "768px",
+                maxWidth: "100vw",
+                height: "calc(100vh - 112px)",
+              }}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
