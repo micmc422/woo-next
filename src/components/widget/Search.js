@@ -35,21 +35,22 @@ const Search = () => {
           </>
         )}
         {opened && searchQuery !== "" && (
-          <>
-            <motion.div
-              className="absolute right-0 z-40 p-1 overflow-y-scroll bg-white rounded shadow-2xl ring-2 ring-brand-500 ring-opacity-25 top-10 "
-              style={{
-                width: "768px",
-                maxWidth: "100vw",
-                height: "calc(100vh - 112px)",
-              }}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-            >
-              <QueryResponse search={searchQuery} />
-            </motion.div>
-          </>
+          <motion.div
+            className="absolute right-0 z-40 px-1 pt-1 overflow-y-scroll bg-white rounded shadow-2xl ring-2 ring-brand-500 ring-opacity-25 top-10"
+            style={{
+              width: "768px",
+              maxWidth: "100vw",
+              maxHeight: "calc(100vh - 112px)",
+            }}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+          >
+            <QueryResponse search={searchQuery} />
+            <div className="sticky bottom-0 px-1 mt-1 bg-white text-brand-500">
+              Voir plus
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
       <button
@@ -86,20 +87,70 @@ const QueryResponse = ({ search }) => {
   );
   if (error) {
     return (
-      <div className="absolute right-0 w-full h-24 p-2 bg-red-500 top-12">
-        Erreur...
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        key="error"
+        className="p-2"
+      >
+        <section className="text-gray-600 body-font">
+          <div className="flex px-5 py-4 mx-auto">
+            <h2 className="w-3/5 mb-2 text-2xl font-medium text-gray-900 sm:text-3xl title-font">
+              Oups, une erreur est survenu.
+            </h2>
+            <div className="w-2/5 md:pl-6">
+              <div className="flex mt-6 md:mt-4">
+                <button className="inline-flex px-4 py-1 text-white border-0 rounded bg-brand-500 focus:outline-none hover:bg-brand-600">
+                  Essayer sur la page de recherche
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </motion.div>
     );
   }
   if (!data?.products?.nodes) {
     return (
-      <div className="absolute right-0 w-full h-24 p-2 bg-red-500 top-12">
-        Loading...
-      </div>
+      <motion.div
+        key="loading"
+        className="p-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <section className="text-gray-600 body-font">
+          <div className="flex items-center px-5 py-4 mx-auto">
+            <h2 className="w-3/5 mb-2 text-2xl font-medium text-gray-900 sm:text-3xl title-font">
+              Chargement des résultats en cour.
+            </h2>
+            <div className="w-2/5 md:pl-6">
+              <div className="flex items-center h-64">
+                <motion.div
+                  className="w-24 h-24 mx-auto bg-brand-500"
+                  animate={{
+                    scale: [1, 2, 2, 1, 1],
+                    rotate: [0, 0, 270, 270, 0],
+                    borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+                  }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      </motion.div>
     );
   }
+  // return <div />;
   return (
-    <div>
+    <motion.div
+      key="result"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <ul className="flex flex-col space-y-2">
         <Result resList={data.products.nodes} noCol={true} />
         {false &&
@@ -114,7 +165,7 @@ const QueryResponse = ({ search }) => {
             </li>
           ))}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 export default Search;
