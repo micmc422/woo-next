@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { TitreWidget } from "../themeComponents";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import InputRange from "react-input-range";
@@ -124,6 +123,7 @@ const BlocCategoriesSelector = ({ categories }) => {
     </AnimatePresence>
   );
 };
+
 const BlocPriceRange = ({ min, max }) => {
   const { t } = useTranslation("shop");
   const router = useRouter();
@@ -132,22 +132,29 @@ const BlocPriceRange = ({ min, max }) => {
 
   const rangeHandler = (value) => {
     setValues(value);
+    console.log(value);
+    isActive
+      ? updateQuery(value, "max", router)
+      : updateQuery(value, "disablePrice", router);
     //  value.min && updateQuery(value.min, "min", router);
-    value.max && updateQuery(value.max, "max", router);
+    // value.max && updateQuery(value.max, "max", router);
   };
   return (
-    <div className={`p-4`}>
+    <div className={`py-4`}>
       <div className={`flex flex-row pb-6`}>
         <div className="flex items-center justify-between space-x-1">
           <div
-            className={`flex items-center w-8 h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full ${
-              values.min ? "bg-green-400" : ""
+            className={`flex items-center w-8 h-6 p-1 duration-300 ease-in-out  rounded-full ${
+              isActive ? "bg-green-400" : "bg-gray-300"
             }`}
-            onClick={() => setValues(500)}
+            onClick={() => {
+              setIsActive(!isActive);
+              updateQuery(values, "disablePrice", router);
+            }}
           >
             <div
               className={`w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md ${
-                values.min ? "translate-x-2" : ""
+                isActive ? "translate-x-2" : ""
               }`}
             ></div>
           </div>
@@ -157,17 +164,23 @@ const BlocPriceRange = ({ min, max }) => {
           </div>
         </div>
       </div>
-      <InputRange
-        step={5}
-        maxValue={max}
-        //  minValue={min}
-        formatLabel={(value) => `${value}€`}
-        value={values}
-        onChange={(value) => {
-          setValues(value);
-        }}
-        onChangeComplete={(value) => rangeHandler(value)}
-      />
+      <div className={`w-full relative`}>
+        {isActive && (
+          <form className="form">
+            <InputRange
+              step={5}
+              maxValue={700}
+              minValue={25}
+              formatLabel={(value) => `${value}€`}
+              value={values}
+              onChange={(value) => {
+                setValues(value);
+              }}
+              onChangeComplete={(value) => rangeHandler(value)}
+            />
+          </form>
+        )}
+      </div>
     </div>
   );
 };

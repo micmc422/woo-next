@@ -16,6 +16,8 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
+import Link from "next/link";
+import { GrFormClose } from "react-icons/gr";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -41,7 +43,7 @@ export default function CategorySingle(props) {
   const catName = query?.category?.length
     ? query.category[query.category.length - 1]
     : "";
-  delete query.category;
+  // delete query.category;
   const formattedQuery = new URLSearchParams(query).toString();
   delete query.lang;
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
@@ -61,7 +63,7 @@ export default function CategorySingle(props) {
       setFilteredProducts(data.products.nodes);
     } else {
       setPageInfo(pageInfoStatic);
-      setFilteredProducts(products);
+      setFilteredProducts([]);
     }
   }, [formattedQuery, data?.products, products]);
   if (router.isFallback) {
@@ -101,7 +103,18 @@ export default function CategorySingle(props) {
                   <Product key={product?.id} product={product} />
                 ))
               ) : (
-                <div> aucun résultat</div>
+                <div className={`col-span-4`}>
+                  <div>
+                    <h2 className="py-12 text-3xl font-black uppercase">
+                      Aucun résultats
+                    </h2>
+                    <p className="prose">
+                      Oups. nous avons cherché partout mais nous n'avons trouvé
+                      aucune photos correspondant à votre requête.
+                    </p>
+                    <QueryResume query={query} />
+                  </div>
+                </div>
               )
             ) : (
               [...Array(24).keys()].map((key) => (
@@ -114,6 +127,43 @@ export default function CategorySingle(props) {
     </Layout>
   );
 }
+const QueryResume = ({ query }) => {
+  const router = useRouter();
+
+  console.log(query);
+  const removePriceRange = () => {
+    delete router.query.max;
+    router.push(router);
+  };
+  return (
+    <div>
+      {query?.category && (
+        <div className="p-2">
+          catégorie :
+          <Link href="/galerie-photo" passHref>
+            <a
+              className={`bg-brand-500 hover:bg-brand-400 ring-2 ring-opacity-75 ring-brand-600 transform-all rounded px-1 mx-1 inline-flex items-center`}
+            >
+              <span>{query?.category[0]}</span> <GrFormClose />
+            </a>
+          </Link>{" "}
+        </div>
+      )}
+      {query?.max && (
+        <div className="p-2">
+          Prix maximum :
+          <a onClick={() => removePriceRange()}>
+            <span
+              className={`bg-brand-500 hover:bg-brand-400 ring-2 ring-opacity-75 ring-brand-600 transform-all rounded px-1 mx-1 inline-flex items-center`}
+            >
+              {query?.max}€ <GrFormClose />
+            </span>
+          </a>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;

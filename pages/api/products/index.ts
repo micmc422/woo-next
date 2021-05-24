@@ -34,8 +34,12 @@ export default async function handler(
       locale,
       category: category ? category : undefined,
       // categoryIn: categoryIn ? categoryIn : category ? category : null,
-      maxPrice: isNaN(Number(max)) ? undefined : Number(max).toFixed(2),
-      minPrice: isNaN(Number(min)) ? undefined : Number(min).toFixed(2),
+      maxPrice: isNaN(Number(max))
+        ? undefined
+        : parseFloat(Number(max).toFixed(2)),
+      minPrice: isNaN(Number(min))
+        ? undefined
+        : parseFloat(Number(min).toFixed(2)),
       order: !before && !after,
     };
     const apolloCli = locale === "fr" ? client : clientEng;

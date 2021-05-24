@@ -53,9 +53,7 @@ export const PriceParse = ({ price }) => {
   const temp = price.split("-");
   const parsedPrice = temp[0].trim();
 
-  return (
-    <div>{temp.length > 1 ? "à partir de " + parsedPrice : parsedPrice}</div>
-  );
+  return <>{temp.length > 1 ? "à partir de " + parsedPrice : parsedPrice}</>;
 };
 
 export const TitreDefault = () => {
