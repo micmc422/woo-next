@@ -36,7 +36,6 @@ const FilterSection = ({ categories, className }) => {
       <div className="flex flex-col">
         <TitreWidget>{t("categories")}</TitreWidget>
         <BlocCategoriesSelector categories={categories} />
-        <TitreWidget>{t("prix")}</TitreWidget>
         <BlocPriceRange min={15} max={1000} />
       </div>
       <div>A venir</div>
@@ -141,13 +140,15 @@ const BlocPriceRange = ({ min, max }) => {
   };
   return (
     <div className={`py-4`}>
-      <div className={`flex flex-row pb-6`}>
+      <TitreWidget>{t("prix")}</TitreWidget>
+
+      <div className={`hidden md:flex flex-row pb-6`}>
         <div className="flex items-center justify-between space-x-1">
           <div
             className={`flex items-center w-8 h-6 p-1 duration-300 ease-in-out  rounded-full ${
               isActive ? "bg-green-400" : "bg-gray-300"
             }`}
-            onClick={() => {
+            onClick={(e) => {
               setIsActive(!isActive);
               updateQuery(values, "disablePrice", router);
             }}
@@ -196,7 +197,7 @@ const updateQuery = (name, key, router) => {
   const routerAction = (theQueryAction, path = router.asPath.split("?")[0]) => {
     // delete theQuery["slug"];
     const formattedQuery = new URLSearchParams(theQueryAction).toString();
-    router.push(
+    router.replace(
       {
         pathname: path,
         query: formattedQuery,

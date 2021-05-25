@@ -52,7 +52,8 @@ const ImageContainer = ({ imgarray }) => {
     <div className="w-full lg:w-1/2">
       <div className="relative max-h-screen">
         {imgarray.map(
-          (item, i) => selected === i && <ImageProduct {...item} key={i} />
+          (item, i) =>
+            selected === i && <ImageProduct {...item} key={item.id} />
         )}
       </div>
       <Vignettes imgarray={imgarray} setSelected={setSelected} />
@@ -63,7 +64,9 @@ const ImageContainer = ({ imgarray }) => {
 const Vignettes = ({ imgarray, setSelected }) => {
   // console.log(imgarray);
   return (
-    <div className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2`}>
+    <div
+      className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2 items-center`}
+    >
       {imgarray.map(
         (
           { id, sourceUrl, mediaItemUrl, mediaDetails: { height, width } },
@@ -81,17 +84,18 @@ const Vignettes = ({ imgarray, setSelected }) => {
             <motion.div
               initial={"notLoaded"}
               animate={animationControls}
-              variants={animationVariants}
+              // variants={animationVariants}
               transition={{ ease: "easeOut", duration: 1 }}
-              className={` w-24 h-24 relative ring-2 ring-brand-500 ring-opacity-60 rounded-md`}
+              className={` w-24 h-24 relative rounded-md`}
               onClick={() => setSelected(i)}
-              key={uniqueId()}
+              key={uniqueId(id)}
             >
               <Image
-                className="object-cover object-center rounded "
+                className=""
                 src={sourceUrl ? sourceUrl : mediaItemUrl}
                 alt="Product Image"
-                layout="fill"
+                height={height}
+                width={width}
                 onLoad={(event) => {
                   const target = event.target;
                   if (target.src.indexOf("data:image/gif;base64") < 0) {
