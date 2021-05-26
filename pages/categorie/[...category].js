@@ -62,7 +62,7 @@ export default function CategorySingle(props) {
       setFilteredProducts(data.products.nodes);
     } else {
       setPageInfo(pageInfoStatic);
-      setFilteredProducts([]);
+      setFilteredProducts(products);
     }
   }, [formattedQuery, data?.products, products]);
   if (router.isFallback) {
@@ -96,23 +96,25 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="relative grid w-full grid-cols-2 gap-4 mx-auto overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredProducts?.length > 0 ? (
-              filteredProducts.map((product) => (
-                <Product key={product?.id} product={product} />
-              ))
-            ) : !isLoading ? (
-              <div className={`col-span-4`}>
-                <div>
-                  <h2 className="py-12 text-3xl font-black uppercase">
-                    Aucun résultats
-                  </h2>
-                  <p className="prose">
-                    Oups. nous avons cherché partout mais nous n'avons trouvé
-                    aucune photos correspondant à votre requête.
-                  </p>
-                  <QueryResume query={query} />
+            {!isLoading ? (
+              filteredProducts?.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <Product key={product?.id} product={product} />
+                ))
+              ) : (
+                <div className={`col-span-4`}>
+                  <div>
+                    <h2 className="py-12 text-3xl font-black uppercase">
+                      Aucun résultats
+                    </h2>
+                    <p className="prose">
+                      Oups. nous avons cherché partout mais nous n'avons trouvé
+                      aucune photos correspondant à votre requête.
+                    </p>
+                    <QueryResume query={query} />
+                  </div>
                 </div>
-              </div>
+              )
             ) : (
               [...Array(24).keys()].map((key) => (
                 <Product key={key} product={key} />
