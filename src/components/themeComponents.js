@@ -11,8 +11,6 @@ const animationBg = {
   animate: { y: 0, x: "0%", borderRadius: "50%" },
   hovered: (custom) => ({
     x: custom ? [3, 0, 3] : ["0%", "50%", "100%", "-20%", "0%"],
-    scale: !custom ? [1, 1.5, 1.5, 0.5, 1] : 1,
-    rotate: !custom ? [0, 0, 270, 270, 0] : 0,
     borderRadius: !custom ? ["50%", "20%", "50%", "20%", "50%"] : "50%",
     transition: { repeat: Infinity, duration: 2 },
   }),
@@ -42,7 +40,7 @@ export const Bouton = ({
         variants={animationBg}
         custom={small}
         className={`absolute  transition-colors rounded-full
-        ${circleClass ? circleClass : "bg-gray-200 shadow-lg"} 
+        ${circleClass ? circleClass : "neuromorphism-gray"} 
         ${small ? "w-8 h-8" : "h-12 w-12"} 
         `}
       ></motion.div>

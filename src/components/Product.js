@@ -52,14 +52,21 @@ const Product = (props) => {
               {product.name && (
                 <>
                   {product.__typename === "VariableProduct" ? (
-                    <Bouton>
-                      <div className="">
-                        <Price
-                          salesPrice={product?.price}
-                          regularPrice={product?.regularPrice}
-                        />
-                      </div>
-                    </Bouton>
+                    <Link
+                      href={
+                        product.slug ? `/galerie-photo/${product.slug}` : "./"
+                      }
+                      passHref
+                    >
+                      <a className="">
+                        <Bouton>
+                          <Price
+                            salesPrice={product?.price}
+                            regularPrice={product?.regularPrice}
+                          />
+                        </Bouton>
+                      </a>
+                    </Link>
                   ) : (
                     <AddToCartButton product={product}>
                       <div className="">
@@ -73,7 +80,7 @@ const Product = (props) => {
                   <div className="flex flex-row md:flex-col">
                     <div className="hidden m-auto my-1 cursor-pointer lg:block">
                       <Bouton
-                        circleClass={"bg-brand-500 hover:ring-2"}
+                        circleClass={"neuromorphism-brand hover:ring-2"}
                         small={true}
                       >
                         <Link

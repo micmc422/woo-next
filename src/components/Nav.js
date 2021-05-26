@@ -7,7 +7,7 @@ import { domToReact } from "html-react-parser";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronToBot } from "./themeComponents";
+import { Bouton, ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 import Search from "./widget/Search";
@@ -289,13 +289,18 @@ const defaultOptions = {
         .split("?lang=");
       const href = arrayHref[0];
       const lang = arrayHref[1];
+      console.log(attribs);
       if (attribs?.class?.includes("block-link")) {
         return (
-          <a className="p-1 pt-2 mx-2 rounded bg-brand-500 ring-1 ring-yellow-400 whitespace-nowrap">
-            <span className="inline-block">
-              {domToReact(children, defaultOptions)}
-            </span>
-          </a>
+          <Link href={href} locale={lang ? lang : "fr"} passHref>
+            <a className="relative block p-1 pt-2 mx-2 rounded-lg whitespace-nowrap">
+              <Bouton small={true} circleClass="neuromorphism-brand">
+                <span className="inline-block">
+                  {domToReact(children, defaultOptions)}
+                </span>
+              </Bouton>
+            </a>
+          </Link>
         );
       }
       return (
