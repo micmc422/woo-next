@@ -55,7 +55,6 @@ export default function CategorySingle(props) {
       : null,
     fetcher
   );
-  console.log({ data, error, formattedQuery });
   const isLoading = !data && !error && formattedQuery !== "";
 
   useEffect(() => {

@@ -22,7 +22,6 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 const Tags = (props) => {
   const router = useRouter();
   const { query, locale } = router;
-  console.log(props);
   const {
     tagName,
     products,
