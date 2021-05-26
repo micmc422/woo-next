@@ -40,6 +40,7 @@ export default function Product(props) {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
+  console.log(product);
   return (
     <Layout menu={menu}>
       <Head>
@@ -54,20 +55,41 @@ export default function Product(props) {
               slug={product.slug}
             />
             <div className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
-              <h2 className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-500 title-font">
+              <div className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-300">
                 {product?.productCategories?.nodes.map(
                   ({ name, description, uri }) => {
                     return (
-                      <Link href={`${uri}`} passHref key={uniqueId()}>
-                        <a className="transition-colors hover:text-gray-800">
+                      <Link
+                        href={`${uri.replace("https://photo.paris", "")}`}
+                        passHref
+                        key={uniqueId()}
+                      >
+                        <a className="uppercase transition-colors hover:text-gray-400">
                           {name}
                         </a>
                       </Link>
                     );
                   }
                 )}
-              </h2>
-              <h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">
+              </div>
+              <div className="flex flex-row flex-wrap space-x-2 text-xs tracking-widest text-brand-500 title-font">
+                {product?.productTags?.nodes.map(
+                  ({ name, description, uri }) => {
+                    return (
+                      <Link
+                        href={`${uri.replace("https://photo.paris", "")}`}
+                        passHref
+                        key={uniqueId()}
+                      >
+                        <a className="transition-colors hover:text-brand-800">
+                          {name}
+                        </a>
+                      </Link>
+                    );
+                  }
+                )}
+              </div>
+              <h1 className="my-1 text-3xl font-black text-gray-900 md:text-5xl lg:text-6xl title-font">
                 {product.name}
               </h1>
               <RateBlock
@@ -85,6 +107,7 @@ export default function Product(props) {
                   setActiveVariations={setActiveVariations}
                   variations={orderredVariations}
                   activeVariations={activeVariations}
+                  productName={product.name}
                 />
               )}
               <div className="flex">

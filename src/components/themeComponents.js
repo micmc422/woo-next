@@ -7,9 +7,9 @@ const animationParent = {
   exit: {},
 };
 const animationBg = {
-  initial: { y: -50 },
+  initial: (custom) => ({ y: custom ? -10 : -50 }),
   animate: { y: 0, x: 0 },
-  hovered: { x: 25 },
+  hovered: (custom) => ({ x: custom ? 5 : 25 }),
   exit: {},
 };
 const animationText = {
@@ -34,6 +34,7 @@ export const Bouton = ({
     >
       <motion.div
         variants={animationBg}
+        custom={small}
         className={`absolute  transition-colors rounded-full
         ${circleClass ? circleClass : "bg-gray-200 shadow-lg"} 
         ${small ? "w-8 h-8" : "h-12 w-12"} 
@@ -53,7 +54,18 @@ export const PriceParse = ({ price }) => {
   const temp = price.split("-");
   const parsedPrice = temp[0].trim();
 
-  return <>{temp.length > 1 ? "à partir de " + parsedPrice : parsedPrice}</>;
+  return (
+    <>
+      {temp.length > 1 ? (
+        <p className={`text-xs leading-3`}>
+          <span className="text-purple-500">à partir de</span> <br />
+          {parsedPrice}
+        </p>
+      ) : (
+        parsedPrice
+      )}
+    </>
+  );
 };
 
 export const TitreDefault = () => {

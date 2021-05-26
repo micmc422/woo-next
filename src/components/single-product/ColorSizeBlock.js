@@ -1,9 +1,15 @@
+import { AnimateSharedLayout, motion } from "framer-motion";
+import { useState } from "react";
+import { BiLayerMinus, BiLayerPlus } from "react-icons/bi";
 const ColorSizeBlock = ({
   setActiveVariations,
   variations,
   activeVariations,
   colors,
+  productName,
 }) => {
+  const [type, setType] = useState(true);
+  const cadresVal = ["Frame", "Cadre"];
   return (
     <div className="flex items-center pb-5 mt-6 mb-5 border-b-2 border-gray-100">
       {colors && (
@@ -34,7 +40,7 @@ const ColorSizeBlock = ({
                   </option>
                 ))}
               </select>
-              <span className="absolute top-0 right-0 flex items-center justify-center w-10 h-full text-center text-gray-600 pointer-events-none">
+              <span className="absolute top-0 right-0 flex items-center justify-center w-10 h-full text-center text-gray-300 pointer-events-none">
                 <svg
                   fill="none"
                   stroke="currentColor"
@@ -49,26 +55,55 @@ const ColorSizeBlock = ({
               </span>
             </div>
           </div>
-          <div className="items-center hidden md:flex">
+          <div className="items-center hidden md:inline-block">
             <div className="relative">
-              <ul className="py-2 pl-3 pr-10 text-base ">
-                {variations.map((item, i) => (
-                  <li
-                    className={`my-2 p-2 hover:bg-brand-400 transition-colors bg-gray-300 rounded hover:text-white hover:font-bold ${
-                      activeVariations?.id === item.id
-                        ? "bg-brand-500 font-bold text-white"
-                        : ""
-                    }`}
-                    onClick={(e) =>
-                      setActiveVariations(variations[e.target.value])
-                    }
-                    key={`size-selector-desktop-${item.id}`}
-                    value={i}
-                  >
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
+              <div
+                className={`relative inline-block ml-3  rounded-full bg-opacity-50 shadow-inner ${
+                  !type ? "bg-red-500" : "bg-green-500"
+                }`}
+              >
+                <div
+                  layoutId={"btn-cadre"}
+                  className={`flex my-1 bg-white rounded-full shadow-lg transition-all px-3 ${
+                    type ? "ml-4 mr-2" : "mr-4 ml-2"
+                  }`}
+                  onClick={() => setType(!type)}
+                >
+                  {type ? (
+                    <BiLayerMinus size={24} />
+                  ) : (
+                    <BiLayerPlus size={24} />
+                  )}
+                </div>
+              </div>
+              <AnimateSharedLayout>
+                <motion.ul layout className="py-2 pl-3 pr-10 text-base ">
+                  {variations.map(
+                    (item, i) =>
+                      cadresVal.some(
+                        (el) => item.name.includes(el) === type
+                      ) && (
+                        <li
+                          layoutId={item.name}
+                          className={`my-1 p-2 hover:bg-brand-400 transition-colors bg-gray-200 rounded hover:text-white hover:font-bold ${
+                            activeVariations?.id === item.id
+                              ? "bg-brand-300  text-white"
+                              : ""
+                          }`}
+                          onClick={(e) =>
+                            setActiveVariations(variations[e.target.value])
+                          }
+                          key={`size-selector-desktop-${item.id}`}
+                          value={i}
+                        >
+                          {item.name
+                            .replace(productName, "")
+                            .replace(" - ", "")}
+                        </li>
+                      )
+                  )}
+                </motion.ul>
+              </AnimateSharedLayout>
             </div>
           </div>
         </>

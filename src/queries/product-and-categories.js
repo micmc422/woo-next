@@ -82,6 +82,15 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
+    tagList: productTags(first: 100, where: { orderby: COUNT, order: DESC }) {
+      nodes {
+        id
+        name
+        slug
+        uri
+        count
+      }
+    }
     productCategories(where: { include: [1355, 1356, 1062] }) {
       nodes {
         id

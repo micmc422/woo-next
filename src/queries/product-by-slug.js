@@ -38,6 +38,19 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           }
         }
       }
+      productCategories {
+        nodes {
+          name
+          uri
+        }
+      }
+      productTags {
+        nodes {
+          name
+          uri
+        }
+      }
+
       upsell {
         nodes {
           name

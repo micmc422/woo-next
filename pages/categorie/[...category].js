@@ -36,7 +36,7 @@ export default function CategorySingle(props) {
     pageInfoStatic,
     menu,
     seoHead,
-    catData,
+    tagList,
     seoSchema,
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -91,10 +91,11 @@ export default function CategorySingle(props) {
           ""
         )}
         <ShopLayout
-          categories={cat}
+          categories={cat} 
           catBase={catBase}
           pageInfo={pageInfo}
           setPageInfo={setPageInfo}
+          tagList={tagList}
         >
           <div className="relative grid w-full grid-cols-2 gap-4 mx-auto overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
             <DisplayProducts
@@ -170,6 +171,7 @@ export async function getStaticProps({ params: { category }, locale }) {
         ? data?.cat?.children?.nodes
         : data?.catBase?.nodes || [],
       catBase: data?.catBase?.nodes || [],
+      tagList: data?.tagList?.nodes || [],
       seoHead: data?.seo?.seo?.fullHead || "",
       seoSchema: data?.seo?.seo?.schema?.raw || "",
       catData: data?.productCategory,

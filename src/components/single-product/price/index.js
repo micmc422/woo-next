@@ -1,4 +1,5 @@
 import { isEmpty } from "lodash";
+import { PriceParse } from "../../themeComponents";
 
 const Price = ({ regularPrice = 0, salesPrice }) => {
   if (isEmpty(salesPrice)) {
@@ -46,7 +47,7 @@ const Price = ({ regularPrice = 0, salesPrice }) => {
 
       {/* Discounted price */}
       <span className={productMeta?.strikeThroughClass}>
-        {regularPrice.split("€")[0]}€
+        <PriceParse price={regularPrice} />
       </span>
 
       {/* Discount percent */}

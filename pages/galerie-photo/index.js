@@ -24,6 +24,7 @@ export default function Home(props) {
     catBase,
     cat,
     pageInfoStatic,
+    tagList,
     menu,
     seoHead,
     seoSchema,
@@ -70,6 +71,7 @@ export default function Home(props) {
           pageInfo={pageInfo}
           setPageInfo={setPageInfo}
           catBase={catBase}
+          tagList={tagList}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             <DisplayProducts
@@ -107,6 +109,7 @@ export async function getStaticProps({ locale }) {
         ? data.productCategories.nodes
         : [],
       products: data?.products?.nodes ? data.products.nodes : [],
+      tagList: data?.tagList?.nodes || [],
       pageInfoStatic: data?.products?.pageInfo || {},
       bestSeller: data?.bestSeller?.nodes ? data.bestSeller.nodes : [],
       cat: data?.cat?.nodes ? data.cat.nodes : [],

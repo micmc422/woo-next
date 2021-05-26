@@ -40,6 +40,15 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         uri
       }
     }
+    tagList: productTags(first: 100, where: { orderby: COUNT, order: DESC }) {
+      nodes {
+        id
+        name
+        slug
+        uri
+        count
+      }
+    }
 
     productCategory(id: $uri, idType: URI) {
       id

@@ -7,10 +7,8 @@ const animateMenu = {
   animate: {
     x: 0,
     transition: {
-      type: "spring",
       bounce: 0,
-      duration: 0.2,
-      staggerChildren: 0.1,
+     // staggerChildren: 0.1,
     },
     when: "beforeChildren",
   },

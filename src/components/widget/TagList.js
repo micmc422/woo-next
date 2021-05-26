@@ -2,7 +2,7 @@ import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { TitreWidget } from "../themeComponents";
+import { Bouton, TitreWidget } from "../themeComponents";
 
 const animationParent = {
   initial: { scaleY: 0.1, height: 0 },
@@ -60,15 +60,29 @@ const TagList = ({ tagList, className }) => {
 };
 
 const SideNavRoot = ({ tagList, hovered, setHovered }) => {
-  return tagList.map((item, i) => (
-    <motion.div variants={animationChild} key={`side-nav-item-${i}`}>
-      <NavRootItem
-        hovered={hovered}
-        setHovered={setHovered}
-        {...item}
-      ></NavRootItem>
-    </motion.div>
-  ));
+  const [limit, setLimit] = useState(32);
+  return (
+    <>
+      {tagList.slice(0, limit).map((item, i) => (
+        <motion.div variants={animationChild} key={`side-nav-item-${i}`}>
+          <NavRootItem
+            hovered={hovered}
+            setHovered={setHovered}
+            {...item}
+          ></NavRootItem>
+        </motion.div>
+      ))}
+      {limit === 32 ? (
+        <Bouton>
+          <div onClick={() => setLimit(100)}>Voir plus +</div>
+        </Bouton>
+      ) : (
+        <Bouton>
+          <div onClick={() => setLimit(32)}>Voir moins</div>
+        </Bouton>
+      )}
+    </>
+  );
 };
 
 const NavRootItem = ({ name, slug, id, count, hovered, setHovered }) => {

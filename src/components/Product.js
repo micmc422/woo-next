@@ -17,7 +17,7 @@ const productCardAnimationContainer = {
 };
 const Product = (props) => {
   const { product, noName } = props;
-  // console.log(product)
+ // console.log(product.__typename === "VariableProduct");
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product">
@@ -51,14 +51,25 @@ const Product = (props) => {
             <div className="flex flex-row flex-wrap items-center justify-around space-x-2">
               {product.name && (
                 <>
-                  <AddToCartButton product={product}>
-                    <div className="pt-2">
-                      <Price
-                        salesPrice={product?.price}
-                        regularPrice={product?.regularPrice}
-                      />
-                    </div>
-                  </AddToCartButton>
+                  {product.__typename === "VariableProduct" ? (
+                    <Bouton>
+                      <div className="">
+                        <Price
+                          salesPrice={product?.price}
+                          regularPrice={product?.regularPrice}
+                        />
+                      </div>
+                    </Bouton>
+                  ) : (
+                    <AddToCartButton product={product}>
+                      <div className="">
+                        <Price
+                          salesPrice={product?.price}
+                          regularPrice={product?.regularPrice}
+                        />
+                      </div>
+                    </AddToCartButton>
+                  )}
                   <div className="flex flex-row md:flex-col">
                     <div className="hidden m-auto my-1 cursor-pointer lg:block">
                       <Bouton
