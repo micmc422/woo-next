@@ -2,6 +2,7 @@ import Layout from "../src/components/Layout";
 import client, { clientEng } from "../src/components/ApolloClient";
 import ParentCategoriesBlock from "../src/components/category/category-block/ParentCategoriesBlock";
 import { GET_CATEGORIES_QUERY_FULL } from "../src/queries/get-categories";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Categories(props) {
   const { productCategories } = props;
@@ -26,6 +27,11 @@ export async function getStaticProps({ locale }) {
   return {
     props: {
       productCategories: data?.productCategories?.nodes || [],
+      ...(await serverSideTranslations(locale, [
+        "common",
+        "footer",
+        "checkout",
+      ])),
     },
     revalidate: 86400,
   };
