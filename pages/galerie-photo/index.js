@@ -13,6 +13,7 @@ import getMenu from "../../src/get-menu-fallback";
 import Head from "next/head";
 import parse from "html-react-parser";
 import nextI18nextConfig from "../../next-i18next.config.js";
+import DisplayProducts from "../../src/components/sections/DisplayProducts";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -38,7 +39,7 @@ export default function Home(props) {
       : null,
     fetcher
   );
-  const isLoading = !data && !error && formattedQuery.length;
+  const isLoading = !data && !error && formattedQuery !== "";
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo);
@@ -71,19 +72,10 @@ export default function Home(props) {
           catBase={catBase}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-            {!isLoading ? (
-              filteredProducts?.length > 0 ? (
-                filteredProducts.map((product) => (
-                  <Product key={product?.id} product={product} />
-                ))
-              ) : (
-                <div> aucun résultat</div>
-              )
-            ) : (
-              [...Array(24).keys()].map((key) => (
-                <Product key={key} product={key} />
-              ))
-            )}
+            <DisplayProducts
+              isLoading={isLoading}
+              filteredProducts={filteredProducts}
+            />
           </div>
         </ShopLayout>{" "}
         {/*Categories*/}

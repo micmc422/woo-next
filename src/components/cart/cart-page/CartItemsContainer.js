@@ -175,7 +175,7 @@ const CartItemsContainer = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody class="flex-1 sm:flex-none">
+              <tbody className="flex-1 sm:flex-none">
                 {cart.products.length &&
                   cart.products.map((item) => (
                     <CartItem

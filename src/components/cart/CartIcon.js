@@ -30,7 +30,7 @@ const CartIcon = ({props}) => {
           />
         </svg>
         {productsCount ? (
-          <div class=" text-xs absolute top-0 right-0 -mt-2 mr-4 md:-mr-3 w-5 h-5 bg-brand-500 text-white rounded-full">
+          <div className=" text-xs absolute top-0 right-0 -mt-2 mr-4 md:-mr-3 w-5 h-5 bg-brand-500 text-white rounded-full">
             <span className="">{productsCount}</span>
           </div>
         ) : (

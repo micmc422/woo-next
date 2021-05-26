@@ -18,6 +18,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
 import Link from "next/link";
 import { GrFormClose } from "react-icons/gr";
+import DisplayProducts from "../../src/components/sections/DisplayProducts";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -43,8 +44,8 @@ export default function CategorySingle(props) {
   const catName = query?.category?.length
     ? query.category[query.category.length - 1]
     : "";
-  // delete query.category;
   const formattedQuery = new URLSearchParams(query).toString();
+  delete query.category;
   delete query.lang;
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
@@ -54,7 +55,8 @@ export default function CategorySingle(props) {
       : null,
     fetcher
   );
-  const isLoading = !data && !error && formattedQuery.length;
+  console.log({ data, error, formattedQuery });
+  const isLoading = !data && !error && formattedQuery !== "";
 
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
@@ -96,30 +98,10 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
         >
           <div className="relative grid w-full grid-cols-2 gap-4 mx-auto overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-            {!isLoading ? (
-              filteredProducts?.length > 0 ? (
-                filteredProducts.map((product) => (
-                  <Product key={product?.id} product={product} />
-                ))
-              ) : (
-                <div className={`col-span-4`}>
-                  <div>
-                    <h2 className="py-12 text-3xl font-black uppercase">
-                      Aucun résultats
-                    </h2>
-                    <p className="prose">
-                      Oups. nous avons cherché partout mais nous n'avons trouvé
-                      aucune photos correspondant à votre requête.
-                    </p>
-                    <QueryResume query={query} />
-                  </div>
-                </div>
-              )
-            ) : (
-              [...Array(24).keys()].map((key) => (
-                <Product key={key} product={key} />
-              ))
-            )}
+            <DisplayProducts
+              isLoading={isLoading}
+              filteredProducts={filteredProducts}
+            />
           </div>{" "}
         </ShopLayout>
       </div>

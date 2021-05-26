@@ -256,8 +256,8 @@ const StarComp = ({ averageRating, reviewCount }) => {
   const arrrayOfStar = new Array(5).fill("");
   return (
     averageRating !== 0 && (
-      <span class="flex flex-col items-end">
-        <span class="flex items-center text-right">
+      <span className="flex flex-col items-end">
+        <span className="flex items-center text-right">
           {arrrayOfStar.map((star, i) => {
             return i < averageRating ? (
               <svg
@@ -266,7 +266,7 @@ const StarComp = ({ averageRating, reviewCount }) => {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                class="w-4 h-4 text-brand-500"
+                className="w-4 h-4 text-brand-500"
                 viewBox="0 0 24 24"
               >
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
@@ -278,7 +278,7 @@ const StarComp = ({ averageRating, reviewCount }) => {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                class="w-4 h-4 text-brand-500"
+                className="w-4 h-4 text-brand-500"
                 viewBox="0 0 24 24"
               >
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
@@ -286,7 +286,7 @@ const StarComp = ({ averageRating, reviewCount }) => {
             );
           })}
         </span>
-        <span class="text-gray-300 ml-3 text-xs leading-3">
+        <span className="ml-3 text-xs leading-3 text-gray-300">
           {reviewCount} vote{reviewCount > 1 ? "s" : ""}
         </span>
       </span>
