@@ -71,14 +71,23 @@ export default function Home(props) {
           catBase={catBase}
         >
           <div className="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-            {!isLoading ? (
-              filteredProducts?.length > 0 ? (
-                filteredProducts.map((product) => (
-                  <Product key={product?.id} product={product} />
-                ))
-              ) : (
-                <div> aucun résultat</div>
-              )
+            {filteredProducts?.length > 0 ? (
+              filteredProducts.map((product) => (
+                <Product key={product?.id} product={product} />
+              ))
+            ) : !isLoading ? (
+              <div className={`col-span-4`}>
+                <div>
+                  <h2 className="py-12 text-3xl font-black uppercase">
+                    Aucun résultats
+                  </h2>
+                  <p className="prose">
+                    Oups. nous avons cherché partout mais nous n'avons trouvé
+                    aucune photos correspondant à votre requête.
+                  </p>
+                  <QueryResume query={query} />
+                </div>
+              </div>
             ) : (
               [...Array(24).keys()].map((key) => (
                 <Product key={key} product={key} />
