@@ -110,7 +110,6 @@ export default function CategorySingle(props) {
 const QueryResume = ({ query }) => {
   const router = useRouter();
 
-  console.log(query);
   const removePriceRange = () => {
     delete router.query.max;
     router.push(router);

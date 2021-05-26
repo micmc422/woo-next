@@ -1,7 +1,6 @@
 import Product from "../Product";
 
 const DisplayProducts = ({ isLoading, filteredProducts }) => {
-  console.log({ isLoading, filteredProducts });
   if (isLoading) {
     return [...Array(24).keys()].map((key) => (
       <Product key={key} product={key} />
