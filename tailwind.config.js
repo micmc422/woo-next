@@ -5,6 +5,7 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   purge: {
+    enabled: true,
     content: ["./src/components/**/*.js", "./pages/**/*.js"],
     option: {
       safelist: {
