@@ -78,30 +78,28 @@ const ColorSizeBlock = ({
               </div>
               <AnimateSharedLayout>
                 <motion.ul layout className="py-2 pl-3 pr-10 text-base ">
-                  {variations.map(
-                    (item, i) =>
-                      cadresVal.some(
-                        (el) => item.name.includes(el) === type
-                      ) && (
-                        <li
-                          layoutId={item.name}
-                          className={`my-1 p-2 hover:bg-brand-400 transition-colors bg-gray-200 rounded hover:text-white hover:font-bold ${
-                            activeVariations?.id === item.id
-                              ? "bg-brand-300  text-white"
-                              : ""
-                          }`}
-                          onClick={(e) =>
-                            setActiveVariations(variations[e.target.value])
-                          }
-                          key={`size-selector-desktop-${item.id}`}
-                          value={i}
-                        >
-                          {item.name
-                            .replace(productName, "")
-                            .replace(" - ", "")}
-                        </li>
-                      )
-                  )}
+                  {variations
+                    .filter(
+                      (elem) =>
+                        cadresVal.some((el) => elem.name.includes(el)) === type
+                    )
+                    .map((item, i) => (
+                      <li
+                        layoutId={item.name}
+                        className={`my-1 p-2 hover:bg-brand-400 transition-colors bg-gray-200 rounded hover:text-white hover:font-bold ${
+                          activeVariations?.id === item.id
+                            ? "bg-brand-300  text-white"
+                            : ""
+                        }`}
+                        onClick={(e) =>
+                          setActiveVariations(variations[e.target.value])
+                        }
+                        key={`size-selector-desktop-${item.id}`}
+                        value={i}
+                      >
+                        {item.name.replace(productName, "").replace(" - ", "")}
+                      </li>
+                    ))}
                 </motion.ul>
               </AnimateSharedLayout>
             </div>
