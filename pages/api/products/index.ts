@@ -17,6 +17,7 @@ export default async function handler(
       exclude,
       locale = "fr",
       category,
+      tag,
       // categoryIn,
       min,
       max,
@@ -33,6 +34,7 @@ export default async function handler(
       exclude,
       locale,
       category: category ? category : undefined,
+      tag: tag ? tag : undefined,
       // categoryIn: categoryIn ? categoryIn : category ? category : null,
       maxPrice: isNaN(Number(max))
         ? undefined

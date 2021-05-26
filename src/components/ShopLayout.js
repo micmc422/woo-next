@@ -5,8 +5,9 @@ import { Bouton } from "./themeComponents";
 import CategorieList from "./widget/CategorieList";
 import FilterSection from "./widget/FilterSection";
 import SideBarSticky from "./widget/SideBarSticky";
+import TagList from "./widget/TagList";
 
-const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
+const ShopLayout = ({ children, categories, catBase, tagList, pageInfo, className }) => {
   const [pageLength, setPageLength] = useState(24);
   const toShop = useRef(null);
   const executeScroll = () => toShop.current.scrollIntoView();
@@ -32,6 +33,11 @@ const ShopLayout = ({ children, categories, catBase, pageInfo, className }) => {
           className="w-48 m-auto text-right"
           navCatData={catBase}
         />
+         <TagList
+          className="w-48 m-auto text-right"
+          tagList={tagList}
+        />
+       
       </SideBarSticky>
     </div>
   );

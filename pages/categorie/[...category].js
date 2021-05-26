@@ -24,7 +24,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function CategorySingle(props) {
   const router = useRouter();
-  const { query, locale } = useRouter();
+  const { query, locale } = router;
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
