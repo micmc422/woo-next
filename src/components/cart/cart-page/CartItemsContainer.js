@@ -10,6 +10,7 @@ import GET_CART from "../../../queries/get-cart";
 import CLEAR_CART_MUTATION from "../../../mutations/clear-cart";
 import { isEmpty, uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
+import { Cross } from "../../icons";
 
 const CartItemsContainer = () => {
   const { t } = useTranslation("panier");
@@ -29,7 +30,6 @@ const CartItemsContainer = () => {
       setCart(updatedCart);
     },
   });
-  console.log(cart);
 
   // Update Cart Mutation.
   const [
@@ -155,7 +155,7 @@ const CartItemsContainer = () => {
               {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-2 mb-5 xl:grid-cols-3 xl:gap-4 ">
+          <div className="hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4 ">
             <table className="w-full col-span-2 text-left whitespace-no-wrap table-auto">
               <thead className="text-left">
                 <tr className="flex flex-col mb-2 rounded-l-lg bg-brand-400 flex-no wrap sm:table-row sm:rounded-none sm:mb-0">
@@ -224,7 +224,50 @@ const CartItemsContainer = () => {
               </div>
             </div>
           </div>
-
+          <div className="flex flex-col space-y-1 md:hidden">
+            {cart.products.length &&
+              cart.products.map((item) => (
+                <div className={`relative`} key={uniqueId(item.productId)}>
+                  <div
+                    className="absolute top-0 right-0"
+                    onClick={(event) =>
+                      handleRemoveProductClick(
+                        event,
+                        item.cartKey,
+                        cart.products
+                      )
+                    }
+                  >
+                    <Cross />
+                  </div>
+                  <div className={`flex flex-row`}>
+                    <div className="w-1/5 px-1 pr-1 bg-brand-500">Nom</div>
+                    <div className="pl-1"> {item.name} </div>
+                  </div>
+                  <div className={`flex flex-row`}>
+                    <div className="w-1/5 px-1 pr-1 bg-brand-500">quantité</div>
+                    <div className="pl-1"> {item.qty} </div>
+                  </div>
+                  <div className={`flex flex-row`}>
+                    <div className="w-1/5 px-1 pr-1 bg-brand-500">prix</div>
+                    <div className="pl-1">
+                      {" "}
+                      {"string" !== typeof item.price
+                        ? item.price.toFixed(2)
+                        : item.price}
+                    </div>
+                  </div>
+                  <div className={`flex flex-row`}>
+                    <div className="w-1/5 px-1 pr-1 bg-brand-500">total</div>
+                    <div className="pl-1">
+                      {"string" !== typeof item.totalPrice
+                        ? item.totalPrice.toFixed(2)
+                        : item.totalPrice}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
           {/* Display Errors if any */}
           {requestError ? (
             <div className="mt-5 row woo-next-cart-total-container">

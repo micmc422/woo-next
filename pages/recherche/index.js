@@ -12,6 +12,7 @@ import { GET_CATEGORIES_LIST } from "../../src/queries/get-categories";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
 import { Bouton } from "../../src/components/themeComponents";
+import { uniqueId } from "lodash";
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const Recherche = ({ menu, cat }) => {
@@ -47,9 +48,7 @@ const SearchContainer = ({ cat }) => {
     router.replace(router);
   };
   const isLoading = !data && !error && search?.length > 0;
-  console.log(isLoading);
   useEffect(() => {
-    console.log(data?.products?.nodes);
     if (data?.products?.nodes?.length > 0) {
       setResult(data?.products?.nodes);
     } else {
@@ -75,8 +74,10 @@ const SearchContainer = ({ cat }) => {
         <AnimatePresence exitBeforeEnter>
           {result?.length > 0 ? (
             <Result resList={result} />
-          ) : (
+          ) : search?.length > 0 && !isLoading ? (
             <NoResult cat={cat} />
+          ) : (
+            <div>Saissiez votre requête</div>
           )}
         </AnimatePresence>
       </motion.div>
@@ -101,7 +102,6 @@ const NoResult = ({ cat }) => {
             Essayer d'explorer nos catégories, ou essayer différents mots cléfs.
           </p>
           <div className={`flex flex-row space-x-8`}>
-            {" "}
             <a className="inline-flex items-center mt-4 text-brand-500">
               Accueil
               <svg
@@ -139,7 +139,7 @@ const NoResult = ({ cat }) => {
           <nav className="flex flex-wrap -mb-1 list-none">
             {cat.map(({ name, slug }) => {
               return (
-                <li className="w-1/2 mb-1 lg:w-1/3">
+                <li className="w-1/2 mb-1 lg:w-1/3" key={uniqueId(slug)}>
                   <Link href={`/categorie/${slug}`} passHref>
                     <a className="text-gray-600 hover:text-gray-800">{name}</a>
                   </Link>
@@ -168,7 +168,6 @@ const item = {
 };
 
 export const Result = ({ resList, noCol = false }) => {
-  console.log(resList);
   return (
     <motion.div
       variants={container}
@@ -255,13 +254,11 @@ const ResItem = ({
 
 const StarComp = ({ averageRating, reviewCount }) => {
   const arrrayOfStar = new Array(5).fill("");
-  console.log(arrrayOfStar, averageRating, reviewCount);
   return (
     averageRating !== 0 && (
       <span class="flex flex-col items-end">
         <span class="flex items-center text-right">
           {arrrayOfStar.map((star, i) => {
-            console.log({ i, averageRating });
             return i < averageRating ? (
               <svg
                 fill="currentColor"
@@ -310,7 +307,11 @@ export async function getStaticProps({ locale }) {
     props: {
       menu,
       cat: data?.productCategories.nodes,
-      ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ["shop", "common"],
+        nextI18nextConfig
+      )),
     },
     revalidate: 86400,
   };

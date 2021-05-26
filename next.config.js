@@ -23,7 +23,6 @@ module.exports = {
   },
   i18n,
   async Rewrites() {
-    console.log("redirects called");
     return [
       {
         source: "/category/:category*",

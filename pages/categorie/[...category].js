@@ -57,7 +57,6 @@ export default function CategorySingle(props) {
   const isLoading = !data && !error && formattedQuery.length;
 
   useEffect(() => {
-    console.log(data?.products?.nodes);
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
       setFilteredProducts(data.products.nodes);
@@ -129,8 +128,6 @@ export default function CategorySingle(props) {
 }
 const QueryResume = ({ query }) => {
   const router = useRouter();
-
-  console.log(query);
   const removePriceRange = () => {
     delete router.query.max;
     router.push(router);

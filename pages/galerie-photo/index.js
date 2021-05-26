@@ -40,7 +40,6 @@ export default function Home(props) {
   );
   const isLoading = !data && !error && formattedQuery.length;
   useEffect(() => {
-    console.log(data?.products?.nodes);
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo);
       setFilteredProducts(data.products.nodes);

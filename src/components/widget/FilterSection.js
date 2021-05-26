@@ -131,7 +131,6 @@ const BlocPriceRange = ({ min, max }) => {
 
   const rangeHandler = (value) => {
     setValues(value);
-    console.log(value);
     isActive
       ? updateQuery(value, "max", router)
       : updateQuery(value, "disablePrice", router);
