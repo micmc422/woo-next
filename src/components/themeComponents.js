@@ -7,9 +7,14 @@ const animationParent = {
   exit: {},
 };
 const animationBg = {
-  initial: (custom) => ({ y: custom ? -10 : -50 }),
-  animate: { y: 0, x: 0 },
-  hovered: (custom) => ({ x: custom ? 5 : 25 }),
+  initial: (custom) => ({ y: custom ? 10 : -50 }),
+  animate: { y: 0, x: 0, borderRadius: "50%" },
+  hovered: (custom) => ({
+    scale: !custom ? [1, 1.5, 1.5, 0.5, 1] : 1,
+    rotate: !custom ? [0, 0, 270, 270, 0] : 0,
+    borderRadius: !custom ? ["50%", "20%", "50%", "20%", "50%"] : "50%",
+    transition: { repeat: Infinity, duration: 2 },
+  }),
   exit: {},
 };
 const animationText = {
@@ -58,7 +63,7 @@ export const PriceParse = ({ price }) => {
     <>
       {temp.length > 1 ? (
         <p className={`text-xs leading-3`}>
-          <span className="text-purple-500">à partir de</span> <br />
+          <span className="text-purple-500 safe">à partir de</span> <br />
           {parsedPrice}
         </p>
       ) : (

@@ -17,7 +17,7 @@ const productCardAnimationContainer = {
 };
 const Product = (props) => {
   const { product, noName } = props;
- // console.log(product.__typename === "VariableProduct");
+  // console.log(product.__typename === "VariableProduct");
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product">
@@ -44,7 +44,7 @@ const Product = (props) => {
         {!noName && (
           <div className="text-center cursor-pointer product-info">
             <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
-              <h3 className="pb-2 mt-3 text-sm font-thin text-center text-gray-600 md:overflow-ellipsis max-h-10 md:max-h-full overflow-hidden ... md:text-xl hover:text-gray-800 ">
+              <h3 className="pb-2 mt-3 font-thin text-center  text-gray-600 md:overflow-ellipsis max-h-10 md:max-h-full overflow-hidden ... hover:text-gray-800 leading-4">
                 {product.name ? product.name : "Chargement..."}
               </h3>
             </Link>

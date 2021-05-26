@@ -111,16 +111,17 @@ export default function Product(props) {
                 />
               )}
               <div className="flex">
-                <BlocPrix
-                  price={product.price}
-                  activeVariations={activeVariations}
-                />
                 <div className="flex px-6 py-2 ml-auto">
                   {" "}
                   <AddToCartButton
                     product={product}
                     variation={activeVariations}
-                  />
+                  >
+                    <BlocPrix
+                      price={product.price}
+                      activeVariations={activeVariations}
+                    />
+                  </AddToCartButton>
                   <button className="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full">
                     <svg
                       fill="currentColor"

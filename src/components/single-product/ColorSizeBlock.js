@@ -57,31 +57,35 @@ const ColorSizeBlock = ({
           </div>
           <div className="items-center hidden md:inline-block">
             <div className="relative">
-              <div
-                className={`relative inline-block ml-3  rounded-full bg-opacity-50 shadow-inner ${
-                  !type ? "bg-red-500" : "bg-green-500"
-                }`}
-              >
+              {variations.filter((elem) =>
+                cadresVal.some((el) => elem.name.includes(el))
+              ).length > 0 && (
                 <div
-                  layoutId={"btn-cadre"}
-                  className={`flex my-1 bg-white rounded-full shadow-lg transition-all px-3 ${
-                    type ? "ml-4 mr-2" : "mr-4 ml-2"
+                  className={`relative inline-block ml-3  rounded-full bg-opacity-50 shadow-inner ${
+                    !type ? "bg-red-500" : "bg-green-500"
                   }`}
-                  onClick={() => setType(!type)}
                 >
-                  {type ? (
-                    <BiLayerMinus size={24} />
-                  ) : (
-                    <BiLayerPlus size={24} />
-                  )}
+                  <div
+                    layoutId={"btn-cadre"}
+                    className={`flex my-1 bg-white rounded-full shadow-lg transition-all px-3 ${
+                      type ? "ml-4 mr-2" : "mr-4 ml-2"
+                    }`}
+                    onClick={() => setType(!type)}
+                  >
+                    {type ? (
+                      <BiLayerMinus size={24} />
+                    ) : (
+                      <BiLayerPlus size={24} />
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
               <AnimateSharedLayout>
                 <motion.ul layout className="py-2 pl-3 pr-10 text-base ">
                   {variations
                     .filter(
                       (elem) =>
-                        cadresVal.some((el) => elem.name.includes(el)) === type
+                        cadresVal.some((el) => elem.name.includes(el)) !== type
                     )
                     .map((item, i) => (
                       <li
