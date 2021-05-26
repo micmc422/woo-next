@@ -224,7 +224,7 @@ const CartItemsContainer = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col space-y-1 md:hidden">
+          <div className="flex flex-col space-y-1 safe md:hidden">
             {cart.products.length &&
               cart.products.map((item) => (
                 <div className={`relative`} key={uniqueId(item.productId)}>
