@@ -62,7 +62,7 @@ export default function CategorySingle(props) {
       setFilteredProducts(data.products.nodes);
     } else {
       setPageInfo(pageInfoStatic);
-      setFilteredProducts([]);
+      setFilteredProducts(products);
     }
   }, [formattedQuery, data?.products, products]);
   if (router.isFallback) {
