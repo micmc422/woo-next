@@ -40,7 +40,7 @@ export default function Product(props) {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  console.log(product);
+ // console.log(product);
   return (
     <Layout menu={menu}>
       <Head>

@@ -8,8 +8,9 @@ const animationParent = {
 };
 const animationBg = {
   initial: (custom) => ({ y: custom ? 10 : -50 }),
-  animate: { y: 0, x: 0, borderRadius: "50%" },
+  animate: { y: 0, x: "0%", borderRadius: "50%" },
   hovered: (custom) => ({
+    x: custom ? [3, 0, 3] : ["0%", "50%", "100%", "-20%", "0%"],
     scale: !custom ? [1, 1.5, 1.5, 0.5, 1] : 1,
     rotate: !custom ? [0, 0, 270, 270, 0] : 0,
     borderRadius: !custom ? ["50%", "20%", "50%", "20%", "50%"] : "50%",
@@ -18,9 +19,9 @@ const animationBg = {
   exit: {},
 };
 const animationText = {
-  initial: { x: -10 },
+  initial: { x: -5 },
   animate: { x: 0, x: 0 },
-  hovered: { x: 12.5 },
+  hovered: { x: 5 },
   exit: {},
 };
 
@@ -44,11 +45,13 @@ export const Bouton = ({
         ${circleClass ? circleClass : "bg-gray-200 shadow-lg"} 
         ${small ? "w-8 h-8" : "h-12 w-12"} 
         `}
-      >
-        {icon && <div className="relative">{icon}</div>}
-      </motion.div>
+      ></motion.div>
+      {icon && <div className="absolute top-0 left-1/2">{icon}</div>}
 
-      <motion.div variants={animationText} className="relative inset-0 p-1 ">
+      <motion.div
+        variants={animationText}
+        className="relative inset-0 flex flex-row items-center p-1"
+      >
         {children}
       </motion.div>
     </motion.div>
