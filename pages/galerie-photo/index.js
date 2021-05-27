@@ -34,8 +34,10 @@ export default function Home(props) {
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const { query, locale } = useRouter();
   let formattedQuery = new URLSearchParams(query)?.toString();
-  const { data, error } = useSWR(
-    formattedQuery.length > 0
+  delete query.category;
+  delete query.lang;
+const { data, error } = useSWR(
+    formattedQuery !== ""
       ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
     fetcher

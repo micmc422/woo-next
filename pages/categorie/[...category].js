@@ -51,13 +51,13 @@ export default function CategorySingle(props) {
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
-    formattedQuery?.length > 0
+    formattedQuery !== ""
       ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
     fetcher
   );
   const isLoading = !data && !error && formattedQuery !== "";
-
+  console.log({formattedQuery});
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
@@ -78,7 +78,7 @@ export default function CategorySingle(props) {
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-      <div className="container px-4 mx-auto my-8">
+      <div className="container px-4 mx-auto my-8 xl:px-0">
         {categoryName ? (
           <motion.h1
             key={categoryName}

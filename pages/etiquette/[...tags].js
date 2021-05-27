@@ -36,12 +36,13 @@ const Tags = (props) => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const formattedQuery = new URLSearchParams(query).toString();
+  delete query.tags;
   delete query.category;
   delete query.lang;
   // const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
-    formattedQuery?.length > 0
+    formattedQuery !== ""
       ? `/api/products/?locale=${locale}&tag=${tagName}&${formattedQuery}`
       : null,
     fetcher
