@@ -50,7 +50,16 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           uri
         }
       }
-
+      related(first: 4) {
+        nodes {
+          name
+          image {
+            sourceUrl
+            altText
+          }
+          slug
+        }
+      }
       upsell {
         nodes {
           name

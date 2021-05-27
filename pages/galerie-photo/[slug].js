@@ -34,13 +34,16 @@ export default function Product(props) {
   const [activeVariations, setActiveVariations] = useState(
     orderredVariations ? orderredVariations[0] : null
   );
+  const fullUpsellList = [
+    ...product?.upsell?.nodes,
+    ...product?.related?.nodes,
+  ].slice(0, 4);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   useEffect(() => {});
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
- // console.log(product);
   return (
     <Layout menu={menu}>
       <Head>
@@ -146,7 +149,7 @@ export default function Product(props) {
         </Bouton>
       </div>
       <div className="grid max-w-screen-lg grid-cols-2 gap-4 px-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-        <Upsell products={product?.upsell?.nodes} />
+        <Upsell products={fullUpsellList} />
       </div>
       {product ? (
         <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">

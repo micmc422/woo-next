@@ -66,7 +66,6 @@ const ColorSizeBlock = ({
                   }`}
                 >
                   <div
-                    layoutId={"btn-cadre"}
                     className={`flex my-1 bg-white rounded-full shadow-lg transition-all px-3 ${
                       type ? "ml-4 mr-2" : "mr-4 ml-2"
                     }`}
@@ -88,7 +87,7 @@ const ColorSizeBlock = ({
                         cadresVal.some((el) => elem.name.includes(el)) !== type
                     )
                     .map((item, i) => (
-                      <li
+                      <motion.li
                         layoutId={item.name}
                         className={`my-1 p-2 hover:bg-brand-400 transition-colors bg-gray-200 rounded hover:text-white hover:font-bold ${
                           activeVariations?.id === item.id
@@ -102,7 +101,7 @@ const ColorSizeBlock = ({
                         value={i}
                       >
                         {item.name.replace(productName, "").replace(" - ", "")}
-                      </li>
+                      </motion.li>
                     ))}
                 </motion.ul>
               </AnimateSharedLayout>
