@@ -96,9 +96,9 @@ const NavRootItem = ({ name, slug, id, count, hovered, setHovered }) => {
           {hovered === id && (
             <motion.div
               layoutId="tag-over"
-              className="absolute z-0 bg-gray-300 rounded-full -inset-1"
+              className="absolute z-0 rounded-full neuromorphism-gray -inset-1"
             >
-              {count}
+              <span className="text-purple-500">{count}</span>
             </motion.div>
           )}
           <span className="relative z-10">{name}</span>

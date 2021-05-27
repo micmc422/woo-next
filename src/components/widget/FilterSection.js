@@ -104,7 +104,7 @@ const BlocCategoriesSelector = ({ categories }) => {
                     {activeCat?.includes(item.slug) && (
                       <motion.span
                         variants={animationChild}
-                        className={`bg-gray-300 absolute inset-1 rounded-full`}
+                        className={`neuromorphism-gray absolute inset-1 rounded-full`}
                       ></motion.span>
                     )}
                   </AnimatePresence>
@@ -144,8 +144,8 @@ const BlocPriceRange = ({ min, max }) => {
       <div className={`hidden md:flex flex-row pb-6`}>
         <div className="flex items-center justify-between space-x-1">
           <div
-            className={`flex items-center w-8 h-6 p-1 duration-300 ease-in-out  rounded-full ${
-              isActive ? "bg-green-400" : "bg-gray-300"
+            className={`flex items-center w-8 h-6 p-1 duration-300 ease-in-out  rounded-full transition-all ${
+              isActive ? "neuromorphism-green" : "neuromorphism-gray"
             }`}
             onClick={(e) => {
               setIsActive(!isActive);
