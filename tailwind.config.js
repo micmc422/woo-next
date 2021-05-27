@@ -1,7 +1,7 @@
 module.exports = {
   // @see https://tailwindcss.com/docs/upcoming-changes
   future: {
-    removeDeprecatedGapUtilities: true,
+    // removeDeprecatedGapUtilities: true,
     //  purgeLayersByDefault: true,
   },
   purge: {

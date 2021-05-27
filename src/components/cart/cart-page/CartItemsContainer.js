@@ -117,26 +117,6 @@ const CartItemsContainer = () => {
 
   return (
     <div className="container px-4 mx-auto my-32 cart product-cart-container xl:px-0">
-      <style jsx>{`
-        html,
-        body {
-          height: 100%;
-        }
-
-        @media (min-width: 640px) {
-          table {
-            display: inline-table !important;
-          }
-
-          thead tr:not(:first-child) {
-            display: none;
-          }
-        }
-
-        td:not(:last-child) {
-          border-bottom: 0;
-        }
-      `}</style>
       {cart ? (
         <div className="container woo-next-cart-wrapper">
           <div className="grid grid-cols-2 gap-4 cart-header">
@@ -224,10 +204,10 @@ const CartItemsContainer = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col space-y-1 safe md:hidden">
+          <div className="flex flex-col md:hidden">
             {cart.products.length &&
               cart.products.map((item) => (
-                <div className={`relative`} key={uniqueId(item.productId)}>
+                <div className={`relative pt-5`} key={uniqueId(item.productId)}>
                   <div
                     className="absolute top-0 right-0"
                     onClick={(event) =>
@@ -240,26 +220,25 @@ const CartItemsContainer = () => {
                   >
                     <Cross />
                   </div>
-                  <div className={`flex flex-row`}>
-                    <div className="w-1/5 px-1 pr-1 bg-brand-500">Nom</div>
-                    <div className="pl-1"> {item.name} </div>
+                  <div className={`flex`}>
+                    <div className="w-1/5 bg-brand-500">Nom</div>
+                    <div className="w-4/5 text-sm p-1"> {item.name} </div>
                   </div>
-                  <div className={`flex flex-row`}>
+                  <div className={`flex`}>
                     <div className="w-1/5 px-1 pr-1 bg-brand-500">quantité</div>
-                    <div className="pl-1"> {item.qty} </div>
+                    <div className="w-4/5 pl-1"> {item.qty} </div>
                   </div>
-                  <div className={`flex flex-row`}>
+                  <div className={`flex`}>
                     <div className="w-1/5 px-1 pr-1 bg-brand-500">prix</div>
-                    <div className="pl-1">
-                      {" "}
+                    <div className="w-4/5 pl-1">
                       {"string" !== typeof item.price
                         ? item.price.toFixed(2)
                         : item.price}
                     </div>
                   </div>
-                  <div className={`flex flex-row`}>
+                  <div className={`flex`}>
                     <div className="w-1/5 px-1 pr-1 bg-brand-500">total</div>
-                    <div className="pl-1">
+                    <div className="w-4/5 pl-1">
                       {"string" !== typeof item.totalPrice
                         ? item.totalPrice.toFixed(2)
                         : item.totalPrice}

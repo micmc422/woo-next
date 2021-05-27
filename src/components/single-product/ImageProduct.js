@@ -65,7 +65,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
   // console.log(imgarray);
   return (
     <div
-      className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2 items-center`}
+      className={`h-24 relative flex flex-row w-2/3 mx-auto space-x-2 items-center justify-center`}
     >
       {imgarray.map(
         (
@@ -81,12 +81,14 @@ const Vignettes = ({ imgarray, setSelected }) => {
           }, [loaded]);
 
           return (
-            <motion.div
-              initial={"notLoaded"}
-              animate={animationControls}
+            <div
+              // initial={"notLoaded"}
+              //  animate={animationControls}
               // variants={animationVariants}
-              transition={{ ease: "easeOut", duration: 1 }}
-              className={` w-24 h-24 relative rounded-md`}
+              // transition={{ ease: "easeOut", duration: 1 }}
+              className={` w-24 h-24 relative rounded-md transition ${
+                loaded ? "opacity-100" : "opacity-0"
+              }`}
               onClick={() => setSelected(i)}
               key={uniqueId(id)}
             >
@@ -94,8 +96,11 @@ const Vignettes = ({ imgarray, setSelected }) => {
                 className=""
                 src={sourceUrl ? sourceUrl : mediaItemUrl}
                 alt="Product Image"
-                height={height}
-                width={width}
+                layout="fill"
+                objectFit="cover"
+                objectPosition=" center center"
+                // height={height}
+                //  width={width}
                 onLoad={(event) => {
                   const target = event.target;
                   if (target.src.indexOf("data:image/gif;base64") < 0) {
@@ -103,7 +108,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
                   }
                 }}
               />
-            </motion.div>
+            </div>
           );
         }
       )}

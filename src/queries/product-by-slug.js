@@ -51,7 +51,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           uri
         }
       }
-      related(first: 4) {
+      related(first: 8) {
         nodes {
           name
           image {
