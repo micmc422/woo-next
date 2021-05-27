@@ -86,7 +86,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
               //  animate={animationControls}
               // variants={animationVariants}
               // transition={{ ease: "easeOut", duration: 1 }}
-              className={` w-24 h-24 relative rounded-md transition ${
+              className={` w-24 h-24 relative rounded-md transition overflow-hidden ${
                 loaded ? "opacity-100" : "opacity-0"
               }`}
               onClick={() => setSelected(i)}
