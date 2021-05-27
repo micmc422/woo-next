@@ -45,19 +45,19 @@ export default function CategorySingle(props) {
   const catName = query?.category?.length
     ? query.category[query.category.length - 1]
     : "";
-  const formattedQuery = new URLSearchParams(query).toString();
   delete query.category;
   delete query.lang;
+  const formattedQuery = new URLSearchParams(query).toString();
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
     formattedQuery !== ""
-      ? `/api/products/?locale=${locale}&${formattedQuery}`
+      ? `/api/products/?locale=${locale}&category=${catName}&${formattedQuery}`
       : null,
     fetcher
   );
   const isLoading = !data && !error && formattedQuery !== "";
-  console.log({formattedQuery});
+  // console.log({ formattedQuery });
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
