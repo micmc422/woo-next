@@ -35,8 +35,8 @@ export default function Product(props) {
     orderredVariations ? orderredVariations[0] : null
   );
   const fullUpsellList = [
-    ...product?.upsell?.nodes,
-    ...product?.related?.nodes,
+    ...(product?.upsell?.nodes || []),
+    ...(product?.related?.nodes || []),
   ].slice(0, 4);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
