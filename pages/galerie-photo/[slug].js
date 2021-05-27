@@ -65,7 +65,7 @@ export default function Product(props) {
                       <Link
                         href={`${uri.replace("https://photo.paris", "")}`}
                         passHref
-                        key={uniqueId()}
+                        key={uniqueId(uri)}
                       >
                         <a className="uppercase transition-colors hover:text-gray-400">
                           {name}
@@ -82,7 +82,7 @@ export default function Product(props) {
                       <Link
                         href={`${uri.replace("https://photo.paris", "")}`}
                         passHref
-                        key={uniqueId()}
+                        key={uniqueId(uri)}
                       >
                         <a className="transition-colors hover:text-brand-800">
                           {name}
@@ -115,7 +115,6 @@ export default function Product(props) {
               )}
               <div className="flex">
                 <div className="flex px-6 py-2 ml-auto">
-                  {" "}
                   <AddToCartButton
                     product={product}
                     variation={activeVariations}
@@ -154,7 +153,6 @@ export default function Product(props) {
       {product ? (
         <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
           <ContentParser data={product.description}></ContentParser>
-
           {false && (
             <div
               dangerouslySetInnerHTML={{
@@ -174,7 +172,9 @@ export default function Product(props) {
 const Upsell = ({ products }) => {
   return (
     products &&
-    products.map((product) => <ProductCard product={product} noName />)
+    products.map((product) => (
+      <ProductCard product={product} noName key={product.id} />
+    ))
   );
 };
 
