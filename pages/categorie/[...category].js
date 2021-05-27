@@ -19,6 +19,7 @@ import nextI18nextConfig from "../../next-i18next.config";
 import Link from "next/link";
 import { GrFormClose } from "react-icons/gr";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
+import { GET_PAGE_BY_URI } from "../../src/queries/get-pages";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -70,6 +71,7 @@ export default function CategorySingle(props) {
     return <div>Loading...</div>;
   }
   const seoData = seoHead && parse(seoHead);
+  // console.log({ seoData, seoSchema });
   return (
     <Layout menu={menu}>
       <Head>
@@ -78,7 +80,7 @@ export default function CategorySingle(props) {
       </Head>
       <div className="container px-4 mx-auto my-8">
         {categoryName ? (
-          <motion.h3
+          <motion.h1
             key={categoryName}
             initial={{ x: -200 }}
             animate={{ x: 0 }}
@@ -86,12 +88,12 @@ export default function CategorySingle(props) {
             className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
           >
             {categoryName}
-          </motion.h3>
+          </motion.h1>
         ) : (
           ""
         )}
         <ShopLayout
-          categories={cat} 
+          categories={cat}
           catBase={catBase}
           pageInfo={pageInfo}
           setPageInfo={setPageInfo}
@@ -172,8 +174,8 @@ export async function getStaticProps({ params: { category }, locale }) {
         : data?.catBase?.nodes || [],
       catBase: data?.catBase?.nodes || [],
       tagList: data?.tagList?.nodes || [],
-      seoHead: data?.seo?.seo?.fullHead || "",
-      seoSchema: data?.seo?.seo?.schema?.raw || "",
+      seoHead: data?.productCategory?.seo?.fullHead || "",
+      seoSchema: data?.productCategory?.seo?.schema?.raw || "",
       catData: data?.productCategory,
       ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
     },

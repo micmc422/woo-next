@@ -70,7 +70,7 @@ const Tags = (props) => {
       </Head>
       <div className="container px-4 mx-auto my-8">
         {tagName ? (
-          <motion.h3
+          <motion.h1
             key={tagName}
             initial={{ x: -200 }}
             animate={{ x: 0 }}
@@ -78,7 +78,7 @@ const Tags = (props) => {
             className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl"
           >
             {tagName}
-          </motion.h3>
+          </motion.h1>
         ) : (
           ""
         )}

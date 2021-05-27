@@ -54,6 +54,12 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
       id
       name
       uri
+      seo {
+        fullHead
+        schema {
+          raw
+        }
+      }
       products(
         first: 24
         after: ""
