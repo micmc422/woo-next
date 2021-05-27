@@ -53,7 +53,7 @@ const ImageContainer = ({ imgarray }) => {
       <div className="relative">
         {imgarray.map(
           (item, i) =>
-            selected === i && <ImageProduct {...item} key={item.id} />
+            selected === i && <ImageProduct {...item} key={uniqueId(i)} />
         )}
       </div>
       <Vignettes imgarray={imgarray} setSelected={setSelected} />

@@ -10,13 +10,13 @@ const defaultOptions = {
     }
     if (name === "figure") {
       return (
-        <div className="relative">
+        <div className="relative pt-16">
           <div
-            className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-200`}
+            className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-300`}
           >
             {" "}
           </div>
-          <div className="relative">
+          <div className="relative pt-16">
             {" "}
             {domToReact(children, defaultOptions)}
           </div>
@@ -200,14 +200,14 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto sm:flex-row md:space-x-8 md:flex-nowrap">
+        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl py-8 mx-auto sm:flex-row ">
           {domToReact(children, defaultOptions)}
         </div>
       );
     }
     if (attribs?.class?.includes("vc_column-inner")) {
       return (
-        <div className="pb-16">{domToReact(children, defaultOptions)}</div>
+        <div className="mx-auto">{domToReact(children, defaultOptions)}</div>
       );
     }
     if (attribs?.class?.includes("vc_btn")) {
@@ -237,12 +237,12 @@ const defaultOptions = {
       return parsedHref ? (
         <a
           href={parsedHref}
-          className="relative flex flex-row items-center mx-auto text-2xl sm:space-x-2 w-max"
+          className="relative flex flex-row items-center mx-auto text-2xl w-max"
         >
           {domToReact(children, defaultOptions)}
         </a>
       ) : (
-        <div className="relative flex flex-row items-center mx-auto text-2xl sm:space-x-2">
+        <div className="relative flex flex-row items-center mx-auto text-2xl">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -261,12 +261,12 @@ const defaultOptions = {
               : attribs?.class.includes("vc_col-sm-6")
               ? "sm:w-1/2 flex-shrink"
               : attribs?.class.includes("vc_col-sm-8")
-              ? "sm:w-8/12"
+              ? "sm:w-2/3"
               : attribs?.class.includes("vc_col-sm-9")
               ? "sm:w-3/4"
               : attribs?.class.includes("vc_col-sm-12")
               ? "w-full"
-              : ""
+              : "w-auto"
           }
     `}
         >
