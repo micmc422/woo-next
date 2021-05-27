@@ -22,6 +22,7 @@ const ImageWithFallback = (props) => {
     src,
     slug,
     objectfit,
+    alt,
     fallbackSrc = clientConfig.productImagePlaceholder,
     ...rest
   } = props;
@@ -37,6 +38,7 @@ const ImageWithFallback = (props) => {
       <Image
         objectFit={objectfit}
         src={imgSrc}
+        alt={alt}
         layout="fill"
         onLoad={(event) => {
           const target = event.target;

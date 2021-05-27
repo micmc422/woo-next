@@ -11,6 +11,7 @@ const animationVariants = {
 const ImageProduct = ({
   slug,
   sourceUrl,
+  altText,
   mediaItemUrl,
   mediaDetails: { height, width },
 }) => {
@@ -33,7 +34,7 @@ const ImageProduct = ({
       <Image
         className="object-cover object-center w-full rounded lg:w-4/5 lg:max-h-screen"
         src={sourceUrl ? sourceUrl : mediaItemUrl}
-        alt="Product Image"
+        alt={altText}
         height={height}
         width={width}
         onLoad={(event) => {
@@ -69,7 +70,13 @@ const Vignettes = ({ imgarray, setSelected }) => {
     >
       {imgarray.map(
         (
-          { id, sourceUrl, mediaItemUrl, mediaDetails: { height, width } },
+          {
+            id,
+            sourceUrl,
+            mediaItemUrl,
+            altText,
+            mediaDetails: { height, width },
+          },
           i
         ) => {
           const [loaded, setLoaded] = useState(false);
@@ -93,7 +100,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
               <Image
                 className=""
                 src={sourceUrl ? sourceUrl : mediaItemUrl}
-                alt="Product Image"
+                alt={altText}
                 height={height}
                 width={width}
                 onLoad={(event) => {

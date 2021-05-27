@@ -289,7 +289,7 @@ const defaultOptions = {
         .split("?lang=");
       const href = arrayHref[0];
       const lang = arrayHref[1];
-      console.log(attribs);
+      //  console.log(attribs);
       if (attribs?.class?.includes("block-link")) {
         return (
           <Link href={href} locale={lang ? lang : "fr"} passHref>

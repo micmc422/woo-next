@@ -80,6 +80,7 @@ export const PRODUCT_BY_TAG_SLUG = gql`
             title
             srcSet
             sourceUrl
+          altText
             mediaDetails {
               height
               width

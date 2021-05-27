@@ -133,6 +133,7 @@ const VignettePhoto = ({ product }) => {
     ? product.galleryImages?.nodes[0].mediaItemUrl
     : product.image?.sourceUrl;
   const imageUrlSecondaire = product.image?.sourceUrl;
+
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -150,7 +151,7 @@ const VignettePhoto = ({ product }) => {
             <ImageWithFallback
               src={imageUrlPrimaire}
               slug={product.slug}
-              alt="Product image"
+              alt={product?.image?.altText || product?.image?.title}
               layout="fill"
               objectfit={orientation}
             />
@@ -166,7 +167,7 @@ const VignettePhoto = ({ product }) => {
             <ImageWithFallback
               src={imageUrlSecondaire}
               slug={product.slug}
-              alt="Product image"
+              alt={product?.image?.altText || product?.image?.title}
               layout="fill"
               objectfit={orientation}
             />

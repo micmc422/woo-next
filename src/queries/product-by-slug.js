@@ -22,6 +22,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
         title
         srcSet
         sourceUrl
+        altText
         mediaDetails {
           height
           width
