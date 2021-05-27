@@ -11,7 +11,6 @@ const animationVariants = {
 const ImageProduct = ({
   slug,
   sourceUrl,
-  altText,
   mediaItemUrl,
   mediaDetails: { height, width },
 }) => {
@@ -29,12 +28,12 @@ const ImageProduct = ({
       animate={animationControls}
       variants={animationVariants}
       transition={{ ease: "easeOut", duration: 1 }}
-      className="relative max-h-screen"
+      className="relative"
     >
       <Image
-        className="object-cover object-center w-full rounded lg:w-4/5 lg:max-h-screen"
+        className="object-cover object-center w-full rounded lg:w-4/5"
         src={sourceUrl ? sourceUrl : mediaItemUrl}
-        alt={altText}
+        alt="Product Image"
         height={height}
         width={width}
         onLoad={(event) => {
@@ -51,7 +50,7 @@ const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(0);
   return (
     <div className="w-full lg:w-1/2">
-      <div className="relative max-h-screen">
+      <div className="relative">
         {imgarray.map(
           (item, i) =>
             selected === i && <ImageProduct {...item} key={item.id} />
@@ -70,13 +69,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
     >
       {imgarray.map(
         (
-          {
-            id,
-            sourceUrl,
-            mediaItemUrl,
-            altText,
-            mediaDetails: { height, width },
-          },
+          { id, sourceUrl, mediaItemUrl, mediaDetails: { height, width } },
           i
         ) => {
           const [loaded, setLoaded] = useState(false);
@@ -100,7 +93,7 @@ const Vignettes = ({ imgarray, setSelected }) => {
               <Image
                 className=""
                 src={sourceUrl ? sourceUrl : mediaItemUrl}
-                alt={altText}
+                alt="Product Image"
                 height={height}
                 width={width}
                 onLoad={(event) => {
