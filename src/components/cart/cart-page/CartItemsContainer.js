@@ -116,7 +116,7 @@ const CartItemsContainer = () => {
   };
 
   return (
-    <div className="container px-4 mx-auto my-32 cart product-cart-container xl:px-0">
+    <div className="container px-4 mx-auto my-8 md:my-32 cart product-cart-container xl:px-0">
       {cart ? (
         <div className="container woo-next-cart-wrapper">
           <div className="grid grid-cols-2 gap-4 cart-header">
@@ -207,9 +207,12 @@ const CartItemsContainer = () => {
           <div className="flex flex-col md:hidden">
             {cart.products.length &&
               cart.products.map((item) => (
-                <div className={`relative pt-5`} key={uniqueId(item.productId)}>
+                <div
+                  className={`relative pt-5 text-xs`}
+                  key={uniqueId(item.productId)}
+                >
                   <div
-                    className="absolute top-0 right-0"
+                    className="absolute top-0 right-0 flex transform scale-90"
                     onClick={(event) =>
                       handleRemoveProductClick(
                         event,
@@ -218,27 +221,28 @@ const CartItemsContainer = () => {
                       )
                     }
                   >
+                    <span className="mr-1 text-sm text-gray-500">
+                      supprimer
+                    </span>{" "}
                     <Cross />
                   </div>
                   <div className={`flex`}>
-                    <div className="w-1/5 bg-brand-500">Nom</div>
-                    <div className="w-4/5 text-sm p-1"> {item.name} </div>
+                    <div className="flex-shrink-0 w-1/6 p-1 bg-gray-200">
+                      Nom
+                    </div>
+                    <div className="w-5/6 p-1"> {item.name} </div>
                   </div>
                   <div className={`flex`}>
-                    <div className="w-1/5 px-1 pr-1 bg-brand-500">quantité</div>
-                    <div className="w-4/5 pl-1"> {item.qty} </div>
-                  </div>
-                  <div className={`flex`}>
-                    <div className="w-1/5 px-1 pr-1 bg-brand-500">prix</div>
-                    <div className="w-4/5 pl-1">
+                    <div className="w-1/6 p-1 bg-gray-200">quantité</div>
+                    <div className="w-1/6 p-1"> {item.qty} </div>
+                    <div className="w-1/6 p-1 bg-gray-200">prix(1)</div>
+                    <div className="w-1/6 p-1">
                       {"string" !== typeof item.price
                         ? item.price.toFixed(2)
                         : item.price}
                     </div>
-                  </div>
-                  <div className={`flex`}>
-                    <div className="w-1/5 px-1 pr-1 bg-brand-500">total</div>
-                    <div className="w-4/5 pl-1">
+                    <div className="w-1/6 p-1 bg-brand-400">total</div>
+                    <div className="w-1/6 p-1">
                       {"string" !== typeof item.totalPrice
                         ? item.totalPrice.toFixed(2)
                         : item.totalPrice}
@@ -246,6 +250,20 @@ const CartItemsContainer = () => {
                   </div>
                 </div>
               ))}
+            <span className="block pt-4 text-right">
+              Total commande :{" "}
+              {"string" !== typeof cart.totalProductsPrice
+                ? cart.totalProductsPrice.toFixed(2)
+                : cart.totalProductsPrice}
+            </span>
+            <Link href="/checkout">
+              <button className="w-auto px-5 py-3 mt-5 text-white rounded-sm bg-brand-500 xl:w-full">
+                <span className="woo-next-cart-checkout-txt">
+                  {t("finalisercommande")}
+                </span>
+                <i className="fas fa-long-arrow-alt-right" />
+              </button>
+            </Link>
           </div>
           {/* Display Errors if any */}
           {requestError ? (
