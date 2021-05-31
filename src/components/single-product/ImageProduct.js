@@ -48,8 +48,11 @@ const ImageProduct = ({
 };
 const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(imgarray[0].id || 0);
-  console.log(imgarray[0].id)
-  console.log({selected})
+  console.log(imgarray[0].id);
+  console.log({ selected });
+  useEffect(() => {
+    setSelected(imgarray[0].id);
+  }, [imgarray]);
   return (
     imgarray.length > 0 && (
       <div className="w-full lg:w-1/2">
@@ -86,7 +89,7 @@ const Vignettes = ({
   },
   setSelected,
 }) => {
-   console.log(id);
+  console.log(id);
   const [loaded, setLoaded] = useState(false);
   const animationControls = useAnimation();
   useEffect(() => {

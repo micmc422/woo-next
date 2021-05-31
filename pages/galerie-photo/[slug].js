@@ -20,6 +20,7 @@ import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
 import { Bouton } from "../../src/components/themeComponents";
+import Loading from "../../src/components/Loading";
 
 export default function Product(props) {
   const { product, menu, footer } = props;
@@ -40,11 +41,8 @@ export default function Product(props) {
   ].slice(0, 8);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  if (!product) {
-    return <div>No productData...</div>;
-  }
-  if (router.isFallback) {
-    return <div>Loading...</div>;
+  if (router.isFallback || !product) {
+    return <Loading />;
   }
   return (
     <Layout menu={menu} footer={footer}>
