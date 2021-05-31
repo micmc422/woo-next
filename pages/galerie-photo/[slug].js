@@ -107,7 +107,7 @@ export default function Product(props) {
                   __html: product?.shortDescription,
                 }}
               />
-              <div className="flex">
+              <div className="flex flex-wrap">
                 {product.variations && (
                   <ColorSizeBlock
                     setActiveVariations={setActiveVariations}

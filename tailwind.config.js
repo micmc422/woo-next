@@ -6,7 +6,7 @@ module.exports = {
   },
   purge: {
     enabled: true,
-    content: ["./src/components/**/*.js", "./pages/**/*.js"],
+    content: ["./src/components/*.js","./src/components/**/*.js", "./pages/**/*.js"],
     option: {
       safelist: {
         greedy: ["/safe$/"],

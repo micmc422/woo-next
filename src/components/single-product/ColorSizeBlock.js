@@ -23,9 +23,9 @@ const ColorSizeBlock = ({
       {variations?.length > 0 && (
         <>
           <div className="flex flex-wrap items-center w-full md:hidden">
-            <div className="relative max-w-full">
+            <div className="relative w-full">
               <select
-                className="max-w-full py-2 pl-3 pr-10 text-base border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-brand-500"
+                className="w-full py-2 pl-3 pr-10 text-base border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-brand-300 focus:border-brand-500"
                 onChange={(e) =>
                   setActiveVariations(variations[e.target.value])
                 }

@@ -12,7 +12,7 @@ const Footer = ({ footer }) => {
     <div className="p-6 text-white bg-gray-800 footer">
       <div className="container mx-auto">
         <div className="items-center justify-between flex-none footer-text md:flex">
-          <div className="flex flex-col flex-shrink-0 mr-20 text-white">
+          <div className="flex flex-col flex-shrink-0 md:mr-20 text-white">
             <div>
               <Link href="/" locale={locale}>
                 <a>
@@ -21,7 +21,7 @@ const Footer = ({ footer }) => {
               </Link>
             </div>
             <span
-              className="w-64"
+              className="sm:w-64 w-full"
               dangerouslySetInnerHTML={{ __html: t("adresse") }}
             ></span>
             <span> {t("num-tel")}</span>

@@ -105,13 +105,13 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <div
-          className={`px-2 mx-auto prose md:px-0 ${
+        <p
+          className={`px-2 mx-auto prose md:px-0 break-all overflow-hidden ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
-        </div>
+        </p>
       );
     }
     if (name === "ul") {
@@ -253,7 +253,7 @@ const defaultOptions = {
     ) {
       return (
         <div
-          className={`${
+          className={`safe w-full ${
             attribs?.class.includes("vc_col-sm-3")
               ? "sm:w-1/4"
               : attribs?.class.includes("vc_col-sm-4")
@@ -261,7 +261,7 @@ const defaultOptions = {
               : attribs?.class.includes("vc_col-sm-6")
               ? "sm:w-1/2 flex-shrink"
               : attribs?.class.includes("vc_col-sm-8")
-              ? "sm:w-2/3"
+              ? "sm:w-2/3 "
               : attribs?.class.includes("vc_col-sm-9")
               ? "sm:w-3/4"
               : attribs?.class.includes("vc_col-sm-12")
