@@ -119,7 +119,7 @@ const CartItemsContainer = () => {
     <div className="container px-4 mx-auto my-8 md:my-32 cart product-cart-container xl:px-0">
       {cart ? (
         <div className="container woo-next-cart-wrapper">
-          <div className="grid grid-cols-2 gap-4 cart-header">
+          <div className="grid-cols-2 gap-4 cart-header">
             <h1 className="mb-5 text-2xl uppercase">{t("panier")}</h1>
             {/*Clear entire cart*/}
             <div className="text-right clear-cart">
@@ -135,40 +135,34 @@ const CartItemsContainer = () => {
               {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
             </div>
           </div>
-          <div className="hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4 ">
-            <table className="w-full col-span-2 text-left whitespace-no-wrap table-auto">
-              <thead className="text-left">
-                <tr className="flex flex-col mb-2 rounded-l-lg bg-brand-400 flex-no wrap sm:table-row sm:rounded-none sm:mb-0">
-                  <th className="p-3" scope="col" />
-                  <th className="p-3" scope="col" />
-                  <th className="p-3" scope="col">
-                    {t("photo")}
-                  </th>
-                  <th className="p-3" scope="col">
-                    {t("quantite")}
-                  </th>
-                  <th className="p-3" scope="col">
-                    {t("prix")}
-                  </th>
-                  <th className="p-3" scope="col">
-                    {t("total")}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="flex-1 sm:flex-none">
-                {cart.products.length &&
-                  cart.products.map((item) => (
-                    <CartItem
-                      key={uniqueId(item.productId)}
-                      item={item}
-                      updateCartProcessing={updateCartProcessing}
-                      products={cart.products}
-                      handleRemoveProductClick={handleRemoveProductClick}
-                      updateCart={updateCart}
-                    />
-                  ))}
-              </tbody>
-            </table>
+          <div className="relative hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4">
+            <div className="col-span-2">
+              <table className="text-left table-fixed">
+                <thead className="text-left">
+                  <tr className="mb-2 rounded-none rounded-l-lg bg-brand-400">
+                    <th className="w-1/12 p-3" />
+                    <th className="w-1/12 p-3" />
+                    <th className="w-1/2 p-3">{t("photo")}</th>
+                    <th className="w-1/12 p-3">{t("quantite")}</th>
+                    <th className="w-1/12 p-3">{t("prix")}</th>
+                    <th className="w-2/12 p-3">{t("total")}</th>
+                  </tr>
+                </thead>
+                <tbody className="flex-1 sm:flex-none">
+                  {cart.products.length &&
+                    cart.products.map((item) => (
+                      <CartItem
+                        key={uniqueId(item.productId)}
+                        item={item}
+                        updateCartProcessing={updateCartProcessing}
+                        products={cart.products}
+                        handleRemoveProductClick={handleRemoveProductClick}
+                        updateCart={updateCart}
+                      />
+                    ))}
+                </tbody>
+              </table>
+            </div>
             {/*Cart Total*/}
             <div className="p-5 bg-gray-200 border row woo-next-cart-total-container">
               <div className="">

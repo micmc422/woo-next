@@ -51,8 +51,8 @@ const CartItem = ({
     }
   };
   return (
-    <tr className="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-      <th className="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+    <tr className="flex flex-col mb-2 bg-white rounded-l-lg flex-nowrap sm:table-row sm:rounded-none sm:mb-0">
+      <th className="w-8 p-3 text-red-400 border cursor-pointer border-grey-light hover:bg-gray-100 hover:text-red-600 hover:font-medium">
         {/* Remove item */}
         <span
           className="cursor-pointer woo-next-cart-close-icon"
@@ -63,7 +63,7 @@ const CartItem = ({
           <Cross />
         </span>
       </th>
-      <th className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
         <div className="relative w-32 h-24">
           <Image
             layout="fill"
@@ -73,10 +73,10 @@ const CartItem = ({
           />
         </div>
       </th>
-      <th className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+      <th className="p-3 border border-grey-light hover:bg-gray-100 w-44 ">
         {item.name}
       </th>
-      <th className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
         <input
           type="number"
           min="1"
@@ -88,10 +88,10 @@ const CartItem = ({
           onChange={(event) => handleQtyChange(event, item.cartKey)}
         />
       </th>
-      <th className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
         {item.price.toFixed(2)}€
       </th>
-      <th className="border-grey-light border hover:bg-gray-100 p-3 truncate">
+      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
         {"string" !== typeof item.totalPrice
           ? item.totalPrice.toFixed(2)
           : item.totalPrice}
