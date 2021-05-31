@@ -16,7 +16,7 @@ const defaultOptions = {
           >
             {" "}
           </div>
-          <div className="relative lg:px-0 pt-16 px-4">
+          <div className="relative px-4 pt-16 lg:px-0">
             {" "}
             {domToReact(children, defaultOptions)}
           </div>
