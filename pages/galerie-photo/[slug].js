@@ -197,7 +197,7 @@ export async function getStaticProps(context) {
   return {
     props: {
       menu,
-      product: data?.product || {},
+      product: data?.product,
       footer: data?.getFooter,
       ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },

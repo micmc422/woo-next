@@ -34,6 +34,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       }
       galleryImages {
         nodes {
+          id
           sourceUrl
           mediaItemUrl
           altText
