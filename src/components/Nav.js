@@ -20,17 +20,16 @@ const Nav = ({ menu, translations, sticky }) => {
   const [isOpen, setOpen] = useState(false);
   // return <ContentParser data={menu} options={defaultOptions}></ContentParser>;
   /*
- //TODO attente de correction du bug graphQL WPML
-             translations && translations[0]
-              ? translations[0].href.replace(/^http(s):\/\/photo.paris/i, "")
-              : !router.asPath.includes("/galerie-photo/")
-              ? router.asPath
-              : "/galerie-photo/"
-
- */
+    //TODO attente de correction du bug graphQL WPML
+    translations && translations[0]
+    ? translations[0].href.replace(/^http(s):\/\/photo.paris/i, "")
+    : !router.asPath.includes("/galerie-photo/")
+    ? router.asPath
+    : "/galerie-photo/"
+  */
 
   return (
-    <nav className="bg-white">
+    <nav className="z-30 bg-white">
       {!sticky && (
         <div className="px-4 py-1 text-gray-100 bg-gray-900 ">
           <div className="container flex flex-row justify-between mx-auto">
@@ -243,7 +242,7 @@ const MegaMenu = ({ collection }) => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 20 }}
-        className="absolute left-0 z-50 max-w-screen-lg px-8 bg-gray-100 top-12 w-max"
+        className="absolute left-0 z-50 max-w-screen-lg px-8 bg-gray-100 top-8 w-max"
       >
         <div className="relative">
           <ContentParser data={collection} options={defaultOptions} />

@@ -6,7 +6,9 @@ const Header = ({ menu, translations }) => {
   const ref = useRef();
   let [check, setCheck] = useState(true);
   const sticky = useStickyHeader(200);
-  const headerClasses = `header z-40 ${sticky && check ? "sticky top-0" : ""}`;
+  const headerClasses = `relative header z-50 ${
+    sticky && check ? "sticky top-0" : ""
+  }`;
   const { clientHeight } = ref;
 
   const checkChange = (value) => {
