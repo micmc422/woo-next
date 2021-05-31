@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import Search from "./widget/Search";
 import { Spin as Hamburger, Spin } from "hamburger-react";
 
-const Nav = ({ menu, translations }) => {
+const Nav = ({ menu, translations, sticky }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const { t } = useTranslation("common");
@@ -31,26 +31,36 @@ const Nav = ({ menu, translations }) => {
 
   return (
     <nav className="bg-white">
-      <div className="px-4 py-1 text-gray-100 bg-gray-900 ">
-        <div className="container flex flex-row justify-between mx-auto">
-          <div>contact</div>
-          <div>annonce</div>
-          <Link
-            href={"/galerie-photo/"}
-            locale={router.locale === "fr" ? "en" : "fr"}
-            passHref
-          >
-            <a className="self-end w-5 h-5">
-              <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
-            </a>
-          </Link>
+      {!sticky && (
+        <div className="px-4 py-1 text-gray-100 bg-gray-900 ">
+          <div className="container flex flex-row justify-between mx-auto">
+            <div>contact</div>
+            <div>annonce</div>
+            <Link
+              href={"/galerie-photo/"}
+              locale={router.locale === "fr" ? "en" : "fr"}
+              passHref
+            >
+              <a className="self-end w-5 h-5">
+                <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
+              </a>
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="container flex flex-wrap items-center justify-between p-4 mx-auto">
+      )}
+      <div
+        className={`container flex flex-wrap items-center justify-between px-4 mx-auto ${
+          sticky ? "py-0" : "py-4"
+        }`}
+      >
         <div className="flex items-center flex-shrink-0 mr-20 text-black">
           <Link href="/">
             <a>
-              <Image src={"/logo@2x.png"} width={120} height={50} />
+              <Image
+                src={"/logo@2x.png"}
+                width={sticky ? 120 * 0.75 : 120}
+                height={sticky ? 50 * 0.75 : 50}
+              />
             </a>
           </Link>
         </div>
