@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import Layout from "./Layout";
 
 const Loading = () => {
-  console.log(NProgress);
   const [loading, setLoading] = useState(null);
   useEffect(() => {
     setLoading(NProgress.status);
   }, [NProgress.status]);
-  console.log(loading);
   return (
     <Layout>
       <section className="text-gray-600 body-font">

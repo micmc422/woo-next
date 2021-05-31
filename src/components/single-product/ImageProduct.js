@@ -48,8 +48,6 @@ const ImageProduct = ({
 };
 const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(imgarray[0].id || 0);
-  console.log(imgarray[0].id);
-  console.log({ selected });
   useEffect(() => {
     setSelected(imgarray[0].id);
   }, [imgarray]);
@@ -89,7 +87,6 @@ const Vignettes = ({
   },
   setSelected,
 }) => {
-  console.log(id);
   const [loaded, setLoaded] = useState(false);
   const animationControls = useAnimation();
   useEffect(() => {

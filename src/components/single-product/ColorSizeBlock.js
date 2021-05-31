@@ -96,7 +96,6 @@ const ColorSizeBlock = ({
                               .replace(" - ", "")
                           : item.name;
 
-                      console.log(item, name);
                       return (
                         <motion.li
                           layoutId={item.id}
