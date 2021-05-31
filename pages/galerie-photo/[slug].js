@@ -21,7 +21,22 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
 import { Bouton } from "../../src/components/themeComponents";
 import Loading from "../../src/components/Loading";
+import { motion } from "framer-motion";
 
+const parentListEl = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.5,
+    },
+  },
+  exit: {},
+};
+const listEl = {
+  initial: { y: -15, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  exit: {},
+};
 export default function Product(props) {
   const { product, menu, footer } = props;
   const tmp = product?.variations?.nodes.slice();
@@ -58,48 +73,74 @@ export default function Product(props) {
               slug={product.slug}
             />
             <div className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
-              <div className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-300">
-                {product?.productCategories?.nodes.map(
-                  ({ name, description, uri }) => {
-                    return (
-                      <Link
-                        href={`${uri.replace("https://photo.paris", "")}`}
-                        passHref
-                        key={uniqueId(uri)}
-                      >
-                        <a className="uppercase transition-colors hover:text-gray-400">
-                          {name}
-                        </a>
-                      </Link>
-                    );
-                  }
-                )}
-              </div>
-              <div className="flex flex-row flex-wrap space-x-2 text-xs tracking-widest text-brand-500 title-font">
-                {product?.productTags?.nodes.map(
-                  ({ name, description, uri }) => {
-                    return (
-                      <Link
-                        href={`${uri.replace("https://photo.paris", "")}`}
-                        passHref
-                        key={uniqueId(uri)}
-                      >
-                        <a className="transition-colors hover:text-brand-800">
-                          {name}
-                        </a>
-                      </Link>
-                    );
-                  }
-                )}
-              </div>
-              <h1 className="my-1 text-3xl font-black text-gray-900 md:text-5xl lg:text-6xl title-font">
+              <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={parentListEl}
+              >
+                <div className="flex flex-row flex-wrap space-x-2 text-sm tracking-widest text-gray-300">
+                  {product?.productCategories?.nodes.map(
+                    ({ name, description, uri }) => {
+                      return (
+                        <motion.div variants={listEl}>
+                          <Link
+                            href={`${uri.replace("https://photo.paris", "")}`}
+                            passHref
+                            key={uniqueId(uri)}
+                          >
+                            <a className="uppercase transition-colors hover:text-gray-400">
+                              {name}
+                            </a>
+                          </Link>
+                        </motion.div>
+                      );
+                    }
+                  )}
+                </div>
+              </motion.div>
+              <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={parentListEl}
+              >
+                <div className="flex flex-row flex-wrap space-x-2 text-xs tracking-widest text-brand-500 title-font">
+                  {product?.productTags?.nodes.map(
+                    ({ name, description, uri }) => {
+                      return (
+                        <motion.div variants={listEl}>
+                          <Link
+                            href={`${uri.replace("https://photo.paris", "")}`}
+                            passHref
+                            key={uniqueId(uri)}
+                          >
+                            <a className="transition-colors hover:text-brand-800">
+                              {name}
+                            </a>
+                          </Link>
+                        </motion.div>
+                      );
+                    }
+                  )}{" "}
+                </div>
+              </motion.div>
+              <motion.h1
+                initial={{ x: 50 }}
+                animate={{ x: 0 }}
+                exit={{ x: 50 }}
+                className="my-1 text-3xl font-black text-gray-900 md:text-5xl lg:text-6xl title-font"
+              >
                 {product.name}
-              </h1>
+              </motion.h1>
               <RateBlock
                 rating={product?.reviews?.averageRating}
                 reviewCount={product?.reviewCount}
               />
-              <div
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 className="leading-relaxed"
                 dangerouslySetInnerHTML={{
                   __html: product?.shortDescription,
