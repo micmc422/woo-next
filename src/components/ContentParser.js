@@ -16,7 +16,7 @@ const defaultOptions = {
           >
             {" "}
           </div>
-          <div className="relative pt-16">
+          <div className="relative lg:px-0 pt-16 px-4">
             {" "}
             {domToReact(children, defaultOptions)}
           </div>
@@ -105,13 +105,13 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p
+        <div
           className={`px-2 mx-auto prose md:px-0 break-all overflow-hidden ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
-        </p>
+        </div>
       );
     }
     if (name === "ul") {

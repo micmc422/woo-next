@@ -28,7 +28,7 @@ const ImageProduct = ({
       animate={animationControls}
       variants={animationVariants}
       transition={{ ease: "easeOut", duration: 1 }}
-      className="relative"
+      className="relative text-center"
     >
       <Image
         className="object-cover object-center w-full rounded lg:w-4/5"
@@ -48,7 +48,8 @@ const ImageProduct = ({
 };
 const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(imgarray[0].id || 0);
-   console.log(imgarray[0].id)
+  console.log(imgarray[0].id)
+  console.log({selected})
   return (
     imgarray.length > 0 && (
       <div className="w-full lg:w-1/2">
