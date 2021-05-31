@@ -49,15 +49,17 @@ const ImageProduct = ({
 const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(0);
   return (
-    <div className="w-full lg:w-1/2">
-      <div className="relative">
-        {imgarray.map(
-          (item, i) =>
-            selected === i && <ImageProduct {...item} key={uniqueId(i)} />
-        )}
+    imgarray.length > 0 && (
+      <div className="w-full lg:w-1/2">
+        <div className="relative">
+          {imgarray.map(
+            (item, i) =>
+              selected === i && <ImageProduct {...item} key={uniqueId(i)} />
+          )}
+        </div>
+        <Vignettes imgarray={imgarray} setSelected={setSelected} />
       </div>
-      <Vignettes imgarray={imgarray} setSelected={setSelected} />
-    </div>
+    )
   );
 };
 

@@ -86,23 +86,35 @@ const ColorSizeBlock = ({
                       (elem) =>
                         cadresVal.some((el) => elem.name.includes(el)) !== type
                     )
-                    .map((item, i) => (
-                      <motion.li
-                        layoutId={item.name}
-                        className={`my-1 p-2 hover:bg-brand-400 transition-colors bg-gray-200 rounded hover:text-white hover:font-bold ${
-                          activeVariations?.id === item.id
-                            ? "bg-brand-300  text-white"
-                            : ""
-                        }`}
-                        onClick={(e) =>
-                          setActiveVariations(variations[e.target.value])
-                        }
-                        key={`size-selector-desktop-${item.id}`}
-                        value={i}
-                      >
-                        {item.name.replace(productName, "").replace(" - ", "")}
-                      </motion.li>
-                    ))}
+                    .map((item, i) => {
+                      const name =
+                        item.name
+                          .replace(productName, "")
+                          .replace(" - ", "") !== ""
+                          ? item.name
+                              .replace(productName, "")
+                              .replace(" - ", "")
+                          : item.name;
+
+                      console.log(item, name);
+                      return (
+                        <motion.li
+                          layoutId={item.id}
+                          className={`my-1 p-2 hover:bg-brand-400 transition-colors bg-gray-200 rounded hover:text-white hover:font-bold ${
+                            activeVariations?.id === item.id
+                              ? "bg-brand-300  text-white"
+                              : ""
+                          }`}
+                          onClick={(e) =>
+                            setActiveVariations(variations[e.target.value])
+                          }
+                          key={`size-selector-desktop-${item.id}`}
+                          value={i}
+                        >
+                          {name}
+                        </motion.li>
+                      );
+                    })}
                 </motion.ul>
               </AnimateSharedLayout>
             </div>

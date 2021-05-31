@@ -35,12 +35,11 @@ export default function Product(props) {
     orderredVariations ? orderredVariations[0] : null
   );
   const fullUpsellList = [
-    // ...product?.upsell?.nodes || [],
+    ...(product?.upsell?.nodes || []),
     ...(product?.related?.nodes || []),
   ].slice(0, 8);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  useEffect(() => {});
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
@@ -105,16 +104,16 @@ export default function Product(props) {
                   __html: product?.shortDescription,
                 }}
               />
-              {product.variations && (
-                <ColorSizeBlock
-                  setActiveVariations={setActiveVariations}
-                  variations={orderredVariations}
-                  activeVariations={activeVariations}
-                  productName={product.name}
-                />
-              )}
               <div className="flex">
-                <div className="flex px-6 py-2 ml-auto">
+                {product.variations && (
+                  <ColorSizeBlock
+                    setActiveVariations={setActiveVariations}
+                    variations={orderredVariations}
+                    activeVariations={activeVariations}
+                    productName={product.name}
+                  />
+                )}{" "}
+                <div className="sticky flex self-start px-6 py-2 ml-auto top-8">
                   <AddToCartButton
                     product={product}
                     variation={activeVariations}
@@ -138,6 +137,7 @@ export default function Product(props) {
                   </button>
                 </div>
               </div>
+              <div className="flex"></div>
             </div>
           </div>
         </div>
@@ -173,7 +173,7 @@ const Upsell = ({ products }) => {
   return (
     products &&
     products.map((product) => (
-      <ProductCard product={product} noName key={product.id} />
+      <ProductCard product={product} noName key={uniqueId(product.id)} />
     ))
   );
 };

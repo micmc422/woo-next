@@ -358,13 +358,13 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <p
+        <div
           className={`mx-auto prose normal-case p-2 ${
             alignRigth ? "text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
-        </p>
+        </div>
       );
     }
     if (
