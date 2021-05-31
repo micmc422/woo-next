@@ -2,6 +2,10 @@ import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query Product($slug: ID!) {
+    getFooter {
+      sidebarOne
+      sidebarTwo
+    }
     product(id: $slug, idType: SLUG) {
       id
       productId: databaseId

@@ -2,6 +2,10 @@ import { gql } from "@apollo/client";
 
 export const PRODUCT_BY_TAG_SLUG = gql`
   query PRODUCT_BY_TAG_SLUG($uri: ID!) {
+    getFooter {
+      sidebarOne
+      sidebarTwo
+    }
     megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
       id
       content
@@ -80,7 +84,7 @@ export const PRODUCT_BY_TAG_SLUG = gql`
             title
             srcSet
             sourceUrl
-          altText
+            altText
             mediaDetails {
               height
               width

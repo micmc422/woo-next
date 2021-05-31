@@ -71,7 +71,7 @@ const client = new ApolloClient({
     afterware.concat(
       createHttpLink({
         uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/site/graphql`,
-        // fetch: fetch,
+        fetch: fetch,
         // credentials: "include",
       })
     )
@@ -84,7 +84,7 @@ export const clientEng = new ApolloClient({
     afterware.concat(
       createHttpLink({
         uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/site/graphql/?lang=en`,
-        //  fetch: fetch,
+        fetch: fetch,
         //  credentials: "include",
       })
     )

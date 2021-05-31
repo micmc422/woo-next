@@ -23,6 +23,7 @@ const Tags = (props) => {
   const router = useRouter();
   const { query, locale } = router;
   const {
+    footer,
     tagName,
     products,
     pageInfoStatic,
@@ -51,7 +52,7 @@ const Tags = (props) => {
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
-      setFilteredProducts(data.products.nodes);
+      setFilteredProducts(data?.products?.nodes);
     } else {
       setPageInfo(pageInfoStatic);
       setFilteredProducts(products);
@@ -64,7 +65,7 @@ const Tags = (props) => {
   const seoData = seoHead && parse(seoHead);
 
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} footer={footer}>
       <Head>
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -122,7 +123,8 @@ export async function getStaticProps({ params: { tags }, locale }) {
 
   return {
     props: {
-      data, //TODO delete after test
+      // data, //TODO delete after test
+      footer: data?.getFooter,
       menu,
       catBase: data?.catBase?.nodes || [],
       tagName: data?.productTag?.name || "",
@@ -132,7 +134,11 @@ export async function getStaticProps({ params: { tags }, locale }) {
       seoHead: data?.productTag?.seo?.fullHead || "",
       seoSchema: data?.productTag?.seo?.schema?.raw || "",
 
-      ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ["shop", "footer"],
+        nextI18nextConfig
+      )),
     },
     revalidate: 86400,
   };

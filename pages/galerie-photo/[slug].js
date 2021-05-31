@@ -22,7 +22,7 @@ import ProductCard from "../../src/components/Product";
 import { Bouton } from "../../src/components/themeComponents";
 
 export default function Product(props) {
-  const { product, menu } = props;
+  const { product, menu, footer } = props;
   const tmp = product?.variations?.nodes.slice();
   const orderredVariations = tmp?.sort(
     (a, b) => +a?.price?.replace(",00€", "") - +b?.price?.replace(",00€", "")
@@ -40,11 +40,14 @@ export default function Product(props) {
   ].slice(0, 8);
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
+  if (!product) {
+    return <div>No productData...</div>;
+  }
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} footer={footer}>
       <Head>
         {seoData ? seoData : ""}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -195,6 +198,7 @@ export async function getStaticProps(context) {
     props: {
       menu,
       product: data?.product || {},
+      footer: data?.getFooter,
       ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
     },
     revalidate: 86400,

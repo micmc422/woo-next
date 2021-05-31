@@ -8,7 +8,7 @@ const Footer = ({ footer }) => {
   const { t } = useTranslation("common");
   const { locale } = useRouter();
 
-  return (
+  return footer ? (
     <div className="p-6 text-white bg-gray-800 footer">
       <div className="container mx-auto">
         <div className="items-center justify-between flex-none footer-text md:flex">
@@ -26,8 +26,12 @@ const Footer = ({ footer }) => {
             ></span>
             <span> {t("num-tel")}</span>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: footer?.sidebarOne }}></div>
-          <div dangerouslySetInnerHTML={{ __html: footer?.sidebarTwo }}></div>
+          <div
+            dangerouslySetInnerHTML={{ __html: footer?.sidebarOne || "" }}
+          ></div>
+          <div
+            dangerouslySetInnerHTML={{ __html: footer?.sidebarTwo || "" }}
+          ></div>
         </div>
         <ul className="flex mt-8 social-links align-center">
           <li>
@@ -65,6 +69,8 @@ const Footer = ({ footer }) => {
         </ul>
       </div>
     </div>
+  ) : (
+    <div></div>
   );
 };
 export default Footer;
