@@ -7,6 +7,10 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import { ApolloProvider } from "@apollo/client";
 import ScrollToTop from "react-scroll-to-top";
+import { useInView } from "react-intersection-observer";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -14,10 +18,19 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 const Layout = (props) => {
   const { menu, translations, footer } = props;
+  const { scrollY } = useViewportScroll();
+  const [height, setHeight] = useState(300);
+  const ref = useRef(null);
+  const y1 = useTransform(scrollY, [0, height], [0, 400]);
+  const y2 = useTransform(scrollY, [0, height], [400, 0]);
+
+  useEffect(() => {
+    setHeight(ref.current.clientHeight);
+  });
   return (
     <AppProvider>
       <ApolloProvider client={client}>
-        <div className={`relative`}>
+        <div className={`relative`} ref={ref}>
           <Head>
             <title>Galerie paris est une photo</title>
           </Head>
@@ -27,6 +40,16 @@ const Layout = (props) => {
             component={<ArrowSvg />}
           />
           <Header menu={menu} translations={translations} />
+          <motion.div
+            style={{ y: y1, x: 50, width: "10%", height: "30vh", opacity:.05 }}
+            className="fixed inset-0 flex items-center justify-center safe"
+          >
+            <Image
+              src="/logo_black_old.png"
+              layout="fill"
+              objectFit="contain"
+            />
+          </motion.div>
           {props.children}
           <Footer footer={footer} />
         </div>

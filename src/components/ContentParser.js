@@ -245,7 +245,7 @@ const defaultOptions = {
     ) {
       return (
         <div
-          className={`safe w-full ${
+          className={`safe ${
             attribs?.class.includes("vc_col-sm-3")
               ? "sm:w-1/4"
               : attribs?.class.includes("vc_col-sm-4")
@@ -258,7 +258,7 @@ const defaultOptions = {
               ? "sm:w-3/4"
               : attribs?.class.includes("vc_col-sm-12")
               ? "w-full"
-              : "w-auto"
+              : "w-auto flex-shrink"
           }
     `}
         >

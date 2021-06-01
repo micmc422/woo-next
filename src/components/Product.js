@@ -154,6 +154,7 @@ const VignettePhoto = ({ product, noName }) => {
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
               objectfit={noName ? "cover" : orientation}
+              
             />
           </motion.div>
         ) : (
@@ -169,7 +170,8 @@ const VignettePhoto = ({ product, noName }) => {
               slug={product.slug}
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
-              objectfit={noName ? "none" : orientation}
+              objectfit={noName ? "contain" : orientation}
+              objectPosition
             />
           </motion.div>
         )}
