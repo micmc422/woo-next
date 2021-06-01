@@ -29,12 +29,14 @@ export const Bouton = ({
   circleClass,
   icon,
   small = false,
+  className,
 }) => {
   return (
     <motion.div
       whileHover="hovered"
       variants={animationParent}
-      className="relative block"
+      className={`relative block ${className ? className : ""}`}
+      onClick={action}
     >
       <motion.div
         variants={animationBg}

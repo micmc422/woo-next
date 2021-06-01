@@ -136,6 +136,7 @@ export default function Product(props) {
               <RateBlock
                 rating={product?.reviews?.averageRating}
                 reviewCount={product?.reviewCount}
+                product={product}
               />
               <motion.div
                 initial={{ opacity: 0 }}
