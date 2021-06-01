@@ -5,11 +5,25 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ADD_REVIEW from "../../mutations/add-review";
 import { Bouton } from "../themeComponents";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  PinterestShareButton,
+  PinterestIcon,
+} from "react-share";
+import { useRouter } from "next/router";
 
 const RateBlock = ({ rating, reviewCount, product }) => {
+  const { asPath } = useRouter();
   const starBloc = [1, 2, 3, 4, 5];
   const [reviews, setReviews] = useState(false);
-  console.log(reviews);
+  const shareUrl = `https://photo.paris${asPath}`;
+  console.log(product?.image?.sourceUrl);
+
   return (
     <div className="flex mb-4">
       <AnimatePresence>
@@ -58,32 +72,22 @@ const RateBlock = ({ rating, reviewCount, product }) => {
           <span className="ml-3 text-gray-600">Soyez le premier à voter !</span>
         </span>
       )}
-      <span className="flex py-2 pl-3 ml-3 border-l-2 border-gray-200 space-x-2s">
-        <a className="text-gray-500">
-          <svg
-            fill="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-5 h-5"
-            viewBox="0 0 24 24"
-          >
-            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-          </svg>
-        </a>
-        <a className="text-gray-500">
-          <svg
-            fill="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-5 h-5"
-            viewBox="0 0 24 24"
-          >
-            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-          </svg>
-        </a>
-        <a className="text-gray-500">
+      <span className="flex py-2 pl-3 ml-3 space-x-2 border-l-2 border-gray-200">
+        <FacebookShareButton url={shareUrl}>
+          <FacebookIcon size={20} round />
+        </FacebookShareButton>
+        <TwitterShareButton url={shareUrl}>
+          <TwitterIcon size={20} round />
+        </TwitterShareButton>
+        <WhatsappShareButton url={shareUrl}>
+          <WhatsappIcon size={20} round />
+        </WhatsappShareButton>
+        {false && product?.image?.sourceUrl && (
+          <PinterestShareButton url={shareUrl}>
+            <PinterestIcon size={20} round media={product.image.sourceUrl} />
+          </PinterestShareButton>
+        )}
+        <a className="text-gray-500" onClick={() => setReviews(true)}>
           <svg
             fill="currentColor"
             strokeLinecap="round"
@@ -109,11 +113,13 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
   const [authorName, setAuthorName] = useState(null);
   const [addReviews, { data }] = useMutation(ADD_REVIEW);
   useEffect(() => {
-    if (rating && authorName) {
+    if ((rating !== 0 || content !== "") && authorName) {
       setIsValid(true);
+    } else {
+      setIsValid(false);
     }
   }, [rating, content, authorName]);
-  console.log(data);
+  // console.log(data);
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center w-full h-screen">
       <motion.div
@@ -141,76 +147,95 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
           />
         </div>
         <div className="flex flex-col items-center w-full px-4 py-5 bg-white md:w-1/2 md:py-8">
-          <h3 className="flex items-center mb-4 text-3xl font-bold text-blue-500">
-            Commentaire
-          </h3>
-          <span className="flex items-center pb-8">
-            {starBloc.map((count) =>
-              count <= rating ? (
-                <svg
-                  key={uniqueId(count)}
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-4 h-4 text-indigo-500"
-                  viewBox="0 0 24 24"
-                  onMouseEnter={() => setRating(count)}
+          {!data ? (
+            <>
+              {" "}
+              <h3 className="flex items-center mb-4 text-3xl font-bold text-blue-500">
+                Commentaire
+              </h3>
+              <span className="flex items-center pb-8">
+                {starBloc.map((count) =>
+                  count <= rating ? (
+                    <svg
+                      key={uniqueId(count)}
+                      fill="currentColor"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                      onMouseEnter={() => setRating(count)}
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      key={uniqueId(count)}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                      onMouseEnter={() => setRating(count)}
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                  )
+                )}
+              </span>
+              <input
+                type="name"
+                placeholder="Votre nom"
+                className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
+                onKeyUp={(e) => setAuthorName(e.target.value)}
+              />
+              <textarea
+                type="review"
+                placeholder="Votre commentaire"
+                className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
+                onKeyUp={(e) => setContent(e.target.value)}
+              />
+              {error && <span className="p-2 text-red-500">{error}</span>}
+              <Bouton
+                circleClass={isValid ? "neuromorphism-green" : false}
+                className="py-4"
+                action={() =>
+                  isValid
+                    ? addReviews({
+                        variables: {
+                          input: {
+                            rating,
+                            commentOn: product.productId,
+                            content,
+                            author: authorName,
+                          },
+                        },
+                      }).catch((e) => setError(e.message))
+                    : null
+                }
+              >
+                {isValid ? "Valider" : "Complétez le formulaire"}
+              </Bouton>
+            </>
+          ) : (
+            <div>
+              <p className={`safe text-green-500 py-8 prose`}>
+                Commentaires envoyé. merci
+              </p>
+              <div>
+                <Bouton
+                  small
+                  circleClass={`neuromorphism-green`}
+                  action={() => setReviews(false)}
                 >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-              ) : (
-                <svg
-                  key={uniqueId(count)}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-4 h-4 text-indigo-500"
-                  viewBox="0 0 24 24"
-                  onMouseEnter={() => setRating(count)}
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-              )
-            )}
-          </span>
-          <input
-            type="name"
-            placeholder="Votre nom"
-            className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
-            onKeyUp={(e) => setAuthorName(e.target.value)}
-          />
-
-          <textarea
-            type="review"
-            placeholder="Votre commentaire"
-            className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
-            onKeyUp={(e) => setContent(e.target.value)}
-          />
-          {error && <span className="p-2 text-red-500">{error}</span>}
-
-          <Bouton
-            className="py-4"
-            action={() =>
-              isValid
-                ? addReviews({
-                    variables: {
-                      input: {
-                        rating,
-                        commentOn: product.productId,
-                        content,
-                        author: authorName,
-                      },
-                    },
-                  }).catch((e) => setError(e.message))
-                : null
-            }
-          >
-            Valider
-          </Bouton>
+                  Fermer
+                </Bouton>
+              </div>
+            </div>
+          )}
         </div>
       </motion.div>
     </div>

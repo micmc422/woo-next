@@ -14,6 +14,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       shortDescription
       description
       name
+      reviewCount
       seo {
         fullHead
         schema {

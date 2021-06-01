@@ -134,7 +134,7 @@ export default function Product(props) {
                 {product.name}
               </motion.h1>
               <RateBlock
-                rating={product?.reviews?.averageRating}
+                rating={product?.averageRating}
                 reviewCount={product?.reviewCount}
                 product={product}
               />

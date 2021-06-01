@@ -64,7 +64,7 @@ const { data, error } = useSWR(
           initial={{ x: -200 }}
           animate={{ x: 0 }}
           exit={{ x: -300 }}
-          className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-5xl"
+          className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl"
         >
           PARIS EST UNE PHOTO
         </motion.h1>
