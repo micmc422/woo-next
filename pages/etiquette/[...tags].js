@@ -133,7 +133,6 @@ export async function getStaticProps({ params: { tags }, locale }) {
       tagList: data?.tagList?.nodes || [],
       seoHead: data?.productTag?.seo?.fullHead || "",
       seoSchema: data?.productTag?.seo?.schema?.raw || "",
-
       ...(await serverSideTranslations(
         locale,
         ["shop", "footer"],

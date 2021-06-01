@@ -10,13 +10,13 @@ const defaultOptions = {
     }
     if (name === "figure") {
       return (
-        <div className="relative pt-16">
+        <div className="relative">
           <div
             className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-300`}
           >
             {" "}
           </div>
-          <div className="relative px-4 pt-16 lg:px-0">
+          <div className="relative px-4 lg:px-1">
             {" "}
             {domToReact(children, defaultOptions)}
           </div>
@@ -98,7 +98,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <div
-          className={`px-0 mx-auto md:px-0 break-all prose ${
+          className={`px-0 mx-auto md:px-0 prose ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
@@ -192,7 +192,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl py-8 mx-auto break-all sm:flex-row">
+        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl py-8 mx-auto sm:flex-row">
           {domToReact(children, defaultOptions)}
         </div>
       );

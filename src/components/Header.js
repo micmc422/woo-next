@@ -33,13 +33,13 @@ function useStickyHeader(offset = 0) {
     setStick(window.scrollY > offset);
   };
 
-  useLayoutEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    window && window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window && window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, [offset]);
 
   return stick;
 }

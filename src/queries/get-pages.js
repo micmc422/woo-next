@@ -23,6 +23,11 @@ import { gql } from "@apollo/client";
     } */
 export const GET_PAGE_BY_URI = gql`
   query MyQuery($uri: ID!) {
+    getFooter {
+      sidebarOne
+      sidebarTwo
+    }
+
     page(id: $uri, idType: URI) {
       id
       title

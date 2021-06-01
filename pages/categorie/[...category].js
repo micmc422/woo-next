@@ -39,6 +39,7 @@ export default function CategorySingle(props) {
     seoHead,
     tagList,
     seoSchema,
+    footer,
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
@@ -73,7 +74,7 @@ export default function CategorySingle(props) {
   const seoData = seoHead && parse(seoHead);
   // console.log({ seoData, seoSchema });
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} footer={footer}>
       <Head>
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -165,6 +166,7 @@ export async function getStaticProps({ params: { category }, locale }) {
 
   return {
     props: {
+      footer: data?.getFooter,
       menu,
       categoryName: data?.productCategory?.name || "",
       pageInfoStatic: data?.productCategory?.products?.pageInfo || {},
@@ -177,7 +179,11 @@ export async function getStaticProps({ params: { category }, locale }) {
       seoHead: data?.productCategory?.seo?.fullHead || "",
       seoSchema: data?.productCategory?.seo?.schema?.raw || "",
       catData: data?.productCategory,
-      ...(await serverSideTranslations(locale, ["shop"], nextI18nextConfig)),
+      ...(await serverSideTranslations(
+        locale,
+        ["shop", "footer"],
+        nextI18nextConfig
+      )),
     },
     revalidate: 86400,
   };

@@ -44,7 +44,7 @@ const RateBlock = ({ rating, reviewCount, product }) => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  className="w-4 h-4 text-indigo-500"
+                  className="w-4 h-4 text-brand-500"
                   viewBox="0 0 24 24"
                 >
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
@@ -56,7 +56,7 @@ const RateBlock = ({ rating, reviewCount, product }) => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  className="w-4 h-4 text-indigo-500"
+                  className="w-4 h-4 text-brand-500"
                   viewBox="0 0 24 24"
                 >
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
@@ -121,12 +121,14 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
   }, [rating, content, authorName]);
   // console.log(data);
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center w-full h-screen">
+    <div
+      className={`fixed inset-0 z-50 flex items-end justify-center w-full h-screen md:items-center`}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="absolute inset-0 z-50 flex items-center justify-center w-full h-screen bg-black"
+        className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-center w-full h-screen bg-black bg-opacity-75 md:inset-0 md:bottom-auto"
         onClick={(e) => {
           setReviews(false);
         }}
@@ -136,9 +138,9 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
         initial={{ y: 200, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 400, opacity: 0 }}
-        className="z-50 flex flex-col items-stretch w-full mx-3 overflow-hidden bg-blue-600 bg-center bg-cover rounded shadow-md bg-image sm:w-1/2 md:w-9/12 lg:w-1/2 md:mx-5 lg:mx-0 md:flex-row"
+        className="z-50 flex flex-col items-stretch w-full mx-0 overflow-hidden bg-center shadow-md md:rounded sm:w-1/2 md:w-9/12 lg:w-1/2 md:mx-5 lg:mx-0 md:flex-row"
       >
-        <div className="relative flex flex-col w-full bg-blue-600 bg-opacity-25 md:w-1/2">
+        <div className="relative flex flex-col w-full bg-white md:w-1/2">
           <Image
             className="absolute inset-0 z-0"
             src={product?.image.sourceUrl}
@@ -150,7 +152,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
           {!data ? (
             <>
               {" "}
-              <h3 className="flex items-center mb-4 text-3xl font-bold text-blue-500">
+              <h3 className="flex items-center mb-4 text-3xl font-bold text-brand-500">
                 Commentaire
               </h3>
               <span className="flex items-center pb-8">
@@ -163,7 +165,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      className="w-4 h-4 text-indigo-500"
+                      className="w-4 h-4 text-brand-500"
                       viewBox="0 0 24 24"
                       onMouseEnter={() => setRating(count)}
                     >
@@ -177,7 +179,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      className="w-4 h-4 text-indigo-500"
+                      className="w-4 h-4 text-brand-500"
                       viewBox="0 0 24 24"
                       onMouseEnter={() => setRating(count)}
                     >
@@ -189,7 +191,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
               <input
                 type="name"
                 placeholder="Votre nom"
-                className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 mb-4 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
                 onKeyUp={(e) => setAuthorName(e.target.value)}
               />
               <textarea

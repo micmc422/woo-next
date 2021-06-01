@@ -155,7 +155,7 @@ export default function Product(props) {
                     activeVariations={activeVariations}
                     productName={product.name}
                   />
-                )}{" "}
+                )}
                 <div className="sticky flex self-start px-6 py-2 ml-auto top-8">
                   <AddToCartButton
                     product={product}
@@ -193,7 +193,7 @@ export default function Product(props) {
         <Upsell products={fullUpsellList} />
       </div>
       {product ? (
-        <div className="container flex flex-col px-4 mx-auto mb-32 break-all single-product xl:px-0">
+        <div className="container flex flex-col px-4 mx-auto mb-32 overflow-hidden single-product xl:px-0">
           <ContentParser data={product.description}></ContentParser>
           {false && (
             <div

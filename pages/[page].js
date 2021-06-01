@@ -10,11 +10,12 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../next-i18next.config";
 
 export default function Home(props) {
-  const { page, menu } = props;
+  const { page, menu,footer } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   const seoSchema = page?.seo?.schema?.raw;
+  // console.log(page);
   return (
-    <Layout menu={menu} translations={page?.translations}>
+    <Layout menu={menu} translations={page?.translations} footer={footer}>
       <Head>
         {seoData ? seoData : " "}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -35,6 +36,7 @@ export async function getStaticProps({ locale, params }) {
 
   return {
     props: {
+      footer: data?.getFooter,
       menu,
       page: data?.page || [],
       ...(await serverSideTranslations(
