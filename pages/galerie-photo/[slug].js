@@ -179,21 +179,20 @@ export default function Product(props) {
                   </button>
                 </div>
               </div>
-              <div className="flex"></div>
             </div>
           </div>
         </div>
       </section>
       <div className="max-w-screen-md pb-8 mx-auto">
         <Bouton>
-          <div className="text-4xl md:text-8xl">à découvrir</div>
+          <div className="px-4 text-4xl md:text-8xl">à découvrir</div>
         </Bouton>
       </div>
-      <div className="grid max-w-screen-lg grid-cols-2 gap-4 px-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+      <div className="grid max-w-screen-lg grid-cols-2 gap-2 mx-auto md:gap-4 md:px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <Upsell products={fullUpsellList} />
       </div>
       {product ? (
-        <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
+        <div className="container flex flex-col px-4 mx-auto mb-32 break-all single-product xl:px-0">
           <ContentParser data={product.description}></ContentParser>
           {false && (
             <div

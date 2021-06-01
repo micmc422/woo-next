@@ -33,7 +33,7 @@ const Product = (props) => {
         >
           <a className="relative block h-48 md:h-64">
             {!isEmpty(product.image) ? (
-              <VignettePhoto product={product} />
+              <VignettePhoto product={product} noName={noName} />
             ) : !isEmpty(clientConfig.productImagePlaceholder) ? (
               <div className="relative overflow-hidden">
                 <Skeleton height={192} width={250} />
@@ -118,7 +118,7 @@ const Product = (props) => {
   );
 };
 
-const VignettePhoto = ({ product }) => {
+const VignettePhoto = ({ product, noName }) => {
   const [hovered, setHovered] = useState(false);
   const orientation = product.galleryImages?.nodes[0]
     ? product.galleryImages?.nodes[0].mediaDetails.width >
@@ -153,7 +153,7 @@ const VignettePhoto = ({ product }) => {
               slug={product.slug}
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
-              objectfit={orientation}
+              objectfit={noName ? "cover" : orientation}
             />
           </motion.div>
         ) : (
@@ -169,7 +169,7 @@ const VignettePhoto = ({ product }) => {
               slug={product.slug}
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
-              objectfit={orientation}
+              objectfit={noName ? "none" : orientation}
             />
           </motion.div>
         )}

@@ -49,25 +49,17 @@ const defaultOptions = {
     }
     if (name === "h1") {
       return (
-        <h2 className={`px-4 md:px-0 mx-auto py-16 text-4xl max-w-2xl`}>
+        <h2 className={`px-2 md:px-0 mx-auto py-16 text-4xl max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
     }
-    if (name === "h1" || name === "h2") {
-      return (
-        <h2
-          className={`px-3 md:px-0 mx-auto p-4 md:p-6 lg:p-8 text-3xl max-w-2xl`}
-        >
-          {domToReact(children, defaultOptions)}
-        </h2>
-      );
-    }
-    if (name === "h3") {
+    if (name === "h1" || name === "h2" || name === "h3") {
       const alignRigth = attribs?.style === "text-align: right;";
+
       return (
         <h2
-          className={`px-2 md:px-0 mx-auto py-12 text-2xl max-w-2xl ${
+          className={`px-2 md:px-0 mx-auto py-6 text-2xl max-w-2xl w-full ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
@@ -79,7 +71,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <h3
-          className={`px-2 md:px-0 mx-auto py-8 text-xl max-w-2xl ${
+          className={`px-0 mx-auto py-8 text-xl max-w-2xl ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
@@ -89,14 +81,14 @@ const defaultOptions = {
     }
     if (name === "h5") {
       return (
-        <h2 className={`px-2 md:px-0 mx-auto py-4 text-lg max-w-2xl`}>
+        <h2 className={`px-0 mx-auto py-4 text-lg max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
     }
     if (attribs?.class === "container") {
       return (
-        <div className="px-2 mx-auto prose md:px-0">
+        <div className="px-0 mx-auto prose">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -106,7 +98,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <div
-          className={`px-2 mx-auto prose md:px-0 break-all overflow-hidden ${
+          className={`px-0 mx-auto md:px-0 break-all prose ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
@@ -200,7 +192,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl py-8 mx-auto sm:flex-row ">
+        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl py-8 mx-auto break-all sm:flex-row">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -287,9 +279,7 @@ const defaultOptions = {
       if ("https://www.instagram.com/parisestunephoto" === children[0].data) {
         return (
           <Bouton circleClass="bg-instagram bg-opacity-75">
-            <a href={children[0].data}>
-              {domToReact(children, defaultOptions)}
-            </a>
+            <a href={children[0].data}>Instagram</a>
           </Bouton>
         );
       }
@@ -308,4 +298,3 @@ const ContentParser = ({ data, options = defaultOptions }) => {
 };
 
 export default ContentParser;
-<FiInstagram />;
