@@ -22,7 +22,7 @@ const RateBlock = ({ rating, reviewCount, product }) => {
   const starBloc = [1, 2, 3, 4, 5];
   const [reviews, setReviews] = useState(false);
   const shareUrl = `https://photo.paris${asPath}`;
-  console.log(product?.image?.sourceUrl);
+  // console.log(product?.image?.sourceUrl);
 
   return (
     <div className="flex mb-4">
