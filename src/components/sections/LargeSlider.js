@@ -104,12 +104,13 @@ const LargeSlider = ({ products }) => {
               __html: name || title,
             }}
           ></h2>
-          <div className="text-base text-gray-500 md:text-2xl">
-            <PriceParse price={price} />
-          </div>
           <Link href={`/galerie-photo/${slug}/`}>
             <a className="font-semibold text-gray-800">
-              <Bouton>Voir</Bouton>
+              <Bouton>
+                <div className="text-base font-semibold text-gray-500 md:text-2xl ">
+                  <PriceParse price={price} />
+                </div>
+              </Bouton>
             </a>
           </Link>
         </motion.div>
@@ -171,7 +172,7 @@ const LargeSlider = ({ products }) => {
           </button>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 z-20 px-4 sm:w-4/12">
+      <div className="absolute bottom-0 left-0 z-20 hidden px-4 md:block sm:w-4/12">
         <AnimateSharedLayout type="crossfade">
           <motion.ul
             className="flex flex-row justify-center pb-2 space-x-2 align-middle"

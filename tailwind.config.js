@@ -1,15 +1,16 @@
 module.exports = {
   // @see https://tailwindcss.com/docs/upcoming-changes
   future: {
-    // removeDeprecatedGapUtilities: true,
-    //  purgeLayersByDefault: true,
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
   },
   purge: {
     enabled: true,
     content: [
-      "./src/components/*.js",
-      "./src/components/**/*.js",
-      "./pages/**/*.js",
+      "./src/components/*.{js,ts,jsx,tsx}",
+      "./src/components/**/*.{js,ts,jsx,tsx}",
+      "./pages/**/*.{js,ts,jsx,tsx}",
+      "./pages/*.{js,ts,jsx,tsx}",
     ],
     option: {
       safelist: {

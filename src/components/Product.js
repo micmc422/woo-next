@@ -44,7 +44,7 @@ const Product = (props) => {
         {!noName && (
           <div className="text-center cursor-pointer product-info">
             <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
-              <h3 className="pb-2 mt-3 font-thin text-center  text-gray-600 md:overflow-ellipsis max-h-10 md:max-h-full overflow-hidden ... hover:text-gray-800 leading-4">
+              <h3 className="pb-2 mt-3 font-thin leading-4 text-center text-gray-600 hover:text-gray-800 text-xs md:text-base">
                 {product.name ? product.name : "Chargement..."}
               </h3>
             </Link>
@@ -154,7 +154,6 @@ const VignettePhoto = ({ product, noName }) => {
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
               objectfit={noName ? "cover" : orientation}
-              
             />
           </motion.div>
         ) : (

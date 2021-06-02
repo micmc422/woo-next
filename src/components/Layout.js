@@ -7,7 +7,6 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import { ApolloProvider } from "@apollo/client";
 import ScrollToTop from "react-scroll-to-top";
-import { useInView } from "react-intersection-observer";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -41,8 +40,14 @@ const Layout = (props) => {
           />
           <Header menu={menu} translations={translations} />
           <motion.div
-            style={{ y: y1, x: 50, width: "10%", height: "30vh", opacity:.05 }}
-            className="fixed inset-0 flex items-center justify-center safe"
+            style={{
+              y: y1,
+              x: 50,
+              width: "10%",
+              height: "30vh",
+              opacity: 0.05,
+            }}
+            className="fixed inset-0 flex items-center justify-center"
           >
             <Image
               src="/logo_black_old.png"

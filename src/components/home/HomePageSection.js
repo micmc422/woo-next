@@ -4,6 +4,8 @@ import Link from "next/link";
 import ContentParser from "../ContentParser";
 import LargeSlider from "../sections/LargeSlider";
 import { Bouton } from "../themeComponents";
+import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const HomePageSection = ({ homepage, products }) => {
   const defaultOptions = {
@@ -12,14 +14,28 @@ const HomePageSection = ({ homepage, products }) => {
         return;
       }
       if (attribs["data-vc-parallax-image"]) {
+        const ref = useRef(null);
+        const { scrollY } = useViewportScroll();
+        const { offsetTop = 2400 } = ref?.current || {};
+        const [refHeight, setHeight] = useState(900);
+        const y1 = useTransform(
+          scrollY,
+          [offsetTop - refHeight, offsetTop + refHeight],
+          [-(refHeight / 2), refHeight / 2]
+        );
         return (
-          <div className="relative">
-            <Image
-              src={attribs["data-vc-parallax-image"] || attribs.src}
-              layout="fill"
-              objectFit="cover"
-              alt={attribs.alt}
-            />
+          <div className="relative overflow-hidden safe" ref={ref}>
+            <motion.div
+              className="absolute inset-0"
+              style={{ y: y1, scale: 1.1, filter: "blur(4px)" }}
+            >
+              <Image
+                src={attribs["data-vc-parallax-image"] || attribs.src}
+                layout="fill"
+                objectFit="cover"
+                alt={attribs.alt}
+              />
+            </motion.div>
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -33,7 +49,6 @@ const HomePageSection = ({ homepage, products }) => {
               {" "}
             </div>
             <div className="relative text-center">
-              {" "}
               {domToReact(children, defaultOptions)}
             </div>
           </div>
