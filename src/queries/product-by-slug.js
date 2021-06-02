@@ -21,6 +21,17 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
           raw
         }
       }
+      reviews {
+        nodes {
+          content
+          date
+          author {
+            node {
+              name
+            }
+          }
+        }
+      }
       image {
         id
         uri

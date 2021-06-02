@@ -2,6 +2,18 @@ import parse, { domToReact } from "html-react-parser";
 import Image from "next/image";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
 import { Bouton } from "./themeComponents";
+import { motion } from "framer-motion";
+
+const parentAnimation = {
+  initial: {},
+  animate: { transition: { staggerChildren: 0.1 } },
+  exit: {},
+};
+const childAnimation = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 20 },
+};
 
 const defaultOptions = {
   replace: ({ attribs, children, name, type, data }) => {
@@ -58,13 +70,14 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
 
       return (
-        <h2
+        <motion.h2
+          variants={childAnimation}
           className={`px-2 md:px-0 mx-auto py-6 text-2xl max-w-2xl w-full ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
-        </h2>
+        </motion.h2>
       );
     }
     if (name === "h4") {
@@ -97,13 +110,14 @@ const defaultOptions = {
     if (name === "p") {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
-        <div
+        <motion.div
+          variants={childAnimation}
           className={`px-0 mx-auto md:px-0 prose ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
           {domToReact(children, defaultOptions)}
-        </div>
+        </motion.div>
       );
     }
     if (name === "ul") {
@@ -244,7 +258,8 @@ const defaultOptions = {
       attribs?.class?.includes("vc_column_container")
     ) {
       return (
-        <div
+        <motion.div
+          variants={childAnimation}
           className={`safe ${
             attribs?.class.includes("vc_col-sm-3")
               ? "sm:w-1/4"
@@ -263,7 +278,7 @@ const defaultOptions = {
     `}
         >
           {domToReact(children, defaultOptions)}
-        </div>
+        </motion.div>
       );
     }
     if (name === "a") {
@@ -294,7 +309,18 @@ const ContentParser = ({ data, options = defaultOptions }) => {
   }
   const parsed = parse(data, options);
 
-  return parsed;
+  return (
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={parentAnimation}
+    >
+      {parsed}
+    </motion.div>
+  );
+
+  parsed;
 };
 
 export default ContentParser;

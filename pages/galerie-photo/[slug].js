@@ -21,13 +21,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
 import { Bouton } from "../../src/components/themeComponents";
 import Loading from "../../src/components/Loading";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Reviews from "../../src/components/single-product/reviews";
 
 const parentListEl = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.5,
+      staggerChildren: 0.1,
     },
   },
   exit: {},
@@ -192,25 +193,55 @@ export default function Product(props) {
       <div className="grid max-w-screen-lg grid-cols-2 gap-2 mx-auto md:gap-4 md:px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <Upsell products={fullUpsellList} />
       </div>
-      {product ? (
-        <div className="container flex flex-col px-4 mx-auto mb-32 overflow-hidden single-product xl:px-0">
-          <ContentParser data={product.description}></ContentParser>
-          {false && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: product.description,
-              }}
-              className="container mx-auto mb-5 product-description"
-            />
-          )}
-        </div>
-      ) : (
-        ""
-      )}
+      {<ProductDetails product={product} />}
     </Layout>
   );
 }
-
+const ProductDetails = ({ product }) => {
+  const [activeTab, setActiveTab] = useState("description");
+  return (
+    <>
+      <div
+        className={`flex flex-row justify-center mx-auto space-x-3 border-bottom-2 border-gray-400 text-gray-500`}
+      >
+        <div
+          onClick={() => setActiveTab("description")}
+          className="cursor-pointer hover:text-black"
+        >
+          Description
+        </div>
+        <div
+          onClick={() => setActiveTab("commentaires")}
+          className="cursor-pointer hover:text-black"
+        >
+          Commentaires
+        </div>
+        <div
+          onClick={() => setActiveTab("details")}
+          className="cursor-pointer hover:text-black"
+        >
+          Détails
+        </div>
+        <div
+          onClick={() => setActiveTab("artiste")}
+          className="cursor-pointer hover:text-black"
+        >
+          Artistes
+        </div>
+      </div>
+      <div className="container flex flex-col px-4 mx-auto mb-32 overflow-hidden single-product xl:px-0">
+        <AnimatePresence>
+          {activeTab === "description" && (
+            <ContentParser data={product.description}></ContentParser>
+          )}
+          {activeTab === "commentaires" && (
+            <Reviews reviews={product.reviews.nodes} />
+          )}
+        </AnimatePresence>
+      </div>
+    </>
+  );
+};
 const Upsell = ({ products }) => {
   return (
     products &&
