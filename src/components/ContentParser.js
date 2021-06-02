@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
 import { Bouton } from "./themeComponents";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { InView } from "react-intersection-observer";
 
 const parentAnimation = {
   initial: {},
@@ -257,36 +257,34 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_column") ||
       attribs?.class?.includes("vc_column_container")
     ) {
-      const { ref, inView, entry } = useInView({
-        /* Optional options */
-        threshold: 0,
-        triggerOnce: true,
-        delay: 300,
-      });
       return (
-        <motion.div
-          ref={ref}
-          animate={inView ? "animate" : "initial"}
-          variants={childAnimation}
-          className={`safe ${
-            attribs?.class.includes("vc_col-sm-3")
-              ? "sm:w-1/4"
-              : attribs?.class.includes("vc_col-sm-4")
-              ? "sm:w-1/3"
-              : attribs?.class.includes("vc_col-sm-6")
-              ? "sm:w-1/2 flex-shrink"
-              : attribs?.class.includes("vc_col-sm-8")
-              ? "sm:w-2/3 "
-              : attribs?.class.includes("vc_col-sm-9")
-              ? "sm:w-3/4"
-              : attribs?.class.includes("vc_col-sm-12")
-              ? "w-full"
-              : "w-auto flex-shrink"
-          }
-    `}
-        >
-          {domToReact(children, defaultOptions)}
-        </motion.div>
+        <InView threshold={0.3} delay={600}>
+          {({ inView, ref }) => (
+            <motion.div
+              ref={ref}
+              animate={inView ? "animate" : "initial"}
+              variants={childAnimation}
+              className={`safe pb-4 md:pb-8 lg:pb-16 ${
+                attribs?.class.includes("vc_col-sm-3")
+                  ? "sm:w-1/4"
+                  : attribs?.class.includes("vc_col-sm-4")
+                  ? "sm:w-1/3"
+                  : attribs?.class.includes("vc_col-sm-6")
+                  ? "sm:w-1/2 flex-shrink"
+                  : attribs?.class.includes("vc_col-sm-8")
+                  ? "sm:w-2/3 "
+                  : attribs?.class.includes("vc_col-sm-9")
+                  ? "sm:w-3/4"
+                  : attribs?.class.includes("vc_col-sm-12")
+                  ? "w-full"
+                  : "w-auto flex-shrink"
+              }
+                `}
+            >
+              {domToReact(children, defaultOptions)}
+            </motion.div>
+          )}
+        </InView>
       );
     }
     if (name === "a") {

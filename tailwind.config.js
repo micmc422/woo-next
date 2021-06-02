@@ -14,6 +14,7 @@ module.exports = {
     ],
     option: {
       safelist: {
+        standard: ["pb-4", "md:pb-8", "lg:pb-16"],
         greedy: ["/safe$/"],
       },
     },
