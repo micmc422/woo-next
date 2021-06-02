@@ -29,7 +29,7 @@ const defaultOptions = {
           >
             {" "}
           </div>
-          <div className="relative px-4 lg:px-1">
+          <div className="relative px-0 md:px-4">
             {" "}
             {domToReact(children, defaultOptions)}
           </div>
@@ -62,7 +62,7 @@ const defaultOptions = {
     }
     if (name === "h1") {
       return (
-        <h2 className={`px-2 md:px-0 mx-auto py-16 text-4xl max-w-2xl`}>
+        <h2 className={`px-4 mx-auto py-16 text-4xl max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
@@ -73,7 +73,7 @@ const defaultOptions = {
       return (
         <motion.h2
           variants={childAnimation}
-          className={`px-2 md:px-0 mx-auto py-6 text-2xl max-w-2xl w-full ${
+          className={`px-4 mx-auto py-6 text-2xl max-w-2xl w-full ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
@@ -85,7 +85,7 @@ const defaultOptions = {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <h3
-          className={`px-0 mx-auto py-8 text-xl max-w-2xl ${
+          className={`px-4 mx-auto py-8 text-xl max-w-2xl ${
             alignRigth ? "md:text-right" : ""
           }`}
         >
@@ -95,7 +95,7 @@ const defaultOptions = {
     }
     if (name === "h5") {
       return (
-        <h2 className={`px-0 mx-auto py-4 text-lg max-w-2xl`}>
+        <h2 className={`px-4 mx-auto py-4 text-lg max-w-2xl`}>
           {domToReact(children, defaultOptions)}
         </h2>
       );
@@ -114,9 +114,7 @@ const defaultOptions = {
       return (
         <motion.div
           variants={childAnimation}
-          className={`px-0 mx-auto md:px-0 prose ${
-            alignRigth ? "md:text-right" : ""
-          }`}
+          className={`p-4 mx-auto prose ${alignRigth ? "md:text-right" : ""}`}
         >
           {domToReact(children, defaultOptions)}
         </motion.div>
@@ -208,7 +206,7 @@ const defaultOptions = {
       attribs?.class?.includes("wpb_row")
     ) {
       return (
-        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl py-8 mx-auto sm:flex-row">
+        <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl mx-auto sm:flex-row">
           {domToReact(children, defaultOptions)}
         </div>
       );
@@ -261,8 +259,9 @@ const defaultOptions = {
     ) {
       const { ref, inView, entry } = useInView({
         /* Optional options */
-        threshold: 0.7,
-        triggerOnce: true
+        threshold: 0,
+        triggerOnce: true,
+        delay: 300,
       });
       return (
         <motion.div
