@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
 import { Bouton, PriceParse } from "../themeComponents";
+import Image from "next/image";
 
 const LargeSlider = ({ products }) => {
   if (isEmpty(products) || !isArray(products)) {
@@ -38,8 +39,8 @@ const LargeSlider = ({ products }) => {
         activeIndexRef.current.activeIndex + 1;
     }
 
-    slideRef.current = (slideRef.current % products.length) + 1;
-    setSlide(slideRef.current % products.length);
+    slideRef.current = slideRef.current + 1;
+    setSlide(slideRef.current);
   };
 
   const prevSlide = () => {
@@ -54,15 +55,17 @@ const LargeSlider = ({ products }) => {
      */
     if (activeIndexRef.current.activeIndex === 0) {
       activeIndexRef.current.activeIndex = products.length - 1;
-      setRestartSlide(restartSlide - 1);
+      setRestartSlide(products.length - 1);
     } else {
       // If its not the last slide increment active index by one.
       activeIndexRef.current.activeIndex =
         activeIndexRef.current.activeIndex - 1;
     }
-    slideRef.current = activeIndexRef.current.activeIndex;
-    setSlide(slideRef.current % products.length);
+
+    slideRef.current = slideRef.current - 1;
+    setSlide(slideRef.current);
   };
+
   const goToSlide = (i) => {
     /**
      * If if autoplay is set to true
@@ -73,11 +76,25 @@ const LargeSlider = ({ products }) => {
     slideRef.current = i;
     setSlide(slideRef.current);
   };
+  const handleDrag = (event, info) => {
+    console.log({ event, info });
+    console.log(info.delta.x > 0);
+    console.log(info.delta);
+    if (info.delta.x === 0) return;
+    if (info.delta.x > 0) {
+      nextSlide();
+    } else {
+      prevSlide();
+    }
+  };
 
   useEffect(() => {
     if (autoPlay) {
       const interval = setInterval(() => nextSlide(), slideDuration * 1000);
       return () => clearInterval(interval);
+    } else {
+      const interval = setInterval(() => null, slideDuration * 1000);
+      return () => interval && clearInterval(interval);
     }
   }, [autoPlay]);
   const { image, id, name, title, slug, featuredImage, price } = products[
@@ -115,23 +132,31 @@ const LargeSlider = ({ products }) => {
           </Link>
         </motion.div>
       </AnimatePresence>
-      <div className="relative banner-img sm:w-8/12">
+      <div className="overflow-hidden banner-img sm:w-8/12">
         <AnimatePresence>
           <motion.div
+            drag="x"
+            dragConstraints={{
+              left: 0,
+              right: 0,
+            }}
+            onDragEnd={(event, info) => handleDrag(event, info)}
             key={`image-${slug}-${id}`}
-            initial={{ opacity: 0, x: "100%" }}
+            initial={{ opacity: 0, scale: 1.1 }}
             animate={{
               opacity: 1,
-              x: "0%",
+              scale: 1,
             }}
-            exit={{ opacity: 0, scale: 1.2 }}
+            exit={{ opacity: 0, filter: "blur(15px)" }}
             transition={{ duration: 1 }}
-            className={`absolute top-0 left-0 z-0`}
+            className={`absolute inset-0 z-0`}
           >
-            <img
-              src={image ? image?.sourceUrl : featuredImage.sourceUrl}
-              srcSet={image ? image?.srcSet : featuredImage.srcSet}
-              loading="lazy"
+            <Image
+              src={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
+              srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
+              layout="fill"
+              objectfill="cover"
+              class="pointer-events-none"
             />
           </motion.div>
         </AnimatePresence>

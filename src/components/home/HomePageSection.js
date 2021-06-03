@@ -208,6 +208,13 @@ const HomePageSection = ({ homepage, products }) => {
           </div>
         );
       }
+      if (attribs?.class?.includes("vc_section-o-content-middle")) {
+        return (
+          <div className="flex flex-col space-y-8">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
 
       if (attribs?.class?.includes("vc_message_box-icon")) {
         return (
@@ -323,7 +330,7 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("ciloe-single-product")) {
         return (
-          <div className="flex flex-col max-w-6xl py-32 mx-auto md:flex-row">
+          <div className="flex flex-col max-w-6xl py-8 mx-auto lg:py-32 md:flex-row">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -352,7 +359,7 @@ const HomePageSection = ({ homepage, products }) => {
       }
       if (attribs?.class?.includes("ciloe-tabs")) {
         return (
-          <div className="py-32">
+          <div className="py-4 lg:py-32">
             <LargeSlider products={products} />
           </div>
         );
