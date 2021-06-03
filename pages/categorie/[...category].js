@@ -47,7 +47,6 @@ export default function CategorySingle(props) {
   const catName = query?.category?.length
     ? query.category[query.category.length - 1]
     : "";
-  console.log(catName);
   //delete query.category;
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();

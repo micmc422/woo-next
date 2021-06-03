@@ -4,12 +4,14 @@ import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
 import { Bouton, PriceParse } from "../themeComponents";
 import Image from "next/image";
+import BlocPrix from "../single-product/price/BlocPrix";
 
 const LargeSlider = ({ products }) => {
   if (isEmpty(products) || !isArray(products)) {
     return null;
   }
   const emptyArray = [...Array(products.length).keys()];
+  const [xTransition, setXT] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
   const slideDuration = 6; // in seconds
   const activeIndexRef = useRef({ activeIndex: 0 });
@@ -21,6 +23,7 @@ const LargeSlider = ({ products }) => {
    * Change to next slide.
    */
   const nextSlide = () => {
+    console.log(xTransition);
     if (1 === products.length) {
       return null;
     }
@@ -77,11 +80,13 @@ const LargeSlider = ({ products }) => {
     setSlide(slideRef.current);
   };
   const handleDrag = (event, info) => {
-    console.log({ event, info });
-    console.log(info.delta.x > 0);
-    console.log(info.delta);
-    if (info.delta.x === 0) return;
-    if (info.delta.x > 0) {
+    //  console.log({ event, info });
+    //  console.log(info.offset.x > 0);
+    //  console.log(info.offset);
+    setXT(info.offset.x);
+
+    if (info.offset.x === 0) return;
+    if (info.offset.x > 0) {
       nextSlide();
     } else {
       prevSlide();
@@ -110,9 +115,9 @@ const LargeSlider = ({ products }) => {
         <motion.div
           className="relative z-10 px-4 pt-10 space-y-2 md:px-10 banner-content sm:pt-0 sm:w-4/12"
           key={`titre-slider-${slug}-${id}`}
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, x: -200 }}
+          initial={{ opacity: 0, y: -(xTransition / 10) }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          exit={{ opacity: 0, y: xTransition / 10 }}
           transition={{ delayChildren: 0.5, when: "afterChildren" }}
         >
           <h2
@@ -123,16 +128,16 @@ const LargeSlider = ({ products }) => {
           ></h2>
           <Link href={`/galerie-photo/${slug}/`}>
             <a className="font-semibold text-gray-800">
-              <Bouton>
-                <div className="text-base font-semibold text-gray-500 md:text-2xl ">
-                  <PriceParse price={price} />
+              <Bouton small>
+                <div className="text-sm font-semibold text-gray-500">
+                  <BlocPrix price={price} />
                 </div>
               </Bouton>
             </a>
           </Link>
         </motion.div>
       </AnimatePresence>
-      <div className="overflow-hidden banner-img sm:w-8/12">
+      <div className="relative overflow-hidden banner-img sm:w-8/12">
         <AnimatePresence>
           <motion.div
             drag="x"
@@ -142,10 +147,11 @@ const LargeSlider = ({ products }) => {
             }}
             onDragEnd={(event, info) => handleDrag(event, info)}
             key={`image-${slug}-${id}`}
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.1, x: -xTransition }}
             animate={{
               opacity: 1,
               scale: 1,
+              x: 0,
             }}
             exit={{ opacity: 0, filter: "blur(15px)" }}
             transition={{ duration: 1 }}

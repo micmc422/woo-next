@@ -12,6 +12,7 @@ const HeroCarousel = ({ heroCarousel }) => {
   }
 
   const [autoPlay, setAutoPlay] = useState(true);
+  const [xTransition, setXT] = useState(0);
   const slideDuration = 6; // in seconds
   const activeIndexRef = useRef({ activeIndex: 0 });
   const slideRef = useRef(0);
@@ -82,8 +83,9 @@ const HeroCarousel = ({ heroCarousel }) => {
     activeIndex
   ];
   const handleDrag = (event, info) => {
-    if (info.delta.x === 0) return;
-    if (info.delta.x > 0) {
+    setXT(info.offset.x);
+    if (info.offset.x === 0) return;
+    if (info.offset.x > 0) {
       nextSlide();
     } else {
       prevSlide();
@@ -107,10 +109,11 @@ const HeroCarousel = ({ heroCarousel }) => {
             }}
             onDragEnd={(event, info) => handleDrag(event, info)}
             key={`image-${slug}-${id}`}
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.1, x: -xTransition }}
             animate={{
               opacity: 1,
               scale: 1,
+              x: 0,
             }}
             exit={{ opacity: 0, filter: "blur(15px)" }}
             className={`absolute inset-0`}
