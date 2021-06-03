@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const animationParent = {
   initial: {},
@@ -61,14 +62,17 @@ export const Bouton = ({
 export const PriceParse = ({ price }) => {
   const temp = price.split("-");
   const parsedPrice = temp[0].trim();
+  const { t } = useTranslation("shop");
 
   return (
     <>
       {temp.length > 1 ? (
-        <p className={`text-xs leading-3`}>
-          <span className="text-purple-500 safe">à partir de</span> <br />
-          {parsedPrice}
-        </p>
+        <div>
+          <div className="text-xs font-bold leading-3 text-purple-500 safe">
+            {t("a-partir-de")}
+          </div>{" "}
+          <div className={`text-xs`}>{parsedPrice}</div>
+        </div>
       ) : (
         parsedPrice
       )}

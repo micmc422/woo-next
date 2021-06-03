@@ -16,8 +16,10 @@ import {
   PinterestIcon,
 } from "react-share";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const RateBlock = ({ rating, reviewCount, product }) => {
+  const { t } = useTranslation("shop");
   const { asPath } = useRouter();
   const starBloc = [1, 2, 3, 4, 5];
   const [reviews, setReviews] = useState(false);
@@ -64,12 +66,12 @@ const RateBlock = ({ rating, reviewCount, product }) => {
               )
             )}
 
-            <span className="ml-3 text-gray-600">{reviewCount} Avis</span>
+            <span className="ml-3 text-gray-600">{reviewCount} {t("avis")}</span>
           </span>
         </>
       ) : (
         <span className="flex items-center" onClick={() => setReviews(true)}>
-          <span className="ml-3 text-gray-600">Soyez le premier à voter !</span>
+          <span className="ml-3 text-gray-600">{t("evaluer")} </span>
         </span>
       )}
       <span className="flex py-2 pl-3 ml-3 space-x-2 border-l-2 border-gray-200">
@@ -112,6 +114,8 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
   const [error, setError] = useState(null);
   const [authorName, setAuthorName] = useState(null);
   const [addReviews, { data }] = useMutation(ADD_REVIEW);
+  const { t } = useTranslation("shop");
+
   useEffect(() => {
     if ((rating !== 0 || content !== "") && authorName) {
       setIsValid(true);
@@ -153,7 +157,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
             <>
               {" "}
               <h3 className="flex items-center mb-4 text-3xl font-bold text-brand-500">
-                Commentaire
+                {t("commentaires")}
               </h3>
               <span className="flex items-center pb-8">
                 {starBloc.map((count) =>
@@ -225,7 +229,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
           ) : (
             <div>
               <p className={`safe text-green-500 py-8 prose`}>
-                Commentaires envoyé. merci
+                {t("commentaire-envoye")}
               </p>
               <div>
                 <Bouton
@@ -233,7 +237,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
                   circleClass={`neuromorphism-green`}
                   action={() => setReviews(false)}
                 >
-                  Fermer
+                {t("fermer")}
                 </Bouton>
               </div>
             </div>

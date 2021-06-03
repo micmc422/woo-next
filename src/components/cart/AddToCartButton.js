@@ -122,7 +122,9 @@ const AddToCart = (props) => {
         {/* Add To Cart Loading*/}
         {!showViewCart ? (
           addToCartLoading ? (
-            <div> Ajout en cour {children ? children : ""}</div>
+            <div className="text-xs font-bold leading-3 text-gray-500">
+              {t("patienter")} {children ? children : ""}
+            </div>
           ) : (
             <div
               onClick={handleAddToCartClick}

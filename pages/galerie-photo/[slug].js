@@ -23,6 +23,7 @@ import { Bouton } from "../../src/components/themeComponents";
 import Loading from "../../src/components/Loading";
 import { AnimatePresence, motion } from "framer-motion";
 import Reviews from "../../src/components/single-product/reviews";
+import { useTranslation } from "react-i18next";
 
 const parentListEl = {
   initial: {},
@@ -39,6 +40,8 @@ const listEl = {
   exit: {},
 };
 export default function Product(props) {
+  const { t } = useTranslation("shop");
+
   const { product, menu, footer } = props;
   const tmp = product?.variations?.nodes.slice();
   const orderredVariations = tmp?.sort(
@@ -187,7 +190,9 @@ export default function Product(props) {
       </section>
       <div className="max-w-screen-md pb-8 mx-auto">
         <Bouton>
-          <div className="px-4 text-4xl md:text-8xl">à découvrir</div>
+          <div className="px-4 text-2xl uppercase md:text-4xl">
+            {t("decouvrir")}
+          </div>
         </Bouton>
       </div>
       <div className="grid max-w-screen-lg grid-cols-2 gap-2 mx-auto md:gap-4 md:px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
@@ -199,6 +204,7 @@ export default function Product(props) {
 }
 const ProductDetails = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
+  const { t } = useTranslation("shop");
   return (
     <>
       <div
@@ -208,25 +214,25 @@ const ProductDetails = ({ product }) => {
           onClick={() => setActiveTab("description")}
           className="cursor-pointer hover:text-black"
         >
-          Description
+          {t("description")}
         </div>
         <div
           onClick={() => setActiveTab("commentaires")}
           className="cursor-pointer hover:text-black"
         >
-          Commentaires
+          {t("commentaires")}
         </div>
         <div
           onClick={() => setActiveTab("details")}
           className="cursor-pointer hover:text-black"
         >
-          Détails
+          {t("details")}
         </div>
         <div
           onClick={() => setActiveTab("artiste")}
           className="cursor-pointer hover:text-black"
         >
-          Artistes
+          {t("artiste")}
         </div>
       </div>
       <div className="container flex flex-col px-4 mx-auto mb-32 overflow-hidden single-product xl:px-0">

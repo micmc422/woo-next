@@ -4,5 +4,16 @@
   "categories": "Category",
   "retour": "Back",
   "prix": "Price",
-  "prix-filter": "max price"
+  "prix-filter": "Max price",
+  "decouvrir": "Discover",
+  "evaluer": "Be the first to vote",
+  "avis": "Reviews",
+  "commentaires": "Comments",
+  "commentaire-envoye":"Comment sent. thank you",
+  "fermer": "Close",
+  "patienter": "En cour",
+  "a-partir-de": "From",
+  "explorer": "Explore"
+
+
 }

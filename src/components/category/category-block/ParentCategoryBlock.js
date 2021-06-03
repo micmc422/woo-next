@@ -4,10 +4,14 @@ import { DEFAULT_CATEGORY_IMG_URL } from "../../../constants/urls";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useTranslation } from "react-i18next";
+import { Bouton } from "../../themeComponents";
 
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
   const [activeImage, setActiveImage] = useState(0);
+  const { t } = useTranslation("shop");
+
   let images = [];
   const delay = 1500 + ((300 * i) % 3000);
   if (category.products.nodes) {
@@ -63,7 +67,9 @@ const ParentCategoryBlock = (props) => {
             <h3 className="text-lg font-medium product-title">
               {category?.name}
             </h3>
-            <span className="text-sm shop-now">+ Explore</span>
+            <Bouton>
+              <span className="text-sm shop-now">{t("explorer")}</span>
+            </Bouton>
           </div>
         </a>
       </Link>

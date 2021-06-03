@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import { Bouton } from "../../themeComponents";
 
 const CategoryBlocs = (props) => {
   const { category } = props;
+  const { t } = useTranslation("shop");
   return (
     <div className="mb-5 product">
       <Link href={`/categorie/${category.slug}`}>
@@ -16,7 +19,9 @@ const CategoryBlocs = (props) => {
             <h3 className="text-lg font-medium product-title">
               {category.name}
             </h3>
-            <span className="text-sm shop-now">+ Explore</span>
+            <Bouton>
+              <span className="text-sm shop-now">{t("explorer")}</span>
+            </Bouton>
           </div>
         </a>
       </Link>

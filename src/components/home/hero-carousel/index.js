@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import { Bouton } from "../../themeComponents";
 
 const HeroCarousel = ({ heroCarousel }) => {
   if (isEmpty(heroCarousel) || !isArray(heroCarousel)) {
@@ -16,6 +17,7 @@ const HeroCarousel = ({ heroCarousel }) => {
   const [slide, setSlide] = useState(0);
   const [restartSlide, setRestartSlide] = useState(0);
   const { activeIndex } = activeIndexRef.current;
+  const { t } = useTranslation("shop");
 
   /**
    * Change to next slide.
@@ -52,17 +54,20 @@ const HeroCarousel = ({ heroCarousel }) => {
   const { image, id, name, title, slug, featuredImage } = heroCarousel[
     activeIndex
   ];
-//  console.log(heroCarousel[activeIndex]);
+  //  console.log(heroCarousel[activeIndex]);
   // return null;
   return (
-    <div className="flex flex-col justify-between overflow-hidden banner sm:flex-row">
+    <div className="flex flex-col justify-between overflow-hidden banner sm:flex-row bg-brand-500 bg-gradient-to-tr from-brand-600 to-brand-500">
       <div className="banner-img sm:w-8/12">
         <AnimatePresence>
           <motion.div
             key={`image-${slug}-${id}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            exit={{ opacity: 0, filter: "blur(15px)" }}
             className={`absolute inset-0`}
           >
             <Image
@@ -112,7 +117,7 @@ const HeroCarousel = ({ heroCarousel }) => {
       </div>
       <AnimatePresence exitBeforeEnter>
         <motion.div
-          className="px-4 pt-10 md:px-10 banner-content sm:pt-0 sm:w-4/12"
+          className="px-4 pt-10 text-gray-100 md:px-10 banner-content sm:pt-0 sm:w-4/12"
           key={`titre-slider-${slug}-${id}`}
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,9 +129,13 @@ const HeroCarousel = ({ heroCarousel }) => {
               __html: name || title,
             }}
           ></h2>
-          <Link href={`/categorie/${slug}/`}>
-            <a className="text-gray-700 banner-content__link">+ Explore</a>
-          </Link>
+          <Bouton>
+            <Link href={`/categorie/${slug}/`}>
+              <a className="text-gray-100 banner-content__link">
+                {t("explorer")}
+              </a>
+            </Link>
+          </Bouton>
         </motion.div>
       </AnimatePresence>
     </div>

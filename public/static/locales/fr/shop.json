@@ -4,5 +4,17 @@
   "categories": "Catégories",
   "retour": "Retour",
   "prix": "Prix",
-  "prix-filter": "prix max"
+  "prix-filter": "prix max",
+  "decouvrir": "découvrir",
+  "evaluer": "Soyez le premier à voter",
+  "avis": "avis",
+  "commentaires": "Commentaires",
+  "commentaire-envoye": "Commentaire envoyé. merci",
+  "fermer": "Fermer",
+  "patienter": "En cour",
+  "description": "Description",
+  "details": "Détails",
+  "artiste": "Artiste",
+  "a-partir-de": "à partir de",
+  "explorer": "Voir +"
 }
