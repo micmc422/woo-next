@@ -4,16 +4,17 @@ import { FiInstagram, FiFacebook } from "react-icons/fi";
 import { Bouton } from "./themeComponents";
 import { motion } from "framer-motion";
 import { InView } from "react-intersection-observer";
+import { useEffect, useState } from "react";
 
 const parentAnimation = {
   initial: {},
-  animate: { transition: { staggerChildren: 0.1 } },
+  animate: { transition: { staggerChildren: 0.1, bounce: false } },
   exit: {},
 };
 const childAnimation = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 20 },
+  initial: { opacity: 0, scale: 0.7 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.7 },
 };
 
 const defaultOptions = {
@@ -258,7 +259,7 @@ const defaultOptions = {
       attribs?.class?.includes("vc_column_container")
     ) {
       return (
-        <InView threshold={0.3} delay={600}>
+        <InView threshold={0.3}>
           {({ inView, ref }) => (
             <motion.div
               ref={ref}
@@ -313,7 +314,6 @@ const ContentParser = ({ data, options = defaultOptions }) => {
   if (!data) {
     return null;
   }
-  const parsed = parse(data, options);
 
   return (
     <motion.div
@@ -322,11 +322,9 @@ const ContentParser = ({ data, options = defaultOptions }) => {
       exit="exit"
       variants={parentAnimation}
     >
-      {parsed}
+      {parse(data, options)}
     </motion.div>
   );
-
-  parsed;
 };
 
 export default ContentParser;
