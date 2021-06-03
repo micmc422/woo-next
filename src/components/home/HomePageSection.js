@@ -60,7 +60,7 @@ const HomePageSection = ({ homepage, products }) => {
             src={attribs["data-src"] || attribs.src}
             width={attribs.width}
             height={attribs.height}
-            alt={attribs.alt}
+            alt={attribs.alt || "paris est une photo"}
           />
         );
       }
@@ -194,11 +194,40 @@ const HomePageSection = ({ homepage, products }) => {
       if (name === "p") {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
-          <p className={`md:mx-auto prose ${alignRigth ? "text-right" : ""}`}>
+          <p
+            className={`md:mx-auto prose leading-5 pb-4 ${
+              alignRigth ? "text-right" : ""
+            }`}
+          >
             {domToReact(children, defaultOptions)}
           </p>
         );
       }
+      if (
+        attribs?.class?.includes("image-wrap") ||
+        (attribs?.class?.includes("container") &&
+          parent?.attribs?.class?.includes("ciloe-single-product"))
+      ) {
+        return (
+          <div className="relative w-4/5 mx-auto bg-white md:mx-0 md:w-auto">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
+
+      if (attribs?.class?.includes("product-info-wrap")) {
+        return (
+          <div className="px-4">{domToReact(children, defaultOptions)}</div>
+        );
+      }
+      if (attribs?.class?.includes("short-desc")) {
+        return (
+          <div className="leading-4">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
+
       if (
         attribs?.class?.includes("vc_message_box-outline vc_message_box-round")
       ) {
@@ -294,7 +323,7 @@ const HomePageSection = ({ homepage, products }) => {
           <div className="px-4 py-4 mx-auto md:py-0 max-w-prose">
             <Bouton>
               <Link href={parsedHref} passHref>
-                <a className="pt-1 text-2xl leading-4">
+                <a className="pt-1 text-2xl leading-5">
                   {domToReact(children, defaultOptions)}
                 </a>
               </Link>
@@ -330,7 +359,7 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("ciloe-single-product")) {
         return (
-          <div className="flex flex-col max-w-6xl py-8 mx-auto lg:py-32 md:flex-row">
+          <div className="flex flex-col justify-center py-8 mx-auto lg:py-32 md:flex-row">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -338,16 +367,6 @@ const HomePageSection = ({ homepage, products }) => {
       if (attribs?.class?.includes("flash-text")) {
         return (
           <div className="absolute px-2 pt-1 text-xs uppercase text-gray-50 top-4 right-4 bg-brand-500 rounded-xl">
-            {domToReact(children, defaultOptions)}
-          </div>
-        );
-      }
-      if (
-        attribs?.class?.includes("container") &&
-        parent?.attribs?.class?.includes("ciloe-single-product")
-      ) {
-        return (
-          <div className="relative px-8 mb-2 prose safe md:px-16 bg-gray-50">
             {domToReact(children, defaultOptions)}
           </div>
         );

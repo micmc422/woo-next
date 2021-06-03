@@ -14,7 +14,16 @@ module.exports = {
     ],
     option: {
       safelist: {
-        standard: ["pb-4", "md:pb-8", "lg:pb-16", "md:relative"],
+        standard: [
+          "pb-4",
+          "w-4/5",
+          "leading-5",
+          "md:pb-8",
+          "lg:pb-16",
+          "md:relative",
+          "md:mx-0",
+          "md:w-full",
+        ],
         greedy: ["/safe$/"],
       },
     },
