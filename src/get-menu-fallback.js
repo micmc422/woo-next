@@ -1,5 +1,6 @@
 // fonction destiné à retourner un tableau des données du menu
 // corectif du bug wp-graphql
+const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
 
 export default async function getMenu(locale = "fr") {
   let megaMenuFallBackData = locale === "fr" ? megamenu : megamenuEn;
@@ -8,20 +9,17 @@ export default async function getMenu(locale = "fr") {
     locale === "fr"
       ? `https://photo.paris/wp-json/wp/v2/menu`
       : `https://photo.paris/wp-json/wp/v2/menu?lang=en`
-  ).catch((e) => {
-    console.log(e);
-  });
+  );
   const megamenuList = await fetch(
     locale === "fr"
       ? `https://photo.paris/wp-json/wp/v2/megamenu`
       : `https://photo.paris/wp-json/wp/v2/megamenu?lang=en`
-  ).catch((e) => {
-    console.log(e);
-  });
+  );
   let collection = await megamenuList.json();
   if (collection?.code === "rest_no_route") {
     collection = megaMenuFallBackData;
   }
+
   let parsed = await data.json();
   if (!parsed) {
     parsed = menuFallBackData;

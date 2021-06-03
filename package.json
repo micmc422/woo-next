@@ -20,6 +20,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "@types/node": "^15.6.1",
     "@types/react": "^17.0.8",
+    "@vercel/fetch-retry": "^5.0.3",
     "autoprefixer": "9",
     "framer-motion": "^4.1.17",
     "graphql": "^15.5.0",
