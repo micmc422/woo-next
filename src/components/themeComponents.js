@@ -11,16 +11,20 @@ const animationBg = {
   initial: (custom) => ({ y: custom ? 10 : -50 }),
   animate: { y: 0, x: "0%", borderRadius: "50%" },
   hovered: (custom) => ({
-    x: custom ? [3, 0, 3] : ["0%", "50%", "100%", "-20%", "0%"],
-    borderRadius: !custom ? ["50%", "20%", "50%", "20%", "50%"] : "50%",
+    x: custom ? [3, 0, 3] : ["0%", "50%", "100%", "0%"],
+    borderRadius: !custom ? ["50%", "20%", "20%", "50%"] : "50%",
+    rotate: [0, 90, -90, 0],
     transition: { repeat: Infinity, duration: 2 },
   }),
   exit: {},
 };
 const animationText = {
-  initial: { x: -5 },
-  animate: { x: 0, x: 0 },
-  hovered: { x: 5 },
+  initial: { x: 0 },
+  animate: { x: 5 },
+  hovered: {
+    scale: [1, 1.02, 1],
+    transition: { repeat: Infinity },
+  },
   exit: {},
 };
 

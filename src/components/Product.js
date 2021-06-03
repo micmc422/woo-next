@@ -9,6 +9,7 @@ import { Bouton } from "./themeComponents";
 import { AnimatePresence, motion } from "framer-motion";
 import ImageWithFallback from "./ImageFallBack";
 import Skeleton from "react-loading-skeleton";
+import BlocPrix from "./single-product/price/BlocPrix";
 
 const productCardAnimationContainer = {
   initial: { opacity: 0, y: 10 },
@@ -52,21 +53,21 @@ const Product = (props) => {
               {product.name && (
                 <>
                   {product.__typename === "VariableProduct" ? (
-                    <Link
-                      href={
-                        product.slug ? `/galerie-photo/${product.slug}` : "./"
-                      }
-                      passHref
-                    >
-                      <a className="">
-                        <Bouton>
+                    <Bouton>
+                      <Link
+                        href={
+                          product.slug ? `/galerie-photo/${product.slug}` : "./"
+                        }
+                        passHref
+                      >
+                        <a className="">
                           <Price
                             salesPrice={product?.price}
                             regularPrice={product?.regularPrice}
                           />
-                        </Bouton>
-                      </a>
-                    </Link>
+                        </a>
+                      </Link>
+                    </Bouton>
                   ) : (
                     <AddToCartButton product={product}>
                       <div className="">
