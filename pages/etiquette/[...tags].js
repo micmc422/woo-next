@@ -41,15 +41,15 @@ const Tags = (props) => {
   //delete query.category;
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
+  const asQuery = formattedQuery !== `tags=${query.tags}`;
+
   // const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
-    formattedQuery !== ""
-      ? `/api/products/?locale=${locale}&${formattedQuery}`
-      : null,
+    asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher
   );
-  const isLoading = !data && !error && formattedQuery !== "";
+  const isLoading = !data && !error && asQuery;
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});

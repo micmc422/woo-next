@@ -50,15 +50,16 @@ export default function CategorySingle(props) {
   //delete query.category;
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
-  const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
+  const asQuery = formattedQuery !== `category=${query.category}`;
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
+  console.log(formattedQuery);
+  console.log(`category=${query.category}`);
+  console.log(formattedQuery !== `category=${query.category}`);
   const { data, error } = useSWR(
-    formattedQuery !== ""
-      ? `/api/products/?locale=${locale}&${formattedQuery}`
-      : null,
+    asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher
   );
-  const isLoading = !data && !error && formattedQuery !== "";
+  const isLoading = !data && !error && asQuery;
   // console.log({ formattedQuery });
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
