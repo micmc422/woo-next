@@ -19,8 +19,8 @@ import nextI18nextConfig from "../../next-i18next.config";
 import Link from "next/link";
 import { GrFormClose } from "react-icons/gr";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
-import { GET_PAGE_BY_URI } from "../../src/queries/get-pages";
-const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
+
+const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -47,14 +47,15 @@ export default function CategorySingle(props) {
   const catName = query?.category?.length
     ? query.category[query.category.length - 1]
     : "";
-  delete query.category;
+  console.log(catName);
+  //delete query.category;
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
   const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
     formattedQuery !== ""
-      ? `/api/products/?locale=${locale}&category=${catName}&${formattedQuery}`
+      ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
     fetcher
   );
