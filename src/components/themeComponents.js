@@ -36,7 +36,9 @@ export const Bouton = ({
     <motion.div
       whileHover="hovered"
       variants={animationParent}
-      className={`relative block ${className ? className : ""}`}
+      className={`relative justify-center flex flex-col ${
+        className ? className : " "
+      }`}
       onClick={action}
     >
       <motion.div
