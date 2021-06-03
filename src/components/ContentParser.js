@@ -13,7 +13,7 @@ const parentAnimation = {
 };
 const childAnimation = {
   initial: { opacity: 0, scale: 0.7 },
-  animate: { opacity: 1, scale: 1 },
+  animate: { opacity: 1, scale: [0.7, 1] },
   exit: { opacity: 0, scale: 0.7 },
 };
 
@@ -259,7 +259,7 @@ const defaultOptions = {
       attribs?.class?.includes("vc_column_container")
     ) {
       return (
-        <InView threshold={0.3}>
+        <InView threshold={0}>
           {({ inView, ref }) => (
             <motion.div
               ref={ref}
