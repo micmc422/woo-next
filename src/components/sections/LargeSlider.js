@@ -153,7 +153,6 @@ const LargeSlider = ({ products }) => {
               x: 0,
             }}
             exit={{ opacity: 0, filter: "blur(15px)", x: xTransition }}
-            transition={{ duration: 1 }}
             className={`absolute inset-0 z-0`}
           >
             <Image
