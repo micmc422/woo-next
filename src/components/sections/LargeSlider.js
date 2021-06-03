@@ -23,7 +23,6 @@ const LargeSlider = ({ products }) => {
    * Change to next slide.
    */
   const nextSlide = () => {
-    console.log(xTransition);
     if (1 === products.length) {
       return null;
     }
@@ -153,7 +152,7 @@ const LargeSlider = ({ products }) => {
               scale: 1,
               x: 0,
             }}
-            exit={{ opacity: 0, filter: "blur(15px)" }}
+            exit={{ opacity: 0, filter: "blur(15px)", x: xTransition }}
             transition={{ duration: 1 }}
             className={`absolute inset-0 z-0`}
           >

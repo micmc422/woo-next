@@ -79,9 +79,11 @@ const HeroCarousel = ({ heroCarousel }) => {
       return () => interval && clearInterval(interval);
     }
   }, [autoPlay]);
+
   const { image, id, name, title, slug, featuredImage } = heroCarousel[
     activeIndex
   ];
+
   const handleDrag = (event, info) => {
     setXT(info.offset.x);
     if (info.offset.x === 0) return;
@@ -115,7 +117,7 @@ const HeroCarousel = ({ heroCarousel }) => {
               scale: 1,
               x: 0,
             }}
-            exit={{ opacity: 0, filter: "blur(15px)" }}
+            exit={{ opacity: 0, filter: "blur(15px)", x: xTransition }}
             className={`absolute inset-0`}
           >
             <Image
