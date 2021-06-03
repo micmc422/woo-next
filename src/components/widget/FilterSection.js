@@ -23,6 +23,8 @@ const animationChild = {
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: 75 },
 };
+const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
+
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const FilterSection = ({ categories, className }) => {

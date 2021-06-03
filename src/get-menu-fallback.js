@@ -1,10 +1,12 @@
 // fonction destiné à retourner un tableau des données du menu
 // corectif du bug wp-graphql
-const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
+
+// auto retry on error
+const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 export default async function getMenu(locale = "fr") {
-  let megaMenuFallBackData = locale === "fr" ? megamenu : megamenuEn;
-  let menuFallBackData = locale === "fr" ? menu : menuEn;
+  // let megaMenuFallBackData = locale === "fr" ? megamenu : megamenuEn;
+  // let menuFallBackData = locale === "fr" ? menu : menuEn;
   const data = await fetch(
     locale === "fr"
       ? `https://photo.paris/wp-json/wp/v2/menu`
@@ -16,14 +18,18 @@ export default async function getMenu(locale = "fr") {
       : `https://photo.paris/wp-json/wp/v2/megamenu?lang=en`
   );
   let collection = await megamenuList.json();
+  /*
   if (collection?.code === "rest_no_route") {
     collection = megaMenuFallBackData;
   }
+  */
 
   let parsed = await data.json();
+  /*
   if (!parsed) {
     parsed = menuFallBackData;
   }
+  */
   const base = [];
   parsed.map((item) => {
     !item.title.includes("wpml-ls-flag") &&
@@ -39,7 +45,7 @@ export default async function getMenu(locale = "fr") {
         .rendered || [],
   };
 }
-
+/*
 const megamenu = [
   {
     id: 7889,
@@ -572,3 +578,4 @@ const menuEn = [
     hiden_title: "",
   },
 ];
+*/

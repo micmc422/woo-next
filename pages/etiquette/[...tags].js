@@ -16,6 +16,7 @@ import DisplayProducts from "../../src/components/sections/DisplayProducts";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 

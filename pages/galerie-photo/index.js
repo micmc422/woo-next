@@ -14,6 +14,7 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import nextI18nextConfig from "../../next-i18next.config.js";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
+const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 

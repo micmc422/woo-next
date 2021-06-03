@@ -75,6 +75,8 @@ const Search = () => {
     </div>
   );
 };
+const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
+
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const QueryResponse = ({ search }) => {

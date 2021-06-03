@@ -20,6 +20,7 @@ import Link from "next/link";
 import { GrFormClose } from "react-icons/gr";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
 import { GET_PAGE_BY_URI } from "../../src/queries/get-pages";
+const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
