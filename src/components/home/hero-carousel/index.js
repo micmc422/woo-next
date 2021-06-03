@@ -101,7 +101,7 @@ const HeroCarousel = ({ heroCarousel }) => {
       onMouseEnter={() => setAutoPlay(false)}
       onMouseLeave={() => setAutoPlay(true)}
     >
-      <div className="overflow-hidden banner-img sm:w-8/12">
+      <div className="relative overflow-hidden banner-img sm:w-8/12">
         <AnimatePresence>
           <motion.div
             drag="x"

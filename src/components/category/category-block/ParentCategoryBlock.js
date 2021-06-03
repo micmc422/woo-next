@@ -103,14 +103,14 @@ const ParentCategoryBlock = (props) => {
 
   return (
     <div
-      className="mb-5 product"
+      className="relative mb-5 overflow-hidden product "
       ref={ref}
       onMouseEnter={() => setAutoPlay(false)}
       onMouseLeave={() => setAutoPlay(true)}
     >
       <Link href={`/categorie/${category?.slug}`}>
         <a>
-          <div className="relative block w-full h-64 md:h-96">
+          <div className="relative block w-full h-64 overflow-hidden md:h-96">
             <AnimatePresence>
               <motion.div
                 drag="x"
