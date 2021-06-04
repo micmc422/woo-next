@@ -50,7 +50,7 @@ export default function CategorySingle(props) {
   //delete query.category;
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
-  const asQuery = query.category && formattedQuery !== `category=${query.category.join("%2C")}`;
+  const asQuery = query.category.length > 0 && formattedQuery !== `category=${query.category.join("%2C")}`;
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   console.log(formattedQuery);
   console.log(`category=${query.category.join("%2C")}`);
