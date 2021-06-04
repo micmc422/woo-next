@@ -25,8 +25,8 @@ export default async function handler(
   } = req;
   try {
     const params = {
-      first: !last ? 24 : undefined,
-      last: last ? 24 : undefined,
+      first: !last ? first || 24 : undefined,
+      last: last ? last || 24 : undefined,
       after,
       before,
       search,
