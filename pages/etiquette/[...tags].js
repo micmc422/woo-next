@@ -73,7 +73,7 @@ const Tags = (props) => {
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-      <div className="container px-4 mx-auto my-8">
+      <div className="container px-4 mx-auto my-8 xl:px-0">
         {tagName ? (
           <motion.h1
             key={tagName}

@@ -54,9 +54,6 @@ export default function CategorySingle(props) {
     query?.category?.length > 0 &&
     formattedQuery !== `category=${query?.category?.join("%2C")}`;
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
-  console.log(formattedQuery);
-  console.log(`category=${query?.category?.join("%2C")}`);
-  console.log(asQuery);
   const { data, error } = useSWR(
     asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher
