@@ -1,4 +1,3 @@
-import { QueryOptions } from "@apollo/client/core";
 import { NextApiRequest, NextApiResponse } from "next";
 import client, { clientEng } from "src/components/ApolloClient";
 import GET_PRODUCTS_QUERY from "src/queries/get-products";
@@ -26,8 +25,8 @@ export default async function handler(
   } = req;
   try {
     const params = {
-      first,
-      last,
+      first: !last ? 24 : undefined,
+      last: last ? 24 : undefined,
       after,
       before,
       search,
