@@ -42,7 +42,7 @@ const Tags = (props) => {
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
   const asQuery =
-    query.tags.length > 0 &&
+    query?.tags?.length > 0 &&
     formattedQuery !== `tags=${query.tags.join("%2C")}`;
 
   // const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
