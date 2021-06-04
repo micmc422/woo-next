@@ -43,7 +43,7 @@ const Tags = (props) => {
   const formattedQuery = new URLSearchParams(query).toString();
   const asQuery =
     query?.tags?.length > 0 &&
-    formattedQuery !== `tags=${query.tags.join("%2C")}`;
+    formattedQuery !== `tags=${query?.tags?.join("%2C")}`;
 
   // const catInFilterred = cat?.filter(({ slug }) => slug === query?.categoryIn);
   //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
