@@ -5,6 +5,7 @@ import { gql } from "@apollo/client";
  */
 const GET_PRODUCTS_QUERY = gql`
   query getProduct(
+    $first: Int
     $last: Int
     $after: String
     $before: String
@@ -17,7 +18,7 @@ const GET_PRODUCTS_QUERY = gql`
     $tag: String
   ) {
     products(
-      first: 24
+      first: $first
       last: $last
       after: $after
       before: $before

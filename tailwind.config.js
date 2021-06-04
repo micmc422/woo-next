@@ -15,6 +15,7 @@ module.exports = {
     option: {
       safelist: {
         standard: [
+          "p-8",
           "pb-4",
           "w-4/5",
           "leading-5",

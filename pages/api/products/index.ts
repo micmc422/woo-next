@@ -1,3 +1,4 @@
+import { QueryOptions } from "@apollo/client/core";
 import { NextApiRequest, NextApiResponse } from "next";
 import client, { clientEng } from "src/components/ApolloClient";
 import GET_PRODUCTS_QUERY from "src/queries/get-products";
@@ -9,7 +10,7 @@ export default async function handler(
   res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
   const {
     query: {
-      first = 24,
+      first,
       last,
       after,
       before,
@@ -23,11 +24,10 @@ export default async function handler(
       max,
     },
   } = req;
-
   try {
     const params = {
-      first: !before ? Number(first) : undefined,
-      last: before ? Number(first) || Number(last) : undefined,
+      first,
+      last,
       after,
       before,
       search,
@@ -42,8 +42,17 @@ export default async function handler(
       minPrice: isNaN(Number(min))
         ? undefined
         : parseFloat(Number(min).toFixed(2)),
-      order: !before && !after,
+      // order: !before && !after,
     };
+    if (before) {
+      delete params.first;
+
+      params.last = 24;
+    } else {
+      delete params.last;
+      params.first = 24;
+    }
+    console.log(params);
     const apolloCli = locale === "fr" ? client : clientEng;
     const { data } = await apolloCli.query({
       query: GET_PRODUCTS_QUERY,

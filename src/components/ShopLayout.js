@@ -46,7 +46,7 @@ const Pagination = ({ pageInfo = {}, pageLength, executeScroll }) => {
   const { hasNextPage, hasPreviousPage } = pageInfo;
   const router = useRouter();
   return (
-    <div className={`flex flex-row justify-around`}>
+    <div className={`flex flex-row justify-around pt-8`}>
       {hasPreviousPage && (
         <Bouton
           icon={
