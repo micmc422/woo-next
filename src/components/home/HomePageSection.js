@@ -209,12 +209,17 @@ const HomePageSection = ({ homepage, products }) => {
           parent?.attribs?.class?.includes("ciloe-single-product"))
       ) {
         return (
-          <div className="relative w-4/5 mx-auto bg-white md:mx-0 md:w-auto">
+          <div className="relative flex w-4/5 mx-auto bg-white md:mx-0 md:w-auto">
             {domToReact(children, defaultOptions)}
           </div>
         );
       }
 
+      if (attribs?.class?.includes("vc_row wpb_row vc_row-fluid")) {
+        return (
+          <div className="flex flex-col pb-4 md:flex-row">{domToReact(children, defaultOptions)}</div>
+        );
+      }
       if (attribs?.class?.includes("product-info-wrap")) {
         return (
           <div className="px-4">{domToReact(children, defaultOptions)}</div>

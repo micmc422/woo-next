@@ -136,7 +136,7 @@ const LargeSlider = ({ products }) => {
           </Link>
         </motion.div>
       </AnimatePresence>
-      <div className="relative overflow-hidden banner-img sm:w-8/12">
+      <div className="relative mb-8 overflow-hidden banner-img sm:w-8/12">
         <AnimatePresence>
           <motion.div
             drag="x"
@@ -160,7 +160,7 @@ const LargeSlider = ({ products }) => {
               srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
               layout="fill"
               objectfill="cover"
-              class="pointer-events-none"
+              className="pointer-events-none"
             />
           </motion.div>
         </AnimatePresence>

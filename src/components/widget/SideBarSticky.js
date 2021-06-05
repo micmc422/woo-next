@@ -8,7 +8,7 @@ const animateMenu = {
     x: 0,
     transition: {
       bounce: 0,
-     // staggerChildren: 0.1,
+      // staggerChildren: 0.1,
     },
     when: "beforeChildren",
   },
@@ -34,7 +34,7 @@ const SideBarSticky = ({ children, isRight }) => {
       >
         <AnimatePresence>
           <div
-            className={`sticky top-0 overflow-hidden ${
+            className={`sticky top-16 overflow-hidden ${
               isRight ? "float-right -right-8" : "float-left"
             }`}
           >
@@ -72,7 +72,7 @@ const SideBarSticky = ({ children, isRight }) => {
       </div>
       <div className={`hidden lg:block flex-grow w-0 lg:w-auto relative`}>
         <div
-          className={`sticky top-0 block z-30 ${
+          className={`sticky top-16 block z-30 ${
             isRight ? "float-right" : "float-left"
           }`}
           onClick={() => setIsOpen(false)}
@@ -102,7 +102,7 @@ const SideBarSticky = ({ children, isRight }) => {
             exit="exit"
           >
             <div
-              className={`sticky top-0 block z-30 overflow-hidden ${
+              className={`sticky top-14 block z-30 overflow-hidden ${
                 isRight ? "float-right right-0" : "float-left"
               }`}
             >

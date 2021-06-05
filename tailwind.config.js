@@ -1,21 +1,27 @@
 module.exports = {
   // @see https://tailwindcss.com/docs/upcoming-changes
+  /*
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
+  */
   purge: {
-    enabled: true,
+    // enabled: true,
     content: [
       "./src/components/*.{js,ts,jsx,tsx}",
       "./src/components/**/*.{js,ts,jsx,tsx}",
       "./pages/**/*.{js,ts,jsx,tsx}",
       "./pages/*.{js,ts,jsx,tsx}",
     ],
+    /*
     option: {
       safelist: {
         standard: [
+          "top-16",
+          "top-14",
           "p-8",
+          "mb-8",
           "pb-4",
           "w-4/5",
           "leading-5",
@@ -28,6 +34,7 @@ module.exports = {
         greedy: ["/safe$/"],
       },
     },
+      */
   },
   theme: {
     fontFamily: {

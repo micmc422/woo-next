@@ -101,7 +101,7 @@ const HeroCarousel = ({ heroCarousel }) => {
       onMouseEnter={() => setAutoPlay(false)}
       onMouseLeave={() => setAutoPlay(true)}
     >
-      <div className="relative overflow-hidden banner-img sm:w-8/12">
+      <div className="relative mb-8 overflow-hidden banner-img sm:w-8/12">
         <AnimatePresence>
           <motion.div
             drag="x"
@@ -125,7 +125,7 @@ const HeroCarousel = ({ heroCarousel }) => {
               srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
               layout="fill"
               objectfill="cover"
-              class="pointer-events-none"
+              className="pointer-events-none"
             />
           </motion.div>
         </AnimatePresence>

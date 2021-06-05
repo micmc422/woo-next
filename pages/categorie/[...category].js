@@ -87,7 +87,7 @@ export default function CategorySingle(props) {
             initial={{ x: -200 }}
             animate={{ x: 0 }}
             exit={{ x: -300 }}
-            className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl"
+            className="relative w-full mb-5 overflow-hidden text-2xl font-black uppercase lg:text-8xl md:text-5xl sm:text-4xl"
           >
             {categoryName}
           </motion.h1>
