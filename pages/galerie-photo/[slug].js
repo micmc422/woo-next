@@ -220,7 +220,7 @@ const ProductDetails = ({ product }) => {
   const artiste = product?.productCategories?.nodes?.filter((cat) =>
     cat.uri.includes("artistes")
   );
-  const size = product.variations.nodes;
+  const size = product?.variations?.nodes;
 
   return (
     <>
@@ -247,7 +247,7 @@ const ProductDetails = ({ product }) => {
             {t("details")}
           </div>
         )}
-        {artiste && artiste[0].description && (
+        {artiste?.length > 0 && artiste[0].description && (
           <div
             onClick={() => setActiveTab("artiste")}
             className="cursor-pointer hover:text-black"
