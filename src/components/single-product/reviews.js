@@ -1,6 +1,11 @@
+import { useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
 import { uniqueId } from "lodash";
+import { useEffect, useState } from "react";
 import Avatar from "react-avatar";
+import { useTranslation } from "react-i18next";
+import ADD_REVIEW from "../../mutations/add-review";
+import { Bouton } from "../themeComponents";
 
 const parentAnimation = {
   initial: {},
@@ -14,6 +19,22 @@ const childAnimation = {
 };
 
 const Reviews = ({ reviews }) => {
+  const starBloc = [1, 2, 3, 4, 5];
+  const [isValid, setIsValid] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [content, setContent] = useState(null);
+  const [error, setError] = useState(null);
+  const [authorName, setAuthorName] = useState(null);
+  const [addReviews, { data }] = useMutation(ADD_REVIEW);
+  const { t } = useTranslation("shop");
+  useEffect(() => {
+    if ((rating !== 0 || content !== "") && authorName) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [rating, content, authorName]);
+
   return (
     <motion.div
       initial="initial"
@@ -25,6 +46,77 @@ const Reviews = ({ reviews }) => {
       {reviews.map((review) => (
         <Review review={review} key={uniqueId()} />
       ))}
+      <div>
+        <h3 className="flex items-center mb-4 text-3xl font-bold text-brand-500">
+          {t("commentaires")}
+        </h3>
+        <span className="flex items-center pb-8">
+          {starBloc.map((count) =>
+            count <= rating ? (
+              <svg
+                key={uniqueId(count)}
+                fill="currentColor"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="w-4 h-4 text-brand-500"
+                viewBox="0 0 24 24"
+                onMouseEnter={() => setRating(count)}
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+            ) : (
+              <svg
+                key={uniqueId(count)}
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="w-4 h-4 text-brand-500"
+                viewBox="0 0 24 24"
+                onMouseEnter={() => setRating(count)}
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+            )
+          )}
+        </span>
+        <input
+          type="name"
+          placeholder="Votre nom"
+          className="w-full px-4 py-2 mb-4 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
+          onKeyUp={(e) => setAuthorName(e.target.value)}
+        />
+        <textarea
+          type="review"
+          placeholder="Votre commentaire"
+          className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
+          onKeyUp={(e) => setContent(e.target.value)}
+        />
+        {error && <span className="p-2 text-red-500">{error}</span>}
+        <Bouton
+          circleClass={isValid ? "neuromorphism-green" : false}
+          className="py-4"
+          action={() =>
+            isValid
+              ? addReviews({
+                  variables: {
+                    input: {
+                      rating,
+                      commentOn: product.productId,
+                      content,
+                      author: authorName,
+                    },
+                  },
+                }).catch((e) => setError(e.message))
+              : null
+          }
+        >
+          {isValid ? "Valider" : "Complétez le formulaire"}
+        </Bouton>
+      </div>
     </motion.div>
   );
 };

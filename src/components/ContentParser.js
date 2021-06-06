@@ -261,10 +261,9 @@ const defaultOptions = {
       attribs?.class?.includes("vc_column_container")
     ) {
       return (
-        <InView threshold={0}>
+        <InView threshold={0.1}>
           {({ inView, ref }) => (
             <motion.div
-              key={uniqueId()}
               ref={ref}
               animate={inView ? "animate" : "initial"}
               variants={childAnimation}
