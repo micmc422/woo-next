@@ -138,7 +138,7 @@ export async function getStaticProps({ params: { tags }, locale }) {
       seoSchema: data?.productTag?.seo?.schema?.raw || "",
       ...(await serverSideTranslations(
         locale,
-        ["shop", "footer"],
+        ["shop", "common"],
         nextI18nextConfig
       )),
     },

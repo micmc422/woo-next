@@ -42,6 +42,7 @@ export default function CategorySingle(props) {
     seoSchema,
     footer,
   } = props;
+  console.log(footer);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const catName = query?.category?.length
@@ -112,42 +113,6 @@ export default function CategorySingle(props) {
     </Layout>
   );
 }
-const QueryResume = ({ query }) => {
-  const router = useRouter();
-
-  const removePriceRange = () => {
-    delete router.query.max;
-    router.push(router);
-  };
-  return (
-    <div>
-      {query?.category && (
-        <div className="p-2">
-          catégorie :
-          <Link href="/galerie-photo" passHref>
-            <a
-              className={`bg-brand-500 hover:bg-brand-400 ring-2 ring-opacity-75 ring-brand-600 transform-all rounded px-1 mx-1 inline-flex items-center`}
-            >
-              <span>{query?.category[0]}</span> <GrFormClose />
-            </a>
-          </Link>{" "}
-        </div>
-      )}
-      {query?.max && (
-        <div className="p-2">
-          Prix maximum :
-          <a onClick={() => removePriceRange()}>
-            <span
-              className={`bg-brand-500 hover:bg-brand-400 ring-2 ring-opacity-75 ring-brand-600 transform-all rounded px-1 mx-1 inline-flex items-center`}
-            >
-              {query?.max}€ <GrFormClose />
-            </span>
-          </a>
-        </div>
-      )}
-    </div>
-  );
-};
 
 export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
@@ -182,7 +147,7 @@ export async function getStaticProps({ params: { category }, locale }) {
       catData: data?.productCategory,
       ...(await serverSideTranslations(
         locale,
-        ["shop", "footer"],
+        ["shop", "common"],
         nextI18nextConfig
       )),
     },

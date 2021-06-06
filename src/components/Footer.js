@@ -6,22 +6,21 @@ import { Facebook, Instagram, Twitter, Youtube } from "./icons";
 
 const Footer = ({ footer }) => {
   const { t } = useTranslation("common");
-  const { locale } = useRouter();
 
   return footer ? (
     <div className="p-6 text-white bg-gray-800 footer">
       <div className="container mx-auto">
         <div className="items-center justify-between flex-none footer-text md:flex">
-          <div className="flex flex-col flex-shrink-0 md:mr-20 text-white">
+          <div className="flex flex-col flex-shrink-0 text-white md:mr-20">
             <div>
-              <Link href="/" locale={locale}>
+              <Link href="/">
                 <a>
                   <Image src={"/logo-light@2x.png"} width={120} height={50} />
                 </a>
               </Link>
             </div>
             <span
-              className="sm:w-64 w-full"
+              className="w-full sm:w-64"
               dangerouslySetInnerHTML={{ __html: t("adresse") }}
             ></span>
             <span> {t("num-tel")}</span>

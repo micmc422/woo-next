@@ -29,8 +29,6 @@ export async function getStaticProps({ locale }) {
       productCategories: data?.productCategories?.nodes || [],
       ...(await serverSideTranslations(locale, [
         "common",
-        "footer",
-        "checkout",
       ])),
     },
     revalidate: 86400,

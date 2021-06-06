@@ -275,7 +275,7 @@ export async function getStaticProps(context) {
       menu,
       product: data?.product,
       footer: data?.getFooter,
-      ...(await serverSideTranslations(locale, ["common", "footer", "shop"])),
+      ...(await serverSideTranslations(locale, ["common", "shop"])),
     },
     revalidate: 86400,
   };

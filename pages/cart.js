@@ -30,7 +30,6 @@ export async function getStaticProps({ locale, params }) {
       page: data?.page || [],
       ...(await serverSideTranslations(locale, [
         "common",
-        "footer",
         "panier",
       ])),
     },
