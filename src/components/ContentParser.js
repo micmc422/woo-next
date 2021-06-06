@@ -4,7 +4,7 @@ import { FiInstagram, FiFacebook } from "react-icons/fi";
 import { Bouton } from "./themeComponents";
 import { motion } from "framer-motion";
 import { InView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import { uniqueId } from "lodash";
 
 const parentAnimation = {
   initial: {},
@@ -12,9 +12,9 @@ const parentAnimation = {
   exit: {},
 };
 const childAnimation = {
-  initial: { opacity: 0, scale: 0.7 },
-  animate: { opacity: 1, scale: [0.7, 1] },
-  exit: { opacity: 0, scale: 0.7 },
+  initial: { opacity: 0, y: 200 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 300 },
 };
 
 const defaultOptions = {
@@ -77,6 +77,7 @@ const defaultOptions = {
           className={`px-4 mx-auto py-6 text-2xl max-w-2xl w-full ${
             alignRigth ? "md:text-right" : ""
           }`}
+          key={uniqueId()}
         >
           {domToReact(children, defaultOptions)}
         </motion.h2>
@@ -116,6 +117,7 @@ const defaultOptions = {
         <motion.div
           variants={childAnimation}
           className={`p-4 mx-auto prose ${alignRigth ? "md:text-right" : ""}`}
+          key={uniqueId()}
         >
           {domToReact(children, defaultOptions)}
         </motion.div>
@@ -262,6 +264,7 @@ const defaultOptions = {
         <InView threshold={0}>
           {({ inView, ref }) => (
             <motion.div
+              key={uniqueId()}
               ref={ref}
               animate={inView ? "animate" : "initial"}
               variants={childAnimation}
@@ -310,10 +313,25 @@ const defaultOptions = {
   },
 };
 
-const ContentParser = ({ data, options = defaultOptions }) => {
+const ContentParser = ({ data, children, options = defaultOptions }) => {
+  if (children) {
+    // console.log(children);
+    return (
+      <motion.div
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={parentAnimation}
+        key={uniqueId()}
+      >
+        {parse(children, options)}
+      </motion.div>
+    );
+  }
   if (!data) {
     return null;
   }
+  // console.log(data);
 
   return (
     <motion.div
@@ -321,6 +339,7 @@ const ContentParser = ({ data, options = defaultOptions }) => {
       animate="animate"
       exit="exit"
       variants={parentAnimation}
+      key={uniqueId()}
     >
       {parse(data, options)}
     </motion.div>

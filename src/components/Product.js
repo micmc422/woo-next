@@ -21,7 +21,7 @@ const Product = (props) => {
   // console.log(product.__typename === "VariableProduct");
   return (
     // @TODO Need to handle Group products differently.
-    <div className="w-full product">
+    <div className="w-full product" key={uniqueId()}>
       <motion.div
         initial="initial"
         animate="animate"

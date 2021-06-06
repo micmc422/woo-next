@@ -59,12 +59,14 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       productCategories {
         nodes {
           name
+          description
           uri
         }
       }
       productTags {
         nodes {
           name
+          description
           uri
         }
       }
@@ -97,6 +99,12 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
         price
         id
         regularPrice
+        paPrintSizes {
+          nodes {
+            name
+            uri
+          }
+        }
         variations(where: { orderby: { field: PRICE, order: DESC } }) {
           nodes {
             productId: databaseId

@@ -39,6 +39,17 @@ const listEl = {
   animate: { y: 0, opacity: 1 },
   exit: {},
 };
+const parentAnimation = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { staggerChildren: 0.1, bounce: false } },
+  exit: { opacity: 0, transition: { staggerChildren: 0.01, bounce: false } },
+};
+const childAnimation = {
+  initial: { opacity: 0, x: 20 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: 30 },
+};
+
 export default function Product(props) {
   const { t } = useTranslation("shop");
 
@@ -205,6 +216,12 @@ export default function Product(props) {
 const ProductDetails = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
   const { t } = useTranslation("shop");
+  // console.log(product);
+  const artiste = product?.productCategories?.nodes?.filter((cat) =>
+    cat.uri.includes("artistes")
+  );
+  const size = product.variations.nodes;
+
   return (
     <>
       <div
@@ -222,32 +239,80 @@ const ProductDetails = ({ product }) => {
         >
           {t("commentaires")}
         </div>
-        <div
-          onClick={() => setActiveTab("details")}
-          className="cursor-pointer hover:text-black"
-        >
-          {t("details")}
-        </div>
-        <div
-          onClick={() => setActiveTab("artiste")}
-          className="cursor-pointer hover:text-black"
-        >
-          {t("artiste")}
-        </div>
+        {size && (
+          <div
+            onClick={() => setActiveTab("details")}
+            className="cursor-pointer hover:text-black"
+          >
+            {t("details")}
+          </div>
+        )}
+        {artiste && artiste[0].description && (
+          <div
+            onClick={() => setActiveTab("artiste")}
+            className="cursor-pointer hover:text-black"
+          >
+            {artiste[0].name}
+          </div>
+        )}
       </div>
-      <div className="container flex flex-col px-4 mx-auto mb-32 overflow-hidden single-product xl:px-0">
-        <AnimatePresence>
-          {activeTab === "description" && (
-            <ContentParser data={product.description}></ContentParser>
-          )}
-          {activeTab === "commentaires" && (
-            <Reviews reviews={product.reviews.nodes} />
-          )}
-        </AnimatePresence>
-      </div>
+      <motion.div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
+        <ActiveDetail
+          product={product}
+          activeTab={activeTab}
+          size={size}
+          artiste={artiste}
+        />
+      </motion.div>
     </>
   );
 };
+
+const ActiveDetail = ({ product, activeTab, size, artiste }) => {
+  return (
+    <AnimatePresence exitBeforeEnter>
+      {
+        {
+          description: (
+            <ContentParser data={product.description}></ContentParser>
+          ),
+          commentaires: <Reviews reviews={product.reviews.nodes} />,
+          details: size?.length > 0 && (
+            <motion.div
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={parentAnimation}
+              key={uniqueId("details")}
+              className="mx-auto mt-8 prose border border-gray-200 rounded shadow-2xl"
+            >
+              <div className="relative overflow-hidden">
+                <div className="px-2 bg-gray-200">Tailles :</div>
+                {size.map((item, i) => (
+                  <div
+                    key={uniqueId()}
+                    className={`overflow-hidden flex flex-row justify-between`}
+                  >
+                    <motion.span variants={childAnimation} className={`px-2 `}>
+                      {item.name}
+                    </motion.span>
+                    <motion.span variants={childAnimation} className={`pr-2 `}>
+                      {item.price}
+                    </motion.span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ),
+          artiste: artiste?.length > 0 && (
+            <ContentParser data={artiste[0].description}></ContentParser>
+          ),
+        }[activeTab]
+      }
+    </AnimatePresence>
+  );
+};
+
 const Upsell = ({ products }) => {
   return (
     products &&
