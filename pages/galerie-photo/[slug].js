@@ -209,7 +209,9 @@ export default function Product(props) {
       <div className="grid max-w-screen-lg grid-cols-2 gap-2 mx-auto md:gap-4 md:px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <Upsell products={fullUpsellList} />
       </div>
-      {<ProductDetails product={product} />}
+      <div className="container">
+        <ProductDetails product={product} />
+      </div>
     </Layout>
   );
 }
@@ -217,9 +219,10 @@ const ProductDetails = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
   const { t } = useTranslation("shop");
   // console.log(product);
-  const artiste = product?.productCategories?.nodes?.filter((cat) =>
-    cat.uri.includes("artistes")
-  );
+  const artiste =
+    product?.productCategories?.nodes?.filter((cat) =>
+      cat.uri.includes("artistes")
+    )[0] || false;
   const size = product?.variations?.nodes;
 
   return (
@@ -228,56 +231,53 @@ const ProductDetails = ({ product }) => {
         className={`flex flex-row justify-center mx-auto space-x-3 border-bottom-2 border-gray-400 text-gray-500`}
       >
         <div
-          onClick={() => setActiveTab("description")}
+          onClick={() =>
+            activeTab !== "description" && setActiveTab("description")
+          }
           className="cursor-pointer hover:text-black"
         >
           {t("description")}
         </div>
         <div
-          onClick={() => setActiveTab("commentaires")}
+          onClick={() =>
+            activeTab !== "commentaires" && setActiveTab("commentaires")
+          }
           className="cursor-pointer hover:text-black"
         >
           {t("commentaires")}
         </div>
         {size && (
           <div
-            onClick={() => setActiveTab("details")}
+            onClick={() => activeTab !== "details" && setActiveTab("details")}
             className="cursor-pointer hover:text-black"
           >
             {t("details")}
           </div>
         )}
-        {artiste?.length > 0 && artiste[0].description && (
+        {artiste && artiste.description && (
           <div
-            onClick={() => setActiveTab("artiste")}
+            onClick={() => activeTab !== "artiste" && setActiveTab("artiste")}
             className="cursor-pointer hover:text-black"
           >
-            {artiste[0].name}
+            {artiste.name}
           </div>
         )}
       </div>
-      <motion.div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
-        <ActiveDetail
-          product={product}
-          activeTab={activeTab}
-          size={size}
-          artiste={artiste}
-        />
-      </motion.div>
-    </>
-  );
-};
-
-const ActiveDetail = ({ product, activeTab, size, artiste }) => {
-  return (
-    <AnimatePresence exitBeforeEnter>
-      {
-        {
-          description: (
+      <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
+        {activeTab === "description" && (
+          <div key={uniqueId("description")}>
+            {" "}
             <ContentParser data={product.description}></ContentParser>
-          ),
-          commentaires: <Reviews reviews={product.reviews.nodes} />,
-          details: size?.length > 0 && (
+          </div>
+        )}
+        {activeTab === "commentaires" && (
+          <div key={uniqueId("commentaires")}>
+            <Reviews reviews={product.reviews.nodes} />
+          </div>
+        )}
+        
+        {activeTab === "details" && size?.length > 0 && (
+          <div key={uniqueId("details")}>
             <motion.div
               initial="initial"
               animate="animate"
@@ -303,12 +303,57 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
                 ))}
               </div>
             </motion.div>
-          ),
-          artiste: artiste?.length > 0 && (
-            <ContentParser data={artiste[0].description}></ContentParser>
-          ),
-        }[activeTab]
-      }
+          </div>
+        )}
+        {activeTab === "artiste" && (
+          <div key={uniqueId("details")}>
+            <ContentParser data={artiste.description}></ContentParser>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+const ActiveDetail = ({ product, activeTab, size, artiste }) => {
+  return (
+    <AnimatePresence exitBeforeEnter>
+      {activeTab === "description" && (
+        <ContentParser data={product.description}></ContentParser>
+      )}
+      {activeTab === "commentaires" && (
+        <Reviews reviews={product.reviews.nodes} />
+      )}
+      {activeTab === "details" && size?.length > 0 && (
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={parentAnimation}
+          key={uniqueId("details")}
+          className="mx-auto mt-8 prose border border-gray-200 rounded shadow-2xl"
+        >
+          <div className="relative overflow-hidden">
+            <div className="px-2 bg-gray-200">Tailles :</div>
+            {size.map((item, i) => (
+              <div
+                key={uniqueId()}
+                className={`overflow-hidden flex flex-row justify-between`}
+              >
+                <motion.span variants={childAnimation} className={`px-2 `}>
+                  {item.name}
+                </motion.span>
+                <motion.span variants={childAnimation} className={`pr-2 `}>
+                  {item.price}
+                </motion.span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+      {activeTab === "artiste" && artiste?.length > 0 && (
+        <ContentParser data={artiste[0].description}></ContentParser>
+      )}
     </AnimatePresence>
   );
 };
@@ -316,8 +361,8 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
 const Upsell = ({ products }) => {
   return (
     products &&
-    products.map((product) => (
-      <ProductCard product={product} noName key={uniqueId(product.id)} />
+    products.map((product, i) => (
+      <ProductCard product={product} noName key={uniqueId(i)} />
     ))
   );
 };
