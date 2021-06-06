@@ -41,6 +41,7 @@ const RateBlock = ({ rating, reviewCount, product }) => {
             {starBloc.map((count) =>
               count <= rating ? (
                 <svg
+                key={uniqueId(count)}
                   fill="currentColor"
                   stroke="currentColor"
                   strokeLinecap="round"
@@ -53,7 +54,8 @@ const RateBlock = ({ rating, reviewCount, product }) => {
                 </svg>
               ) : (
                 <svg
-                  fill="none"
+                key={uniqueId(count)}
+              fill="none"
                   stroke="currentColor"
                   strokeLinecap="round"
                   strokeLinejoin="round"

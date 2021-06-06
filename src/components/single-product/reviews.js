@@ -8,9 +8,9 @@ import ADD_REVIEW from "../../mutations/add-review";
 import { Bouton } from "../themeComponents";
 
 const parentAnimation = {
-  initial: {},
-  animate: { transition: { staggerChildren: 0.1 } },
-  exit: {},
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  exit: { opacity: 0 },
 };
 const childAnimation = {
   initial: { opacity: 0, y: 20 },
@@ -46,11 +46,17 @@ const Reviews = ({ reviews }) => {
       {reviews.map((review) => (
         <Review review={review} key={uniqueId()} />
       ))}
-      <div>
-        <h3 className="flex items-center mb-4 text-3xl font-bold text-brand-500">
+      <div className={`bg-gray-50 rounded shadow-2xl p-4`}>
+        <motion.h3
+          variants={childAnimation}
+          className="flex items-center mb-4 text-3xl font-bold text-brand-500"
+        >
           {t("commentaires")}
-        </h3>
-        <span className="flex items-center pb-8">
+        </motion.h3>
+        <motion.span
+          variants={childAnimation}
+          className="flex items-center pb-8"
+        >
           {starBloc.map((count) =>
             count <= rating ? (
               <svg
@@ -82,47 +88,55 @@ const Reviews = ({ reviews }) => {
               </svg>
             )
           )}
-        </span>
-        <input
+        </motion.span>
+        <motion.input
+          variants={childAnimation}
           type="name"
           placeholder="Votre nom"
           className="w-full px-4 py-2 mb-4 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
           onKeyUp={(e) => setAuthorName(e.target.value)}
         />
-        <textarea
+        <motion.textarea
+          variants={childAnimation}
           type="review"
           placeholder="Votre commentaire"
           className="w-full px-4 py-2 text-base placeholder-gray-500 placeholder-opacity-50 border border-gray-300 rounded shadow-sm resize-y focus:outline-none focus:border-blue-500"
           onKeyUp={(e) => setContent(e.target.value)}
         />
-        {error && <span className="p-2 text-red-500">{error}</span>}
-        <Bouton
-          circleClass={isValid ? "neuromorphism-green" : false}
-          className="py-4"
-          action={() =>
-            isValid
-              ? addReviews({
-                  variables: {
-                    input: {
-                      rating,
-                      commentOn: product.productId,
-                      content,
-                      author: authorName,
+        {error && (
+          <motion.span variants={childAnimation} className="p-2 text-red-500">
+            {error}
+          </motion.span>
+        )}
+        <motion.div variants={childAnimation}>
+          <Bouton
+            circleClass={isValid ? "neuromorphism-green" : false}
+            className="py-4"
+            action={() =>
+              isValid
+                ? addReviews({
+                    variables: {
+                      input: {
+                        rating,
+                        commentOn: product.productId,
+                        content,
+                        author: authorName,
+                      },
                     },
-                  },
-                }).catch((e) => setError(e.message))
-              : null
-          }
-        >
-          {isValid ? "Valider" : "Complétez le formulaire"}
-        </Bouton>
+                  }).catch((e) => setError(e.message))
+                : null
+            }
+          >
+            {isValid ? "Valider" : "Complétez le formulaire"}
+          </Bouton>
+        </motion.div>
       </div>
     </motion.div>
   );
 };
 
 const Review = ({ review }) => {
-  console.log(review);
+  // console.log(review);
   return (
     <motion.div variants={childAnimation} className="w-full p-4">
       <div className="h-full p-8 bg-gray-100 rounded">

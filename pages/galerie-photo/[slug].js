@@ -21,7 +21,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
 import { Bouton } from "../../src/components/themeComponents";
 import Loading from "../../src/components/Loading";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import Reviews from "../../src/components/single-product/reviews";
 import { useTranslation } from "react-i18next";
 
@@ -226,35 +226,59 @@ const ProductDetails = ({ product }) => {
   const size = product?.variations?.nodes;
 
   return (
-    <>
+    <AnimateSharedLayout>
       <div
-        className={`flex flex-row justify-center mx-auto space-x-3 border-bottom-2 border-gray-400 text-gray-500`}
+        className={`flex flex-row justify-center mx-auto border-bottom-2 border-gray-400 text-gray-500 pt-8`}
       >
         <div
           onClick={() => setActiveTab("description")}
-          className="cursor-pointer hover:text-black"
+          className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
         >
+          {activeTab == "description" && (
+            <motion.div
+              layoutId="isActiveTab"
+              className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
+            />
+          )}
           {t("description")}
         </div>
         <div
           onClick={() => setActiveTab("commentaires")}
-          className="cursor-pointer hover:text-black"
+          className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
         >
+          {activeTab == "commentaires" && (
+            <motion.div
+              layoutId="isActiveTab"
+              className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
+            />
+          )}
           {t("commentaires")}
         </div>
         {size && (
           <div
             onClick={() => setActiveTab("details")}
-            className="cursor-pointer hover:text-black"
+            className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
           >
+            {activeTab == "details" && (
+              <motion.div
+                layoutId="isActiveTab"
+                className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
+              />
+            )}
             {t("details")}
           </div>
         )}
         {artiste && artiste.description && (
           <div
             onClick={() => setActiveTab("artiste")}
-            className="cursor-pointer hover:text-black"
+            className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
           >
+            {activeTab == "artiste" && (
+              <motion.div
+                layoutId="isActiveTab"
+                className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
+              />
+            )}
             {artiste.name}
           </div>
         )}
@@ -267,12 +291,12 @@ const ProductDetails = ({ product }) => {
           artiste={artiste}
         />
       </div>
-    </>
+    </AnimateSharedLayout>
   );
 };
 
 const ActiveDetail = ({ product, activeTab, size, artiste }) => {
-  console.log(artiste);
+ // console.log(artiste);
   return (
     <AnimatePresence exitBeforeEnter>
       {activeTab === "description" && (

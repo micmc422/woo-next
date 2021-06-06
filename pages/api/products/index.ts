@@ -51,7 +51,7 @@ export default async function handler(
       delete params.last;
       params.first = 24;
     }
-    console.log(params);
+   // console.log(params);
     const apolloCli = locale === "fr" ? client : clientEng;
     const { data } = await apolloCli.query({
       query: GET_PRODUCTS_QUERY,

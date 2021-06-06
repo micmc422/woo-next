@@ -12,9 +12,9 @@ const parentAnimation = {
   exit: {},
 };
 const childAnimation = {
-  initial: { opacity: 0, y: 200 },
+  initial: { opacity: 0, y: 100 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 300 },
+  exit: { opacity: 0, y: 50 },
 };
 
 const defaultOptions = {
