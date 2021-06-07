@@ -102,7 +102,7 @@ const defaultOptions = {
       );
     }
 
-    if (name === "p" && parent.attribs?.class?.includes("vc_message_box")) {
+    if (name === "p" && parent?.attribs?.class?.includes("vc_message_box")) {
       return (
         <div className="px-4 md:py-4">
           {domToReact(children, defaultOptions)}
@@ -276,7 +276,7 @@ const defaultOptions = {
       );
     }
 
-    if (name === "p" && !parent.attribs?.class?.includes("vc_message_box")) {
+    if (name === "p" && !parent?.attribs?.class?.includes("vc_message_box")) {
       const alignRigth = attribs?.style === "text-align: right;";
       return (
         <motion.div
@@ -290,7 +290,7 @@ const defaultOptions = {
     }
     if (name === "ul") {
       return (
-        <ul className="mx-auto prose">
+        <ul className="p-4 mx-auto prose">
           {" "}
           {domToReact(children, defaultOptions)}
         </ul>
@@ -312,6 +312,11 @@ const defaultOptions = {
         <div className="p-4 m-4 bg-gray-100 border border-gray-200 rounded-md bg-gradient-to-br from-gray-100 to-gray-200">
           {domToReact(children, defaultOptions)}
         </div>
+      );
+    }
+    if (attribs?.class?.includes("page-main-content")) {
+      return (
+        <div className="space-y-8">{domToReact(children, defaultOptions)}</div>
       );
     }
     if (attribs?.class?.includes("vc_cta3_content-container")) {
@@ -367,7 +372,9 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_column-inner")) {
       return (
-        <div className="mx-auto space-y-4">{domToReact(children, defaultOptions)}</div>
+        <div className="mx-auto space-y-4">
+          {domToReact(children, defaultOptions)}
+        </div>
       );
     }
     if (attribs?.class?.includes("vc_btn")) {
