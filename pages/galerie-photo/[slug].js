@@ -124,11 +124,10 @@ export default function Product(props) {
                   {product?.productTags?.nodes.map(
                     ({ name, description, uri }) => {
                       return (
-                        <motion.div variants={listEl}>
+                        <motion.div variants={listEl} key={uniqueId(uri)}>
                           <Link
                             href={`${uri.replace("https://photo.paris", "")}`}
                             passHref
-                            key={uniqueId(uri)}
                           >
                             <a className="transition-colors hover:text-brand-800">
                               {name}
@@ -226,62 +225,64 @@ const ProductDetails = ({ product }) => {
   const size = product?.variations?.nodes;
 
   return (
-    <AnimateSharedLayout>
+    <>
       <div
         className={`flex flex-row justify-center mx-auto border-bottom-2 border-gray-400 text-gray-500 pt-8`}
       >
-        <div
-          onClick={() => setActiveTab("description")}
-          className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
-        >
-          {activeTab == "description" && (
-            <motion.div
-              layoutId="isActiveTab"
-              className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
-            />
-          )}
-          {t("description")}
-        </div>
-        <div
-          onClick={() => setActiveTab("commentaires")}
-          className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
-        >
-          {activeTab == "commentaires" && (
-            <motion.div
-              layoutId="isActiveTab"
-              className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
-            />
-          )}
-          {t("commentaires")}
-        </div>
-        {size && (
+        <AnimateSharedLayout>
           <div
-            onClick={() => setActiveTab("details")}
+            onClick={() => setActiveTab("description")}
             className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
           >
-            {activeTab == "details" && (
+            {activeTab == "description" && (
               <motion.div
                 layoutId="isActiveTab"
                 className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
               />
             )}
-            {t("details")}
+            {t("description")}
           </div>
-        )}
-        {artiste && artiste.description && (
           <div
-            onClick={() => setActiveTab("artiste")}
+            onClick={() => setActiveTab("commentaires")}
             className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
           >
-            {activeTab == "artiste" && (
+            {activeTab == "commentaires" && (
               <motion.div
                 layoutId="isActiveTab"
                 className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
               />
             )}
-            {artiste.name}
+            {t("commentaires")} {`(${product.reviews.nodes.length || 0})`}
           </div>
-        )}
+          {size && (
+            <div
+              onClick={() => setActiveTab("details")}
+              className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
+            >
+              {activeTab == "details" && (
+                <motion.div
+                  layoutId="isActiveTab"
+                  className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
+                />
+              )}
+              {t("details")}
+            </div>
+          )}
+          {artiste && artiste.description.length > 30 && (
+            <div
+              onClick={() => setActiveTab("artiste")}
+              className={`relative cursor-pointer hover:text-black border-b-8 px-4`}
+            >
+              {activeTab == "artiste" && (
+                <motion.div
+                  layoutId="isActiveTab"
+                  className={`absolute -bottom-2 left-0 h-2 bg-brand-500 w-full`}
+                />
+              )}
+              {artiste.name}
+            </div>
+          )}
+        </AnimateSharedLayout>
       </div>
       <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
         <ActiveDetail
@@ -291,12 +292,12 @@ const ProductDetails = ({ product }) => {
           artiste={artiste}
         />
       </div>
-    </AnimateSharedLayout>
+    </>
   );
 };
 
 const ActiveDetail = ({ product, activeTab, size, artiste }) => {
- // console.log(artiste);
+  // console.log(artiste);
   return (
     <AnimatePresence exitBeforeEnter>
       {activeTab === "description" && (

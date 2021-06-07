@@ -42,7 +42,7 @@ export default function CategorySingle(props) {
     seoSchema,
     footer,
   } = props;
-  console.log(footer);
+  // console.log(footer);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
   const catName = query?.category?.length
