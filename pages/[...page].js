@@ -69,33 +69,47 @@ export async function getStaticPaths() {
 
   data?.pages?.nodes &&
     data?.pages?.nodes.map(({ uri }) => {
-      if (!isEmpty(uri) && !uri.includes("contact")) {
+      if (
+        !isEmpty(uri) &&
+        !uri.includes("contact") &&
+        !uri.includes("galerie-photo") &&
+        !uri.includes("commande")
+      ) {
         const parsedUri = uri?.split("/").filter((item) => item !== "");
-        //  console.log(parsedUri);
-        pathsData.push({
-          params: {
-            page: parsedUri,
-          },
-          locale: "fr",
-        });
+        console.log(parsedUri.length);
+        console.log(parsedUri);
+        parsedUri.length > 0 &&
+          pathsData.push({
+            params: {
+              page: parsedUri,
+            },
+            locale: "fr",
+          });
       }
     });
   dataEn?.pages?.nodes &&
     dataEn?.pages?.nodes.map(({ uri }) => {
-      if (!isEmpty(uri) && !uri.includes("contact")) {
+      if (
+        !isEmpty(uri) &&
+        !uri.includes("contact") &&
+        !uri.includes("galerie-photo") &&
+        !uri.includes("commande")
+      ) {
         const parsedUri = uri?.split("/").filter((item) => item !== "");
-        // console.log(parsedUri);
-        pathsData.push({
-          params: {
-            page: parsedUri,
-          },
-          locale: "en",
-        });
+        console.log(parsedUri.length);
+        console.log(parsedUri);
+        parsedUri.length > 0 &&
+          pathsData.push({
+            params: {
+              page: parsedUri,
+            },
+            locale: "en",
+          });
       }
     });
 
   return {
     paths: pathsData,
-    fallback: true,
+    fallback: false,
   };
 }
