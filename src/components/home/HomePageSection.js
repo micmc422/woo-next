@@ -214,6 +214,14 @@ const HomePageSection = ({ homepage, products }) => {
           </div>
         );
       }
+      if (attribs?.class?.includes("has-line")) {
+        return (
+          <div className="pb-6">
+            {domToReact(children, defaultOptions)}
+            <div className="w-1/2 h-1 px-4 mx-auto bg-gray-300 rounded"></div>
+          </div>
+        );
+      }
 
       if (attribs?.class?.includes("vc_row wpb_row vc_row-fluid")) {
         return (

@@ -10,7 +10,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../next-i18next.config";
 
 export default function Home(props) {
-  const { page, menu,footer } = props;
+  const { page, menu, footer } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   const seoSchema = page?.seo?.schema?.raw;
   // console.log(page);
@@ -30,7 +30,7 @@ export async function getStaticProps({ locale, params }) {
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: GET_PAGE_BY_URI,
-    variables: { uri: params.page },
+    variables: { uri: params.page.join("/") },
   });
   const menu = (await getMenu(locale)) || [];
 
@@ -64,7 +64,7 @@ export async function getStaticPaths() {
       if (!isEmpty(uri) && !uri.includes("contact")) {
         pathsData.push({
           params: {
-            page: uri,
+            page: uri.split("/"),
           },
           locale: "fr",
         });
@@ -75,7 +75,7 @@ export async function getStaticPaths() {
       if (!isEmpty(uri) && !uri.includes("contact")) {
         pathsData.push({
           params: {
-            page: uri,
+            page: uri.split("/"),
           },
           locale: "en",
         });

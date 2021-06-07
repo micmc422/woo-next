@@ -297,7 +297,7 @@ const ProductDetails = ({ product }) => {
 };
 
 const ActiveDetail = ({ product, activeTab, size, artiste }) => {
-  console.log(activeTab);
+//  console.log(activeTab);
   return (
     <AnimatePresence exitBeforeEnter>
       {
