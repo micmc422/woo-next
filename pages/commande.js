@@ -18,6 +18,7 @@ const Checkout = ({ data, page, menu }) => (
   </Layout>
 );
 
+
 export default Checkout;
 
 export async function getStaticProps({ locale, params }) {
