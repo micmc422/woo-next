@@ -70,9 +70,11 @@ export async function getStaticPaths() {
   data?.pages?.nodes &&
     data?.pages?.nodes.map(({ uri }) => {
       if (!isEmpty(uri) && !uri.includes("contact")) {
+        const parsedUri = uri?.split("/").filter((item) => item !== "");
+        //  console.log(parsedUri);
         pathsData.push({
           params: {
-            page: uri.split("/").replace("//", "/"),
+            page: parsedUri,
           },
           locale: "fr",
         });
@@ -81,9 +83,11 @@ export async function getStaticPaths() {
   dataEn?.pages?.nodes &&
     dataEn?.pages?.nodes.map(({ uri }) => {
       if (!isEmpty(uri) && !uri.includes("contact")) {
+        const parsedUri = uri?.split("/").filter((item) => item !== "");
+        // console.log(parsedUri);
         pathsData.push({
           params: {
-            page: uri.split("/").replace("//", "/"),
+            page: parsedUri,
           },
           locale: "en",
         });
