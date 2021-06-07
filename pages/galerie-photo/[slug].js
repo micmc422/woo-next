@@ -227,7 +227,7 @@ const ProductDetails = ({ product }) => {
   return (
     <>
       <div
-        className={`flex flex-row justify-center mx-auto border-bottom-2 border-gray-400 text-gray-500 pt-8`}
+        className={`flex flex-row flex-wrap justify-center mx-auto border-bottom-2 border-gray-400 text-gray-500 pt-8`}
       >
         <AnimateSharedLayout>
           <div

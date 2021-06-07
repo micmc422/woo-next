@@ -154,7 +154,7 @@ const HomePageSection = ({ homepage, products }) => {
       }
       if (name === "h2") {
         return (
-          <h2 className={`mx-auto py-14 text-3xl max-w-2xl`}>
+          <h2 className={`mx-auto  px-4 py-14 text-3xl max-w-2xl`}>
             {domToReact(children, defaultOptions)}
           </h2>
         );
@@ -163,7 +163,7 @@ const HomePageSection = ({ homepage, products }) => {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
           <h2
-            className={`mx-auto py-3 md:py-5 text-2xl max-w-2xl ${
+            className={`mx-auto px-4 py-3 md:py-5 text-2xl max-w-2xl ${
               alignRigth ? "text-right" : ""
             }`}
           >
@@ -175,7 +175,7 @@ const HomePageSection = ({ homepage, products }) => {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
           <h3
-            className={`mx-auto py-8 text-xl max-w-2xl ${
+            className={`mx-auto px-4 py-8 text-xl max-w-2xl ${
               alignRigth ? "text-right" : ""
             }`}
           >
@@ -185,7 +185,7 @@ const HomePageSection = ({ homepage, products }) => {
       }
       if (name === "h5") {
         return (
-          <h2 className={`mx-auto py-4 text-lg max-w-2xl`}>
+          <h2 className={`mx-auto px-4 py-4 text-lg max-w-2xl`}>
             {domToReact(children, defaultOptions)}
           </h2>
         );
@@ -195,7 +195,7 @@ const HomePageSection = ({ homepage, products }) => {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
           <p
-            className={`md:mx-auto prose leading-5 pb-4 ${
+            className={`md:mx-auto px-4 prose leading-5 pb-4 ${
               alignRigth ? "text-right" : ""
             }`}
           >
@@ -217,7 +217,9 @@ const HomePageSection = ({ homepage, products }) => {
 
       if (attribs?.class?.includes("vc_row wpb_row vc_row-fluid")) {
         return (
-          <div className="flex flex-col pb-4 md:flex-row">{domToReact(children, defaultOptions)}</div>
+          <div className="flex flex-col pb-4 md:flex-row">
+            {domToReact(children, defaultOptions)}
+          </div>
         );
       }
       if (attribs?.class?.includes("product-info-wrap")) {
@@ -342,7 +344,7 @@ const HomePageSection = ({ homepage, products }) => {
         attribs?.class?.includes("vc_inner ")
       ) {
         return (
-          <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto safe md:flex-row xl:flex-nowrap lg:space-x-12">
+          <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto md:flex-row xl:flex-nowrap lg:space-x-12">
             {domToReact(children, defaultOptions)}
           </div>
         );
