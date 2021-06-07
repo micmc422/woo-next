@@ -314,6 +314,7 @@ const defaultOptions = {
 
 const ContentParser = ({ data, children, options = defaultOptions }) => {
   if (children) {
+    // not working yet
     // console.log(children);
     return (
       <motion.div

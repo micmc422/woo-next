@@ -297,55 +297,60 @@ const ProductDetails = ({ product }) => {
 };
 
 const ActiveDetail = ({ product, activeTab, size, artiste }) => {
-  // console.log(artiste);
+  console.log(activeTab);
   return (
     <AnimatePresence exitBeforeEnter>
-      {activeTab === "description" && (
-        <ContentParser
-          key={uniqueId("description")}
-          data={product.description}
-        ></ContentParser>
-      )}
-      {activeTab === "commentaires" && (
-        <Reviews
-          key={uniqueId("commentaires")}
-          reviews={product.reviews.nodes}
-        />
-      )}
-      {activeTab === "details" && size?.length > 0 && (
-        <motion.div
-          key={uniqueId()}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          variants={parentAnimation}
-          key={uniqueId("details")}
-          className="mx-auto mt-8 prose border border-gray-200 rounded shadow-2xl"
-        >
-          <div className="relative overflow-hidden">
-            <div className="px-2 bg-gray-200">Tailles :</div>
-            {size.map((item, i) => (
-              <div
-                key={uniqueId(i)}
-                className={`overflow-hidden flex flex-row justify-between`}
-              >
-                <motion.span variants={childAnimation} className={`px-2 `}>
-                  {item.name}
-                </motion.span>
-                <motion.span variants={childAnimation} className={`pr-2 `}>
-                  {item.price}
-                </motion.span>
+      {
+        {
+          description: (
+            <ContentParser
+              key={uniqueId("description")}
+              data={product.description}
+            ></ContentParser>
+          ),
+          commentaires: (
+            <Reviews
+              key={uniqueId("commentaires")}
+              reviews={product.reviews.nodes}
+            />
+          ),
+          details: (
+            <motion.div
+              key={uniqueId()}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={parentAnimation}
+              key={uniqueId("details")}
+              className="mx-auto mt-8 prose border border-gray-200 rounded shadow-2xl"
+            >
+              <div className="relative overflow-hidden">
+                <div className="px-2 bg-gray-200">Tailles :</div>
+                {size.map((item, i) => (
+                  <div
+                    key={uniqueId(i)}
+                    className={`overflow-hidden flex flex-row justify-between`}
+                  >
+                    <motion.span variants={childAnimation} className={`px-2 `}>
+                      {item.name}
+                    </motion.span>
+                    <motion.span variants={childAnimation} className={`pr-2 `}>
+                      {item.price}
+                    </motion.span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
-      {activeTab === "artiste" && (
-        <ContentParser
-          key={uniqueId("artiste")}
-          data={artiste.description}
-        ></ContentParser>
-      )}
+            </motion.div>
+          ),
+          artiste: (
+            <ContentParser
+              key={uniqueId("artiste")}
+              data={artiste.description}
+            ></ContentParser>
+          ),
+        }[activeTab]
+      }
+
       {activeTab === null && <div key={uniqueId(null)} />}
     </AnimatePresence>
   );
