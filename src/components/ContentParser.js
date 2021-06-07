@@ -1,10 +1,17 @@
 import parse, { domToReact } from "html-react-parser";
 import Image from "next/image";
 import { FiInstagram, FiFacebook } from "react-icons/fi";
+import {
+  FaEuroSign,
+  FaRegClock,
+  FaCropAlt,
+  FaRegComments,
+} from "react-icons/fa";
 import { Bouton } from "./themeComponents";
 import { motion } from "framer-motion";
 import { InView } from "react-intersection-observer";
 import { uniqueId } from "lodash";
+import Link from "next/link";
 
 const parentAnimation = {
   initial: {},
@@ -18,7 +25,7 @@ const childAnimation = {
 };
 
 const defaultOptions = {
-  replace: ({ attribs, children, name, type, data }) => {
+  replace: ({ attribs, children, parent, name, type, data }) => {
     if (!attribs) {
       return;
     }
@@ -37,6 +44,29 @@ const defaultOptions = {
         </div>
       );
     }
+    if (name === "a" && attribs?.href?.includes("https://vimeo.com/")) {
+      return (
+        <div
+          style={{ padding: "56.25% 0 0 0", position: "relative" }}
+          className="mt-16"
+        >
+          <iframe
+            src="https://player.vimeo.com/video/411716627"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      );
+    }
+
     if (name === "img") {
       return (
         <Image
@@ -45,6 +75,77 @@ const defaultOptions = {
           height={attribs.height}
           alt={attribs.alt}
         />
+      );
+    }
+    if (
+      attribs?.class?.includes("vc_message_box-outline vc_message_box-round")
+    ) {
+      return (
+        <div className="flex flex-row items-center justify-center mr-2 text-gray-400 transition-colors duration-300 rounded hover:text-black hover:bg-gray-200">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (attribs?.class?.includes("vc_section-o-content-middle")) {
+      return (
+        <div className="flex flex-col space-y-8">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+
+    if (attribs?.class?.includes("vc_message_box-icon")) {
+      return (
+        <div className="px-4 md:py-4">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+
+    if (name === "p" && parent.attribs?.class?.includes("vc_message_box")) {
+      return (
+        <div className="px-4 md:py-4">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+
+    if (name === "i" && attribs?.class?.includes("fa-euro-sign")) {
+      return (
+        <>
+          <FaEuroSign />
+        </>
+      );
+    }
+    if (name === "span" && attribs?.class?.includes("vc_icon_element-icon")) {
+      return (
+        <div className={`p-2`}>
+          <FaRegClock size={32} />
+        </div>
+      );
+    }
+    if (
+      (name === "i" && attribs?.class?.includes("fa-clock")) ||
+      attribs?.class?.includes("fa-clock-o")
+    ) {
+      return (
+        <>
+          <FaRegClock />
+        </>
+      );
+    }
+    if (name === "i" && attribs?.class?.includes("fa-crop-alt")) {
+      return (
+        <>
+          <FaCropAlt />
+        </>
+      );
+    }
+    if (name === "i" && attribs?.class?.includes("fa-comments")) {
+      return (
+        <>
+          <FaRegComments />
+        </>
       );
     }
     if (name === "i" && attribs?.class?.includes("fa-instagram")) {
@@ -74,7 +175,7 @@ const defaultOptions = {
       return (
         <motion.h2
           variants={childAnimation}
-          className={`px-4 mx-auto py-6 text-2xl max-w-2xl w-full ${
+          className={`px-4 mx-auto text-2xl max-w-2xl w-full ${
             alignRigth ? "md:text-right" : ""
           }`}
           key={uniqueId()}
@@ -109,10 +210,74 @@ const defaultOptions = {
         </div>
       );
     }
+    if (name === "b" || name === "strong") {
+      return <b>{domToReact(children, defaultOptions)}</b>;
+    }
+    if (name === "i" || name === "i") {
+      return <i>{domToReact(children, defaultOptions)}</i>;
+    }
 
-    if (name === "p") {
+    if (
+      name === "a" &&
+      (attribs?.class?.includes("block-link") ||
+        attribs?.class?.includes("shop-now-link"))
+    ) {
+      const { href, target, title } = attribs;
+      const parsedHref = href?.replace("https://photo.paris", "");
+      return (
+        <div className="py-4 mx-auto max-w-prose">
+          <Bouton>
+            <Link href={parsedHref} passHref>
+              <a className="p-2 text-2xl">
+                {domToReact(children, defaultOptions)}
+              </a>
+            </Link>
+          </Bouton>
+        </div>
+      );
+    }
+    if (name === "a" && attribs?.class?.includes("social-item")) {
+      const { href, target, title } = attribs;
+      const parsedHref = href?.replace("https://photo.paris", "");
+      return (
+        <div className="py-4 mx-auto max-w-prose">
+          <Bouton small={true}>
+            <Link href={parsedHref} passHref>
+              <a className="p-2 text-2xl">
+                {domToReact(children, defaultOptions)}
+              </a>
+            </Link>
+          </Bouton>
+        </div>
+      );
+    }
+    if (attribs?.class === "socials") {
+      return (
+        <div className="flex flex-row">
+          {domToReact(children, defaultOptions)}
+        </div>
+      );
+    }
+    if (
+      attribs?.class?.includes("wpb_map_wraper") ||
+      attribs?.class?.includes("ciloe-google-maps")
+    ) {
+      return (
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.232743990237!2d2.3399348158538786!3d48.87283950764294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e3eec51010d%3A0xb15c5adcde3bfab1!2sParis%20est%20une%20photo%20-%20Galerie%20art%20et%20encadrement!5e0!3m2!1sfr!2sfr!4v1590146273170!5m2!1sfr!2sfr"
+          width="600"
+          height="450"
+          frameborder="0"
+          style={{ border: "0px", pointerEvents: "none" }}
+          allowfullscreen=""
+          aria-hidden="false"
+          tabindex="0"
+        ></iframe>
+      );
+    }
+
+    if (name === "p" && !parent.attribs?.class?.includes("vc_message_box")) {
       const alignRigth = attribs?.style === "text-align: right;";
-
       return (
         <motion.div
           variants={childAnimation}
@@ -135,6 +300,14 @@ const defaultOptions = {
       return <li> {domToReact(children, defaultOptions)}</li>;
     }
     if (attribs?.class?.includes("vc_cta3-style-classic")) {
+      if (attribs?.class?.includes("vc_general")) {
+        return (
+          <div className="p-4 mx-auto text-white bg-gray-100 border rounded-md shadow-lg border-brand-200 bg-gradient-to-br from-brand-300 to-brand-400 w-min">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
+
       return (
         <div className="p-4 m-4 bg-gray-100 border border-gray-200 rounded-md bg-gradient-to-br from-gray-100 to-gray-200">
           {domToReact(children, defaultOptions)}
@@ -155,28 +328,6 @@ const defaultOptions = {
         </header>
       );
     }
-    if (name === "a" && attribs?.href?.includes("https://vimeo.com/")) {
-      return (
-        <div
-          style={{ padding: "56.25% 0 0 0", position: "relative" }}
-          className="mt-16"
-        >
-          <iframe
-            src="https://player.vimeo.com/video/411716627"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      );
-    }
 
     if (name === "div" && attribs?.class === "vc_cta3-content") {
       return (
@@ -192,7 +343,7 @@ const defaultOptions = {
         </div>
       );
     }
-    if (name === "a" && attribs?.class?.includes("vc_btn3-color-turquoise")) {
+    if (name === "a" && attribs?.class?.includes("vc_btn3")) {
       const { href, target, title } = attribs;
       const parsedHref = href?.replace("https://photo.paris", "");
       return (
@@ -216,7 +367,7 @@ const defaultOptions = {
     }
     if (attribs?.class?.includes("vc_column-inner")) {
       return (
-        <div className="mx-auto">{domToReact(children, defaultOptions)}</div>
+        <div className="mx-auto space-y-4">{domToReact(children, defaultOptions)}</div>
       );
     }
     if (attribs?.class?.includes("vc_btn")) {
@@ -274,6 +425,8 @@ const defaultOptions = {
                   ? "sm:w-1/3"
                   : attribs?.class.includes("vc_col-sm-6")
                   ? "sm:w-1/2 flex-shrink"
+                  : attribs?.class.includes("vc_col-sm-5")
+                  ? "sm:w-1/2 flex-shrink"
                   : attribs?.class.includes("vc_col-sm-8")
                   ? "sm:w-2/3 "
                   : attribs?.class.includes("vc_col-sm-9")
@@ -291,7 +444,16 @@ const defaultOptions = {
       );
     }
     if (name === "a") {
+      if (attribs) {
+        return (
+          <Link href={attribs.href} passHref>
+            <a>{domToReact(children, defaultOptions)}</a>
+          </Link>
+        );
+      }
+
       if (
+        children?.length > 0 &&
         "https://www.facebook.com/galerieparisestunephoto/" === children[0].data
       ) {
         return (
@@ -300,7 +462,10 @@ const defaultOptions = {
           </Bouton>
         );
       }
-      if ("https://www.instagram.com/parisestunephoto" === children[0].data) {
+      if (
+        children?.length > 0 &&
+        "https://www.instagram.com/parisestunephoto" === children[0].data
+      ) {
         return (
           <Bouton circleClass="bg-instagram bg-opacity-75">
             <a href={children[0].data}>Instagram</a>
@@ -313,25 +478,9 @@ const defaultOptions = {
 };
 
 const ContentParser = ({ data, children, options = defaultOptions }) => {
-  if (children) {
-    // not working yet
-    // console.log(children);
-    return (
-      <motion.div
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        variants={parentAnimation}
-        key={uniqueId()}
-      >
-        {parse(children, options)}
-      </motion.div>
-    );
-  }
   if (!data) {
-    return null;
+    return <div />;
   }
-  // console.log(data);
 
   return (
     <motion.div

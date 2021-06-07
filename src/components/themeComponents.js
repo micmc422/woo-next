@@ -22,8 +22,7 @@ const animationText = {
   initial: { x: 0 },
   animate: { x: 5 },
   hovered: {
-    scale: [1, 1.02, 1],
-    transition: { repeat: Infinity },
+    y: -4,
   },
   exit: {},
 };
@@ -48,7 +47,7 @@ export const Bouton = ({
       <motion.div
         variants={animationBg}
         custom={small}
-        className={`absolute  transition-colors rounded-full
+        className={`absolute  transition-colors rounded-full opacity-50
         ${circleClass ? circleClass : "neuromorphism-gray"} 
         ${small ? "w-8 h-8" : "h-12 w-12"} 
         `}
