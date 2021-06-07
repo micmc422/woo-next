@@ -72,7 +72,7 @@ export async function getStaticPaths() {
       if (!isEmpty(uri) && !uri.includes("contact")) {
         pathsData.push({
           params: {
-            page: uri.split("/"),
+            page: uri.split("/").replace("//", "/"),
           },
           locale: "fr",
         });
@@ -83,7 +83,7 @@ export async function getStaticPaths() {
       if (!isEmpty(uri) && !uri.includes("contact")) {
         pathsData.push({
           params: {
-            page: uri.split("/"),
+            page: uri.split("/").replace("//", "/"),
           },
           locale: "en",
         });
