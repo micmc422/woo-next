@@ -6,7 +6,7 @@ import { Bouton, PriceParse } from "../themeComponents";
 import Image from "next/image";
 import BlocPrix from "../single-product/price/BlocPrix";
 
-const LargeSlider = ({ products }) => {
+const LargeSlider = ({ products, cover }) => {
   if (isEmpty(products) || !isArray(products)) {
     return null;
   }
@@ -159,7 +159,7 @@ const LargeSlider = ({ products }) => {
               src={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
               srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
               layout="fill"
-              objectfill="cover"
+              objectFit={cover ? "contain" : "cover"}
               className="pointer-events-none"
             />
           </motion.div>
