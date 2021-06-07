@@ -326,7 +326,7 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
             >
               <div className="relative overflow-hidden">
                 <div className="px-2 bg-gray-200">Tailles :</div>
-                {size.map((item, i) => (
+                {size?.map((item, i) => (
                   <div
                     key={uniqueId(i)}
                     className={`overflow-hidden flex flex-row justify-between`}

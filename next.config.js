@@ -22,13 +22,16 @@ module.exports = {
     domains: ["photo.paris", "via.placeholder.com"],
   },
   i18n,
-  async Rewrites() {
-    return [
-      {
-        source: "/category/:category*",
-        destination: "/categorie/:category*",
-        permanent: true,
-      },
-    ];
-  },
+  rewrites: [
+    {
+      source: "/category/:category*",
+      destination: "/categorie/:category*",
+      permanent: true,
+    },
+    {
+      source: "/en/:gallery*",
+      destination: "/en/:galerie-photo*",
+      permanent: true,
+    },
+  ],
 };
