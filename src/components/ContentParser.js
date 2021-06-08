@@ -13,6 +13,7 @@ import { InView } from "react-intersection-observer";
 import { uniqueId } from "lodash";
 import Link from "next/link";
 import LargeSlider from "./sections/LargeSlider";
+import { useRouter } from "next/router";
 
 const parentAnimation = {
   initial: {},
@@ -26,6 +27,15 @@ const childAnimation = {
 };
 
 const ContentParser = ({ data, children, options, products }) => {
+  const { locale } = useRouter();
+  function localize(href) {
+    if (!href) {
+      return;
+    }
+    return locale !== "fr" && !href.includes("photo.paris/en")
+      ? href.replace("photo.paris/", "photo.paris/en/").replace("?lang=en", "")
+      : href;
+  }
   if (!data) {
     return <div />;
   }
@@ -245,12 +255,11 @@ const ContentParser = ({ data, children, options, products }) => {
             (attribs?.class?.includes("block-link") ||
               attribs?.class?.includes("shop-now-link"))
           ) {
-            const { href, target, title } = attribs;
-            const parsedHref = href?.replace("https://photo.paris", "");
+            const localizeHref = localize(attribs.href);
             return (
               <div className="py-4 mx-auto max-w-prose">
                 <Bouton>
-                  <Link href={parsedHref} passHref>
+                  <Link href={localizeHref} locale={locale} passHref>
                     <a className="p-2 text-2xl">
                       {domToReact(children, defaultOptions)}
                     </a>
@@ -260,12 +269,11 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (name === "a" && attribs?.class?.includes("social-item")) {
-            const { href, target, title } = attribs;
-            const parsedHref = href?.replace("https://photo.paris", "");
+            const localizeHref = localize(attribs.href);
             return (
               <div className="py-4 mx-auto max-w-prose">
                 <Bouton small={true}>
-                  <Link href={parsedHref} passHref>
+                  <Link href={localizeHref} locale={locale} passHref>
                     <a className="p-2 text-2xl">
                       {domToReact(children, defaultOptions)}
                     </a>
@@ -381,11 +389,10 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (name === "a" && attribs?.class?.includes("vc_btn3")) {
-            const { href, target, title } = attribs;
-            const parsedHref = href?.replace("https://photo.paris", "");
+            const localizeHref = localize(attribs.href);
             return (
               <Bouton>
-                <a href={parsedHref} className="p-2 text-base">
+                <a href={localizeHref} className="p-2 text-base">
                   {domToReact(children, defaultOptions)}
                 </a>
               </Bouton>
@@ -410,21 +417,20 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (attribs?.class?.includes("vc_btn")) {
-            const { href, target, title } = attribs;
-            const parsedHref = href?.replace("https://photo.paris", "");
+            const localizeHref = localize(attribs.href);
             if (
-              attribs?.href?.includes("facebook.com/galerieparisestunephoto")
+              localizeHref?.includes("facebook.com/galerieparisestunephoto")
             ) {
               return (
                 <Bouton circleClass="bg-facebook">
-                  <a className="flex" href={attribs?.href}>
+                  <a className="flex" href={localizeHref}>
                     {domToReact(children, defaultOptions)}
                   </a>
                 </Bouton>
               );
             }
             if (
-              attribs?.href?.includes(
+              localizeHref?.includes(
                 "https://www.instagram.com/parisestunephoto"
               )
             ) {
@@ -437,9 +443,9 @@ const ContentParser = ({ data, children, options, products }) => {
               );
             }
 
-            return parsedHref ? (
+            return localizeHref ? (
               <a
-                href={parsedHref}
+                href={localizeHref}
                 className="relative flex flex-row items-center mx-auto text-2xl w-max"
               >
                 {domToReact(children, defaultOptions)}
@@ -488,8 +494,10 @@ const ContentParser = ({ data, children, options, products }) => {
           }
           if (name === "a") {
             if (attribs) {
+              const localizeHref = localize(attribs.href);
+
               return (
-                <Link href={attribs.href} passHref>
+                <Link href={localizeHref} locale={locale} passHref>
                   <a>{domToReact(children, defaultOptions)}</a>
                 </Link>
               );

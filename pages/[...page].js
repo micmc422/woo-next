@@ -106,8 +106,9 @@ export async function getStaticPaths() {
           ?.replace("?lang=en", "")
           ?.split("/")
           .filter((item) => item !== "" && item !== "/");
-        console.log(parsedUri);
-        parsedUri.length > 0 &&
+          console.log(parsedUri);
+          console.log(uri.includes("?lang=en") ? "en" : "fr");
+          parsedUri.length > 0 &&
           pathsData.push({
             params: {
               page: parsedUri,
