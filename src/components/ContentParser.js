@@ -301,7 +301,7 @@ const ContentParser = ({ data, children, options, products }) => {
                 frameBorder="0"
                 style={{ border: "0px", pointerEvents: "none" }}
                 allowFullScreen=""
-                ariaHidden="false"
+                aria-hidden="false"
                 tabIndex="0"
               ></iframe>
             );
