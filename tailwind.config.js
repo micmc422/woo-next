@@ -6,36 +6,10 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   */
-  purge: {
-    // enabled: true,
-    content: [
-      "./src/components/*.{js,ts,jsx,tsx}",
-      "./src/components/**/*.{js,ts,jsx,tsx}",
-      "./pages/**/*.{js,ts,jsx,tsx}",
-      "./pages/*.{js,ts,jsx,tsx}",
-    ],
-    /*
-    option: {
-      safelist: {
-        standard: [
-          "top-16",
-          "top-14",
-          "p-8",
-          "mb-8",
-          "pb-4",
-          "w-4/5",
-          "leading-5",
-          "md:pb-8",
-          "lg:pb-16",
-          "md:relative",
-          "md:mx-0",
-          "md:w-full",
-        ],
-        greedy: ["/safe$/"],
-      },
-    },
-      */
-  },
+  purge: [
+    "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     fontFamily: {
       serif: ["Cardo", "serif"],
