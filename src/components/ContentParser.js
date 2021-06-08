@@ -32,9 +32,15 @@ const ContentParser = ({ data, children, options, products }) => {
     if (!href) {
       return;
     }
+    console.log(
+      locale !== "fr" && !href.includes("photo.paris/en")
+        ? href.replace("https://photo.paris/", "/en/").replace("?lang=en", "")
+        : href.replace("https://photo.paris/", "/")
+    );
+
     return locale !== "fr" && !href.includes("photo.paris/en")
-      ? href.replace("photo.paris/", "photo.paris/en/").replace("?lang=en", "")
-      : href;
+      ? href.replace("https://photo.paris/", "/en/").replace("?lang=en", "")
+      : href.replace("https://photo.paris/", "/");
   }
   if (!data) {
     return <div />;
