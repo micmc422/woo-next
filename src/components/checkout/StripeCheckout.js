@@ -21,18 +21,6 @@ const StripeCheckout = ({ showStripeForm, createdOrderData }) => {
     }
   }, [showStripeForm]);
 
-  // Get Order Data.
-  // const {data} = useQuery(GET_ORDER, {
-  //     client,
-  //     variables: {
-  //         orderId: 2125
-  //     },
-  //     notifyOnNetworkStatusChange: true,
-  //     onCompleted: () => {
-  // console.log( 'data', data );
-  //     }
-  // });
-
   if (!showStripeForm) {
     return null;
   }

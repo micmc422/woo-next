@@ -18,7 +18,6 @@ const productCardAnimationContainer = {
 };
 const Product = (props) => {
   const { product, noName } = props;
-  // console.log(product.__typename === "VariableProduct");
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product" key={uniqueId()}>

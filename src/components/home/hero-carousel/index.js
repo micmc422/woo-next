@@ -93,8 +93,6 @@ const HeroCarousel = ({ heroCarousel }) => {
       prevSlide();
     }
   };
-  //  console.log(heroCarousel[activeIndex]);
-  // return null;
   return (
     <div
       className="relative flex flex-col justify-between overflow-hidden banner sm:flex-row"

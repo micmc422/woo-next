@@ -79,9 +79,6 @@ const LargeSlider = ({ products, cover }) => {
     setSlide(slideRef.current);
   };
   const handleDrag = (event, info) => {
-    //  console.log({ event, info });
-    //  console.log(info.offset.x > 0);
-    //  console.log(info.offset);
     setXT(info.offset.x);
 
     if (info.offset.x === 0) return;

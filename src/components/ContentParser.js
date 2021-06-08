@@ -32,11 +32,6 @@ const ContentParser = ({ data, children, options, products }) => {
     if (!href) {
       return;
     }
-    console.log(
-      locale !== "fr" && !href.includes("photo.paris/en")
-        ? href.replace("https://photo.paris/", "/en/").replace("?lang=en", "")
-        : href.replace("https://photo.paris/", "/")
-    );
 
     return locale !== "fr" && !href.includes("photo.paris/en")
       ? href.replace("https://photo.paris/", "/en/").replace("?lang=en", "")
@@ -91,7 +86,6 @@ const ContentParser = ({ data, children, options, products }) => {
           }
 
           if (name === "img") {
-            // console.log(attribs.src);
             return attribs.width ? (
               <Image
                 src={attribs.src}
@@ -304,11 +298,11 @@ const ContentParser = ({ data, children, options, products }) => {
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.232743990237!2d2.3399348158538786!3d48.87283950764294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e3eec51010d%3A0xb15c5adcde3bfab1!2sParis%20est%20une%20photo%20-%20Galerie%20art%20et%20encadrement!5e0!3m2!1sfr!2sfr!4v1590146273170!5m2!1sfr!2sfr"
                 width="600"
                 height="450"
-                frameborder="0"
+                frameBorder="0"
                 style={{ border: "0px", pointerEvents: "none" }}
-                allowfullscreen=""
-                aria-hidden="false"
-                tabindex="0"
+                allowFullScreen=""
+                ariaHidden="false"
+                tabIndex="0"
               ></iframe>
             );
           }

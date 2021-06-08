@@ -90,7 +90,6 @@ const BlocCategoriesSelector = ({ categories }) => {
       )}
       {categories &&
         categories.map((item) => {
-          // console.log(activeCat, router);
           return (
             <Link
               href={item.uri.replace("https://photo.paris", "")}

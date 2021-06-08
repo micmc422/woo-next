@@ -21,7 +21,6 @@ export default function Home(props) {
   if (router.isFallback || !page) {
     return <Loading />;
   }
-  // console.log(customProducts);
   return (
     <Layout menu={menu} footer={footer}>
       <Head>
@@ -41,7 +40,6 @@ export default function Home(props) {
 
 export async function getStaticProps({ locale, params }) {
   const apolloCli = locale === "fr" ? client : clientEng;
-  // console.log(params.page.join("/"));
   const { data } = await apolloCli.query({
     query: GET_PAGE_BY_URI,
     variables: { uri: params.page.join("/").replace("?lang=en", "") },
@@ -90,7 +88,7 @@ export async function getStaticPaths() {
     data?.pages?.nodes.map(({ uri }) => {
       if (
         !isEmpty(uri) &&
-        !uri.includes("contact") &&
+        // !uri.includes("contact") &&
         !uri.includes("galerie-photo") &&
         !uri.includes("commande") &&
         !uri.includes("cart") &&
@@ -106,9 +104,7 @@ export async function getStaticPaths() {
           ?.replace("?lang=en", "")
           ?.split("/")
           .filter((item) => item !== "" && item !== "/");
-          console.log(parsedUri);
-          console.log(uri.includes("?lang=en") ? "en" : "fr");
-          parsedUri.length > 0 &&
+        parsedUri.length > 0 &&
           pathsData.push({
             params: {
               page: parsedUri,

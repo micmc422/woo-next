@@ -1,6 +1,5 @@
 import Layout from "../../src/components/Layout";
 import client, { clientEng } from "../../src/components/ApolloClient";
-import Product from "../../src/components/Product";
 import {
   PRODUCT_BY_CATEGORY_SLUG,
   PRODUCT_CATEGORIES_SLUGS,
@@ -16,8 +15,6 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
-import Link from "next/link";
-import { GrFormClose } from "react-icons/gr";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
 
 const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
@@ -42,25 +39,18 @@ export default function CategorySingle(props) {
     seoSchema,
     footer,
   } = props;
-  // console.log(footer);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
-  const catName = query?.category?.length
-    ? query.category[query.category.length - 1]
-    : "";
-  //delete query.category;
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
   const asQuery =
     query?.category?.length > 0 &&
     formattedQuery !== `category=${query?.category?.join("%2C")}`;
-  //const categoryIn = catInFilterred?.length > 0 && catInFilterred[0].name;
   const { data, error } = useSWR(
     asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher
   );
   const isLoading = !data && !error && asQuery;
-  // console.log({ formattedQuery });
   useEffect(() => {
     if (data?.products?.nodes?.length > 0) {
       setPageInfo(data?.products?.pageInfo || {});
@@ -74,7 +64,6 @@ export default function CategorySingle(props) {
     return <div>Loading...</div>;
   }
   const seoData = seoHead && parse(seoHead);
-  // console.log({ seoData, seoSchema });
   return (
     <Layout menu={menu} footer={footer}>
       <Head>
@@ -116,10 +105,8 @@ export default function CategorySingle(props) {
 
 export async function getStaticProps({ params: { category }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
-  // console.log({ category });
   const queryPath = `/categorie/${category[category.length - 1]}/`;
   const queryMenuPath = `/categorie/${category[0]}/`;
-  // console.log({ queryPath, queryMenuPath });
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_CATEGORY_SLUG,
     variables: {
@@ -183,25 +170,6 @@ export async function getStaticPaths({}) {
             },
           });
         }
-        /*
-        pathsData.push({
-          params: {
-            category: [category[category.length - 1]],
-            locale: "en",
-          },
-        });
-        pathsData.push({
-          params: {
-            category,
-          },
-        });
-        pathsData.push({
-          params: {
-            category,
-          },
-          locale: "en",
-        });
-        */
       }
     });
   dataEn?.data?.productCategories?.nodes &&
@@ -222,28 +190,8 @@ export async function getStaticPaths({}) {
             },
           });
         }
-        /*
-          pathsData.push({
-            params: {
-              category: [category[category.length - 1]],
-            },
-          });
-        pathsData.push({
-          params: {
-            category,
-          },
-        });
-
-        pathsData.push({
-          params: {
-            category,
-          },
-          locale: "en",
-        });
-        */
       }
     });
-  // pathsData.map((item) => console.log(item.params.category));
   return {
     paths: pathsData,
     fallback: true,

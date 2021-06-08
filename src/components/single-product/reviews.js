@@ -136,7 +136,6 @@ const Reviews = ({ reviews }) => {
 };
 
 const Review = ({ review }) => {
-  // console.log(review);
   return (
     <motion.div variants={childAnimation} className="w-full p-4">
       <div className="h-full p-8 bg-gray-100 rounded">

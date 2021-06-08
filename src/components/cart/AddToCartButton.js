@@ -111,11 +111,9 @@ const AddToCart = (props) => {
   });
 
   const handleAddToCartClick = () => {
-    // handleAddToCartLocalStorage();
     setRequestError(null);
     addToCart();
   };
-  // console.log({ productQryInput, requestError });
   return (
     <Bouton>
       <div className={` cursor-pointer `}>

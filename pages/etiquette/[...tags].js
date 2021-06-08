@@ -110,10 +110,8 @@ export default Tags;
 
 export async function getStaticProps({ params: { tags }, locale }) {
   const apolloCli = locale === "fr" ? client : clientEng;
-  // console.log({ category });
   const queryPath = `/etiquette/${tags[tags.length - 1]}/`;
   const queryMenuPath = `/etiquette/${tags[0]}/`;
-  // console.log({ queryPath, queryMenuPath });
   const { data } = await apolloCli.query({
     query: PRODUCT_BY_TAG_SLUG,
     variables: {

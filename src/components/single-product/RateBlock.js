@@ -24,7 +24,6 @@ const RateBlock = ({ rating, reviewCount, product }) => {
   const starBloc = [1, 2, 3, 4, 5];
   const [reviews, setReviews] = useState(false);
   const shareUrl = `https://photo.paris${asPath}`;
-  // console.log(product?.image?.sourceUrl);
 
   return (
     <div className="flex mb-4">
@@ -125,7 +124,6 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
       setIsValid(false);
     }
   }, [rating, content, authorName]);
-  // console.log(data);
   return (
     <div
       className={`fixed inset-0 z-50 flex items-end justify-center w-full h-screen md:items-center`}

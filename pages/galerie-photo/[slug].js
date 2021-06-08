@@ -217,7 +217,6 @@ export default function Product(props) {
 const ProductDetails = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
   const { t } = useTranslation("shop");
-  // console.log(product);
   const artiste =
     product?.productCategories?.nodes?.filter((cat) =>
       cat.uri.includes("artistes")
@@ -297,7 +296,6 @@ const ProductDetails = ({ product }) => {
 };
 
 const ActiveDetail = ({ product, activeTab, size, artiste }) => {
-//  console.log(activeTab);
   return (
     <AnimatePresence exitBeforeEnter>
       {
