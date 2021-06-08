@@ -92,7 +92,15 @@ export async function getStaticPaths() {
         !isEmpty(uri) &&
         !uri.includes("contact") &&
         !uri.includes("galerie-photo") &&
-        !uri.includes("commande")
+        !uri.includes("commande") &&
+        !uri.includes("cart") &&
+        !uri.includes("my-account") &&
+        !uri.includes("checkout") &&
+        !uri.includes("mon-compte") &&
+        !uri.includes("panier") &&
+        !uri.includes("home") &&
+        !uri.includes("gallery") &&
+        !uri.includes("contemporary-photographs")
       ) {
         const parsedUri = uri
           ?.replace("?lang=en", "")
