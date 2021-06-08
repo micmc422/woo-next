@@ -16,6 +16,20 @@ module.exports = {
       sans: ["Josefin Sans", "sans-serif"],
     },
     extend: {
+      animation: {
+        "ltr-linear-infinite": "ltr-linear-infinite 7s linear infinite",
+        "rtl-linear-infinite": "rtl-linear-infinite 7s linear infinite",
+      },
+      keyframes: {
+        "ltr-linear-infinite": {
+          from: { "background-position": "0 0" },
+          to: { "background-position": "80px 80px" },
+        },
+        "rtl-linear-infinite": {
+          from: { "background-position": "0 0" },
+          to: { "background-position": "-80px -80px" },
+        },
+      },
       translate: {
         screen: "100vh",
       },

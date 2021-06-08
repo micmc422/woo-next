@@ -51,12 +51,16 @@ const ContentParser = ({ data, children, options, products }) => {
             return (
               <div className="relative">
                 <div
-                  className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-300`}
+                  className={`hidden md:absolute left-8 top-8 -bottom-8 -right-8 -mr-2 bg-gray-500`}
                 >
-                  {" "}
+                  <div
+                    className="absolute inset-0 opacity-50"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a338' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                    }}
+                  />
                 </div>
                 <div className="relative px-0 md:px-4">
-                  {" "}
                   {domToReact(children, defaultOptions)}
                 </div>
               </div>
@@ -86,20 +90,25 @@ const ContentParser = ({ data, children, options, products }) => {
           }
 
           if (name === "img") {
-            return attribs.width ? (
-              <Image
-                src={attribs.src}
-                width={attribs.width}
-                height={attribs.height}
-                alt={attribs.alt}
-              />
-            ) : (
-              <Image
-                src={attribs.src}
-                layout="fill"
-                objectFit="cover"
-                alt={attribs.alt}
-              />
+            return (
+              <div className={`relative`}>
+                <div className="absolute inset-0 transform translate-y-2 bg-gray-300 md:translate-x-4 bg-gradient-to-tr from-gray-200 to-gray-100"></div>
+                {attribs.width ? (
+                  <Image
+                    src={attribs.src}
+                    width={attribs.width}
+                    height={attribs.height}
+                    alt={attribs.alt}
+                  />
+                ) : (
+                  <Image
+                    src={attribs.src}
+                    layout="fill"
+                    objectFit="cover"
+                    alt={attribs.alt}
+                  />
+                )}
+              </div>
             );
           }
           if (
@@ -340,8 +349,16 @@ const ContentParser = ({ data, children, options, products }) => {
           if (attribs?.class?.includes("vc_cta3-style-classic")) {
             if (attribs?.class?.includes("vc_general")) {
               return (
-                <div className="p-4 mx-auto text-white bg-gray-100 border rounded-md shadow-lg border-brand-200 bg-gradient-to-br from-brand-300 to-brand-400 w-min">
-                  {domToReact(children, defaultOptions)}
+                <div className="relative p-4 mx-4 text-white bg-gray-100 border rounded-md shadow-xl md:mx-auto border-brand-200 bg-gradient-to-br from-brand-300 to-brand-400 md:w-min">
+                  <div
+                    className="absolute inset-0 transition-all opacity-50 animate-rtl-linear-infinite"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a338' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                    }}
+                  />
+                  <div className="relative">
+                    {domToReact(children, defaultOptions)}
+                  </div>
                 </div>
               );
             }

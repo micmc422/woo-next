@@ -156,7 +156,6 @@ export async function getStaticPaths({}) {
   });
 
   const pathsData = [];
-
   data?.productTags?.nodes &&
     data?.productTags?.nodes.map((productTag) => {
       if (!isEmpty(productTag?.uri)) {
@@ -174,6 +173,7 @@ export async function getStaticPaths({}) {
         }
       }
     });
+  console.log(dataEn?.productTags?.nodes);
   dataEn?.data?.productTags?.nodes &&
     dataEn?.data?.productTags?.nodes.map((productTag) => {
       if (!isEmpty(productTag?.uri)) {
