@@ -21,7 +21,7 @@ export default function Home(props) {
   if (router.isFallback || !page) {
     return <Loading />;
   }
- // console.log(customProducts);
+  // console.log(customProducts);
   return (
     <Layout menu={menu} footer={footer}>
       <Head>
@@ -84,11 +84,9 @@ export async function getStaticPaths() {
   const { data } = await client.query({
     query: GET_PAGES_URI,
   });
-  const { dataEn } = await clientEng.query({
-    query: GET_PAGES_URI,
-  });
   const pathsData = [];
 
+  //console.log(data?.pages?.nodes);
   data?.pages?.nodes &&
     data?.pages?.nodes.map(({ uri }) => {
       if (
@@ -97,31 +95,16 @@ export async function getStaticPaths() {
         !uri.includes("galerie-photo") &&
         !uri.includes("commande")
       ) {
-        const parsedUri = uri?.split("/").filter((item) => item !== "");
+        const parsedUri = uri
+          ?.replace("?lang=en", "")
+          ?.split("/")
+          .filter((item) => item !== "");
         parsedUri.length > 0 &&
           pathsData.push({
             params: {
               page: parsedUri,
             },
-            locale: "fr",
-          });
-      }
-    });
-  dataEn?.pages?.nodes &&
-    dataEn?.pages?.nodes.map(({ uri }) => {
-      if (
-        !isEmpty(uri) &&
-        !uri.includes("contact") &&
-        !uri.includes("galerie-photo") &&
-        !uri.includes("commande")
-      ) {
-        const parsedUri = uri?.split("/").filter((item) => item !== "");
-        parsedUri.length > 0 &&
-          pathsData.push({
-            params: {
-              page: parsedUri,
-            },
-            locale: "en",
+            locale: parsedUri.includes("?lang=en") ? "en" : "fr",
           });
       }
     });
