@@ -44,7 +44,7 @@ export async function getStaticProps({ locale, params }) {
   // console.log(params.page.join("/"));
   const { data } = await apolloCli.query({
     query: GET_PAGE_BY_URI,
-    variables: { uri: params.page.join("/") },
+    variables: { uri: params.page.join("/").replace("?lang=en", "") },
   });
   const menu = (await getMenu(locale)) || [];
   const paramsQuery = {
@@ -86,7 +86,6 @@ export async function getStaticPaths() {
   });
   const pathsData = [];
 
-  //console.log(data?.pages?.nodes);
   data?.pages?.nodes &&
     data?.pages?.nodes.map(({ uri }) => {
       if (
@@ -98,13 +97,14 @@ export async function getStaticPaths() {
         const parsedUri = uri
           ?.replace("?lang=en", "")
           ?.split("/")
-          .filter((item) => item !== "");
+          .filter((item) => item !== "" && item !== "/");
+        console.log(parsedUri);
         parsedUri.length > 0 &&
           pathsData.push({
             params: {
               page: parsedUri,
             },
-            locale: parsedUri.includes("?lang=en") ? "en" : "fr",
+            locale: uri.includes("?lang=en") ? "en" : "fr",
           });
       }
     });
