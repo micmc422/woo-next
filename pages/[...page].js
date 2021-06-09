@@ -115,8 +115,16 @@ export async function getStaticPaths() {
         const parsedUri = uri
           ?.replace("?lang=en", "")
           ?.split("/")
-          .filter((item) => item !== "" && item !== "/");
-        parsedUri.length > 0 &&
+          .filter(
+            (item) =>
+              item !== "" &&
+              item !== "/" &&
+              item !== "https:" &&
+              item !== "photo.paris"
+          );
+        console.log(parsedUri);
+        parsedUri?.length > 0 &&
+          parsedUri !== [] &&
           pathsData.push({
             params: {
               page: parsedUri,
@@ -151,7 +159,8 @@ export async function getStaticPaths() {
               item !== "https:" &&
               item !== "photo.paris"
           );
-        parsedUri.length > 0 &&
+        console.log(parsedUri, parsedUri.length);
+        parsedUri?.length > 0 &&
           parsedUri !== [] &&
           pathsData.push({
             params: {
