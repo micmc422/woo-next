@@ -25,6 +25,7 @@ const Tags = (props) => {
   const { query, locale } = router;
   const {
     footer,
+    coupons,
     tagName,
     products,
     pageInfoStatic,
@@ -68,7 +69,7 @@ const Tags = (props) => {
   const seoData = seoHead && parse(seoHead);
 
   return (
-    <Layout menu={menu} footer={footer}>
+    <Layout menu={menu} footer={footer} coupons={coupons}>
       <Head>
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -126,6 +127,7 @@ export async function getStaticProps({ params: { tags }, locale }) {
     props: {
       // data, //TODO delete after test
       footer: data?.getFooter,
+      coupons: data?.coupons.nodes,
       menu,
       catBase: data?.catBase?.nodes || [],
       tagName: data?.productTag?.name || "",

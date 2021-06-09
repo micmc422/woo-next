@@ -53,7 +53,8 @@ const childAnimation = {
 export default function Product(props) {
   const { t } = useTranslation("shop");
 
-  const { product, menu, footer } = props;
+  const { product, menu, footer, coupons } = props;
+  console.log(coupons);
   const tmp = product?.variations?.nodes.slice();
   const orderredVariations = tmp?.sort(
     (a, b) => +a?.price?.replace(",00€", "") - +b?.price?.replace(",00€", "")
@@ -75,7 +76,7 @@ export default function Product(props) {
     return <Loading />;
   }
   return (
-    <Layout menu={menu} footer={footer}>
+    <Layout menu={menu} footer={footer} coupons={coupons}>
       <Head>
         {seoData ? seoData : ""}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -283,7 +284,7 @@ const ProductDetails = ({ product }) => {
           )}
         </AnimateSharedLayout>
       </div>
-      <div className="container flex flex-col px-4 mx-auto mb-32 single-product xl:px-0">
+      <div className="container flex flex-col px-4 mx-auto mt-8 single-product xl:px-0">
         <ActiveDetail
           product={product}
           activeTab={activeTab}
@@ -320,7 +321,7 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
               exit="exit"
               variants={parentAnimation}
               key={uniqueId("details")}
-              className="mx-auto mt-8 prose border border-gray-200 rounded shadow-2xl"
+              className="mx-auto prose border border-gray-200 rounded shadow-2xl"
             >
               <div className="relative overflow-hidden">
                 <div className="px-2 bg-gray-200">Tailles :</div>
@@ -381,6 +382,7 @@ export async function getStaticProps(context) {
       menu,
       product: data?.product,
       footer: data?.getFooter,
+      coupons: data?.coupons.nodes,
       ...(await serverSideTranslations(locale, ["common", "shop"])),
     },
     revalidate: 86400,

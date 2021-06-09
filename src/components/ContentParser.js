@@ -510,25 +510,21 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (name === "a") {
-            if (attribs) {
-              const localizeHref = localize(attribs.href);
-
-              return (
-                <Link href={localizeHref} locale={locale} passHref>
-                  <a>{domToReact(children, defaultOptions)}</a>
-                </Link>
-              );
-            }
-
             if (
               children?.length > 0 &&
               "https://www.facebook.com/galerieparisestunephoto/" ===
                 children[0].data
             ) {
               return (
-                <Bouton circleClass="bg-facebook bg-opacity-75">
-                  <a href={children[0].data}>Facebook</a>
-                </Bouton>
+                <button
+                  className={`bg-blue-600 px-5 py-3 text-sm font-medium tracking-wider border  rounded-full shadow hover:shadow-lg hover:bg-blue-700 inline-block prose-no-underline transform hover:-translate-y-1 transition-transform`}
+                >
+                  <a className={``} href={children[0].data}>
+                    <span className={`text-white flex`}>
+                      <FiFacebook /> Facebook
+                    </span>
+                  </a>
+                </button>
               );
             }
             if (
@@ -536,9 +532,27 @@ const ContentParser = ({ data, children, options, products }) => {
               "https://www.instagram.com/parisestunephoto" === children[0].data
             ) {
               return (
-                <Bouton circleClass="bg-instagram bg-opacity-75">
-                  <a href={children[0].data}>Instagram</a>
-                </Bouton>
+                <button
+                  className={`bg-pink-600 px-5 py-3 text-sm font-medium tracking-wider border  rounded-full shadow hover:shadow-lg hover:bg-pink-700 inline-block prose-no-underline transform hover:-translate-y-1 transition-transform`}
+                >
+                  <a
+                    className={`text-pink-100 no-underline`}
+                    href={children[0].data}
+                  >
+                    <span className={`text-white flex`}>
+                      <FiInstagram /> &nbsp;Instagram
+                    </span>
+                  </a>
+                </button>
+              );
+            }
+            if (attribs) {
+              const localizeHref = localize(attribs.href);
+
+              return (
+                <Link href={localizeHref} locale={locale} passHref>
+                  <a>{domToReact(children, defaultOptions)}</a>
+                </Link>
               );
             }
           }

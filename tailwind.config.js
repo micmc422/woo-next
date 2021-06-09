@@ -30,6 +30,17 @@ module.exports = {
           to: { "background-position": "-80px -80px" },
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            a: {
+              "text-decoration": "none",
+              opacity: 0.8,
+            },
+            // ...
+          },
+        },
+      }),
       translate: {
         screen: "100vh",
       },

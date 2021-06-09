@@ -22,11 +22,11 @@ export default function Home(props) {
     homepage,
     seoHead,
     seoSchema,
-    footer,
+    footer, coupons,
   } = props;
   const seoData = seoHead && parse(seoHead);
   return (
-    <Layout menu={menu} footer={footer}>
+    <Layout menu={menu} footer={footer} coupons={coupons}>
       <Head>{seoData ? seoData : ""}</Head>
       <script type="application/ld+json">{`${seoSchema}`}</script>
       {/*Hero Carousel*/}
@@ -76,6 +76,7 @@ export async function getStaticProps({ locale }) {
   return {
     props: {
       footer: data?.getFooter,
+      coupons: data?.coupons.nodes,
       data,
       homepage: homepage.data.page,
       menu,

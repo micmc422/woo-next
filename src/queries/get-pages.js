@@ -27,7 +27,23 @@ export const GET_PAGE_BY_URI = gql`
       sidebarOne
       sidebarTwo
     }
-
+    coupons {
+    nodes {
+      amount
+      code
+      dateExpiry
+      description
+      discountType
+      excludeSaleItems
+      freeShipping
+      individualUse
+      maximumAmount
+      minimumAmount
+      usageCount
+      usageLimit
+      usageLimitPerUser
+    }
+  }
     page(id: $uri, idType: URI) {
       id
       title

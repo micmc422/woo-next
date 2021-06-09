@@ -6,6 +6,23 @@ export const PRODUCT_BY_TAG_SLUG = gql`
       sidebarOne
       sidebarTwo
     }
+    coupons {
+      nodes {
+        amount
+        code
+        dateExpiry
+        description
+        discountType
+        excludeSaleItems
+        freeShipping
+        individualUse
+        maximumAmount
+        minimumAmount
+        usageCount
+        usageLimit
+        usageLimitPerUser
+      }
+    }
     megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
       id
       content

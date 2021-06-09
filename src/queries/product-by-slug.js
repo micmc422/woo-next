@@ -6,6 +6,23 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       sidebarOne
       sidebarTwo
     }
+    coupons {
+      nodes {
+        amount
+        code
+        dateExpiry
+        description
+        discountType
+        excludeSaleItems
+        freeShipping
+        individualUse
+        maximumAmount
+        minimumAmount
+        usageCount
+        usageLimit
+        usageLimitPerUser
+      }
+    }
     product(id: $slug, idType: SLUG) {
       id
       productId: databaseId

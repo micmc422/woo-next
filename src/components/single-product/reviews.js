@@ -41,15 +41,15 @@ const Reviews = ({ reviews }) => {
       animate="animate"
       exit="exit"
       variants={parentAnimation}
-      className={`container mx-auto w-full p-4 md:w-1/2`}
+      className={`w-full md:w-1/2 mx-auto`}
     >
       {reviews.map((review) => (
         <Review review={review} key={uniqueId()} />
       ))}
-      <div className={`bg-gray-50 rounded shadow-2xl p-4`}>
+      <div className={`bg-gray-200 rounded shadow-2xl m-4 p-4`}>
         <motion.h3
           variants={childAnimation}
-          className="flex items-center mb-4 text-3xl font-bold text-brand-500"
+          className="flex items-center mb-4 text-3xl font-bold text-gray-800"
         >
           {t("commentaires")}
         </motion.h3>
@@ -138,7 +138,7 @@ const Reviews = ({ reviews }) => {
 const Review = ({ review }) => {
   return (
     <motion.div variants={childAnimation} className="w-full p-4">
-      <div className="h-full p-8 bg-gray-100 rounded">
+      <div className="h-full p-8 bg-gray-100 rounded shadow-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"

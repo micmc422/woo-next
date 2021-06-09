@@ -9,6 +9,23 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       sidebarOne
       sidebarTwo
     }
+    coupons {
+    nodes {
+      amount
+      code
+      dateExpiry
+      description
+      discountType
+      excludeSaleItems
+      freeShipping
+      individualUse
+      maximumAmount
+      minimumAmount
+      usageCount
+      usageLimit
+      usageLimitPerUser
+    }
+  }
     menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {

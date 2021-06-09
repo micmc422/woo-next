@@ -6,14 +6,15 @@ import ContentParser from "./ContentParser";
 import { domToReact } from "html-react-parser";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Transition } from "@headlessui/react";
+import { Menu } from "@headlessui/react";
 import { Bouton, ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 import Search from "./widget/Search";
 import { Spin as Hamburger, Spin } from "hamburger-react";
+import CouponsNav from "./widget/CouponsNav";
 
-const Nav = ({ menu, translations, sticky }) => {
+const Nav = ({ menu, translations, sticky, coupons }) => {
   const router = useRouter();
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const { t } = useTranslation("common");
@@ -27,14 +28,18 @@ const Nav = ({ menu, translations, sticky }) => {
     ? router.asPath
     : "/galerie-photo/"
   */
-
+  // console.log(coupons);
   return (
     <nav className="z-30 bg-white">
       {!sticky && (
         <div className="px-4 py-1 text-gray-100 bg-gray-900 ">
-          <div className="container flex flex-row justify-between mx-auto">
-            <div>contact</div>
-            <div>annonce</div>
+          <div className="container flex flex-row justify-between px-4 mx-auto">
+            <div>
+              <a href="tel:+33156920447">01 56 92 04 47</a>
+            </div>
+            <div>
+              <CouponsNav coupons={coupons} />
+            </div>
             <Link
               href={"/galerie-photo/"}
               locale={router.locale === "fr" ? "en" : "fr"}

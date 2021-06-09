@@ -13,7 +13,7 @@ import Loading from "../src/components/Loading";
 import GET_PRODUCTS_QUERY from "../src/queries/get-products";
 
 export default function Home(props) {
-  const { page, menu, footer, customProducts } = props;
+  const { page, menu, footer, coupons, customProducts } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   const seoSchema = page?.seo?.schema?.raw;
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function Home(props) {
     return <Loading />;
   }
   return (
-    <Layout menu={menu} footer={footer}>
+    <Layout menu={menu} footer={footer} coupons={coupons}>
       <Head>
         {seoData ? seoData : " "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -65,6 +65,7 @@ export async function getStaticProps({ locale, params }) {
   return {
     props: {
       footer: data?.getFooter,
+      coupons: data?.coupons.nodes,
       menu,
       customProducts: customProducts?.data?.products?.nodes,
       page: data?.page || [],
