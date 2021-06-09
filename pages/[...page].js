@@ -39,6 +39,8 @@ export default function Home(props) {
 }
 
 export async function getStaticProps({ locale, params }) {
+  console.log(params.page);
+  // const apolloCli = client;
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
     query: GET_PAGE_BY_URI,
@@ -83,6 +85,9 @@ export async function getStaticPaths() {
   const { data } = await client.query({
     query: GET_PAGES_URI,
   });
+  const dataEng = await clientEng.query({
+    query: GET_PAGES_URI,
+  });
   const pathsData = [];
 
   data?.pages?.nodes &&
@@ -114,9 +119,38 @@ export async function getStaticPaths() {
           });
       }
     });
+  dataEng?.data?.pages?.nodes &&
+    dataEng?.data?.pages?.nodes.map(({ uri }) => {
+      if (
+        !isEmpty(uri) &&
+        // !uri.includes("contact") &&
+        !uri.includes("galerie-photo") &&
+        !uri.includes("commande") &&
+        !uri.includes("cart") &&
+        !uri.includes("my-account") &&
+        !uri.includes("checkout") &&
+        !uri.includes("mon-compte") &&
+        !uri.includes("panier") &&
+        !uri.includes("home") &&
+        !uri.includes("gallery") &&
+        !uri.includes("contemporary-photographs")
+      ) {
+        const parsedUri = uri
+          ?.replace("?lang=en", "")
+          ?.split("/")
+          .filter((item) => item !== "" && item !== "/");
+        parsedUri.length > 0 &&
+          pathsData.push({
+            params: {
+              page: parsedUri,
+            },
+            locale: "en",
+          });
+      }
+    });
 
   return {
     paths: pathsData,
-    fallback: false,
+    fallback: true,
   };
 }

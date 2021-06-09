@@ -18,7 +18,6 @@ const AddToCart = (props) => {
     productId: product.productId,
     variationId: variation?.productId,
   };
-  console.log(productQryInput);
   const [cart, setCart] = useContext(AppContext);
   const [showViewCart, setShowViewCart] = useState(false);
   const [requestError, setRequestError] = useState(null);
