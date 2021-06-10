@@ -46,7 +46,7 @@ const Reviews = ({ reviews }) => {
       {reviews.map((review) => (
         <Review review={review} key={uniqueId()} />
       ))}
-      <div className={`bg-gray-200 rounded shadow-2xl m-4 p-4`}>
+      <div className={`bg-gray-200 rounded shadow-2xl m-4 p-4  mb-16`}>
         <motion.h3
           variants={childAnimation}
           className="flex items-center mb-4 text-3xl font-bold text-gray-800"

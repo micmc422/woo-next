@@ -32,12 +32,14 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
   return (
     <nav className="z-30 bg-white">
       {!sticky && (
-        <div className="px-4 py-1 text-gray-100 bg-gray-900 ">
-          <div className="container flex flex-row justify-between px-4 mx-auto">
-            <div>
+        <div className="py-1 text-gray-100 bg-gray-900 md:px-4 ">
+          <div className="container flex flex-row items-center justify-between px-4 mx-auto">
+            <div className={`text-xs md:text-base flex flex-row items-center`}>
               <a href="tel:+33156920447">01 56 92 04 47</a>
             </div>
-            <div>
+            <div
+              className={`flex flex-row items-center`}
+            >
               <CouponsNav coupons={coupons} />
             </div>
             <Link

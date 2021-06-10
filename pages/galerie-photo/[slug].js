@@ -121,7 +121,7 @@ export default function Product(props) {
                 exit="exit"
                 variants={parentListEl}
               >
-                <div className="flex flex-row flex-wrap space-x-2 text-xs tracking-widest text-brand-500 title-font">
+                <div className="flex flex-row flex-wrap mt-1 space-x-2 text-xs tracking-widest text-brand-500 title-font">
                   {product?.productTags?.nodes.map(
                     ({ name, description, uri }) => {
                       return (
@@ -144,7 +144,7 @@ export default function Product(props) {
                 initial={{ x: 50 }}
                 animate={{ x: 0 }}
                 exit={{ x: 50 }}
-                className="my-1 text-3xl font-black text-gray-900 md:text-5xl lg:text-6xl title-font"
+                className="my-4 text-3xl font-black text-gray-900 md:text-5xl lg:text-6xl title-font"
               >
                 {product.name}
               </motion.h1>
@@ -285,74 +285,73 @@ const ProductDetails = ({ product }) => {
         </AnimateSharedLayout>
       </div>
       <div className="container flex flex-col px-4 mx-auto mt-8 single-product xl:px-0">
-        <ActiveDetail
-          product={product}
-          activeTab={activeTab}
-          size={size}
-          artiste={artiste}
-        />
+        <AnimatePresence exitBeforeEnter>
+          <ActiveDetail
+            product={product}
+            activeTab={activeTab}
+            size={size}
+            artiste={artiste}
+          />
+        </AnimatePresence>
       </div>
     </>
   );
 };
 
 const ActiveDetail = ({ product, activeTab, size, artiste }) => {
-  return (
-    <AnimatePresence exitBeforeEnter>
-      {
-        {
-          description: (
-            <ContentParser
-              key={uniqueId("description")}
-              data={product.description}
-            ></ContentParser>
-          ),
-          commentaires: (
-            <Reviews
-              key={uniqueId("commentaires")}
-              reviews={product.reviews.nodes}
-            />
-          ),
-          details: (
-            <motion.div
-              key={uniqueId()}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={parentAnimation}
-              key={uniqueId("details")}
-              className="mx-auto prose border border-gray-200 rounded shadow-2xl"
+  if (activeTab === "description") {
+    return (
+      <ContentParser
+        key={uniqueId("description")}
+        data={product.description}
+      ></ContentParser>
+    );
+  }
+  if (activeTab === "commentaires") {
+    return (
+      <Reviews key={uniqueId("commentaires")} reviews={product.reviews.nodes} />
+    );
+  }
+  if (activeTab === "details") {
+    return (
+      <motion.div
+        key={uniqueId()}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={parentAnimation}
+        key={uniqueId("details")}
+        className="mx-auto mb-16 prose border border-gray-200 rounded shadow-2xl"
+      >
+        <div className="relative overflow-hidden">
+          <div className="px-2 bg-gray-200">Tailles :</div>
+          {size?.map((item, i) => (
+            <div
+              key={uniqueId(i)}
+              className={`overflow-hidden flex flex-row justify-between`}
             >
-              <div className="relative overflow-hidden">
-                <div className="px-2 bg-gray-200">Tailles :</div>
-                {size?.map((item, i) => (
-                  <div
-                    key={uniqueId(i)}
-                    className={`overflow-hidden flex flex-row justify-between`}
-                  >
-                    <motion.span variants={childAnimation} className={`px-2 `}>
-                      {item.name}
-                    </motion.span>
-                    <motion.span variants={childAnimation} className={`pr-2 `}>
-                      {item.price}
-                    </motion.span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ),
-          artiste: (
-            <ContentParser
-              key={uniqueId("artiste")}
-              data={artiste.description}
-            ></ContentParser>
-          ),
-        }[activeTab]
-      }
+              <motion.span variants={childAnimation} className={`px-2 `}>
+                {item.name}
+              </motion.span>
+              <motion.span variants={childAnimation} className={`pr-2 `}>
+                {item.price}
+              </motion.span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    );
+  }
+  if (activeTab === "artiste") {
+    return (
+      <ContentParser
+        key={uniqueId("artiste")}
+        data={artiste.description}
+      ></ContentParser>
+    );
+  }
 
-      {activeTab === null && <div key={uniqueId(null)} />}
-    </AnimatePresence>
-  );
+  return <div key={uniqueId(null)} />;
 };
 
 const Upsell = ({ products }) => {

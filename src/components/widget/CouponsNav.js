@@ -77,22 +77,22 @@ const CouponsNav = ({ coupons }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div>
-        {sampleData[0].discountType === "PERCENT" && (
-          <span>-{sampleData[0].amount}% </span>
-        )}
-        &nbsp;
-        {t("avec-code")}
-        &nbsp;
-        <span className={`bg-green-500 rounded-full px-1 cursor-pointer`}>
-          <CopyToClipboard
-            text={sampleData[0].code}
-            onCopy={() => setOpen(true)}
-          >
+      <CopyToClipboard text={sampleData[0].code} onCopy={() => setOpen(true)}>
+        <motion.div
+          whileHover={{ x: [0, -10, 10, 0] }}
+          className={`bg-gray-600 rounded-full shadow flex flex-row items-center px-1 my-px cursor-pointer`}
+        >
+          {sampleData[0].discountType === "PERCENT" && (
+            <span className="text-green-500">-{sampleData[0].amount}%</span>
+          )}
+          &nbsp;
+          {t("avec-code")}
+          &nbsp;
+          <span className={`bg-green-500 rounded-full px-1 my-1`}>
             <span>{sampleData[0].code}</span>
-          </CopyToClipboard>
-        </span>
-      </div>
+          </span>
+        </motion.div>
+      </CopyToClipboard>
     </>
   );
 };

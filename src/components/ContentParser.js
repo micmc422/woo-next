@@ -324,7 +324,7 @@ const ContentParser = ({ data, children, options, products }) => {
             return (
               <motion.div
                 variants={childAnimation}
-                className={`p-4 mx-auto prose ${
+                className={`p-4 mx-auto prose overflow-hidden ${
                   alignRigth ? "md:text-right" : ""
                 }`}
                 key={uniqueId()}
