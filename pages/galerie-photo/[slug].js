@@ -54,7 +54,7 @@ export default function Product(props) {
   const { t } = useTranslation("shop");
 
   const { product, menu, footer, coupons } = props;
-  console.log(coupons);
+ // console.log(coupons);
   const tmp = product?.variations?.nodes.slice();
   const orderredVariations = tmp?.sort(
     (a, b) => +a?.price?.replace(",00€", "") - +b?.price?.replace(",00€", "")

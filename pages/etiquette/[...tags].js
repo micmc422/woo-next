@@ -175,8 +175,8 @@ export async function getStaticPaths({}) {
         }
       }
     });
-  console.log(dataEn?.productTags?.nodes);
-  dataEn?.data?.productTags?.nodes &&
+
+    dataEn?.data?.productTags?.nodes &&
     dataEn?.data?.productTags?.nodes.map((productTag) => {
       if (!isEmpty(productTag?.uri)) {
         const tags = productTag?.uri

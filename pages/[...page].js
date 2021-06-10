@@ -39,7 +39,6 @@ export default function Home(props) {
 }
 
 export async function getStaticProps({ locale, params }) {
-  console.log(params.page);
   // const apolloCli = client;
   const apolloCli = locale === "fr" ? client : clientEng;
   const { data } = await apolloCli.query({
@@ -122,7 +121,6 @@ export async function getStaticPaths() {
               item !== "https:" &&
               item !== "photo.paris"
           );
-        console.log(parsedUri);
         parsedUri?.length > 0 &&
           parsedUri !== [] &&
           pathsData.push({
@@ -159,7 +157,6 @@ export async function getStaticPaths() {
               item !== "https:" &&
               item !== "photo.paris"
           );
-        console.log(parsedUri, parsedUri.length);
         parsedUri?.length > 0 &&
           parsedUri !== [] &&
           pathsData.push({
