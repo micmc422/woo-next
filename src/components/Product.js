@@ -21,7 +21,7 @@ const Product = (props) => {
   const { product, noName } = props;
   const starBloc = [1, 2, 3, 4, 5];
   const { t } = useTranslation("shop");
-  console.log(product);
+ // console.log(product);
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product" key={uniqueId()}>
