@@ -42,6 +42,7 @@ const GET_PRODUCTS_QUERY = gql`
         reviewCount
         slug
         description
+        reviewCount
         productCategories {
           nodes {
             name

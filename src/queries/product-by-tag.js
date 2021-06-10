@@ -91,8 +91,8 @@ export const PRODUCT_BY_TAG_SLUG = gql`
         nodes {
           id
           productId: databaseId
-
           averageRating
+          reviewCount
           slug
           description
           image {

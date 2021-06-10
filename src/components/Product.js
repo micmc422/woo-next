@@ -9,7 +9,8 @@ import { Bouton } from "./themeComponents";
 import { AnimatePresence, motion } from "framer-motion";
 import ImageWithFallback from "./ImageFallBack";
 import Skeleton from "react-loading-skeleton";
-import BlocPrix from "./single-product/price/BlocPrix";
+import { FaRegComments, FaRegStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const productCardAnimationContainer = {
   initial: { opacity: 0, y: 10 },
@@ -18,6 +19,9 @@ const productCardAnimationContainer = {
 };
 const Product = (props) => {
   const { product, noName } = props;
+  const starBloc = [1, 2, 3, 4, 5];
+  const { t } = useTranslation("shop");
+  console.log(product);
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product" key={uniqueId()}>
@@ -48,7 +52,7 @@ const Product = (props) => {
                 {product.name ? product.name : "Chargement..."}
               </h3>
             </Link>
-            <div className="">
+            <div className="flex flex-row justify-between">
               {product.name && (
                 <>
                   {product.__typename === "VariableProduct" ? (
@@ -112,6 +116,60 @@ const Product = (props) => {
                   )}
                 </>
               )}
+              <div className="flex flex-col items-end">
+                <div className="flex items-center">
+                  <span className={``}>
+                    {product.averageRating > 1 ? (
+                      <>
+                        <span
+                          className="flex items-center"
+                          onClick={() => setReviews(true)}
+                        >
+                          {starBloc.map((count) =>
+                            count <= product.averageRating ? (
+                              <svg
+                                key={uniqueId(count)}
+                                fill="currentColor"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                className="w-4 h-4 text-brand-500"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                              </svg>
+                            ) : (
+                              <svg
+                                key={uniqueId(count)}
+                                fill="none"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                className="w-4 h-4 text-brand-500"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                              </svg>
+                            )
+                          )}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </span>
+                </div>
+                {product.reviewCount > 0 && (
+                  <div className="flex items-start px-1 pr-1 text-gray-400">
+                    <span className="pr-1 text-sm text-bold">
+                      {product.reviewCount}
+                    </span>
+                    <FaRegComments />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

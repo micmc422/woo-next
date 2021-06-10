@@ -156,6 +156,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         id
         productId: databaseId
         averageRating
+        reviewCount
         slug
         description
         image {

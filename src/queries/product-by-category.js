@@ -7,22 +7,22 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
       sidebarTwo
     }
     coupons {
-    nodes {
-      amount
-      code
-      dateExpiry
-      description
-      discountType
-      excludeSaleItems
-      freeShipping
-      individualUse
-      maximumAmount
-      minimumAmount
-      usageCount
-      usageLimit
-      usageLimitPerUser
+      nodes {
+        amount
+        code
+        dateExpiry
+        description
+        discountType
+        excludeSaleItems
+        freeShipping
+        individualUse
+        maximumAmount
+        minimumAmount
+        usageCount
+        usageLimit
+        usageLimitPerUser
+      }
     }
-  }
     megamenuCollection: page(id: "7666", idType: DATABASE_ID) {
       id
       content
@@ -99,8 +99,8 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         nodes {
           id
           productId: databaseId
-
           averageRating
+          reviewCount
           slug
           description
           image {

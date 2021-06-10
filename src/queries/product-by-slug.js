@@ -27,6 +27,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       id
       productId: databaseId
       averageRating
+        reviewCount
       slug
       shortDescription
       description
