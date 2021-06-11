@@ -195,7 +195,7 @@ const HomePageSection = ({ homepage, products }) => {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
           <p
-            className={`md:mx-auto px-4 prose leading-5 pb-4 ${
+            className={`md:mx-auto px-2 prose leading-5 ${
               alignRigth ? "text-right" : ""
             }`}
           >
@@ -223,9 +223,20 @@ const HomePageSection = ({ homepage, products }) => {
         );
       }
 
-      if (attribs?.class?.includes("vc_row wpb_row vc_row-fluid")) {
+      if (
+        attribs?.class?.includes(
+          "vc_row wpb_row vc_inner vc_row-fluid vc_row-o-content-middle"
+        )
+      ) {
         return (
-          <div className="flex flex-col pb-4 md:flex-row">
+          <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl mx-auto sm:flex-row">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
+      if (attribs?.class?.includes("wpb_row")) {
+        return (
+          <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl mx-auto sm:flex-row">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -243,11 +254,9 @@ const HomePageSection = ({ homepage, products }) => {
         );
       }
 
-      if (
-        attribs?.class?.includes("vc_message_box-outline vc_message_box-round")
-      ) {
+      if (attribs?.class?.includes("vc_message_box-outline")) {
         return (
-          <div className="flex flex-row items-center justify-start mr-2 text-gray-400 transition-colors duration-300 rounded lg:my-12 hover:text-black hover:bg-gray-200">
+          <div className="flex flex-row items-center justify-start mx-2 text-gray-400 transition-colors duration-300 rounded hover:text-black hover:bg-gray-200">
             {domToReact(children, defaultOptions)}
           </div>
         );
@@ -362,6 +371,9 @@ const HomePageSection = ({ homepage, products }) => {
           attribs?.class?.includes("wpb_row")) &&
         !attribs?.class?.includes("vc_inner ")
       ) {
+        if (children.length === 0) {
+          return null;
+        }
         return (
           <div className="flex flex-col items-center px-4 md:flex-row md:space-x-12">
             {domToReact(children, defaultOptions)}

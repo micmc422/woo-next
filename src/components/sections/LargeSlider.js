@@ -109,7 +109,7 @@ const LargeSlider = ({ products, cover }) => {
     >
       <AnimatePresence exitBeforeEnter>
         <motion.div
-          className="relative z-10 px-4 pt-10 space-y-2 md:px-10 banner-content sm:pt-0 sm:w-4/12"
+          className="absolute z-10 px-4 pt-10 space-y-2 md:relative md:px-10 banner-content sm:pt-0 sm:w-4/12 bg-white"
           key={`titre-slider-${slug}-${id}`}
           initial={{ opacity: 0, y: -(xTransition / 10) }}
           animate={{ opacity: 1, y: 0, x: 0 }}
