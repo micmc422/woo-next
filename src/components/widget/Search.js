@@ -58,7 +58,7 @@ const Search = () => {
       </AnimatePresence>
       <button
         onClick={() => setOpened(!opened)}
-        className={`transition-all focus:outline-none`}
+        className={`transition-all focus:outline-none  transform hover:scale-110`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -23,7 +23,7 @@ const animationChild = {
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: 75 },
 };
-const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
+const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -92,7 +92,9 @@ const BlocCategoriesSelector = ({ categories }) => {
         categories.map((item) => {
           return (
             <Link
-              href={item.uri.replace("https://photo.paris", "")}
+              href={item.uri
+                .replace("https://photo.paris", "")
+                .replace("?lang=en", "")}
               passHref
               key={`fieler-item-${item.name}`}
             >
@@ -100,7 +102,9 @@ const BlocCategoriesSelector = ({ categories }) => {
                 // onClick={() => updateQuery(item.slug, "categoryIn", router)}
                 className="p-1"
               >
-                <span className={`relative inline-block`}>
+                <span
+                  className={`relative inline-block  transform hover:scale-110 transition-transform`}
+                >
                   <AnimatePresence exitBeforeEnter>
                     {activeCat?.includes(item.slug) && (
                       <motion.span

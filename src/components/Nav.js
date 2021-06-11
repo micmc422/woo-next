@@ -35,12 +35,15 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
       {!sticky && (
         <div className="py-1 text-gray-100 bg-gray-900 md:px-4 ">
           <div className="container flex flex-row items-center justify-between px-4 mx-auto">
-            <div className={`text-xs md:text-base flex flex-row items-center`}>
-              <div className={`pr-1 -mt-px`}>
-                <HiOutlinePhoneOutgoing  />
-              </div>
-
-              <a href="tel:+33156920447">01 56 92 04 47</a>
+            <div
+              className={`transform hover:translate-x-1 transition-transform`}
+            >
+              <a href="tel:+33156920447" className="flex flex-row items-center">
+                <span className={`pr-1 -mt-px`}>
+                  <HiOutlinePhoneOutgoing />
+                </span>
+                <span className="hidden md:block">01 56 92 04 47</span>
+              </a>
             </div>
             <div className={`flex flex-row items-center`}>
               <CouponsNav coupons={coupons} />
@@ -50,7 +53,7 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
               locale={router.locale === "fr" ? "en" : "fr"}
               passHref
             >
-              <a className="flex flex-row items-center w-5 h-5">
+              <a className="flex flex-row items-center w-5 h-5 transition-transform transform hover:scale-110">
                 {router.locale === "fr" ? <FlagFr /> : <FlagEn />}
               </a>
             </Link>
@@ -104,7 +107,7 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
 
           <div className="flex flex-row space-x-4 text-sm font-medium">
             <Search />
-            <div className="block mt-4 mr-10 text-black lg:inline-block lg:mt-0 hover:text-black">
+            <div className="block mt-4 mr-10 text-black transition-transform transform lg:inline-block lg:mt-0 hover:text-black hover:scale-110">
               <CartIcon />
             </div>
           </div>
@@ -124,17 +127,19 @@ const MenuBaseLvl = ({ base, collection }) => {
         <Menu key={uniqueId("label-menu-")}>
           <div className="hidden md:block">
             <Menu.Button>
-              <div className="flex flex-row items-center px-4 py-1">
-                <div className="pt-1 text-left">{label || title}</div>
+              <div className="flex flex-row items-center px-4 py-1 text-gray-500 hover:text-gray-900">
+                <div className="pt-1 font-semibold text-left">
+                  {label || title}
+                </div>
                 <div className="hidden md:block">
                   <ChevronToBot />
                 </div>
               </div>
             </Menu.Button>
           </div>
-          <div className="flex flex-row items-center px-4 py-1 md:hidden">
+          <div className="flex flex-row items-center px-4 py-1 text-gray-500 md:hidden hover:text-gray-900">
             <Link href={formattedUrl} passHref>
-              <a className="pt-1 text-left">{label || title}</a>
+              <a className="pt-1 font-semibold text-left">{label || title}</a>
             </Link>
           </div>
           <Menu.Items>
@@ -146,11 +151,8 @@ const MenuBaseLvl = ({ base, collection }) => {
           <Menu.Items static>
             <Menu.Item>
               <Link href={formattedUrl} passHref>
-                <a className="flex flex-row items-center px-4 py-1">
-                  <div className="pt-1">{label || title}</div>
-                  <div className="hidden transform -rotate-90 md:block">
-                    <ChevronToBot />
-                  </div>
+                <a className="flex flex-row items-center px-4 py-1 text-gray-500 hover:text-gray-900">
+                  <div className="pt-1 font-semibold">{label || title}</div>
                 </a>
               </Link>
             </Menu.Item>

@@ -41,7 +41,7 @@ const CategorieList = ({ navCatData, className }) => {
             animate="isVisible"
             exit="isHidden"
             variants={animationParent}
-            className={`flex flex-col overflow-hidden relative`}
+            className={`flex flex-col relative`}
           >
             {navCatData?.length && <SideNavRoot navCatData={navCatData} />}
           </motion.div>
@@ -61,8 +61,12 @@ const SideNavRoot = ({ navCatData }) => {
 
 const NavRootItem = ({ name, slug, id, children }) => {
   return (
-    <Link href={`/categorie/${slug}`} key={id} passHref>
-      <a className={`p-1 block leading-4`}>{name}</a>
+    <Link href={`/categorie/${slug.replace("?lang=en", "")}`} key={id} passHref>
+      <a
+        className={`p-1 block leading-4  transform hover:scale-110 transition-transform`}
+      >
+        {name}
+      </a>
     </Link>
   );
 };
