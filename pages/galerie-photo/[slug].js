@@ -321,7 +321,7 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
         exit="exit"
         variants={parentAnimation}
         key={uniqueId("details")}
-        className="mx-auto mb-16 prose border border-gray-200 rounded shadow-2xl"
+        className="w-full mx-auto mb-16 prose border border-gray-200 rounded shadow-2xl md:w-1/2"
       >
         <div className="relative overflow-hidden">
           <div className="px-2 bg-gray-200">Tailles :</div>
