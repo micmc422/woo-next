@@ -86,7 +86,7 @@ const CouponsNav = ({ coupons }) => {
             <span className="text-green-500">-{sampleData[0].amount}%</span>
           )}
           &nbsp;
-          <span className={`hidden md:inline`}>{t("avec-code")}</span>
+          <span className={`hidden md:block`}>{t("avec-code")}</span>
           &nbsp;
           <span className={`bg-green-500 rounded-full px-1 my-1`}>
             <span>{sampleData[0].code}</span>

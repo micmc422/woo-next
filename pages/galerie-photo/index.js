@@ -14,7 +14,7 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import nextI18nextConfig from "../../next-i18next.config.js";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
-const fetch = require('@vercel/fetch-retry')(require('node-fetch'))
+const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -37,7 +37,7 @@ export default function Home(props) {
   delete query.category;
   delete query.lang;
   let formattedQuery = new URLSearchParams(query)?.toString();
-const { data, error } = useSWR(
+  const { data, error } = useSWR(
     formattedQuery !== ""
       ? `/api/products/?locale=${locale}&${formattedQuery}`
       : null,
@@ -53,7 +53,6 @@ const { data, error } = useSWR(
       setFilteredProducts(products);
     }
   }, [query, data?.products?.nodes, locale]);
-
   return (
     <Layout menu={menu}>
       <Head>

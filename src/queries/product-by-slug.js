@@ -27,7 +27,7 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       id
       productId: databaseId
       averageRating
-        reviewCount
+      reviewCount
       slug
       shortDescription
       description
@@ -156,11 +156,15 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
 `;
 
 export const PRODUCT_SLUGS = gql`
-  query Products {
-    products(first: 5000) {
+  query Products($after: String) {
+    products(first: 5000, after: $after) {
       nodes {
         id
         slug
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
