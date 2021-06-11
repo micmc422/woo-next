@@ -11,6 +11,7 @@ import { Bouton, ChevronToBot } from "./themeComponents";
 import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 import Search from "./widget/Search";
+import { HiOutlinePhoneOutgoing } from "react-icons/hi";
 import { Spin as Hamburger, Spin } from "hamburger-react";
 import CouponsNav from "./widget/CouponsNav";
 
@@ -35,11 +36,13 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
         <div className="py-1 text-gray-100 bg-gray-900 md:px-4 ">
           <div className="container flex flex-row items-center justify-between px-4 mx-auto">
             <div className={`text-xs md:text-base flex flex-row items-center`}>
+              <div className={`pr-1 -mt-px`}>
+                <HiOutlinePhoneOutgoing  />
+              </div>
+
               <a href="tel:+33156920447">01 56 92 04 47</a>
             </div>
-            <div
-              className={`flex flex-row items-center`}
-            >
+            <div className={`flex flex-row items-center`}>
               <CouponsNav coupons={coupons} />
             </div>
             <Link
@@ -47,8 +50,8 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
               locale={router.locale === "fr" ? "en" : "fr"}
               passHref
             >
-              <a className="self-end w-5 h-5">
-                <span> {router.locale === "fr" ? <FlagFr /> : <FlagEn />}</span>
+              <a className="flex flex-row items-center w-5 h-5">
+                {router.locale === "fr" ? <FlagFr /> : <FlagEn />}
               </a>
             </Link>
           </div>

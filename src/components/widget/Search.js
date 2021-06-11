@@ -1,14 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Result } from "../../../pages/recherche";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const Search = () => {
   const [opened, setOpened] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+  useEffect(() => {
+    opened ? disableBodyScroll(document) : enableBodyScroll(document);
+  }, [opened]);
   return (
     <div className="relative mx-auto text-gray-600">
       <AnimatePresence>
