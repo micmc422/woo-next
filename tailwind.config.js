@@ -7,8 +7,14 @@ module.exports = {
   },
   */
   purge: [
-    "./src/components/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.js",
+    "./pages/**/*.ts",
+    "./pages/**/*.jsx",
+    "./pages/**/*.tsx",
+    "./src/components/**/*.js",
+    "./src/components/**/*.ts",
+    "./src/components/**/*.jsx",
+    "./src/components/**/*.tsx",
   ],
   theme: {
     fontFamily: {
