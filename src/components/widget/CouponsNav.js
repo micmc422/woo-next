@@ -3,6 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiBellFill } from "react-icons/ri";
+import { BgPattern } from "../themeComponents";
 const sampleData = [
   {
     amount: 10,
@@ -54,12 +55,8 @@ const CouponsNav = ({ coupons }) => {
             onClick={() => setOpen(false)}
           >
             <div className="relative px-6 py-4 m-2 mb-4 text-white border-0 rounded shadow-lg bg-brand-500">
-              <div
-                className="absolute inset-0 z-0 transition-all opacity-50 animate-rtl-linear-infinite"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a338' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                }}
-              />
+              <BgPattern color={"c9a338"} />
+
               <div className="relative flex items-center">
                 <span className="inline-block mr-5 text-xl align-middle">
                   <RiBellFill />

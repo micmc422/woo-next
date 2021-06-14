@@ -11,6 +11,8 @@ import CLEAR_CART_MUTATION from "../../../mutations/clear-cart";
 import { isEmpty, uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 import { Cross } from "../../icons";
+import { FaTrashAlt } from "react-icons/fa";
+import { BgPattern } from "../../themeComponents";
 
 const CartItemsContainer = () => {
   const { t } = useTranslation("panier");
@@ -122,13 +124,15 @@ const CartItemsContainer = () => {
           <div className="grid-cols-2 gap-4 cart-header">
             <h1 className="mb-5 text-2xl uppercase">{t("panier")}</h1>
             {/*Clear entire cart*/}
-            <div className="pb-1 text-right clear-cart">
+            <div className="pb-4 text-right clear-cart">
               <button
-                className="w-auto px-4 py-1 text-white bg-gray-500 rounded"
+                className="w-full px-4 py-1 text-white bg-gray-400 rounded md:w-auto"
                 onClick={(event) => handleClearCart(event)}
                 disabled={clearCartProcessing}
               >
-                <span className="woo-next-cart"> {t("viderpanier")}</span>
+                <span className="flex items-center py-2 space-x-2 woo-next-cart">
+                  <FaTrashAlt /> <span>{t("viderpanier")}</span>
+                </span>
                 <i className="fa fa-arrow-alt-right" />
               </button>
               {clearCartProcessing ? <p>{t("vidageencour")}</p> : ""}
@@ -138,14 +142,15 @@ const CartItemsContainer = () => {
           <div className="relative hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4 ">
             <div className="col-span-2">
               <table className="overflow-hidden text-left rounded table-fixed">
-                <thead className="text-left">
+                <thead className="relative text-left">
+                  <BgPattern color={"c9a338"} />
                   <tr className="mb-2 rounded-none rounded-l-lg bg-brand-400">
                     <th className="w-1/12" />
                     <th className="w-1/12" />
                     <th className="w-1/2 p-2">{t("photo")}</th>
                     <th className="w-1/12 p-2">{t("quantite")}</th>
                     <th className="w-1/12 p-2">{t("prix")}</th>
-                    <th className="w-2/12 p-2">{t("total")}</th>
+                    <th className="w-2/12 p-2">{t("soustotal")}</th>
                   </tr>
                 </thead>
                 <tbody className="flex-1 sm:flex-none">
@@ -164,14 +169,15 @@ const CartItemsContainer = () => {
               </table>
             </div>
             {/*Cart Total*/}
-            <div className="p-5 bg-gray-200 border row woo-next-cart-total-container">
-              <div className="">
+            <div className="relative bg-gray-200 border row woo-next-cart-total-container">
+              <BgPattern />
+              <div className="p-5">
                 {/* <h2 className="text-2xl">Cart Total</h2> */}
                 <table className="table mb-5 table-auto table-hover">
                   <tbody>
                     <tr className="flex flex-col table-light">
                       <td className="text-2xl font-normal woo-next-cart-element-total">
-                        {t("soustotal")}
+                        {t("total")}
                       </td>
                       <td className="text-2xl font-bold woo-next-cart-element-amt">
                         <span>
@@ -202,41 +208,46 @@ const CartItemsContainer = () => {
             {cart.products.length &&
               cart.products.map((item) => (
                 <div
-                  className={`relative pt-5 text-xs`}
+                  className={`relative text-xs shadow-lg rounded p-1  bg-gray-100`}
                   key={uniqueId(item.productId)}
                 >
-                  <div
-                    className="absolute top-0 right-0 flex transform scale-90"
-                    onClick={(event) =>
-                      handleRemoveProductClick(
-                        event,
-                        item.cartKey,
-                        cart.products
-                      )
-                    }
-                  >
-                    <span className="mr-1 text-sm text-gray-500">
-                      supprimer
-                    </span>{" "}
-                    <Cross />
-                  </div>
-                  <div className={`flex`}>
-                    <div className="flex-shrink-0 w-1/6 p-1 bg-gray-200">
-                      Nom
+                  <div className={`flex w-full pb-1`}>
+                    <div className="flex-shrink-0 w-1/6 p-1 text-gray-400 bg-gray-200 rounded">
+                      {t("photo")}
                     </div>
-                    <div className="w-5/6 p-1"> {item.name} </div>
+                    <div className="relative flex w-5/6 p-1 font-bold">
+                      <span>{item.name}</span>
+                      <div
+                        className="absolute top-0 right-0 flex transform scale-90"
+                        onClick={(event) =>
+                          handleRemoveProductClick(
+                            event,
+                            item.cartKey,
+                            cart.products
+                          )
+                        }
+                      >
+                        <Cross />
+                      </div>
+                    </div>
                   </div>
-                  <div className={`flex`}>
-                    <div className="w-1/6 p-1 bg-gray-200">quantité</div>
-                    <div className="w-1/6 p-1"> {item.qty} </div>
-                    <div className="w-1/6 p-1 bg-gray-200">prix(1)</div>
-                    <div className="w-1/6 p-1">
+                  <div className={`items-center flex justify-between`}>
+                    <div className="p-1 text-gray-400 bg-gray-200 rounded">
+                      {t("quantite")}
+                    </div>
+                    <div className="p-1 font-bold"> {item.qty} </div>
+                    <div className="p-1 text-gray-400 bg-gray-200 rounded">
+                      {t("prix")}
+                    </div>
+                    <div className="p-1 font-bold">
                       {"string" !== typeof item.price
                         ? item.price.toFixed(2)
                         : item.price}
                     </div>
-                    <div className="w-1/6 p-1 bg-brand-400">total</div>
-                    <div className="w-1/6 p-1">
+                    <div className="p-1 text-gray-400 bg-gray-200 rounded">
+                      {t("soustotal")}
+                    </div>
+                    <div className="p-1 font-bold">
                       {"string" !== typeof item.totalPrice
                         ? item.totalPrice.toFixed(2)
                         : item.totalPrice}
@@ -245,7 +256,7 @@ const CartItemsContainer = () => {
                 </div>
               ))}
             <span className="block pt-4 text-right">
-              Total commande :{" "}
+              {t("total")} :{" "}
               {"string" !== typeof cart.totalProductsPrice
                 ? cart.totalProductsPrice.toFixed(2)
                 : cart.totalProductsPrice}
