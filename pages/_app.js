@@ -22,11 +22,26 @@ function MyApp({ Component, pageProps }) {
           color: "#fff",
           fontSize: "13px",
           borderRadius: "50px",
+          boxShadow: "1px 0px 3px #9CA3AF",
         }}
-        containerClasses="bg-gray-900"
-        contentClasses="container mx-auto"
+        style={{
+          background: "#fff",
+          color: "#000",
+          border: "1px #D1D5DB",
+          borderRadius: ".5rem",
+          margin: ".5rem",
+          boxShadow: "1px 0px 8px #4B5563",
+          width: "calc(100% - 2rem)",
+          maxWidth: "800px",
+          left: "calc(50% - .5rem - 1px)",
+          transform: "translateX(-50%)",
+        }}
+        // containerClasses="bg-gray-900"
+        contentClasses="container mr-1 w-full"
       >
-        This website uses cookies to enhance the user experience.
+        <div className="" style={{ maxWidth: "calc(100% - 3rem)" }}>
+          This website uses cookies to enhance the user experience.
+        </div>
       </CookieConsent>
       <Component {...pageProps} />
     </>
