@@ -122,9 +122,9 @@ const CartItemsContainer = () => {
           <div className="grid-cols-2 gap-4 cart-header">
             <h1 className="mb-5 text-2xl uppercase">{t("panier")}</h1>
             {/*Clear entire cart*/}
-            <div className="text-right clear-cart">
+            <div className="pb-1 text-right clear-cart">
               <button
-                className="w-auto px-4 py-1 text-white bg-gray-500 rounded-sm"
+                className="w-auto px-4 py-1 text-white bg-gray-500 rounded"
                 onClick={(event) => handleClearCart(event)}
                 disabled={clearCartProcessing}
               >
@@ -135,17 +135,17 @@ const CartItemsContainer = () => {
               {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
             </div>
           </div>
-          <div className="relative hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4">
+          <div className="relative hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4 ">
             <div className="col-span-2">
-              <table className="text-left table-fixed">
+              <table className="overflow-hidden text-left rounded table-fixed">
                 <thead className="text-left">
                   <tr className="mb-2 rounded-none rounded-l-lg bg-brand-400">
-                    <th className="w-1/12 p-3" />
-                    <th className="w-1/12 p-3" />
-                    <th className="w-1/2 p-3">{t("photo")}</th>
-                    <th className="w-1/12 p-3">{t("quantite")}</th>
-                    <th className="w-1/12 p-3">{t("prix")}</th>
-                    <th className="w-2/12 p-3">{t("total")}</th>
+                    <th className="w-1/12" />
+                    <th className="w-1/12" />
+                    <th className="w-1/2 p-2">{t("photo")}</th>
+                    <th className="w-1/12 p-2">{t("quantite")}</th>
+                    <th className="w-1/12 p-2">{t("prix")}</th>
+                    <th className="w-2/12 p-2">{t("total")}</th>
                   </tr>
                 </thead>
                 <tbody className="flex-1 sm:flex-none">

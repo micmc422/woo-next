@@ -31,7 +31,7 @@ const CartItem = ({
       }
 
       // If the user tries to delete the count of product, set that to 1 by default ( This will not allow him to reduce it less than zero )
-      const newQty = event.target.value ? parseInt(event.target.value) : 1;
+      const newQty = event.target.value ? parseInt(event.target.value) : parseInt(event.target.value);
 
       // Set the new qty in state.
       setProductCount(newQty);
@@ -52,18 +52,18 @@ const CartItem = ({
   };
   return (
     <tr className="flex flex-col mb-2 bg-white rounded-l-lg flex-nowrap sm:table-row sm:rounded-none sm:mb-0">
-      <th className="w-8 p-3 text-red-400 border cursor-pointer border-grey-light hover:bg-gray-100 hover:text-red-600 hover:font-medium">
+      <th className="w-2 text-red-400 border cursor-pointer border-grey-light hover:bg-gray-100 hover:text-red-600 hover:font-medium">
         {/* Remove item */}
-        <span
-          className="cursor-pointer woo-next-cart-close-icon"
+        <div
+          className="flex justify-center cursor-pointer woo-next-cart-close-icon"
           onClick={(event) =>
             handleRemoveProductClick(event, item.cartKey, products)
           }
         >
           <Cross />
-        </span>
+        </div>
       </th>
-      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
+      <th className="truncate border border-grey-light hover:bg-gray-100">
         <div className="relative w-32 h-24">
           <Image
             layout="fill"
@@ -73,25 +73,25 @@ const CartItem = ({
           />
         </div>
       </th>
-      <th className="p-3 border border-grey-light hover:bg-gray-100 w-44 ">
+      <th className="px-4 border border-grey-light hover:bg-gray-100 w-44">
         {item.name}
       </th>
-      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
+      <th className="px-1 truncate border border-grey-light hover:bg-gray-100">
         <input
           type="number"
           min="1"
           data-cart-key={item.cartKey}
-          className={`w-8 ${
+          className={`w-full text-center ${
             updateCartProcessing ? "opacity-25 cursor-not-allowed" : ""
           } `}
           value={productCount}
           onChange={(event) => handleQtyChange(event, item.cartKey)}
         />
       </th>
-      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
+      <th className="px-1 text-center truncate border border-grey-light hover:bg-gray-100">
         {item.price.toFixed(2)}€
       </th>
-      <th className="p-3 truncate border border-grey-light hover:bg-gray-100">
+      <th className="px-1 text-center truncate border border-grey-light hover:bg-gray-100">
         {"string" !== typeof item.totalPrice
           ? item.totalPrice.toFixed(2)
           : item.totalPrice}
