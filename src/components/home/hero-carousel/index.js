@@ -24,10 +24,11 @@ const HeroCarousel = ({ heroCarousel }) => {
   /**
    * Change to next slide.
    */
-  const nextSlide = () => {
+  const nextSlide = (dragX = 0) => {
     if (1 === heroCarousel.length) {
       return null;
     }
+    setXT(dragX);
 
     /**
      * If if autoplay is set to true
@@ -47,10 +48,11 @@ const HeroCarousel = ({ heroCarousel }) => {
     setSlide(slideRef.current);
   };
 
-  const prevSlide = () => {
+  const prevSlide = (dragX = 0) => {
     if (1 === heroCarousel.length) {
       return null;
     }
+    setXT(dragX);
 
     /**
      * If if autoplay is set to true
@@ -85,12 +87,11 @@ const HeroCarousel = ({ heroCarousel }) => {
   ];
 
   const handleDrag = (event, info) => {
-    setXT(info.offset.x);
     if (info.offset.x === 0) return;
     if (info.offset.x > 0) {
-      nextSlide();
+      nextSlide(info.offset.x);
     } else {
-      prevSlide();
+      prevSlide(info.offset.x);
     }
   };
   return (

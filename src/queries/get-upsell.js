@@ -32,7 +32,7 @@ const GET_UPSELL_QUERY = gql`
         tagIn: $tagIn
         maxPrice: $maxPrice
         minPrice: $minPrice
-        orderby: { order: ASC, field: TOTAL_SALES }
+        orderby: { order: DESC, field: TOTAL_SALES }
       }
     ) {
       nodes {

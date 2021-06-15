@@ -234,6 +234,33 @@ const HomePageSection = ({ homepage, products }) => {
           </div>
         );
       }
+      if (
+        attribs?.class?.includes("vc_row wpb_row vc_row-fluid") &&
+        attribs?.class?.includes(
+          "vc_row-no-padding vc_row-o-equal-height vc_row-o-content-middle vc_row-flex"
+        )
+      ) {
+        return (
+          <div className="container flex flex-col items-center px-4 md:flex-row md:space-x-12">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
+      if (
+        attribs?.class?.includes(
+          "vc_row wpb_row vc_inner vc_row-fluid vc_custom_1595971649946 vc_column-gap-15 vc_row-o-equal-height vc_row-o-content-middle vc_row-flex responsive_js_composer_custom_css_1291628821"
+        )
+      ) {
+        return (
+          <div className="flex flex-col flex-wrap items-stretch justify-around w-full mx-auto sm:flex-row">
+            {domToReact(children, defaultOptions)}
+          </div>
+        );
+      }
+
+      if (attribs?.class?.includes("vc_row wpb_row vc_row-fluid")) {
+        return <div className="">{domToReact(children, defaultOptions)}</div>;
+      }
       if (attribs?.class?.includes("wpb_row")) {
         return (
           <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl mx-auto sm:flex-row">
@@ -244,6 +271,13 @@ const HomePageSection = ({ homepage, products }) => {
       if (attribs?.class?.includes("product-info-wrap")) {
         return (
           <div className="px-4">{domToReact(children, defaultOptions)}</div>
+        );
+      }
+      if (attribs?.class?.includes("wpb_wrapper")) {
+        return (
+          <div className="flex flex-col justify-between h-full">
+            {domToReact(children, defaultOptions)}
+          </div>
         );
       }
       if (attribs?.class?.includes("short-desc")) {
@@ -358,30 +392,21 @@ const HomePageSection = ({ homepage, products }) => {
       if (
         (attribs?.class?.includes("vc_row") ||
           attribs?.class?.includes("wpb_row")) &&
-        attribs?.class?.includes("vc_inner ")
-      ) {
-        return (
-          <div className="container flex flex-col flex-wrap items-center max-w-screen-xl mx-auto md:flex-row xl:flex-nowrap lg:space-x-12">
-            {domToReact(children, defaultOptions)}
-          </div>
-        );
-      }
-      if (
-        (attribs?.class?.includes("vc_row") ||
-          attribs?.class?.includes("wpb_row")) &&
         !attribs?.class?.includes("vc_inner ")
       ) {
         if (children.length === 0) {
           return null;
         }
         return (
-          <div className="flex flex-col items-center px-4 md:flex-row md:space-x-12">
+          <div className="container flex flex-col items-center px-4 md:flex-row md:space-x-12">
             {domToReact(children, defaultOptions)}
           </div>
         );
       }
       if (attribs?.class?.includes("vc_column-inner")) {
-        return <div className="">{domToReact(children, defaultOptions)}</div>;
+        return (
+          <div className="h-full ">{domToReact(children, defaultOptions)}</div>
+        );
       }
 
       if (attribs?.class?.includes("ciloe-single-product")) {
@@ -434,7 +459,7 @@ const HomePageSection = ({ homepage, products }) => {
       ) {
         return (
           <div
-            className={`${
+            className={` px-2 ${
               attribs?.class.includes("vc_col-sm-12 vc_col-lg-3 vc_col-md-3")
                 ? "w-full lg:w-1/4 md:w-1/2 "
                 : attribs?.class.includes("vc_col-sm-3")
