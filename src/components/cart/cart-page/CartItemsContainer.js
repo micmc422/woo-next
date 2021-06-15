@@ -13,12 +13,15 @@ import { useTranslation } from "react-i18next";
 import { Cross } from "../../icons";
 import { FaTrashAlt } from "react-icons/fa";
 import { BgPattern } from "../../themeComponents";
+import Image from "next/image";
+import CartUpsell from "./CartUpsell";
 
 const CartItemsContainer = () => {
   const { t } = useTranslation("panier");
   // @TODO wil use it in future variations of the project.
   const [cart, setCart] = useContext(AppContext);
   const [requestError, setRequestError] = useState(null);
+  const [upsell, setUpsell] = useState([]);
 
   // Get Cart Data.
   const { loading, error, data, refetch } = useQuery(GET_CART, {
@@ -116,13 +119,15 @@ const CartItemsContainer = () => {
       },
     });
   };
-
+  //  console.log(cart)
   return (
-    <div className="container px-4 mx-auto my-8 md:my-32 cart product-cart-container xl:px-0">
+    <div className="container px-4 mx-auto mt-8 cart product-cart-container xl:px-0">
       {cart ? (
         <div className="container woo-next-cart-wrapper">
           <div className="grid-cols-2 gap-4 cart-header">
-            <h1 className="mb-5 text-2xl uppercase">{t("panier")}</h1>
+            <h1 className="mb-5 text-6xl uppercase md:text-8xl">
+              {t("panier")}
+            </h1>
             {/*Clear entire cart*/}
             <div className="pb-4 text-right clear-cart">
               <button
@@ -130,10 +135,9 @@ const CartItemsContainer = () => {
                 onClick={(event) => handleClearCart(event)}
                 disabled={clearCartProcessing}
               >
-                <span className="flex items-center py-2 space-x-2 woo-next-cart">
+                <span className="flex items-center py-2 space-x-2 text-center woo-next-cart">
                   <FaTrashAlt /> <span>{t("viderpanier")}</span>
                 </span>
-                <i className="fa fa-arrow-alt-right" />
               </button>
               {clearCartProcessing ? <p>{t("vidageencour")}</p> : ""}
               {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
@@ -141,10 +145,10 @@ const CartItemsContainer = () => {
           </div>
           <div className="relative hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4 ">
             <div className="col-span-2">
-              <table className="overflow-hidden text-left rounded table-fixed">
+              <table className="overflow-hidden text-left rounded table-fixed ring-1 ring-gray-200">
                 <thead className="relative text-left">
                   <BgPattern color={"c9a338"} />
-                  <tr className="mb-2 rounded-none rounded-l-lg bg-brand-400">
+                  <tr className="mb-2 bg-brand-400">
                     <th className="w-1/12" />
                     <th className="w-1/12" />
                     <th className="w-1/2 p-2">{t("photo")}</th>
@@ -153,7 +157,7 @@ const CartItemsContainer = () => {
                     <th className="w-2/12 p-2">{t("soustotal")}</th>
                   </tr>
                 </thead>
-                <tbody className="flex-1 sm:flex-none">
+                <tbody className="flex-1 m-px sm:flex-none">
                   {cart.products.length &&
                     cart.products.map((item) => (
                       <CartItem
@@ -211,24 +215,32 @@ const CartItemsContainer = () => {
                   className={`relative text-xs shadow-lg rounded p-1  bg-gray-100`}
                   key={uniqueId(item.productId)}
                 >
-                  <div className={`flex w-full pb-1`}>
+                  <div className={`flex w-full mb-2 h-48 relative`}>
+                    <Image
+                      layout="fill"
+                      objectFit="cover"
+                      src={item.image.sourceUrl}
+                      alt={item.image.title}
+                    />
+                    <div
+                      className="absolute top-0 right-0 flex transform scale-90"
+                      onClick={(event) =>
+                        handleRemoveProductClick(
+                          event,
+                          item.cartKey,
+                          cart.products
+                        )
+                      }
+                    >
+                      <Cross />
+                    </div>
+                  </div>
+                  <div className={`flex w-full mb-1`}>
                     <div className="flex-shrink-0 w-1/6 p-1 text-gray-400 bg-gray-200 rounded">
                       {t("photo")}
                     </div>
                     <div className="relative flex w-5/6 p-1 font-bold">
                       <span>{item.name}</span>
-                      <div
-                        className="absolute top-0 right-0 flex transform scale-90"
-                        onClick={(event) =>
-                          handleRemoveProductClick(
-                            event,
-                            item.cartKey,
-                            cart.products
-                          )
-                        }
-                      >
-                        <Cross />
-                      </div>
                     </div>
                   </div>
                   <div className={`items-center flex justify-between`}>
@@ -256,10 +268,12 @@ const CartItemsContainer = () => {
                 </div>
               ))}
             <span className="block pt-4 text-right">
-              {t("total")} :{" "}
-              {"string" !== typeof cart.totalProductsPrice
-                ? cart.totalProductsPrice.toFixed(2)
-                : cart.totalProductsPrice}
+              <span className="text-gray-500">{t("total")} : </span>
+              <span className="font-extrabold">
+                {"string" !== typeof cart.totalProductsPrice
+                  ? cart.totalProductsPrice.toFixed(2)
+                  : cart.totalProductsPrice}
+              </span>
             </span>
             <Link href="/checkout">
               <button className="w-auto px-5 py-3 mt-5 text-white rounded-sm bg-brand-500 xl:w-full">
