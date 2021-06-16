@@ -101,6 +101,8 @@ const LargeSlider = ({ products, cover }) => {
   const { image, id, name, title, slug, featuredImage, price } = products[
     activeIndex
   ];
+ // console.log(name || title);
+
   return (
     <div
       onMouseEnter={() => setAutoPlay(false)}
@@ -156,6 +158,7 @@ const LargeSlider = ({ products, cover }) => {
               src={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
               srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
               layout="fill"
+              alt={name || title}
               objectFit={cover ? "contain" : "cover"}
               className="pointer-events-none"
             />

@@ -87,6 +87,7 @@ export default function Product(props) {
             <ImageContainer
               imgarray={[...product.galleryImages.nodes, product?.image]}
               slug={product.slug}
+              name={product.name || product.title}
             />
             <div className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
               <motion.div

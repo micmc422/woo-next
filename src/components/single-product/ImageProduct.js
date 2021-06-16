@@ -33,7 +33,7 @@ const ImageProduct = ({
       <Image
         className="object-cover object-center w-full rounded lg:w-4/5"
         src={sourceUrl ? sourceUrl : mediaItemUrl}
-        alt="Product Image"
+        alt={slug}
         height={height}
         width={width}
         onLoad={(event) => {
@@ -80,6 +80,7 @@ const ImageContainer = ({ imgarray }) => {
 
 const Vignettes = ({
   img: {
+    slug, title,name,
     id,
     sourceUrl,
     mediaItemUrl,
@@ -109,7 +110,7 @@ const Vignettes = ({
       <Image
         className=""
         src={sourceUrl ? sourceUrl : mediaItemUrl}
-        alt="Product Image"
+        alt={name || title || slug || "paris est une photo"}
         layout="fill"
         objectFit="cover"
         objectPosition=" center center"

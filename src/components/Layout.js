@@ -53,6 +53,7 @@ const Layout = (props) => {
               src="/logo_black_old.png"
               layout="fill"
               objectFit="contain"
+              alt="paris est une photo logo filigrane"
             />
           </motion.div>
           {props.children}

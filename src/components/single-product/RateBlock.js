@@ -150,6 +150,7 @@ const RateReviewsPopUp = ({ setReviews, product }) => {
             src={product?.image.sourceUrl}
             layout="fill"
             objectFit="none"
+            alt={(product.name || product.title)}
           />
         </div>
         <div className="flex flex-col items-center w-full px-4 py-5 bg-white md:w-1/2 md:py-8">

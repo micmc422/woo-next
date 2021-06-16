@@ -27,17 +27,21 @@ const CartUpsell = () => {
   return (
     <>
       <div className="p-4">
+      </div>
+      <div className="flex">
+        <div className="w-full md:w-1/2">
         <Bouton small circleClass="bg-brand-500">
           <h2 className="text-4xl">Suggestions</h2>
         </Bouton>
         <p className="font-serif">Suggestions, de produits.</p>
-      </div>
-      <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-4 xl:grid-cols-8">
-        {upsellProducts.length
-          ? upsellProducts.map((product) => (
-              <Product key={product.id} product={product} noName />
-            ))
-          : ""}
+        </div>
+        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:w-1/2">
+          {upsellProducts.length
+            ? upsellProducts.map((product) => (
+                <Product key={product.id} product={product} noName />
+              ))
+            : ""}
+        </div>
       </div>
     </>
   );

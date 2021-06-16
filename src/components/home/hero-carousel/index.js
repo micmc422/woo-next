@@ -121,10 +121,11 @@ const HeroCarousel = ({ heroCarousel }) => {
           >
             <Image
               src={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
-              srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
+              // srcSet={image ? image?.srcSet : featuredImage.node.srcSet}
               layout="fill"
               objectfill="cover"
               className="pointer-events-none"
+              alt={title}
             />
           </motion.div>
         </AnimatePresence>

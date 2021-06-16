@@ -218,7 +218,7 @@ const ResItem = ({
             <ImageWithFallback
               src={imageUrlPrimaire}
               slug={slug}
-              alt="Product image"
+              alt={name}
               layout="fill"
               objectfit={"cover"}
             />

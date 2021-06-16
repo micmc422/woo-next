@@ -38,7 +38,7 @@ const ImageWithFallback = (props) => {
       <Image
         objectFit={objectfit}
         src={imgSrc}
-        alt={alt}
+        alt={alt || "paris est une photo"}
         layout="fill"
         onLoad={(event) => {
           const target = event.target;

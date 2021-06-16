@@ -131,7 +131,7 @@ const ParentCategoryBlock = (props) => {
                   containerClassNames="w-full h-64 md:h-96 max-w-full"
                   sourceUrl={images[slide] ?? ""}
                   defaultImgUrl={DEFAULT_CATEGORY_IMG_URL}
-                  altText={category?.image?.altText ?? category.slug}
+                  alt={category?.image?.altText ?? category.slug}
                 />
               </motion.div>
             </AnimatePresence>

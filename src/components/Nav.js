@@ -72,6 +72,7 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
                 src={"/logo@2x.png"}
                 width={sticky ? 120 * 0.75 : 120}
                 height={sticky ? 50 * 0.75 : 50}
+                alt="Paris est une photo"
               />
             </a>
           </Link>
@@ -347,7 +348,7 @@ const defaultOptions = {
     if (name === "img") {
       return (
         <div className="relative w-full transition-transform duration-300 h-36 hover:scale-105 transform-gpu">
-          <Image src={attribs["data-src"]} layout="fill" objectFit="cover" />
+          <Image src={attribs["data-src"]} layout="fill" objectFit="cover" alt={attribs.alt} />
         </div>
       );
     }
