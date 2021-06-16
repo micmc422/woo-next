@@ -130,7 +130,7 @@ const HeroCarousel = ({ heroCarousel }) => {
           </motion.div>
         </AnimatePresence>
         <div className="slider-button">
-          <button className="focus:outline-none" onClick={prevSlide}>
+          <button className="focus:outline-none" onClick={prevSlide} aria-label="précédent">
             <svg
               width="25px"
               className="inline-block mr-3"
@@ -147,7 +147,7 @@ const HeroCarousel = ({ heroCarousel }) => {
               />
             </svg>
           </button>
-          <button className="focus:outline-none" onClick={nextSlide}>
+          <button className="focus:outline-none" onClick={nextSlide}aria-label="suivant">
             <svg
               width="25px"
               className="inline-block"

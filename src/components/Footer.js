@@ -42,7 +42,7 @@ const Footer = ({ footer }) => {
                   className="p-4 mr-0 text-gray-800 bg-white border-t border-b border-l rounded-l-lg focus:outline-none"
                   placeholder="votre@mail.com"
                 />
-                <button className="p-4 px-8 font-bold text-gray-800 uppercase rounded-r-lg bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none">
+                <button className="p-4 px-8 font-bold text-gray-800 uppercase rounded-r-lg bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none" aria-label="Abonnement à la newsletter">
                   ABONNEZ-VOUS
                 </button>
               </form>

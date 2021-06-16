@@ -84,7 +84,12 @@ const Nav = ({ menu, translations, sticky, coupons }) => {
             onClick={() => setMenuVisibility(!isMenuVisible)}
             className="flex items-center p-1 text-black focus:outline-none"
           >
-            <Spin toggled={isOpen} toggle={setOpen} size={20} />
+            <Spin
+              toggled={isOpen}
+              toggle={setOpen}
+              size={20}
+              label="ouvrir le menu"
+            />
           </button>
         </div>
         <AnimatePresence>
@@ -348,7 +353,12 @@ const defaultOptions = {
     if (name === "img") {
       return (
         <div className="relative w-full transition-transform duration-300 h-36 hover:scale-105 transform-gpu">
-          <Image src={attribs["data-src"]} layout="fill" objectFit="cover" alt={attribs.alt} />
+          <Image
+            src={attribs["data-src"]}
+            layout="fill"
+            objectFit="cover"
+            alt={attribs.alt}
+          />
         </div>
       );
     }

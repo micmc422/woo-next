@@ -106,7 +106,7 @@ const QueryResponse = ({ search }) => {
             </h2>
             <div className="w-2/5 md:pl-6">
               <div className="flex mt-6 md:mt-4">
-                <button className="inline-flex px-4 py-1 text-white border-0 rounded bg-brand-500 focus:outline-none hover:bg-brand-600">
+                <button className="inline-flex px-4 py-1 text-white border-0 rounded bg-brand-500 focus:outline-none hover:bg-brand-600" aria-label="Essayer sur la page de recherche">
                   Essayer sur la page de recherche
                 </button>
               </div>

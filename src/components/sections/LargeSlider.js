@@ -120,9 +120,6 @@ const LargeSlider = ({ products, cover }) => {
     });
     setPagination(liProd);
   };
-  if (!pagination && products.length) {
-    showPagination();
-  }
 
   return (
     <div
@@ -186,7 +183,7 @@ const LargeSlider = ({ products, cover }) => {
           </motion.div>
         </AnimatePresence>
         <div className="slider-button">
-          <button className="focus:outline-none" onClick={prevSlide}>
+          <button className="focus:outline-none" onClick={prevSlide}aria-label="précédent">
             <svg
               width="25px"
               className="inline-block mr-3"
@@ -203,7 +200,7 @@ const LargeSlider = ({ products, cover }) => {
               />
             </svg>
           </button>
-          <button className="focus:outline-none" onClick={nextSlide}>
+          <button className="focus:outline-none" onClick={nextSlide} aria-label="suivant">
             <svg
               width="25px"
               className="inline-block"

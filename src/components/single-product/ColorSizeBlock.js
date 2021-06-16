@@ -12,7 +12,7 @@ const ColorSizeBlock = ({
   const cadresVal = ["Frame", "Cadre"];
   return (
     <div className="flex items-center pb-5 mt-6 mb-5 border-b-2 border-gray-100">
-      {colors && (
+      { colors && (
         <div className="flex">
           <span className="mr-3">Color</span>
           <button className="w-6 h-6 border-2 border-gray-300 rounded-full focus:outline-none"></button>
