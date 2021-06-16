@@ -37,12 +37,12 @@ const Footer = ({ footer }) => {
               recevez une fois par mois les actus de la galerie
             </p>
             <div className="self-end">
-              <form class="mt-4 flex shadow w-auto">
+              <form className="flex w-auto mt-4 shadow">
                 <input
-                  class="rounded-l-lg p-4 border-t mr-0 border-b border-l text-gray-800 bg-white focus:outline-none"
+                  className="p-4 mr-0 text-gray-800 bg-white border-t border-b border-l rounded-l-lg focus:outline-none"
                   placeholder="votre@mail.com"
                 />
-                <button class="px-8 rounded-r-lg bg-brand-400 hover:bg-brand-500  text-gray-800 font-bold p-4 uppercase ring-brand-500 focus:outline-none">
+                <button className="p-4 px-8 font-bold text-gray-800 uppercase rounded-r-lg bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none">
                   ABONNEZ-VOUS
                 </button>
               </form>
