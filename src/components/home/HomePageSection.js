@@ -369,7 +369,7 @@ const HomePageSection = ({ homepage, products }) => {
         const parsedHref = href?.replace("https://photo.paris", "");
         return (
           <Link href={parsedHref} passHref>
-            <a className="">{domToReact(children, defaultOptions)}</a>
+            <a className={href}>{domToReact(children, defaultOptions)}</a>
           </Link>
         );
       }

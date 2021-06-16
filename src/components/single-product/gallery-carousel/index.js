@@ -61,7 +61,7 @@ const GalleryCarousel = ({ gallery }) => {
         })}
         <div className="slider-button">
           <button
-            className="focus:outline-none"
+            className="w-12 h-12 focus:outline-none"
             onClick={nextSlide}
             aria-label="suivant"
           >
@@ -82,7 +82,7 @@ const GalleryCarousel = ({ gallery }) => {
             </svg>
           </button>
           <button
-            className="focus:outline-none"
+            className="w-12 h-12 focus:outline-none"
             onClick={nextSlide}
             aria-label="suivant"
           >

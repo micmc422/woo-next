@@ -183,7 +183,7 @@ const LargeSlider = ({ products, cover }) => {
           </motion.div>
         </AnimatePresence>
         <div className="slider-button">
-          <button className="focus:outline-none" onClick={prevSlide}aria-label="précédent">
+          <button className="w-12 h-12 focus:outline-none" onClick={prevSlide}aria-label="précédent">
             <svg
               width="25px"
               className="inline-block mr-3"
@@ -200,7 +200,7 @@ const LargeSlider = ({ products, cover }) => {
               />
             </svg>
           </button>
-          <button className="focus:outline-none" onClick={nextSlide} aria-label="suivant">
+          <button className="w-12 h-12 focus:outline-none" onClick={nextSlide} aria-label="suivant">
             <svg
               width="25px"
               className="inline-block"
