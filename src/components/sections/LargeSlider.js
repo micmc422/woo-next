@@ -12,6 +12,7 @@ const LargeSlider = ({ products, cover }) => {
   }
   const emptyArray = [...Array(products.length).keys()];
   const [xTransition, setXT] = useState(0);
+  const [pagination, setPagination] = useState("");
   const [autoPlay, setAutoPlay] = useState(true);
   const slideDuration = 6; // in seconds
   const activeIndexRef = useRef({ activeIndex: 0 });
@@ -22,6 +23,7 @@ const LargeSlider = ({ products, cover }) => {
   /**
    * Change to next slide.
    */
+
   const nextSlide = () => {
     if (1 === products.length) {
       return null;
@@ -88,6 +90,9 @@ const LargeSlider = ({ products, cover }) => {
       prevSlide();
     }
   };
+  useEffect(() => {
+    showPagination();
+  }, [slideRef.current]);
 
   useEffect(() => {
     if (autoPlay) {
@@ -101,7 +106,23 @@ const LargeSlider = ({ products, cover }) => {
   const { image, id, name, title, slug, featuredImage, price } = products[
     activeIndex
   ];
- // console.log(name || title);
+  // console.log(name || title);
+  const showPagination = () => {
+    const liProd = [];
+    products.map((p, i) => {
+      liProd.push(
+        <RoundedCounter
+          onClick={() => goToSlide(i)}
+          key={uniqueId()}
+          slide={slide === i}
+        />
+      );
+    });
+    setPagination(liProd);
+  };
+  if (!pagination && products.length) {
+    showPagination();
+  }
 
   return (
     <div
@@ -207,18 +228,7 @@ const LargeSlider = ({ products, cover }) => {
             className="flex flex-row justify-center pb-2 space-x-2 align-middle"
             layout
           >
-            {emptyArray.length &&
-              emptyArray.map((item, i) => {
-                return (
-                  <RoundedCounter
-                    key={uniqueId()}
-                    products={products}
-                    slide={slide === i}
-                    goToSlide={goToSlide}
-                    i={i}
-                  />
-                );
-              })}
+            {pagination}
           </motion.ul>
         </AnimateSharedLayout>
       </div>
@@ -226,9 +236,11 @@ const LargeSlider = ({ products, cover }) => {
   );
 };
 
-function RoundedCounter({ slide, goToSlide, i }) {
+function RoundedCounter(props) {
+  // console.log(setSlide);
+  const { slide } = props;
   return (
-    <div onClick={() => goToSlide(i)}>
+    <div {...props}>
       <div
         className={`relative transition-colors w-3 h-3 ${
           slide ? "bg-gray-200" : "bg-gray-300"

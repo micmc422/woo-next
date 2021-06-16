@@ -11,8 +11,10 @@ import { GET_PAGE_BY_URI } from "../src/queries/get-pages";
 import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useState } from "react";
 
 export default function Home(props) {
+  const [productsList, setProductsList] = useState("");
   const {
     products,
     productCategories,
@@ -22,8 +24,20 @@ export default function Home(props) {
     homepage,
     seoHead,
     seoSchema,
-    footer, coupons,
+    footer,
+    coupons,
   } = props;
+
+  const showProducts = () => {
+    const liProd = [];
+    products.map((p) => {
+      liProd.push(<Product key={p.id} product={p} />);
+    });
+    setProductsList(liProd);
+  };
+  if (!productsList && products.length) {
+    showProducts();
+  }
   const seoData = seoHead && parse(seoHead);
   return (
     <Layout menu={menu} footer={footer} coupons={coupons}>
@@ -47,11 +61,7 @@ export default function Home(props) {
           <span className="main-title-inner">Products</span>
         </h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-          {products.length
-            ? products.map((product) => (
-                <Product key={product.id} product={product} />
-              ))
-            : ""}
+          {productsList}
         </div>
       </div>
     </Layout>
