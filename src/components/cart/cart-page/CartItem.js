@@ -52,7 +52,6 @@ const CartItem = ({
       }
     }
   };
-  console.log((item))
   return (
     <tr className="flex flex-col mb-2 bg-white border-t border-gray-200 rounded-l-lg flex-nowrap sm:table-row sm:rounded-none sm:mb-0">
       <th className="w-2 text-red-400 cursor-pointer hover:bg-gray-100 hover:text-red-600 hover:font-medium">

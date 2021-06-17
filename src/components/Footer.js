@@ -102,7 +102,6 @@ const Legal = ({ legal }) => {
   const Construct = () => {
     const jsxArray = [];
     legal.map((el, i) => {
-      console.log(el);
       jsxArray.push(
         <Link href={el.path} key={i} passHref>
           <a className="text-gray-400 transition transform hover:-translate-y-1">

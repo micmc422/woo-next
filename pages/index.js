@@ -28,7 +28,7 @@ export default function Home(props) {
     legal,
     coupons,
   } = props;
-  console.log(legal);
+ // console.log(legal);
   const showProducts = () => {
     const liProd = [];
     products.map((p) => {

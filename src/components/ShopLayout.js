@@ -138,12 +138,10 @@ const replaceQuery = (name, key, router, pageLength, executeScroll) => {
   }
   if (key === "category") {
   }
-  console.log(theQuery["category"]);
   if (isArray(theQuery["category"])) {
     theQuery["category"] =
       theQuery["category"][theQuery["category"]?.length - 1];
   }
-  console.log(theQuery["category"]);
   const options = { scroll: false };
   const formattedQuery = new URLSearchParams(theQuery).toString();
   router.push(

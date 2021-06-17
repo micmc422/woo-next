@@ -104,7 +104,6 @@ const AddToCart = (props) => {
 
       // On Success:
       // 1. Make the GET_CART query to update the cart with new values in React context.
-      console.log("add");
       setOpen(true);
       refetch();
 

@@ -52,9 +52,6 @@ export default function CategorySingle(props) {
   const asQuery =
     query?.category?.length > 0 &&
     formattedQuery !== `category=${slugify(categoryName).toLowerCase()}`;
-  console.log(
-    formattedQuery !== `category=${slugify(categoryName).toLowerCase()}`
-  );
   const { data, error } = useSWR(
     asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher

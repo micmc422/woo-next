@@ -403,7 +403,6 @@ export async function getStaticPaths() {
     });
   dataEn?.products?.nodes &&
     dataEn?.products?.nodes.map(({ slug }) => {
-      console.log(slug);
       if (!isEmpty(slug)) {
         pathsData.push({
           params: {
