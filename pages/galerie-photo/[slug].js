@@ -53,7 +53,7 @@ const childAnimation = {
 export default function Product(props) {
   const { t } = useTranslation("shop");
 
-  const { product, menu, footer, coupons } = props;
+  const { product, menu, footer, coupons, legal } = props;
   // console.log(coupons);
   const tmp = product?.variations?.nodes.slice();
   const orderredVariations = tmp?.sort(
@@ -76,7 +76,7 @@ export default function Product(props) {
     return <Loading />;
   }
   return (
-    <Layout menu={menu} footer={footer} coupons={coupons}>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
         {seoData ? seoData : ""}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -368,6 +368,7 @@ export async function getStaticProps(context) {
   return {
     props: {
       menu,
+      legal: data?.legalmenu?.menuItems?.nodes || [],
       product: data?.product,
       footer: data?.getFooter,
       coupons: data?.coupons.nodes,

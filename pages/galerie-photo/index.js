@@ -29,6 +29,9 @@ export default function Home(props) {
     menu,
     seoHead,
     seoSchema,
+    legal,
+    footer,
+    coupons
   } = props;
   const seoData = seoHead && parse(seoHead);
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -54,7 +57,7 @@ export default function Home(props) {
     }
   }, [query, data?.products?.nodes, locale]);
   return (
-    <Layout menu={menu}>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -107,7 +110,10 @@ export async function getStaticProps({ locale }) {
   return {
     props: {
       menu,
-      productCategories: data?.productCategories?.nodes
+      legal: data?.legalmenu?.menuItems?.nodes || [],
+      footer: data?.getFooter,
+      coupons: data?.coupons.nodes,
+ productCategories: data?.productCategories?.nodes
         ? data.productCategories.nodes
         : [],
       products: data?.products?.nodes ? data.products.nodes : [],
