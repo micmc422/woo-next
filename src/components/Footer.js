@@ -31,7 +31,7 @@ const Footer = ({ footer }) => {
           <div
             dangerouslySetInnerHTML={{ __html: footer?.sidebarTwo || "" }}
           ></div>
-          <div className={`flex flex-col`}>
+          <div className={`flex flex-col w-full lg:w-1/3`}>
             <p className="prose-sm">
               Bons plans, invitation au vernissage, nouvelles expositions :
               recevez une fois par mois les actus de la galerie

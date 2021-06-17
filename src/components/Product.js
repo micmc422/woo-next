@@ -3,13 +3,13 @@ import AddToCartButton from "../components/cart/AddToCartButton";
 import clientConfig from "../../client-config";
 import { isEmpty, uniqueId } from "lodash";
 import Price from "./single-product/price";
-import Image from "next/image";
 import { useState } from "react";
 import { Bouton } from "./themeComponents";
 import { AnimatePresence, motion } from "framer-motion";
 import ImageWithFallback from "./ImageFallBack";
 import Skeleton from "react-loading-skeleton";
-import { FaRegComments, FaRegStar } from "react-icons/fa";
+import { FaRegComments, FaRegHeart } from "react-icons/fa";
+import { MdFiberNew } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
 const productCardAnimationContainer = {
@@ -21,7 +21,12 @@ const Product = (props) => {
   const { product, noName } = props;
   const starBloc = [1, 2, 3, 4, 5];
   const { t } = useTranslation("shop");
-  // console.log(product);
+  const dateToOld = new Date(new Date().setDate(new Date().getDate() - 60));
+  const dateProd = new Date(product.date);
+  console.log({ dateToOld, dateProd });
+  const isNew = dateToOld < dateProd;
+  console.log({ isNew });
+  if (isNew) console.log(product);
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product" key={uniqueId()}>
@@ -36,6 +41,22 @@ const Product = (props) => {
           passHref
         >
           <a className="relative block h-48 md:h-64">
+            <div className="absolute top-0 right-0 z-10">
+              {isNew && (
+                <div
+                  className={`m-2 p-1 bg-brand-500 text-gray-50 rounded-full`}
+                >
+                  <MdFiberNew />
+                </div>
+              )}
+              {product.featured && (
+                <div
+                  className={`m-2 p-1 bg-brand-500 text-gray-50 rounded-full`}
+                >
+                  <FaRegHeart />
+                </div>
+              )}
+            </div>
             {!isEmpty(product.image) ? (
               <VignettePhoto product={product} noName={noName} />
             ) : !isEmpty(clientConfig.productImagePlaceholder) ? (

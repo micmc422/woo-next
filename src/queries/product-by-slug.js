@@ -29,6 +29,11 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
       averageRating
       reviewCount
       slug
+      featured
+      onSale
+      status
+      date
+
       shortDescription
       description
       name

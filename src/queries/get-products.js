@@ -38,6 +38,11 @@ const GET_PRODUCTS_QUERY = gql`
       nodes {
         id
         productId: databaseId
+        featured
+        onSale
+        status
+        date
+
         averageRating
         reviewCount
         slug

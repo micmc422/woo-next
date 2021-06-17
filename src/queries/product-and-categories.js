@@ -10,22 +10,22 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       sidebarTwo
     }
     coupons {
-    nodes {
-      amount
-      code
-      dateExpiry
-      description
-      discountType
-      excludeSaleItems
-      freeShipping
-      individualUse
-      maximumAmount
-      minimumAmount
-      usageCount
-      usageLimit
-      usageLimitPerUser
+      nodes {
+        amount
+        code
+        dateExpiry
+        description
+        discountType
+        excludeSaleItems
+        freeShipping
+        individualUse
+        maximumAmount
+        minimumAmount
+        usageCount
+        usageLimit
+        usageLimitPerUser
+      }
     }
-  }
     menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {
@@ -157,6 +157,11 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         productId: databaseId
         averageRating
         reviewCount
+        featured
+        onSale
+        date
+
+        status
         slug
         description
         image {
@@ -221,10 +226,12 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       nodes {
         id
         productId: databaseId
-
         averageRating
         slug
         description
+        featured
+        onSale
+        status
         image {
           id
           uri

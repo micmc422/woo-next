@@ -91,6 +91,10 @@ export const PRODUCT_BY_TAG_SLUG = gql`
         nodes {
           id
           productId: databaseId
+          featured
+          onSale
+          status
+          date
           averageRating
           reviewCount
           slug
