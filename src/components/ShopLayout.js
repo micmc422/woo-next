@@ -1,3 +1,4 @@
+import { isArray } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -7,7 +8,14 @@ import FilterSection from "./widget/FilterSection";
 import SideBarSticky from "./widget/SideBarSticky";
 import TagList from "./widget/TagList";
 
-const ShopLayout = ({ children, categories, catBase, tagList, pageInfo, className }) => {
+const ShopLayout = ({
+  children,
+  categories,
+  catBase,
+  tagList,
+  pageInfo,
+  className,
+}) => {
   const [pageLength, setPageLength] = useState(24);
   const toShop = useRef(null);
   const executeScroll = () => toShop.current.scrollIntoView();
@@ -33,11 +41,7 @@ const ShopLayout = ({ children, categories, catBase, tagList, pageInfo, classNam
           className="w-48 m-auto text-right"
           navCatData={catBase}
         />
-         <TagList
-          className="w-48 m-auto text-right"
-          tagList={tagList}
-        />
-       
+        <TagList className="w-48 m-auto text-right" tagList={tagList} />
       </SideBarSticky>
     </div>
   );
@@ -132,6 +136,14 @@ const replaceQuery = (name, key, router, pageLength, executeScroll) => {
     delete theQuery["after"];
     delete theQuery["first"];
   }
+  if (key === "category") {
+  }
+  console.log(theQuery["category"]);
+  if (isArray(theQuery["category"])) {
+    theQuery["category"] =
+      theQuery["category"][theQuery["category"]?.length - 1];
+  }
+  console.log(theQuery["category"]);
   const options = { scroll: false };
   const formattedQuery = new URLSearchParams(theQuery).toString();
   router.push(

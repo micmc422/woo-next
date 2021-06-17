@@ -34,7 +34,7 @@ export default async function handler(
       locale,
       category: category ? category : undefined,
       tag: tag ? tag : undefined,
-      // categoryIn: categoryIn ? categoryIn : category ? category : null,
+      // categoryIn: category ? category : undefined,
       maxPrice: isNaN(Number(max))
         ? undefined
         : parseFloat(Number(max).toFixed(2)),

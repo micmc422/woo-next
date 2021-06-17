@@ -4,7 +4,7 @@ import {
   PRODUCT_BY_CATEGORY_SLUG,
   PRODUCT_CATEGORIES_SLUGS,
 } from "../../src/queries/product-by-category";
-import { isEmpty } from "lodash";
+import { isArray, isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import ShopLayout from "../../src/components/ShopLayout";
 import { useEffect, useState } from "react";
@@ -43,11 +43,18 @@ export default function CategorySingle(props) {
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
+  if (isArray(query["category"])) {
+    query["category"] = query["category"][query["category"]?.length - 1];
+  }
+
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
+  // console.log(query?.category[query?.category.length - 1]);
   const asQuery =
     query?.category?.length > 0 &&
-    formattedQuery !== `category=${query?.category?.join("%2C")}`;
+    formattedQuery !== `category=${categoryName}`;
+  // query?.category?.join("%2C")
+  console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
   const { data, error } = useSWR(
     asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher
