@@ -29,7 +29,19 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
       uri
       title
     }
-    menu: menus(first: 1, where: { id: 6 }) {
+    legalmenu: menu(id: "19", idType: DATABASE_ID) {
+      name
+      menuItems {
+        nodes {
+          title
+        label
+          path
+          url
+          locations
+        }
+      }
+    }
+   menu: menus(first: 1, where: { id: 6 }) {
       nodes {
         menuItems {
           edges {

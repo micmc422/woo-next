@@ -39,7 +39,7 @@ const Product = (props) => {
           passHref
         >
           <a className="relative block h-48 md:h-64">
-            <div className="absolute top-0 right-0 z-10 flex">
+            <div className="absolute bottom-0 right-0 z-10 flex">
               {isNew && (
                 <div
                   style={{ color: "#8BC34A" }}

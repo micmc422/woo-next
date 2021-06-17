@@ -37,7 +37,9 @@ export default function CategorySingle(props) {
     seoHead,
     tagList,
     seoSchema,
-    footer, coupons,
+    footer,
+    coupons,
+    legal
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
@@ -65,7 +67,7 @@ export default function CategorySingle(props) {
   }
   const seoData = seoHead && parse(seoHead);
   return (
-    <Layout menu={menu} footer={footer}  coupons={coupons}>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -119,8 +121,9 @@ export async function getStaticProps({ params: { category }, locale }) {
 
   return {
     props: {
+      legal: data?.legalmenu?.menuItems?.nodes || [],
       footer: data?.getFooter,
-      coupons: data?.coupons.nodes,  
+      coupons: data?.coupons.nodes,
       menu,
       categoryName: data?.productCategory?.name || "",
       pageInfoStatic: data?.productCategory?.products?.pageInfo || {},

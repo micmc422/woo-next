@@ -27,7 +27,7 @@ export default function Home(props) {
         {seoData ? seoData : " "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-      <div className="container mx-auto py-2">
+      <div className="container py-2 mx-auto">
         <h1 className="text-5xl md:text-8xl">{page?.title}</h1>
       </div>
       {page?.content && (

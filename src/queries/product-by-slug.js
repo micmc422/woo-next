@@ -23,7 +23,19 @@ export const PRODUCT_BY_SLUG_QUERY = gql`
         usageLimitPerUser
       }
     }
-    product(id: $slug, idType: SLUG) {
+    legalmenu: menu(id: "19", idType: DATABASE_ID) {
+      name
+      menuItems {
+        nodes {
+          title
+        label
+          path
+          url
+          locations
+        }
+      }
+    }
+ product(id: $slug, idType: SLUG) {
       id
       productId: databaseId
       averageRating

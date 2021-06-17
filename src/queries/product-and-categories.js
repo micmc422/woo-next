@@ -26,6 +26,18 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         usageLimitPerUser
       }
     }
+    legalmenu: menu(id: "19", idType: DATABASE_ID) {
+      name
+      menuItems {
+        nodes {
+          title
+        label
+          path
+          url
+          locations
+        }
+      }
+    }
     menu: menus(where: { location: PRIMARY }) {
       nodes {
         menuItems {

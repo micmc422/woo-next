@@ -34,6 +34,7 @@ const Tags = (props) => {
     tagList,
     catBase,
     seoSchema,
+    legal,
   } = props;
 
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -69,7 +70,7 @@ const Tags = (props) => {
   const seoData = seoHead && parse(seoHead);
 
   return (
-    <Layout menu={menu} footer={footer} coupons={coupons}>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
         {seoData ? seoData : ""}{" "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
@@ -126,6 +127,7 @@ export async function getStaticProps({ params: { tags }, locale }) {
   return {
     props: {
       // data, //TODO delete after test
+      legal: data?.legalmenu?.menuItems?.nodes || [],
       footer: data?.getFooter,
       coupons: data?.coupons.nodes,
       menu,
@@ -176,7 +178,7 @@ export async function getStaticPaths({}) {
       }
     });
 
-    dataEn?.data?.productTags?.nodes &&
+  dataEn?.data?.productTags?.nodes &&
     dataEn?.data?.productTags?.nodes.map((productTag) => {
       if (!isEmpty(productTag?.uri)) {
         const tags = productTag?.uri
