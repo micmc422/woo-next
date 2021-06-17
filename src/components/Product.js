@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import ImageWithFallback from "./ImageFallBack";
 import Skeleton from "react-loading-skeleton";
 import { FaRegComments, FaRegHeart } from "react-icons/fa";
-import { MdFiberNew } from "react-icons/md";
+import { MdFiberNew, MdNewReleases } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
 const productCardAnimationContainer = {
@@ -41,17 +41,17 @@ const Product = (props) => {
           passHref
         >
           <a className="relative block h-48 md:h-64">
-            <div className="absolute top-0 right-0 z-10">
+            <div className="absolute top-0 right-0 z-10 flex">
               {isNew && (
                 <div
-                  className={`m-2 p-1 bg-brand-500 text-gray-50 rounded-full`}
+                  className={`m-2 p-1 text-brand-500 bg-white bg-opacity-25 rounded-full shadow`}
                 >
                   <MdFiberNew />
                 </div>
               )}
               {product.featured && (
                 <div
-                  className={`m-2 p-1 bg-brand-500 text-gray-50 rounded-full`}
+                  className={`m-2 p-1 text-pink-500 bg-white bg-opacity-25 rounded-full shadow`}
                 >
                   <FaRegHeart />
                 </div>
