@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Facebook, Instagram, Twitter, Youtube } from "./icons";
-
+import { Facebook, Instagram } from "./icons";
+import { Bouton } from "../components/themeComponents"
 const Footer = ({ footer, legal }) => {
   const { t } = useTranslation("common");
   if (!footer) {
@@ -39,19 +38,24 @@ const Footer = ({ footer, legal }) => {
           <div
             dangerouslySetInnerHTML={{ __html: footer?.sidebarTwo || "" }}
           ></div>
-          <div className={`flex flex-col w-full lg:w-1/3`}>
-            <p className="prose-sm">
-              Bons plans, invitation au vernissage, nouvelles expositions :
-              recevez une fois par mois les actus de la galerie
-            </p>
-            <div className="self-end">
-              <form className="flex w-auto mt-4 shadow">
+          <div className={`flex flex-col w-full lg:w-1/3 pt-8 md:pt-0`}>
+            <div>
+              <Bouton>
+                <h3 className="pb-4 text-2xl">Newletter</h3>
+              </Bouton>
+              <p className="pt-4 prose-sm">
+                Bons plans, invitation au vernissage, nouvelles expositions :
+                recevez une fois par mois les actus de la galerie
+              </p>
+            </div>
+            <div className="">
+              <form className="flex w-full mt-4 shadow">
                 <input
-                  className="p-4 mr-0 text-gray-800 bg-white border-t border-b border-l rounded-l-lg focus:outline-none"
+                  className="flex-grow p-2 mr-0 text-gray-800 bg-white border-t border-b border-l rounded-l-lg md:p-4 focus:outline-none"
                   placeholder="votre@mail.com"
                 />
                 <button
-                  className="p-4 px-8 font-bold text-gray-800 uppercase rounded-r-lg bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none"
+                  className="px-1 text-xs font-bold text-gray-800 uppercase rounded-r-lg md:px-8 bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none md:text-base"
                   aria-label="Abonnement à la newsletter"
                 >
                   ABONNEZ-VOUS
@@ -60,7 +64,7 @@ const Footer = ({ footer, legal }) => {
             </div>
           </div>
         </div>
-        <div className="flex items-end justify-between">
+        <div className="flex flex-col items-start justify-between space-y-8 md:items-end md:flex-row md:space-y-0">
           <ul className="flex mt-8 social-links align-center">
             <li>
               <a
@@ -84,7 +88,7 @@ const Footer = ({ footer, legal }) => {
               </a>
             </li>
           </ul>
-          <div className="flex flex-col flex-wrap justify-end md:flex-row md:space-x-2">
+          <div className="flex flex-col flex-wrap justify-end md:flex-row md:space-x-2 ">
             <Legal legal={legal} />
           </div>
         </div>
