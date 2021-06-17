@@ -23,10 +23,7 @@ const Product = (props) => {
   const { t } = useTranslation("shop");
   const dateToOld = new Date(new Date().setDate(new Date().getDate() - 60));
   const dateProd = new Date(product.date);
-  console.log({ dateToOld, dateProd });
   const isNew = dateToOld < dateProd;
-  console.log({ isNew });
-  if (isNew) console.log(product);
   return (
     // @TODO Need to handle Group products differently.
     <div className="w-full product" key={uniqueId()}>
