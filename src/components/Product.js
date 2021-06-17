@@ -48,7 +48,7 @@ const Product = (props) => {
               )}
               {product.featured && (
                 <div
-                  className={`m-2 p-1 text-pink-500 bg-white bg-opacity-25 rounded-full shadow`}
+                  className={`m-2 p-1 text-purple-500 bg-white bg-opacity-25 rounded-full shadow`}
                 >
                   <FaRegHeart />
                 </div>
