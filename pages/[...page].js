@@ -28,7 +28,9 @@ export default function Home(props) {
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
       <div className="container py-2 mx-auto">
-        <h1 className="text-5xl md:text-8xl">{page?.title}</h1>
+        <h1 className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl">
+          {page?.title}
+        </h1>
       </div>
       {page?.content && (
         <ContentParser
