@@ -8,8 +8,8 @@ import { GET_PAGE_BY_URI } from "../src/queries/get-pages";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import CartUpsell from "../src/components/cart/cart-page/CartUpsell";
 
-const Cart = ({ page, menu, footer, coupons }) => (
-  <Layout menu={menu} footer={footer} coupons={coupons}>
+const Cart = ({ page, menu, footer, coupons, legal }) => (
+  <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
     <Head>{page?.seo?.fullHead ? parse(page?.seo?.fullHead) : ""}</Head>
     <CartItemsContainer />
     <div className="container mx-auto mb-8 md:mb-16 lg:mb-32">
@@ -31,6 +31,7 @@ export async function getStaticProps({ locale, params }) {
   return {
     props: {
       menu,
+      legal: data?.legalmenu?.menuItems?.nodes || [],
       footer: data?.getFooter,
       coupons: data?.coupons.nodes,
       page: data?.page || [],

@@ -39,7 +39,7 @@ export default function CategorySingle(props) {
     seoSchema,
     footer,
     coupons,
-    legal
+    legal,
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
@@ -182,9 +182,7 @@ export async function getStaticPaths({}) {
         const category = productCategory?.uri
           .replace("https://photo.paris", "")
           .split("/")
-          .filter(
-            (e) => e !== "" && !e.includes("?lang=") && !e.includes("?en")
-          )
+          .filter((e) => e !== "" && !e.includes("?lang="))
           .slice(1, 99);
         if (category.length > 1) {
           pathsData.push({
