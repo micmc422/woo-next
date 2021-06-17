@@ -13,7 +13,7 @@ import Loading from "../src/components/Loading";
 import GET_PRODUCTS_QUERY from "../src/queries/get-products";
 
 export default function Home(props) {
-  const { page, menu, footer, coupons, customProducts } = props;
+  const { page, menu, footer, coupons, customProducts, legal } = props;
   const seoData = page?.seo?.fullHead && parse(page?.seo?.fullHead);
   const seoSchema = page?.seo?.schema?.raw;
   const router = useRouter();
@@ -22,12 +22,14 @@ export default function Home(props) {
     return <Loading />;
   }
   return (
-    <Layout menu={menu} footer={footer} coupons={coupons}>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
         {seoData ? seoData : " "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-
+      <div className="container mx-auto py-2">
+        <h1 className="text-5xl md:text-8xl">{page?.title}</h1>
+      </div>
       {page?.content && (
         <ContentParser
           data={page?.content}
@@ -71,6 +73,7 @@ export async function getStaticProps({ locale, params }) {
 
   return {
     props: {
+      legal: data?.legalmenu?.menuItems?.nodes || [],
       footer: data?.getFooter,
       coupons: data?.coupons.nodes,
       menu,

@@ -16,7 +16,7 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const Layout = (props) => {
-  const { menu, translations, footer, coupons } = props;
+  const { menu, translations, footer, coupons, legal } = props;
   const { scrollY } = useViewportScroll();
   const [height, setHeight] = useState(300);
   const ref = useRef(null);
@@ -38,7 +38,7 @@ const Layout = (props) => {
             className="fixed z-40 w-8 h-8 p-1 text-white rounded-full md:w-12 md:h-12 neuromorphism-brand bottom-6 md:bottom-12 right-6 md:right-12 focus:outline-none"
             component={<ArrowSvg />}
           />
-          <Header menu={menu} translations={translations}  coupons={coupons}/>
+          <Header menu={menu} translations={translations} coupons={coupons} />
           <motion.div
             style={{
               y: y1,
@@ -57,7 +57,7 @@ const Layout = (props) => {
             />
           </motion.div>
           {props.children}
-          <Footer footer={footer} />
+          <Footer footer={footer} legal={legal} />
         </div>
       </ApolloProvider>
     </AppProvider>

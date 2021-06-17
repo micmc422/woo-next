@@ -1,13 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Facebook, Instagram, Twitter, Youtube } from "./icons";
 
-const Footer = ({ footer }) => {
+const Footer = ({ footer, legal }) => {
   const { t } = useTranslation("common");
-
-  return footer ? (
+  if (!footer) {
+    return <div></div>;
+  }
+  return (
     <div className="p-6 text-white bg-gray-800 footer">
       <div className="container mx-auto">
         <div className="items-end justify-between flex-none footer-text md:flex">
@@ -15,7 +18,12 @@ const Footer = ({ footer }) => {
             <div>
               <Link href="/">
                 <a>
-                  <Image src={"/logo-light@2x.png"} width={120} height={50} alt={"paris est une photo"} />
+                  <Image
+                    src={"/logo-light@2x.png"}
+                    width={120}
+                    height={50}
+                    alt={"paris est une photo"}
+                  />
                 </a>
               </Link>
             </div>
@@ -42,7 +50,10 @@ const Footer = ({ footer }) => {
                   className="p-4 mr-0 text-gray-800 bg-white border-t border-b border-l rounded-l-lg focus:outline-none"
                   placeholder="votre@mail.com"
                 />
-                <button className="p-4 px-8 font-bold text-gray-800 uppercase rounded-r-lg bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none" aria-label="Abonnement à la newsletter">
+                <button
+                  className="p-4 px-8 font-bold text-gray-800 uppercase rounded-r-lg bg-brand-400 hover:bg-brand-500 ring-brand-500 focus:outline-none"
+                  aria-label="Abonnement à la newsletter"
+                >
                   ABONNEZ-VOUS
                 </button>
               </form>
@@ -73,14 +84,34 @@ const Footer = ({ footer }) => {
               </a>
             </li>
           </ul>
-          <div>
-            Conditions générales de vente Mentions légales Contact et infos
+          <div className="flex flex-col flex-wrap justify-end md:flex-row md:space-x-2">
+            <Legal legal={legal} />
           </div>
         </div>
       </div>
     </div>
-  ) : (
-    <div></div>
   );
+};
+
+const Legal = ({ legal }) => {
+  const [jsx, setJsx] = useState("");
+  const Construct = () => {
+    const jsxArray = [];
+    legal.map((el, i) => {
+      console.log(el);
+      jsxArray.push(
+        <Link href={el.path} key={i} passHref>
+          <a className="text-gray-400 transition transform hover:-translate-y-1">
+            {el.label}
+          </a>
+        </Link>
+      );
+    });
+    setJsx(jsxArray);
+  };
+  useEffect(() => {
+    legal?.length && Construct();
+  }, [legal.length]);
+  return jsx;
 };
 export default Footer;

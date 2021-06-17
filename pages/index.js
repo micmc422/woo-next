@@ -25,9 +25,10 @@ export default function Home(props) {
     seoHead,
     seoSchema,
     footer,
+    legal,
     coupons,
   } = props;
-
+  console.log(legal);
   const showProducts = () => {
     const liProd = [];
     products.map((p) => {
@@ -40,7 +41,7 @@ export default function Home(props) {
   }
   const seoData = seoHead && parse(seoHead);
   return (
-    <Layout menu={menu} footer={footer} coupons={coupons}>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>{seoData ? seoData : ""}</Head>
       <script type="application/ld+json">{`${seoSchema}`}</script>
       {/*Hero Carousel*/}
@@ -85,9 +86,9 @@ export async function getStaticProps({ locale }) {
 
   return {
     props: {
-      footer: data?.getFooter,
-      coupons: data?.coupons.nodes,
-      data,
+      legal: homepage.data?.legalmenu?.menuItems?.nodes || [],
+      footer: homepage.data?.getFooter,
+      coupons: homepage.data?.coupons.nodes,
       homepage: homepage.data.page,
       menu,
       productCategories: data?.productCategories?.nodes

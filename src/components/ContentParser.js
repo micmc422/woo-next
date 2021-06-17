@@ -417,7 +417,9 @@ const ContentParser = ({ data, children, options, products }) => {
           }
 
           if (
-            attribs?.class?.includes("vc_row wpb_row vc_inner vc_row-fluid vc_row-o-content-middle")
+            attribs?.class?.includes(
+              "vc_row wpb_row vc_inner vc_row-fluid vc_row-o-content-middle"
+            )
           ) {
             return (
               <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl pl-2 mx-auto sm:flex-row">
@@ -425,9 +427,7 @@ const ContentParser = ({ data, children, options, products }) => {
               </div>
             );
           }
-          if (
-            attribs?.class?.includes("wpb_row")
-          ) {
+          if (attribs?.class?.includes("wpb_row")) {
             return (
               <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl mx-auto sm:flex-row">
                 {domToReact(children, defaultOptions)}
@@ -486,7 +486,7 @@ const ContentParser = ({ data, children, options, products }) => {
             attribs?.class?.includes("vc_column_container")
           ) {
             return (
-              <InView threshold={0.1}>
+              <InView threshold={0}>
                 {({ inView, ref }) => (
                   <motion.div
                     ref={ref}

@@ -28,22 +28,34 @@ export const GET_PAGE_BY_URI = gql`
       sidebarTwo
     }
     coupons {
-    nodes {
-      amount
-      code
-      dateExpiry
-      description
-      discountType
-      excludeSaleItems
-      freeShipping
-      individualUse
-      maximumAmount
-      minimumAmount
-      usageCount
-      usageLimit
-      usageLimitPerUser
+      nodes {
+        amount
+        code
+        dateExpiry
+        description
+        discountType
+        excludeSaleItems
+        freeShipping
+        individualUse
+        maximumAmount
+        minimumAmount
+        usageCount
+        usageLimit
+        usageLimitPerUser
+      }
     }
-  }
+    legalmenu: menu(id: "19", idType: DATABASE_ID) {
+      name
+      menuItems {
+        nodes {
+          title
+        label
+          path
+          url
+          locations
+        }
+      }
+    }
     page(id: $uri, idType: URI) {
       id
       title
