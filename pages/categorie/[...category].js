@@ -17,8 +17,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
 
+var slugify = require("slugify");
 const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
-
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function CategorySingle(props) {
@@ -43,18 +43,18 @@ export default function CategorySingle(props) {
   } = props;
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [pageInfo, setPageInfo] = useState(pageInfoStatic);
-  if (isArray(query["category"])) {
+  if (query["category"] && isArray(query["category"])) {
     query["category"] = query["category"][query["category"]?.length - 1];
   }
 
   delete query.lang;
   const formattedQuery = new URLSearchParams(query).toString();
-  // console.log(query?.category[query?.category.length - 1]);
   const asQuery =
     query?.category?.length > 0 &&
-    formattedQuery !== `category=${categoryName}`;
-  // query?.category?.join("%2C")
-  console.log(`/api/products/?locale=${locale}&${formattedQuery}`);
+    formattedQuery !== `category=${slugify(categoryName).toLowerCase()}`;
+  console.log(
+    formattedQuery !== `category=${slugify(categoryName).toLowerCase()}`
+  );
   const { data, error } = useSWR(
     asQuery ? `/api/products/?locale=${locale}&${formattedQuery}` : null,
     fetcher
