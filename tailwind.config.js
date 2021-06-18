@@ -6,7 +6,8 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   */
-  purge: [
+  purge: {
+    content: [
     "./pages/**/*.js",
     "./pages/**/*.ts",
     "./pages/**/*.jsx",
@@ -15,7 +16,7 @@ module.exports = {
     "./src/components/**/*.ts",
     "./src/components/**/*.jsx",
     "./src/components/**/*.tsx",
-  ],
+  ]},
   theme: {
     fontFamily: {
       serif: ["Cardo", "serif"],

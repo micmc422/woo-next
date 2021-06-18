@@ -364,13 +364,6 @@ const ContentParser = ({ data, children, options, products }) => {
               </div>
             );
           }
-          if (attribs?.class?.includes("page-main-content")) {
-            return (
-              <div className="space-y-8">
-                {domToReact(children, defaultOptions)}
-              </div>
-            );
-          }
           if (attribs?.class?.includes("vc_cta3_content-container")) {
             return (
               <div className="flex flex-col items-center sm:flex-row sm:space-x-4">
@@ -410,9 +403,12 @@ const ContentParser = ({ data, children, options, products }) => {
               </Bouton>
             );
           }
-          if (attribs?.class?.includes("page-main-content")) {
+          if (
+            attribs?.class === "page-main-content" ||
+            attribs?.class?.includes("container")
+          ) {
             return (
-              <section className="container">
+              <section className="container space-y-8 md:space-y-16">
                 {domToReact(children, defaultOptions)}
               </section>
             );
@@ -431,7 +427,7 @@ const ContentParser = ({ data, children, options, products }) => {
           }
           if (attribs?.class?.includes("wpb_row")) {
             return (
-              <div className="flex flex-col items-center justify-around max-w-screen-xl mx-auto space-x-8 sm:flex-row">
+              <div className="flex flex-col items-center justify-around max-w-screen-xl mx-auto safe md:space-x-8 sm:flex-row">
                 {domToReact(children, defaultOptions)}
               </div>
             );
@@ -577,6 +573,7 @@ const ContentParser = ({ data, children, options, products }) => {
       exit="exit"
       variants={parentAnimation}
       key={uniqueId()}
+      className={`space-y-8 md:space-y-16 lg:space-y-32`}
     >
       {parse(data, defaultOptions)}
     </motion.div>

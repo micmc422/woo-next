@@ -1,5 +1,11 @@
 module.exports = {
-  plugins: ["postcss-import", "tailwindcss", "autoprefixer"],
+  plugins: [
+    "postcss-import",
+    "tailwindcss",
+    "autoprefixer",
+    "@tailwindcss/typography",
+    "@tailwindcss/aspect-ratio",
+  ],
 };
 /*
 module.exports = {
