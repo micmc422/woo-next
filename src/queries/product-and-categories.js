@@ -66,6 +66,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         databaseId
         excerpt
         uri
+        content
         featuredImage {
           node {
             id

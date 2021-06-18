@@ -3,8 +3,9 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { Bouton } from "../../themeComponents";
+import { Bouton, ThemeH3, ThemeH4 } from "../../themeComponents";
 import { useTranslation } from "react-i18next";
+import parse, { domToReact } from "html-react-parser";
 
 const HeroCarousel = ({ heroCarousel }) => {
   if (isEmpty(heroCarousel) || !isArray(heroCarousel)) {
@@ -81,11 +82,11 @@ const HeroCarousel = ({ heroCarousel }) => {
       return () => interval && clearInterval(interval);
     }
   }, [autoPlay]);
-
-  const { image, id, name, title, slug, featuredImage } = heroCarousel[
+  const { image, id, name, title, slug, featuredImage, content } = heroCarousel[
     activeIndex
   ];
-
+  const LinkJsx = parse(content, options);
+  // console.log(heroCarousel[activeIndex]);
   const handleDrag = (event, info) => {
     if (info.offset.x === 0) return;
     if (info.offset.x > 0) {
@@ -94,6 +95,7 @@ const HeroCarousel = ({ heroCarousel }) => {
       prevSlide(info.offset.x);
     }
   };
+
   return (
     <div
       className="relative flex flex-col justify-between overflow-hidden banner sm:flex-row"
@@ -182,21 +184,37 @@ const HeroCarousel = ({ heroCarousel }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, x: 200 }}
         >
-          <h2
-            className="text-base uppercase md:text-4xl"
-            dangerouslySetInnerHTML={{
-              __html: name || title,
-            }}
-          ></h2>
-          <Link href={`/categorie/${slug}/`}>
-            <Bouton small={true}>
-              <a className="">{t("explorer")}</a>
+          <ThemeH4>{name || title}</ThemeH4>
+          {LinkJsx ? (
+            <Bouton small={true} circleClass={`bg-brand-500 `}>
+              {LinkJsx}
             </Bouton>
-          </Link>
+          ) : (
+            <Link href={`/galerie-photo/`}>
+              <Bouton small={true}>{t("explorer")}</Bouton>
+            </Link>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
   );
+};
+
+const options = {
+  replace: ({ attribs, name, children }) => {
+    if (!attribs) {
+      return;
+    }
+    if (attribs.href) {
+      console.log(attribs.href);
+      return (
+        <Link href={attribs.href} passHref>
+          <a>{domToReact(children, options)}</a>
+        </Link>
+      );
+    }
+    return;
+  },
 };
 
 export default HeroCarousel;

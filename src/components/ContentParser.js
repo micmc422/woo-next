@@ -211,9 +211,9 @@ const ContentParser = ({ data, children, options, products }) => {
             const alignRigth = attribs?.style === "text-align: right;";
 
             return (
-              <ThemeH2 alignRigth={alignRigth}>
+              <ThemeH3 alignRigth={alignRigth}>
                 {domToReact(children, defaultOptions)}
-              </ThemeH2>
+              </ThemeH3>
             );
           }
           if (name === "h3") {
@@ -248,10 +248,18 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (name === "b" || name === "strong") {
-            return <b>{domToReact(children, defaultOptions)}</b>;
+            return (
+              <b className="inline-block">
+                {domToReact(children, defaultOptions)}
+              </b>
+            );
           }
           if (name === "i" || name === "i") {
-            return <i>{domToReact(children, defaultOptions)}</i>;
+            return (
+              <i className="inline-block">
+                {domToReact(children, defaultOptions)}
+              </i>
+            );
           }
 
           if (
@@ -388,8 +396,11 @@ const ContentParser = ({ data, children, options, products }) => {
           }
           if (name === "div" && attribs?.class === "vc_cta3-actions") {
             return (
-              <div className="flex-grow-1 md:w-max">
-                {domToReact(children, defaultOptions)}
+              <div className="relative flex-grow-1 md:w-max ">
+                <div className="absolute rounded shadow bg-brand-500 ring-2 ring-offset-white ring-white -inset-2"></div>
+                <div className="relative">
+                  {domToReact(children, defaultOptions)}
+                </div>
               </div>
             );
           }
@@ -403,10 +414,7 @@ const ContentParser = ({ data, children, options, products }) => {
               </Bouton>
             );
           }
-          if (
-            attribs?.class === "page-main-content" ||
-            attribs?.class?.includes("container")
-          ) {
+          if (attribs?.class === "page-main-content") {
             return (
               <section className="container space-y-8 md:space-y-16">
                 {domToReact(children, defaultOptions)}
@@ -434,7 +442,7 @@ const ContentParser = ({ data, children, options, products }) => {
           }
           if (attribs?.class?.includes("vc_column-inner")) {
             return (
-              <div className="mx-auto space-y-4">
+              <div className="py-8 mx-auto space-y-4">
                 {domToReact(children, defaultOptions)}
               </div>
             );
@@ -573,7 +581,7 @@ const ContentParser = ({ data, children, options, products }) => {
       exit="exit"
       variants={parentAnimation}
       key={uniqueId()}
-      className={`space-y-8 md:space-y-16 lg:space-y-32`}
+      className={`space-y-4  pt-16 md:space-y-8 lg:space-y-16`}
     >
       {parse(data, defaultOptions)}
     </motion.div>

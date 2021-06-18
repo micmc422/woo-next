@@ -6,6 +6,7 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import { appWithTranslation } from "next-i18next";
 import CookieConsent from "react-cookie-consent";
+import { AnimatePresence } from "framer-motion";
 
 NProgress.configure({ showSpinner: true });
 Router.events.on("routeChangeStart", () => NProgress.start());
@@ -43,7 +44,9 @@ function MyApp({ Component, pageProps }) {
           This website uses cookies to enhance the user experience.
         </div>
       </CookieConsent>
-      <Component {...pageProps} />
+      <AnimatePresence exitBeforeEnter>
+        <Component {...pageProps} />
+      </AnimatePresence>
     </>
   );
 }
