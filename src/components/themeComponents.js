@@ -113,7 +113,7 @@ export const ThemeH2 = ({ children, alignRigth }) => {
       initial={{ x: -200 }}
       animate={{ x: 0 }}
       exit={{ x: -300 }}
-      className={`relative mb-5 text-3xl font-black uppercase lg:text-6xl md:text-5xl sm:text-4xl`}
+      className={`p-4 relative mb-5 text-3xl font-black uppercase lg:text-6xl md:text-5xl sm:text-4xl`}
     >
       {children}
       <div className="absolute top-0 w-2 h-16 rounded -left-2 bg-brand-500" />
@@ -127,6 +127,20 @@ export const ThemeH3 = ({ children }) => {
       animate={{ x: 0, minWith: "300px" }}
       exit={{ x: -300, minWith: "300px" }}
       className={`relative p-4 mb-5 text-2xl font-black uppercase lg:text-5xl md:text-4xl sm:text-3xl inline-block text-gray-600`}
+    >
+      {children}
+      <div className="absolute top-0 w-1 rounded shadow h-1/2 -left-3 bg-brand-500" />
+      <div className="absolute bottom-0 w-1/2 h-1 bg-gray-300 rounded shadow right-3" />
+    </motion.h3>
+  );
+};
+export const ThemeH4 = ({ children }) => {
+  return (
+    <motion.h3
+      initial={{ x: -200 }}
+      animate={{ x: 0 }}
+      exit={{ x: -300 }}
+      className={`relative p-4 mb-5 text-xl font-black uppercase lg:text-4xl md:text-3xl sm:text-2xl text-gray-600`}
     >
       {children}
       <div className="absolute top-0 w-1 rounded shadow h-1/2 -left-3 bg-brand-500" />

@@ -2,7 +2,7 @@ import { isEmpty, isArray, uniqueId } from "lodash";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
-import { Bouton, PriceParse } from "../themeComponents";
+import { Bouton, PriceParse, ThemeH3, ThemeH4 } from "../themeComponents";
 import Image from "next/image";
 import BlocPrix from "../single-product/price/BlocPrix";
 
@@ -136,12 +136,9 @@ const LargeSlider = ({ products, cover }) => {
           exit={{ opacity: 0, y: xTransition / 10 }}
           transition={{ delayChildren: 0.5, when: "afterChildren" }}
         >
-          <h2
-            className="text-base text-gray-800 uppercase md:text-4xl"
-            dangerouslySetInnerHTML={{
-              __html: name || title,
-            }}
-          ></h2>
+          <ThemeH4>
+            {name || title}
+          </ThemeH4>
           <Link href={`/galerie-photo/${slug}/`}>
             <a className="font-semibold text-gray-800">
               <Bouton small>

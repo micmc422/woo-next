@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContentParser from "../ContentParser";
 import LargeSlider from "../sections/LargeSlider";
-import { Bouton } from "../themeComponents";
+import { Bouton, ThemeH2, ThemeH3 } from "../themeComponents";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -153,22 +153,16 @@ const HomePageSection = ({ homepage, products }) => {
         );
       }
       if (name === "h2") {
-        return (
-          <h2 className={`mx-auto  px-4 py-14 text-3xl max-w-2xl`}>
-            {domToReact(children, defaultOptions)}
-          </h2>
-        );
+        return <ThemeH2>{domToReact(children, defaultOptions)}</ThemeH2>;
       }
       if (name === "h3") {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
-          <h2
-            className={`mx-auto px-4 py-3 md:py-5 text-2xl max-w-2xl ${
-              alignRigth ? "text-right" : ""
-            }`}
-          >
-            {domToReact(children, defaultOptions)}
-          </h2>
+          <div className="max-w-2xl mx-auto">
+            <ThemeH3 alignRigth={alignRigth}>
+              {domToReact(children, defaultOptions)}
+            </ThemeH3>
+          </div>
         );
       }
       if (name === "h4") {
@@ -211,14 +205,6 @@ const HomePageSection = ({ homepage, products }) => {
         return (
           <div className="relative flex w-4/5 mx-auto bg-white md:mx-0 md:w-auto">
             {domToReact(children, defaultOptions)}
-          </div>
-        );
-      }
-      if (attribs?.class?.includes("has-line")) {
-        return (
-          <div className="pb-6">
-            {domToReact(children, defaultOptions)}
-            <div className="w-1/2 h-1 px-4 mx-auto bg-gray-300 rounded"></div>
           </div>
         );
       }

@@ -205,11 +205,7 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (name === "h1") {
-            return (
-              <ThemeH1>
-                {domToReact(children, defaultOptions)}
-              </ThemeH1>
-            );
+            return <ThemeH1>{domToReact(children, defaultOptions)}</ThemeH1>;
           }
           if (name === "h2") {
             const alignRigth = attribs?.style === "text-align: right;";
@@ -223,11 +219,7 @@ const ContentParser = ({ data, children, options, products }) => {
           if (name === "h3") {
             const alignRigth = attribs?.style === "text-align: right;";
 
-            return (
-              <ThemeH3>
-                {domToReact(children, defaultOptions)}
-              </ThemeH3>
-            );
+            return <ThemeH3>{domToReact(children, defaultOptions)}</ThemeH3>;
           }
           if (name === "h4") {
             const alignRigth = attribs?.style === "text-align: right;";
@@ -418,6 +410,13 @@ const ContentParser = ({ data, children, options, products }) => {
               </Bouton>
             );
           }
+          if (attribs?.class?.includes("page-main-content")) {
+            return (
+              <section className="container">
+                {domToReact(children, defaultOptions)}
+              </section>
+            );
+          }
 
           if (
             attribs?.class?.includes(
@@ -425,14 +424,14 @@ const ContentParser = ({ data, children, options, products }) => {
             )
           ) {
             return (
-              <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl pl-2 mx-auto sm:flex-row">
+              <div className="flex flex-col flex-wrap items-center justify-around max-w-screen-xl pl-2 mx-auto sm:flex-row">
                 {domToReact(children, defaultOptions)}
               </div>
             );
           }
           if (attribs?.class?.includes("wpb_row")) {
             return (
-              <div className="container flex flex-col flex-wrap items-center justify-around max-w-screen-xl mx-auto sm:flex-row">
+              <div className="flex flex-col items-center justify-around max-w-screen-xl mx-auto space-x-8 sm:flex-row">
                 {domToReact(children, defaultOptions)}
               </div>
             );
