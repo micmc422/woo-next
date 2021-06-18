@@ -3,8 +3,8 @@ module.exports = {
     "postcss-import",
     "tailwindcss",
     "autoprefixer",
-    "@tailwindcss/typography",
-    "@tailwindcss/aspect-ratio",
+    "typography",
+    "aspect-ratio",
   ],
 };
 /*
