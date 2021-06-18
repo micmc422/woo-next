@@ -7,7 +7,7 @@ import {
   FaCropAlt,
   FaRegComments,
 } from "react-icons/fa";
-import { Bouton } from "./themeComponents";
+import { Bouton, ThemeH1, ThemeH2, ThemeH3 } from "./themeComponents";
 import { motion } from "framer-motion";
 import { InView } from "react-intersection-observer";
 import { uniqueId } from "lodash";
@@ -206,24 +206,27 @@ const ContentParser = ({ data, children, options, products }) => {
           }
           if (name === "h1") {
             return (
-              <h2 className={`px-4 mx-auto py-16 text-4xl max-w-2xl`}>
+              <ThemeH1>
                 {domToReact(children, defaultOptions)}
-              </h2>
+              </ThemeH1>
             );
           }
-          if (name === "h1" || name === "h2" || name === "h3") {
+          if (name === "h2") {
             const alignRigth = attribs?.style === "text-align: right;";
 
             return (
-              <motion.h2
-                variants={childAnimation}
-                className={`px-4 mx-auto text-2xl max-w-2xl w-full ${
-                  alignRigth ? "md:text-right" : ""
-                }`}
-                key={uniqueId()}
-              >
+              <ThemeH2 alignRigth={alignRigth}>
                 {domToReact(children, defaultOptions)}
-              </motion.h2>
+              </ThemeH2>
+            );
+          }
+          if (name === "h3") {
+            const alignRigth = attribs?.style === "text-align: right;";
+
+            return (
+              <ThemeH3>
+                {domToReact(children, defaultOptions)}
+              </ThemeH3>
             );
           }
           if (name === "h4") {
@@ -266,7 +269,7 @@ const ContentParser = ({ data, children, options, products }) => {
           ) {
             const localizeHref = localize(attribs.href);
             return (
-              <div className="py-4 mx-auto max-w-prose">
+              <div className="pl-16 mx-auto max-w-prose">
                 <Bouton>
                   <Link href={localizeHref} locale={locale} passHref>
                     <a className="p-2 text-2xl">
@@ -324,7 +327,7 @@ const ContentParser = ({ data, children, options, products }) => {
             return (
               <motion.div
                 variants={childAnimation}
-                className={`p-4 mx-auto prose overflow-hidden ${
+                className={`p-4 mx-auto prose font-semibold font-serif overflow-hidden ${
                   alignRigth ? "md:text-right" : ""
                 }`}
                 key={uniqueId()}
@@ -409,7 +412,7 @@ const ContentParser = ({ data, children, options, products }) => {
             const localizeHref = localize(attribs.href);
             return (
               <Bouton>
-                <a href={localizeHref} className="p-2 text-base">
+                <a href={localizeHref} className="text-base">
                   {domToReact(children, defaultOptions)}
                 </a>
               </Bouton>

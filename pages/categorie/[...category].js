@@ -16,6 +16,7 @@ import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
+import { ThemeH1 } from "../../src/components/themeComponents";
 
 var slugify = require("slugify");
 const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
@@ -77,19 +78,7 @@ export default function CategorySingle(props) {
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
-        {categoryName ? (
-          <motion.h1
-            key={categoryName}
-            initial={{ x: -200 }}
-            animate={{ x: 0 }}
-            exit={{ x: -300 }}
-            className="relative w-full mb-5 overflow-hidden text-2xl font-black uppercase lg:text-8xl md:text-5xl sm:text-4xl"
-          >
-            {categoryName}
-          </motion.h1>
-        ) : (
-          ""
-        )}
+        <ThemeH1>{categoryName}</ThemeH1>
         <ShopLayout
           categories={cat}
           catBase={catBase}

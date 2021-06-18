@@ -14,6 +14,7 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import nextI18nextConfig from "../../next-i18next.config.js";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
+import { ThemeH1 } from "../../src/components/themeComponents";
 const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
@@ -63,14 +64,9 @@ export default function Home(props) {
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
-        <motion.h1
-          initial={{ x: -200 }}
-          animate={{ x: 0 }}
-          exit={{ x: -300 }}
-          className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl"
-        >
+        <ThemeH1>
           PARIS EST UNE PHOTO
-        </motion.h1>
+        </ThemeH1>
         <ShopLayout
           categories={cat}
           pageInfo={pageInfo}
