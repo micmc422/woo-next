@@ -127,7 +127,7 @@ export const ThemePName = ({ children }) => {
             initial={{ right: "100%" }}
             animate={{ right: "0%" }}
             exit={{ right: "100%" }}
-            className="absolute z-20 w-2 h-full bg-gray-300 rounded -top-0 -right-0"
+            className="absolute top-0 right-0 z-20 w-2 h-full bg-gray-300 rounded"
             transition={{
               duration: 2,
             }}
