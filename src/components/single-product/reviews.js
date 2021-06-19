@@ -41,7 +41,7 @@ const Reviews = ({ reviews }) => {
       animate="animate"
       exit="exit"
       variants={parentAnimation}
-      className={`w-full md:w-1/2 mx-auto`}
+      className={`w-full mx-auto`}
     >
       {reviews.map((review) => (
         <Review review={review} key={uniqueId()} />

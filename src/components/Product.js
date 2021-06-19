@@ -19,7 +19,7 @@ const productCardAnimationContainer = {
   exit: { opacity: 0, y: 10 },
 };
 const Product = (props) => {
-  const { product, noName } = props;
+  const { product, noName, cover } = props;
   const starBloc = [1, 2, 3, 4, 5];
   const { t } = useTranslation("shop");
   const dateToOld = new Date(new Date().setDate(new Date().getDate() - 60));
@@ -57,7 +57,7 @@ const Product = (props) => {
               )}
             </div>
             {!isEmpty(product.image) ? (
-              <VignettePhoto product={product} noName={noName} />
+              <VignettePhoto product={product} noName={noName} cover={cover} />
             ) : !isEmpty(clientConfig.productImagePlaceholder) ? (
               <div className="relative overflow-hidden">
                 <Skeleton height={192} width={250} />
@@ -198,7 +198,7 @@ const Product = (props) => {
   );
 };
 
-const VignettePhoto = ({ product, noName }) => {
+const VignettePhoto = ({ product, noName, cover }) => {
   const [hovered, setHovered] = useState(false);
   const orientation = product.galleryImages?.nodes[0]
     ? product.galleryImages?.nodes[0].mediaDetails.width >
@@ -249,7 +249,7 @@ const VignettePhoto = ({ product, noName }) => {
               slug={product.slug}
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
-              objectfit={noName ? "contain" : orientation}
+              objectfit={noName ? (cover ? "cover" : "contain") : orientation}
               objectPosition
             />
           </motion.div>

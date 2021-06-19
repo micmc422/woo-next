@@ -194,10 +194,10 @@ export default function Product(props) {
           </div>
         </Bouton>
       </div>
-      <div className="grid max-w-screen-lg grid-cols-2 gap-2 mx-auto md:gap-4 md:px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+      <div className="grid grid-cols-2 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <Upsell products={fullUpsellList} />
       </div>
-      <div className="container mx-auto">
+      <div className="container mx-auto max-w-prose">
         <ProductDetails product={product} />
       </div>
     </Layout>
@@ -309,7 +309,7 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
         exit="exit"
         variants={parentAnimation}
         key={uniqueId("details")}
-        className="w-full mx-auto mb-16 prose border border-gray-200 rounded shadow-2xl md:w-1/2"
+        className="w-full mx-auto mb-16 prose border border-gray-200 rounded shadow-2xl"
       >
         <div className="relative overflow-hidden">
           <div className="px-2 bg-gray-200">Tailles :</div>
@@ -346,7 +346,7 @@ const Upsell = ({ products }) => {
   return (
     products &&
     products.map((product, i) => (
-      <ProductCard product={product} noName key={uniqueId(i)} />
+      <ProductCard product={product} noName key={uniqueId(i)} cover />
     ))
   );
 };
