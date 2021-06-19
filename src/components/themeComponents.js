@@ -113,7 +113,7 @@ export const ThemePName = ({ children }) => {
       <div className="p-4 my-4">
         <h1 className="text-2xl font-black uppercase lg:text-6xl md:text-4xl">
           {children}
-          <div className="absolute w-2 h-full rounded -top-0 -left-2 bg-brand-500" />
+          <div className="absolute top-0 w-2 h-full rounded left-0 bg-brand-500" />
           <motion.div
             initial={{ width: "100%" }}
             animate={{ width: "0%" }}
