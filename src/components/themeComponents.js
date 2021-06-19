@@ -107,6 +107,36 @@ export const ThemeH1 = ({ children }) => {
     </motion.h1>
   );
 };
+export const ThemePName = ({ children }) => {
+  return (
+    <div className={`relative`}>
+      <div className="p-4 my-4">
+        <h1 className="text-2xl font-black uppercase lg:text-6xl md:text-4xl">
+          {children}
+          <div className="absolute w-2 h-full rounded -top-0 -left-2 bg-brand-500" />
+          <motion.div
+            initial={{ width: "100%" }}
+            animate={{ width: "0%" }}
+            exit={{ width: "100%" }}
+            transition={{
+              duration: 2,
+            }}
+            className="absolute top-0 right-0 z-10 h-full bg-white"
+          ></motion.div>
+          <motion.div
+            initial={{ right: "100%" }}
+            animate={{ right: "0%" }}
+            exit={{ right: "100%" }}
+            className="absolute z-20 w-2 h-full bg-gray-300 rounded -top-0 -right-0"
+            transition={{
+              duration: 2,
+            }}
+          />
+        </h1>
+      </div>
+    </div>
+  );
+};
 export const ThemeH2 = ({ children, alignRigth }) => {
   return (
     <motion.h2

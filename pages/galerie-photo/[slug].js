@@ -19,7 +19,7 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
-import { Bouton } from "../../src/components/themeComponents";
+import { Bouton, ThemeH1, ThemePName } from "../../src/components/themeComponents";
 import Loading from "../../src/components/Loading";
 import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import Reviews from "../../src/components/single-product/reviews";
@@ -141,14 +141,13 @@ export default function Product(props) {
                   )}{" "}
                 </div>
               </motion.div>
-              <motion.h1
+              <motion.div
                 initial={{ x: 50 }}
                 animate={{ x: 0 }}
                 exit={{ x: 50 }}
-                className="my-4 text-3xl font-black text-gray-900 md:text-5xl lg:text-6xl title-font"
               >
-                {product.name}
-              </motion.h1>
+                <ThemePName> {product.name}</ThemePName>
+              </motion.div>
               <RateBlock
                 rating={product?.averageRating}
                 reviewCount={product?.reviewCount}
@@ -182,7 +181,7 @@ export default function Product(props) {
                       activeVariations={activeVariations}
                     />
                   </AddToCartButton>
-                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -186,9 +186,7 @@ const HeroCarousel = ({ heroCarousel }) => {
         >
           <ThemeH4>{name || title}</ThemeH4>
           {LinkJsx ? (
-            <Bouton small={true} circleClass={`bg-brand-500 `}>
-              {LinkJsx}
-            </Bouton>
+            LinkJsx
           ) : (
             <Link href={`/galerie-photo/`}>
               <Bouton small={true}>{t("explorer")}</Bouton>
@@ -209,7 +207,11 @@ const options = {
       console.log(attribs.href);
       return (
         <Link href={attribs.href} passHref>
-          <a>{domToReact(children, options)}</a>
+          <a>
+            <Bouton small={true} circleClass={`bg-brand-500 `}>
+              {domToReact(children, options)}
+            </Bouton>
+          </a>
         </Link>
       );
     }
