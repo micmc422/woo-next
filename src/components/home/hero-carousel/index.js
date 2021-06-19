@@ -204,7 +204,6 @@ const options = {
       return;
     }
     if (attribs.href) {
-      console.log(attribs.href);
       return (
         <Link href={attribs.href} passHref>
           <a>
@@ -214,6 +213,8 @@ const options = {
           </a>
         </Link>
       );
+    } else {
+      return<></>
     }
     return;
   },

@@ -22,7 +22,7 @@ export default function Home(props) {
   if (router.isFallback || !page) {
     return <Loading />;
   }
-  console.log(page)
+ // console.log(page)
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
