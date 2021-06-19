@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 
 const animationParent = {
@@ -113,8 +114,9 @@ export const ThemePName = ({ children }) => {
       <div className="p-4 my-4">
         <h1 className="text-2xl font-black uppercase lg:text-6xl md:text-4xl">
           {children}
-          <div className="absolute top-0 w-2 h-full rounded left-0 bg-brand-500" />
+          <div className="absolute top-0 left-0 w-2 h-full rounded bg-brand-500" />
           <motion.div
+            key={uniqueId()}
             initial={{ width: "100%" }}
             animate={{ width: "0%" }}
             exit={{ width: "100%" }}
@@ -124,6 +126,7 @@ export const ThemePName = ({ children }) => {
             className="absolute top-0 right-0 z-10 h-full bg-white"
           ></motion.div>
           <motion.div
+            key={uniqueId()}
             initial={{ right: "100%" }}
             animate={{ right: "0%" }}
             exit={{ right: "100%" }}
