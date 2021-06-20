@@ -11,7 +11,7 @@ import nextI18nextConfig from "../next-i18next.config";
 import { useRouter } from "next/router";
 import Loading from "../src/components/Loading";
 import GET_PRODUCTS_QUERY from "../src/queries/get-products";
-import { ThemeH1 } from "../src/components/themeComponents";
+import { ThemeH1, ThemePName } from "../src/components/themeComponents";
 
 export default function Home(props) {
   const { page, menu, footer, coupons, customProducts, legal } = props;
@@ -30,9 +30,9 @@ export default function Home(props) {
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
-        <ThemeH1>
+        <ThemePName>
           {page?.title}
-        </ThemeH1>
+        </ThemePName>
       </div>
       {page?.content && (
         <ContentParser

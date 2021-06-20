@@ -16,7 +16,7 @@ import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
 import DisplayProducts from "../../src/components/sections/DisplayProducts";
-import { ThemeH1 } from "../../src/components/themeComponents";
+import { ThemeH1, ThemePName } from "../../src/components/themeComponents";
 
 var slugify = require("slugify");
 const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
@@ -78,7 +78,7 @@ export default function CategorySingle(props) {
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
-        <ThemeH1>{categoryName}</ThemeH1>
+        <ThemePName>{categoryName}</ThemePName>
         <ShopLayout
           categories={cat}
           catBase={catBase}

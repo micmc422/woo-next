@@ -16,7 +16,7 @@ import DisplayProducts from "../../src/components/sections/DisplayProducts";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { ThemeH1 } from "../../src/components/themeComponents";
+import { ThemeH1, ThemePName } from "../../src/components/themeComponents";
 const fetch = require("@vercel/fetch-retry")(require("node-fetch"));
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
@@ -78,9 +78,9 @@ const Tags = (props) => {
       </Head>
       <div className="container px-4 mx-auto my-8 xl:px-0">
         {tagName ? (
-          <ThemeH1>
+          <ThemePName>
             {tagName}
-          </ThemeH1>
+          </ThemePName>
         ) : (
           ""
         )}

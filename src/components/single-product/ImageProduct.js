@@ -38,7 +38,7 @@ const ImageProduct = ({
         alt={slug}
         height={height}
         width={width}
-        placeholder="blur"
+         placeholder="blur"
         blurDataURL={
           base64 ||
           `/_next/image?url=${sourceUrl ? sourceUrl : mediaItemUrl}&w=16&q=1`

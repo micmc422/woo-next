@@ -98,20 +98,17 @@ export const PriceParse = ({ price }) => {
 
 export const ThemeH1 = ({ children }) => {
   return (
-    <motion.h1
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      exit={{ x: -300 }}
+    <h1
       className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl"
     >
       {children}
-    </motion.h1>
+    </h1>
   );
 };
 export const ThemePName = ({ children }) => {
   return (
-    <div className={`relative`}>
-      <div className="p-4 my-4">
+    <div className={`relative inline-block my-4`}>
+      <div className="px-4 pt-2">
         <h1 className="text-2xl font-black uppercase lg:text-6xl md:text-4xl">
           {children}
           <div className="absolute top-0 left-0 w-2 h-full rounded bg-brand-500" />
