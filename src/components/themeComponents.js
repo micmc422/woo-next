@@ -98,14 +98,11 @@ export const PriceParse = ({ price }) => {
 
 export const ThemeH1 = ({ children }) => {
   return (
-    <h1
-      className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl"
-    >
+    <h1 className="mb-5 text-4xl font-black uppercase lg:text-8xl md:text-6xl sm:text-4xl">
       {children}
     </h1>
   );
 };
-
 
 export const ThemePName = ({ children }) => {
   return (
@@ -130,9 +127,6 @@ export const ThemePName = ({ children }) => {
             animate={{ right: "0%" }}
             exit={{ right: "100%" }}
             className="absolute top-0 right-0 z-20 w-2 h-full bg-gray-300 rounded"
-            transition={{
-              duration: 2,
-            }}
           />
         </h1>
       </div>
@@ -141,23 +135,17 @@ export const ThemePName = ({ children }) => {
 };
 export const ThemeH2 = ({ children, alignRigth }) => {
   return (
-    <motion.h2
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      exit={{ x: -300 }}
+    <h2
       className={`p-4 relative mb-5 text-3xl font-black uppercase lg:text-6xl md:text-5xl sm:text-4xl`}
     >
       {children}
       <div className="absolute top-0 w-2 h-16 rounded -left-2 bg-brand-500" />
-    </motion.h2>
+    </h2>
   );
 };
 export const ThemeH3 = ({ children }) => {
   return (
-    <motion.h3
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      exit={{ x: -300 }}
+    <h3
       className={`p-4 mb-5 text-2xl font-black uppercase lg:text-5xl md:text-4xl sm:text-3xl text-gray-600 max-w-screen-md mx-auto`}
     >
       <div className="relative inline min-w-min">
@@ -165,12 +153,12 @@ export const ThemeH3 = ({ children }) => {
         <div className="absolute top-0 w-1 rounded shadow h-1/2 -left-3 bg-brand-500" />
         <div className="absolute w-1/2 h-1 bg-gray-300 rounded shadow -bottom-2 right-3" />
       </div>
-    </motion.h3>
+    </h3>
   );
 };
 export const ThemeH4 = ({ children }) => {
   return (
-    <motion.h3
+    <h3
       initial={{ x: -200 }}
       animate={{ x: 0 }}
       exit={{ x: -300 }}
@@ -181,7 +169,7 @@ export const ThemeH4 = ({ children }) => {
         <div className="absolute top-0 w-1 rounded shadow h-1/2 -left-3 bg-brand-500" />
         <div className="absolute bottom-0 w-1/2 h-1 bg-gray-300 rounded shadow right-3" />
       </div>
-    </motion.h3>
+    </h3>
   );
 };
 export const TitreDefault = () => {
