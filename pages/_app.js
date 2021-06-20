@@ -13,9 +13,21 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
+const container = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.5,
+      when: "afterChildren",
+    },
+  },
+  exit: { opacity: 0 },
+};
+
 function MyApp({ Component, pageProps }) {
-  const { pathname } = useRouter();
-  console.log(pathname);
+  const { asPath } = useRouter();
+  console.log(asPath);
   return (
     <>
       <CookieConsent
@@ -48,10 +60,11 @@ function MyApp({ Component, pageProps }) {
       </CookieConsent>
       <AnimatePresence exitBeforeEnter>
         <motion.main
-          key={pathname}
+          key={asPath}
           initial={"initial"}
           animate={"animate"}
           exit={"exit"}
+          variants={container}
         >
           <Component {...pageProps} />
         </motion.main>
