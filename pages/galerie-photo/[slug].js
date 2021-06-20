@@ -19,11 +19,16 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ProductCard from "../../src/components/Product";
-import { Bouton, ThemeH1, ThemePName } from "../../src/components/themeComponents";
+import {
+  Bouton,
+  ThemeH1,
+  ThemePName,
+} from "../../src/components/themeComponents";
 import Loading from "../../src/components/Loading";
 import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import Reviews from "../../src/components/single-product/reviews";
 import { useTranslation } from "react-i18next";
+import { getPlaiceholder } from "plaiceholder";
 
 const parentListEl = {
   initial: {},
@@ -75,6 +80,7 @@ export default function Product(props) {
   if (router.isFallback || !product) {
     return <Loading />;
   }
+  console.log(product.image)
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
@@ -88,6 +94,7 @@ export default function Product(props) {
               imgarray={[...product.galleryImages.nodes, product?.image]}
               slug={product.slug}
               name={product.name || product.title}
+              base64={product.image.base64}
             />
             <div className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
               <motion.div
@@ -203,6 +210,7 @@ export default function Product(props) {
     </Layout>
   );
 }
+
 const ProductDetails = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
   const { t } = useTranslation("shop");
@@ -364,11 +372,16 @@ export async function getStaticProps(context) {
     variables: { slug },
   });
 
+  const { base64, img } = await getPlaiceholder(data?.product.image.sourceUrl, {
+    size: 10,
+  });
+  const product = { ...data.product, image: { ...data.product.image, base64 } };
   return {
     props: {
+      
       menu,
       legal: data?.legalmenu?.menuItems?.nodes || [],
-      product: data?.product,
+      product,
       footer: data?.getFooter,
       coupons: data?.coupons.nodes,
       ...(await serverSideTranslations(locale, ["common", "shop"])),

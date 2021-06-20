@@ -6,17 +6,19 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   */
+
   purge: {
     content: [
-    "./pages/**/*.js",
-    "./pages/**/*.ts",
-    "./pages/**/*.jsx",
-    "./pages/**/*.tsx",
-    "./src/components/**/*.js",
-    "./src/components/**/*.ts",
-    "./src/components/**/*.jsx",
-    "./src/components/**/*.tsx",
-  ]},
+      "./pages/**/*.js",
+      "./pages/**/*.ts",
+      "./pages/**/*.jsx",
+      "./pages/**/*.tsx",
+      "./src/components/**/*.js",
+      "./src/components/**/*.ts",
+      "./src/components/**/*.jsx",
+      "./src/components/**/*.tsx",
+    ],
+  },
   theme: {
     fontFamily: {
       serif: ["Cardo", "serif"],

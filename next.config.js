@@ -1,7 +1,8 @@
 const { i18n } = require("./next-i18next.config");
 const path = require("path");
+const { withPlaiceholder } = require("@plaiceholder/next");
 
-module.exports = {
+module.exports = withPlaiceholder({
   trailingSlash: true,
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
@@ -34,4 +35,4 @@ module.exports = {
       permanent: true,
     },
   ],
-};
+});

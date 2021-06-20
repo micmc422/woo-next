@@ -10,7 +10,7 @@ const animationVariants = {
 };
 
 const ImageWithFallback = (props) => {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const animationControls = useAnimation();
   useEffect(() => {
     if (loaded) {
@@ -40,6 +40,9 @@ const ImageWithFallback = (props) => {
         src={imgSrc}
         alt={alt || "paris est une photo"}
         layout="fill"
+        placeholder="blur"
+        blurDataURL={`/_next/image?url=${imgSrc}&w=16&q=1`}
+        /*
         onLoad={(event) => {
           const target = event.target;
 
@@ -48,6 +51,7 @@ const ImageWithFallback = (props) => {
             setLoaded(true);
           }
         }}
+        */
       />
     </motion.div>
   );

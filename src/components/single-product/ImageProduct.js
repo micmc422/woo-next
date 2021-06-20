@@ -10,22 +10,24 @@ const animationVariants = {
 
 const ImageProduct = ({
   slug,
+  base64,
   sourceUrl,
   mediaItemUrl,
   mediaDetails: { height, width },
 }) => {
-  const [loaded, setLoaded] = useState(false);
+  /*
+  const [loaded, setLoaded] = useState(true);
   const animationControls = useAnimation();
   useEffect(() => {
     if (loaded) {
       animationControls.start("loaded");
     }
   }, [loaded]);
-
+*/
   return (
     <motion.div
       initial={"notLoaded"}
-      animate={animationControls}
+      animate={"loaded"}
       variants={animationVariants}
       transition={{ ease: "easeOut", duration: 1 }}
       className="relative text-center"
@@ -36,17 +38,24 @@ const ImageProduct = ({
         alt={slug}
         height={height}
         width={width}
+        placeholder="blur"
+        blurDataURL={
+          base64 ||
+          `/_next/image?url=${sourceUrl ? sourceUrl : mediaItemUrl}&w=16&q=1`
+        }
+        /*
         onLoad={(event) => {
           const target = event.target;
           if (target.src.indexOf("data:image/gif;base64") < 0) {
             setLoaded(true);
           }
         }}
+        */
       />
     </motion.div>
   );
 };
-const ImageContainer = ({ imgarray }) => {
+const ImageContainer = ({ imgarray, base64 }) => {
   const [selected, setSelected] = useState(imgarray[0].id || 0);
   useEffect(() => {
     setSelected(imgarray[0].id);
@@ -58,7 +67,11 @@ const ImageContainer = ({ imgarray }) => {
           {imgarray.map(
             (item) =>
               selected === item.id && (
-                <ImageProduct {...item} key={uniqueId(item.id)} />
+                <ImageProduct
+                  {...item}
+                  key={uniqueId(item.id)}
+                  base64={base64}
+                />
               )
           )}
         </div>
@@ -70,6 +83,7 @@ const ImageContainer = ({ imgarray }) => {
               img={img}
               setSelected={setSelected}
               key={uniqueId(img.id)}
+              base64={base64}
             />
           ))}
         </div>
@@ -80,7 +94,10 @@ const ImageContainer = ({ imgarray }) => {
 
 const Vignettes = ({
   img: {
-    slug, title,name,
+    slug,
+    base64,
+    title,
+    name,
     id,
     sourceUrl,
     mediaItemUrl,
@@ -88,6 +105,7 @@ const Vignettes = ({
   },
   setSelected,
 }) => {
+  /*
   const [loaded, setLoaded] = useState(false);
   const animationControls = useAnimation();
   useEffect(() => {
@@ -95,15 +113,16 @@ const Vignettes = ({
       animationControls.start("loaded");
     }
   }, [loaded]);
+  console.log(base64);
+  */
+
   return (
     <div
-      // initial={"notLoaded"}
-      //  animate={animationControls}
-      // variants={animationVariants}
+      initial={"notLoaded"}
+      animate={"loaded"}
+      variants={animationVariants}
       // transition={{ ease: "easeOut", duration: 1 }}
-      className={` w-24 h-24 relative rounded-md transition overflow-hidden ${
-        loaded ? "opacity-100" : "opacity-0"
-      }`}
+      className={` w-24 h-24 relative rounded-md transition overflow-hidden`}
       onClick={() => setSelected(id)}
       key={uniqueId(id)}
     >
@@ -114,14 +133,21 @@ const Vignettes = ({
         layout="fill"
         objectFit="cover"
         objectPosition=" center center"
+        placeholder="blur"
+        blurDataURL={
+          base64 ||
+          `/_next/image?url=${sourceUrl ? sourceUrl : mediaItemUrl}&w=16&q=1`
+        }
         // height={height}
         //  width={width}
+        /*
         onLoad={(event) => {
           const target = event.target;
           if (target.src.indexOf("data:image/gif;base64") < 0) {
             setLoaded(true);
           }
         }}
+        */
       />
     </div>
   );

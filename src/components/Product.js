@@ -220,7 +220,7 @@ const VignettePhoto = ({ product, noName, cover }) => {
       onMouseLeave={() => setHovered(false)}
     >
       <AnimatePresence>
-        {hovered ? (
+        {hovered || cover ? (
           <motion.div
             className="absolute inset-0"
             key={uniqueId(product.id)}
@@ -234,6 +234,7 @@ const VignettePhoto = ({ product, noName, cover }) => {
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
               objectfit={noName ? "cover" : orientation}
+              objectPosition={"50% 50%"}
             />
           </motion.div>
         ) : (
@@ -249,8 +250,8 @@ const VignettePhoto = ({ product, noName, cover }) => {
               slug={product.slug}
               alt={product?.image?.altText || product?.image?.title}
               layout="fill"
-              objectfit={noName ? (cover ? "cover" : "contain") : orientation}
-              objectPosition
+              objectfit={noName ? (cover ? "none" : "contain") : orientation}
+              objectPosition={"50% 50%"}
             />
           </motion.div>
         )}
