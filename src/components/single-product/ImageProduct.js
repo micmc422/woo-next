@@ -3,10 +3,12 @@ import { uniqueId } from "lodash";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+/*
 const animationVariants = {
   loaded: { opacity: 1 },
   notLoaded: { opacity: 0 },
 };
+*/
 
 const ImageProduct = ({
   slug,
@@ -25,11 +27,7 @@ const ImageProduct = ({
   }, [loaded]);
 */
   return (
-    <motion.div
-      initial={"notLoaded"}
-      animate={"loaded"}
-      variants={animationVariants}
-      transition={{ ease: "easeOut", duration: 1 }}
+    <div
       className="relative text-center"
     >
       <Image
@@ -50,7 +48,7 @@ const ImageProduct = ({
         }}
         */
       />
-    </motion.div>
+    </div>
   );
 };
 const ImageContainer = ({ imgarray, base64 }) => {
@@ -116,10 +114,6 @@ const Vignettes = ({
 
   return (
     <div
-      initial={"notLoaded"}
-      animate={"loaded"}
-      variants={animationVariants}
-      // transition={{ ease: "easeOut", duration: 1 }}
       className={` w-24 h-24 relative rounded-md transition overflow-hidden`}
       onClick={() => setSelected(id)}
       key={uniqueId(id)}

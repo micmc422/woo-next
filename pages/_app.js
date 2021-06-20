@@ -2,31 +2,17 @@ import "../src/styles/style.scss";
 import "../src/styles/main.scss";
 import "tailwindcss/tailwind.css";
 
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import NProgress from "nprogress";
 import { appWithTranslation } from "next-i18next";
 import CookieConsent from "react-cookie-consent";
-import { AnimatePresence, motion } from "framer-motion";
 
 NProgress.configure({ showSpinner: true });
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-const container = {
-  initial: {},
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-      when: "afterChildren",
-    },
-  },
-  exit: {},
-};
-
 function MyApp({ Component, pageProps }) {
-  const { asPath } = useRouter();
-  console.log(asPath);
   return (
     <>
       <CookieConsent
@@ -57,17 +43,7 @@ function MyApp({ Component, pageProps }) {
           This website uses cookies to enhance the user experience.
         </div>
       </CookieConsent>
-      <AnimatePresence exitBeforeEnter>
-        <motion.main
-          key={asPath}
-          initial={"initial"}
-          animate={"animate"}
-          exit={"exit"}
-          variants={container}
-        >
-          <Component {...pageProps} />
-        </motion.main>
-      </AnimatePresence>
+      <Component {...pageProps} />
     </>
   );
 }

@@ -105,6 +105,8 @@ export const ThemeH1 = ({ children }) => {
     </h1>
   );
 };
+
+
 export const ThemePName = ({ children }) => {
   return (
     <div className={`relative inline-block my-4`}>
