@@ -41,7 +41,7 @@ const ImageWithFallback = (props) => {
         alt={alt || "paris est une photo"}
         layout="fill"
         placeholder="blur"
-        blurDataURL={`/_next/image?url=${imgSrc}&w=16&q=1`}
+        blurDataURL={imgSrc}
         /*
         onLoad={(event) => {
           const target = event.target;

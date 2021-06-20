@@ -38,12 +38,10 @@ const ImageProduct = ({
         alt={slug}
         height={height}
         width={width}
-         placeholder="blur"
-        blurDataURL={
-          base64 ||
-          `/_next/image?url=${sourceUrl ? sourceUrl : mediaItemUrl}&w=16&q=1`
-        }
+        placeholder="blur"
+        blurDataURL={sourceUrl ? sourceUrl : mediaItemUrl}
         /*
+        base64 || 
         onLoad={(event) => {
           const target = event.target;
           if (target.src.indexOf("data:image/gif;base64") < 0) {
@@ -134,11 +132,8 @@ const Vignettes = ({
         objectFit="cover"
         objectPosition=" center center"
         placeholder="blur"
-        blurDataURL={
-          base64 ||
-          `/_next/image?url=${sourceUrl ? sourceUrl : mediaItemUrl}&w=16&q=1`
-        }
-        // height={height}
+        blurDataURL={sourceUrl ? sourceUrl : mediaItemUrl}
+        // height={height} base64 || 
         //  width={width}
         /*
         onLoad={(event) => {
