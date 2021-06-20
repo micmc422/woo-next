@@ -14,16 +14,14 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const container = {
-  initial: { opacity: 0 },
+  initial: {},
   animate: {
-    opacity: 1,
     transition: {
-      staggerChildren: 0.5,
+      staggerChildren: 0.1,
       when: "afterChildren",
     },
-    duration: 0.1,
   },
-  exit: { opacity: 0 },
+  exit: {},
 };
 
 function MyApp({ Component, pageProps }) {
