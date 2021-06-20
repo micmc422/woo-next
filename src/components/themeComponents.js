@@ -116,9 +116,6 @@ export const ThemePName = ({ children }) => {
             initial={{ width: "100%" }}
             animate={{ width: "0%" }}
             exit={{ width: "100%" }}
-            transition={{
-              duration: 2,
-            }}
             className="absolute top-0 right-0 z-10 h-full bg-white"
           ></motion.div>
           <motion.div
