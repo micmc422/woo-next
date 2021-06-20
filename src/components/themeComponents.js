@@ -158,7 +158,7 @@ export const ThemeH3 = ({ children }) => {
       initial={{ x: -200 }}
       animate={{ x: 0 }}
       exit={{ x: -300 }}
-      className={`p-4 mb-5 text-2xl font-black uppercase lg:text-5xl md:text-4xl sm:text-3xl text-gray-600`}
+      className={`p-4 mb-5 text-2xl font-black uppercase lg:text-5xl md:text-4xl sm:text-3xl text-gray-600 max-w-screen-md mx-auto`}
     >
       <div className="relative inline min-w-min">
         {children}

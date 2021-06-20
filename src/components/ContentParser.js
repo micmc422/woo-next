@@ -205,7 +205,7 @@ const ContentParser = ({ data, children, options, products }) => {
             );
           }
           if (name === "h1") {
-            return <ThemeH1>{domToReact(children, defaultOptions)}</ThemeH1>;
+            return <ThemeH3>{domToReact(children, defaultOptions)}</ThemeH3>;
           }
           if (name === "h2") {
             const alignRigth = attribs?.style === "text-align: right;";
@@ -327,7 +327,7 @@ const ContentParser = ({ data, children, options, products }) => {
             return (
               <motion.div
                 variants={childAnimation}
-                className={`p-4 mx-auto prose font-semibold font-serif overflow-hidden ${
+                className={`mx-auto prose md:prose-xl font-serif overflow-hidden ${
                   alignRigth ? "md:text-right" : ""
                 }`}
                 key={uniqueId()}
@@ -344,7 +344,11 @@ const ContentParser = ({ data, children, options, products }) => {
                 </div>
               );
             }
-            return <ul className="p-4 mx-auto prose"> </ul>;
+            return (
+              <ul className="p-4 mx-auto prose md:prose-xl">
+                {domToReact(children, defaultOptions)}
+              </ul>
+            );
           }
           if (name === "li") {
             return <li> {domToReact(children, defaultOptions)}</li>;
@@ -581,7 +585,7 @@ const ContentParser = ({ data, children, options, products }) => {
       exit="exit"
       variants={parentAnimation}
       key={uniqueId()}
-      className={`space-y-4  pt-16 md:space-y-8 lg:space-y-16`}
+      className={`space-y-2  pt-16 md:space-y-4 lg:space-y-8`}
     >
       {parse(data, defaultOptions)}
     </motion.div>

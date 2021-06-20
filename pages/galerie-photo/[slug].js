@@ -203,7 +203,7 @@ export default function Product(props) {
       <div className="grid grid-cols-2 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <Upsell products={fullUpsellList} />
       </div>
-      <div className="container mx-auto max-w-prose">
+      <div className="container mx-auto">
         <ProductDetails product={product} />
       </div>
     </Layout>
@@ -279,7 +279,7 @@ const ProductDetails = ({ product }) => {
           )}
         </AnimateSharedLayout>
       </div>
-      <div className="container flex flex-col px-4 mx-auto mt-8 single-product xl:px-0">
+      <div className="container flex flex-col px-4 mx-auto my-8 single-product xl:px-0">
         <AnimatePresence exitBeforeEnter>
           <ActiveDetail
             product={product}
@@ -304,7 +304,12 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
   }
   if (activeTab === "commentaires") {
     return (
-      <Reviews key={uniqueId("commentaires")} reviews={product.reviews.nodes} />
+      <div className="w-full max-w-screen-lg mx-auto">
+        <Reviews
+          key={uniqueId("commentaires")}
+          reviews={product.reviews.nodes}
+        />
+      </div>
     );
   }
   if (activeTab === "details") {
@@ -316,7 +321,7 @@ const ActiveDetail = ({ product, activeTab, size, artiste }) => {
         exit="exit"
         variants={parentAnimation}
         key={uniqueId("details")}
-        className="w-full mx-auto mb-16 prose border border-gray-200 rounded shadow-2xl"
+        className="container w-full max-w-screen-lg mx-auto prose border border-gray-200 rounded shadow-2xl"
       >
         <div className="relative overflow-hidden">
           <div className="px-2 bg-gray-200">Tailles :</div>
@@ -377,7 +382,6 @@ export async function getStaticProps(context) {
   const product = { ...data.product, image: { ...data.product.image, base64 } };
   return {
     props: {
-      
       menu,
       legal: data?.legalmenu?.menuItems?.nodes || [],
       product,
