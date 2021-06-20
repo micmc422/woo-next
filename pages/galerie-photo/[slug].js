@@ -376,7 +376,7 @@ export async function getStaticProps(context) {
     variables: { slug },
   });
 
-  const { base64, img } = await getPlaiceholder(data?.product.image.sourceUrl, {
+  const { base64 } = await getPlaiceholder(data?.product.image.sourceUrl, {
     size: 10,
   });
   const product = { ...data.product, image: { ...data.product.image, base64 } };

@@ -1,4 +1,3 @@
-import { motion, useAnimation } from "framer-motion";
 import { uniqueId } from "lodash";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -12,7 +11,6 @@ const animationVariants = {
 
 const ImageProduct = ({
   slug,
-  base64,
   sourceUrl,
   mediaItemUrl,
   mediaDetails: { height, width },
