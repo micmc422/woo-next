@@ -80,7 +80,6 @@ export default function Product(props) {
   if (router.isFallback || !product) {
     return <Loading />;
   }
-  console.log(product.image)
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
