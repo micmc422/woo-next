@@ -21,6 +21,7 @@ const container = {
       staggerChildren: 0.5,
       when: "afterChildren",
     },
+    duration: 0.1,
   },
   exit: { opacity: 0 },
 };
