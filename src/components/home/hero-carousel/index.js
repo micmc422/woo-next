@@ -13,6 +13,7 @@ const HeroCarousel = ({ heroCarousel }) => {
   }
 
   const [autoPlay, setAutoPlay] = useState(true);
+  const [linkJsx, setLinkJsx] = useState(false);
   const [xTransition, setXT] = useState(0);
   const slideDuration = 6; // in seconds
   const activeIndexRef = useRef({ activeIndex: 0 });
@@ -85,8 +86,12 @@ const HeroCarousel = ({ heroCarousel }) => {
   const { image, id, name, title, slug, featuredImage, content } = heroCarousel[
     activeIndex
   ];
-  const LinkJsx = parse(content, options);
-  // console.log(heroCarousel[activeIndex]);
+  let LinkJsx = false;
+  useEffect(() => {
+    if (content) {
+      setLinkJsx(parse(content, options))
+    }
+  }, [content]);
   const handleDrag = (event, info) => {
     if (info.offset.x === 0) return;
     if (info.offset.x > 0) {
@@ -178,15 +183,15 @@ const HeroCarousel = ({ heroCarousel }) => {
       </div>
       <AnimatePresence exitBeforeEnter>
         <motion.div
-          className="absolute px-4 py-5 m-4 bg-white rounded shadow-md md:relative md:bg-transparent md:px-10 banner-content sm:pt-0 sm:w-4/12 md:shadow-none md:rounded-none"
+          className="absolute px-4 py-0 m-4 bg-white rounded shadow-md md:relative md:bg-transparent md:px-10 banner-content sm:pt-0 sm:w-4/12 md:shadow-none md:rounded-none"
           key={`titre-slider-${slug}-${id}`}
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, x: 200 }}
         >
           <ThemeH4>{name || title}</ThemeH4>
-          {LinkJsx ? (
-            LinkJsx
+          {linkJsx ? (
+            <div className="pb-4">{linkJsx}</div>
           ) : (
             <Link href={`/galerie-photo/`}>
               <Bouton small={true}>{t("explorer")}</Bouton>
@@ -199,10 +204,11 @@ const HeroCarousel = ({ heroCarousel }) => {
 };
 
 const options = {
-  replace: ({ attribs, name, children }) => {
+  replace: ({ attribs, name, children, type }) => {
     if (!attribs) {
       return;
     }
+    console.log(type);
     if (attribs.href) {
       return (
         <Link href={attribs.href} passHref>
@@ -213,10 +219,8 @@ const options = {
           </a>
         </Link>
       );
-    } else {
-      return<></>
     }
-    return;
+    return <>{domToReact(children, options)}</>;
   },
 };
 

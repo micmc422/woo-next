@@ -108,7 +108,7 @@ export const ThemePName = ({ children }) => {
   return (
     <div className={`relative inline-block my-4`}>
       <div className="px-4 pt-2">
-        <h1 className="text-2xl font-black uppercase lg:text-6xl md:text-4xl">
+        <h1 className="text-2xl font-black inline uppercase lg:text-6xl md:text-4xl">
           {children}
           <div className="absolute top-0 left-0 w-2 h-full rounded bg-brand-500" />
           <motion.div
@@ -161,10 +161,10 @@ export const ThemeH4 = ({ children }) => {
       exit={{ x: -300 }}
       className={`p-4 mb-5 text-xl font-black uppercase lg:text-4xl md:text-3xl sm:text-2xl text-gray-600 `}
     >
-      <div className="relative inline-flex min-w-min">
+      <div className="relative inline min-w-min">
         {children}
         <div className="absolute top-0 w-1 rounded shadow h-1/2 -left-3 bg-brand-500" />
-        <div className="absolute bottom-0 w-1/2 h-1 bg-gray-300 rounded shadow right-3" />
+        <div className="absolute w-1/2 h-1 bg-gray-300 rounded shadow -bottom-2 right-3" />
       </div>
     </h3>
   );
