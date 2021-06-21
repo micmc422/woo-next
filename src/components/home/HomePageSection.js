@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContentParser from "../ContentParser";
 import LargeSlider from "../sections/LargeSlider";
-import { Bouton, ThemeH2, ThemeH3 } from "../themeComponents";
+import { Bouton, ThemeH2, ThemeH3, ThemeH4, ThemeH5 } from "../themeComponents";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -159,9 +159,9 @@ const HomePageSection = ({ homepage, products }) => {
         const alignRigth = attribs?.style === "text-align: right;";
         return (
           <div className="max-w-2xl mx-auto">
-            <ThemeH3 alignRigth={alignRigth}>
+            <ThemeH5 alignRigth={alignRigth}>
               {domToReact(children, defaultOptions)}
-            </ThemeH3>
+            </ThemeH5>
           </div>
         );
       }
@@ -364,15 +364,9 @@ const HomePageSection = ({ homepage, products }) => {
         const { href, target, title } = attribs;
         const parsedHref = href?.replace("https://photo.paris", "");
         return (
-          <div className="px-4 py-4 mx-auto md:py-0 max-w-prose">
-            <Bouton>
-              <Link href={parsedHref} passHref>
-                <a className="pt-1 text-2xl leading-5">
-                  {domToReact(children, defaultOptions)}
-                </a>
-              </Link>
-            </Bouton>
-          </div>
+          <Link href={parsedHref} passHref>
+            <a>{domToReact(children, defaultOptions)}</a>
+          </Link>
         );
       }
       if (

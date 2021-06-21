@@ -133,6 +133,9 @@ const HeroCarousel = ({ heroCarousel }) => {
               objectfill="cover"
               className="pointer-events-none"
               alt={title}
+              placeholder="blur"
+              blurDataURL={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
+      
             />
           </motion.div>
         </AnimatePresence>

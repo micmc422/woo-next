@@ -22,24 +22,24 @@ export default function Home(props) {
   if (router.isFallback || !page) {
     return <Loading />;
   }
- // console.log(page)
+  // console.log(page)
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
         {seoData ? seoData : " "}
         <script type="application/ld+json">{`${seoSchema}`}</script>
       </Head>
-      <div className="container px-4 mx-auto my-8 xl:px-0">
-        <ThemePName>
-          {page?.title}
-        </ThemePName>
+      <div className="container px-4 mx-auto my-2 md:my-4 xl:px-0">
+        <ThemePName>{page?.title}</ThemePName>
       </div>
-      {page?.content && (
-        <ContentParser
-          data={page?.content}
-          products={customProducts}
-        ></ContentParser>
-      )}
+      <section className={`relative max-w-full overflow-hidden`}>
+        {page?.content && (
+          <ContentParser
+            data={page?.content}
+            products={customProducts}
+          ></ContentParser>
+        )}
+      </section>
     </Layout>
   );
 }

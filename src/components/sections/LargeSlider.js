@@ -136,9 +136,7 @@ const LargeSlider = ({ products, cover }) => {
           exit={{ opacity: 0, y: xTransition / 10 }}
           transition={{ delayChildren: 0.5, when: "afterChildren" }}
         >
-          <ThemeH4>
-            {name || title}
-          </ThemeH4>
+          <ThemeH4>{name || title}</ThemeH4>
           <Link href={`/galerie-photo/${slug}/`}>
             <a className="font-semibold text-gray-800">
               <Bouton small>
@@ -176,11 +174,19 @@ const LargeSlider = ({ products, cover }) => {
               alt={name || title}
               objectFit={cover ? "contain" : "cover"}
               className="pointer-events-none"
+              placeholder="blur"
+              blurDataURL={
+                image ? image?.sourceUrl : featuredImage.node.sourceUrl
+              }
             />
           </motion.div>
         </AnimatePresence>
         <div className="slider-button">
-          <button className="w-12 h-12 focus:outline-none" onClick={prevSlide}aria-label="précédent">
+          <button
+            className="w-12 h-12 focus:outline-none"
+            onClick={prevSlide}
+            aria-label="précédent"
+          >
             <svg
               width="25px"
               className="inline-block mr-3"
@@ -197,7 +203,11 @@ const LargeSlider = ({ products, cover }) => {
               />
             </svg>
           </button>
-          <button className="w-12 h-12 focus:outline-none" onClick={nextSlide} aria-label="suivant">
+          <button
+            className="w-12 h-12 focus:outline-none"
+            onClick={nextSlide}
+            aria-label="suivant"
+          >
             <svg
               width="25px"
               className="inline-block"
@@ -216,7 +226,13 @@ const LargeSlider = ({ products, cover }) => {
           </button>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 z-20 hidden px-4 md:block sm:w-4/12">
+    </div>
+  );
+};
+
+function RoundedCounter(props) {
+  /*
+        <div className="absolute bottom-0 left-0 z-20 hidden px-4 md:block sm:w-4/12">
         <AnimateSharedLayout type="crossfade">
           <motion.ul
             className="flex flex-row justify-center pb-2 space-x-2 align-middle"
@@ -226,11 +242,8 @@ const LargeSlider = ({ products, cover }) => {
           </motion.ul>
         </AnimateSharedLayout>
       </div>
-    </div>
-  );
-};
 
-function RoundedCounter(props) {
+  */
   // console.log(setSlide);
   const { slide } = props;
   return (

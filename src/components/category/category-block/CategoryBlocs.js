@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { Bouton } from "../../themeComponents";
+import { Bouton, ThemeH5 } from "../../themeComponents";
 
 const CategoryBlocs = (props) => {
   const { category } = props;
@@ -16,9 +16,7 @@ const CategoryBlocs = (props) => {
             alt="ParentCategoryBlock image"
           />
           <div className="p-3 product-title-container">
-            <h3 className="text-lg font-medium product-title">
-              {category.name}
-            </h3>
+            <ThemeH5>{category.name}</ThemeH5>
             <Bouton>
               <span className="text-sm shop-now">{t("explorer")}</span>
             </Bouton>

@@ -91,7 +91,7 @@ const ContentParser = ({ data, children, options, products }) => {
 
           if (name === "img") {
             return (
-              <div className={`relative`}>
+              <div className={`relative md:w-max mx-auto`}>
                 <div className="absolute inset-0 transform translate-y-2 bg-gray-300 md:translate-x-4 bg-gradient-to-tr from-gray-200 to-gray-100"></div>
                 {attribs.width ? (
                   <Image
@@ -99,6 +99,9 @@ const ContentParser = ({ data, children, options, products }) => {
                     width={attribs.width}
                     height={attribs.height}
                     alt={attribs.alt}
+                    placeholder="blur"
+                    blurDataURL={attribs.src}
+            
                   />
                 ) : (
                   <Image
@@ -106,6 +109,8 @@ const ContentParser = ({ data, children, options, products }) => {
                     layout="fill"
                     objectFit="cover"
                     alt={attribs.alt}
+                    placeholder="blur"
+                    blurDataURL={attribs.src}
                   />
                 )}
               </div>
@@ -327,7 +332,7 @@ const ContentParser = ({ data, children, options, products }) => {
             return (
               <motion.div
                 variants={childAnimation}
-                className={`mx-auto prose md:prose-xl font-serif overflow-hidden ${
+                className={`mx-auto prose px-4 md:prose-xl font-serif overflow-hidden ${
                   alignRigth ? "md:text-right" : ""
                 }`}
                 key={uniqueId()}
@@ -502,7 +507,7 @@ const ContentParser = ({ data, children, options, products }) => {
                     ref={ref}
                     animate={inView ? "animate" : "initial"}
                     variants={childAnimation}
-                    className={`safe pb-4 md:pb-8 lg:pb-16 ${
+                    className={`safe p-0 md:p-4 md:pb-8 lg:pb-16 bg-white relative md:rounded ${
                       attribs?.class.includes("vc_col-sm-3")
                         ? "sm:w-1/4"
                         : attribs?.class.includes("vc_col-sm-4")
@@ -585,7 +590,7 @@ const ContentParser = ({ data, children, options, products }) => {
       exit="exit"
       variants={parentAnimation}
       key={uniqueId()}
-      className={`space-y-2  pt-16 md:space-y-4 lg:space-y-8`}
+      className={`space-y-2 md:space-y-4 lg:space-y-8`}
     >
       {parse(data, defaultOptions)}
     </motion.div>

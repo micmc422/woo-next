@@ -105,9 +105,10 @@ html {
     position: absolute;
     bottom: 50%;
     left: 0;
-    height: 2px;
+    height: .25rem;
     width: 50%;
-    background: #222;
+    background: #f5cc26;
+    border-radius: 9999px;
     z-index: -1;
   }
   &:after {
@@ -115,9 +116,10 @@ html {
     position: absolute;
     bottom: 50%;
     right: 0;
-    height: 2px;
+    height: .25rem;
+    border-radius: 9999px;
     width: 50%;
-    background: #222;
+    background: #d1d5db;
     z-index: -1;
   }
 }

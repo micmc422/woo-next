@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useTranslation } from "react-i18next";
-import { Bouton } from "../../themeComponents";
+import { Bouton, ThemeH5 } from "../../themeComponents";
 
 const ParentCategoryBlock = (props) => {
   const { category, i } = props;
@@ -137,12 +137,7 @@ const ParentCategoryBlock = (props) => {
             </AnimatePresence>
           </div>
           <div className="p-3 product-title-container">
-            <h3 className="text-lg font-medium product-title">
-              {category?.name}
-            </h3>
-            <Bouton>
-              <span className="text-sm shop-now">{t("explorer")}</span>
-            </Bouton>
+            <ThemeH5>{category?.name}</ThemeH5>
           </div>
         </a>
       </Link>
