@@ -4,7 +4,7 @@ import clientConfig from "../../client-config";
 import { isEmpty, uniqueId } from "lodash";
 import Price from "./single-product/price";
 import { useState } from "react";
-import { Bouton } from "./themeComponents";
+import { Bouton, ThemeTitre } from "./themeComponents";
 import { AnimatePresence, motion } from "framer-motion";
 import ImageWithFallback from "./ImageFallBack";
 import Skeleton from "react-loading-skeleton";
@@ -27,7 +27,7 @@ const Product = (props) => {
   const isNew = dateToOld < dateProd;
   return (
     // @TODO Need to handle Group products differently.
-    <div className="w-full product" key={uniqueId()}>
+    <div className="relative w-full product" key={uniqueId()}>
       <motion.div
         initial="initial"
         animate="animate"
@@ -66,11 +66,12 @@ const Product = (props) => {
           </a>
         </Link>
         {!noName && (
-          <div className="text-center cursor-pointer product-info">
+          <div className="p-1 rounded bg-gray-50 shadow">
             <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
-              <h3 className="pb-2 mt-3 text-xs font-thin leading-4 text-center text-gray-600 hover:text-gray-800 md:text-base">
+              <h2 className="inline-block pb-4 mt-3 text-sm leading-3 text-left text-gray-600 cursor-pointer hover:text-gray-800">
+                <ThemeTitre />
                 {product.name ? product.name : "Chargement..."}
-              </h3>
+              </h2>
             </Link>
             <div className="flex flex-row justify-between">
               {product.name && (
@@ -83,7 +84,7 @@ const Product = (props) => {
                         }
                         passHref
                       >
-                        <a className="">
+                        <a className="cursor-pointer">
                           <Price
                             salesPrice={product?.price}
                             regularPrice={product?.regularPrice}
@@ -93,7 +94,7 @@ const Product = (props) => {
                     </Bouton>
                   ) : (
                     <AddToCartButton product={product}>
-                      <div className="">
+                      <div className="cursor-pointer">
                         <Price
                           salesPrice={product?.price}
                           regularPrice={product?.regularPrice}

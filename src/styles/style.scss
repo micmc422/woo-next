@@ -123,9 +123,17 @@ html {
     z-index: -1;
   }
 }
+.neuro-btn {
+  background: linear-gradient(315deg, #ececec, #ffffff);
+}
 .neuro-btn-white {
   border-radius: 50px;
   background: linear-gradient(145deg, #d4d4d4, #fbfbfb);
+  box-shadow: 6px 6px 18px #c8c8c8, -20px -20px 60px #ffffff;
+}
+.neuro-btn-blue {
+  border-radius: 50px;
+  background: linear-gradient(145deg, #595cd9, #6a6dff);
   box-shadow: 6px 6px 18px #c8c8c8, -20px -20px 60px #ffffff;
 }
 .neuro-btn-brand {

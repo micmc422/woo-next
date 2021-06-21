@@ -23,7 +23,7 @@ const animationText = {
   initial: { x: 0 },
   animate: { x: 5 },
   hovered: {
-    y: -4,
+    x: 4,
   },
   exit: {},
 };
@@ -58,8 +58,8 @@ export const Bouton = ({
       <motion.div
         variants={animationBg}
         custom={small}
-        className={`absolute  transition-colors rounded-full opacity-50
-        ${circleClass ? circleClass : "neuromorphism-gray"} 
+        className={`absolute  transition-colors rounded-full opacity-25
+        ${circleClass ? circleClass : "neuro-btn-white"} 
         ${small ? "w-8 h-8" : "h-12 w-12"} 
         `}
       ></motion.div>
@@ -84,7 +84,7 @@ export const PriceParse = ({ price }) => {
     <>
       {temp.length > 1 ? (
         <div>
-          <div className="text-xs font-bold leading-3 text-purple-500 safe">
+          <div className="text-xs font-bold leading-3 text-brand-700 hover:text-brand-800 safe">
             {t("a-partir-de")}
           </div>{" "}
           <div className={`text-xs`}>{parsedPrice}</div>
@@ -173,7 +173,7 @@ export const ThemeTitre = ({ children }) => {
   return (
     <div className="relative inline min-w-min">
       {children}
-      <div className="absolute -top-px w-1 h-full rounded shadow -left-2 bg-brand-500" />
+      <div className="absolute w-1 h-full rounded shadow -top-px -left-2 bg-brand-500" />
     </div>
   );
 };
