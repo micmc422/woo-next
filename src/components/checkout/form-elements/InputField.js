@@ -1,6 +1,7 @@
 import Error from "../Error";
 import PropTypes from "prop-types";
 import Abbr from "./Abbr";
+import { ThemeTitre } from "../../themeComponents";
 
 const InputField = ({
   handleOnChange,
@@ -18,9 +19,10 @@ const InputField = ({
 
   return (
     <div className={containerClassNames}>
-      <label className="text-sm leading-7 text-gray-700" htmlFor={inputId}>
-        {label || ""}
-        <Abbr required={required} />
+      <label className="text-sm leading-7 text-gray-600" htmlFor={inputId}>
+        <ThemeTitre>
+          {label || ""}<Abbr required={required} />
+        </ThemeTitre>
       </label>
       <input
         onChange={handleOnChange}
@@ -28,7 +30,7 @@ const InputField = ({
         placeholder={placeholder}
         type={type}
         name={name}
-        className="w-full px-3 py-1 text-base leading-8 text-gray-800 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border-0 border-gray-500 outline-none border-b-1 focus:ring-brand-200 ring-gray-200 focus:bg-transparent ring-2 "
+        className="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border-0 border-b-2 border-gray-300 outline-none focus:bg-transparent focus:border-gray-500"
         id={inputId}
       />
       <Error errors={errors} fieldName={name} />

@@ -129,7 +129,7 @@ const LargeSlider = ({ products, cover }) => {
           <Separator>
             <Link href={`/galerie-photo/${slug}/`}>
               <a className="inline-block transition transform neuro-btn-brand max-w-max hover:-translate-y-1">
-                <span className="inline-block p-3 text-gray-50 text-lg">
+                <span className="inline-block p-3 text-lg text-gray-50">
                   <BlocPrix price={price} />
                 </span>
               </a>

@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import GET_UPSELL_QUERY from "../../../queries/get-upsell";
 import Product from "../../Product";
-import { Bouton } from "../../themeComponents";
+import { Bouton, ThemeH3 } from "../../themeComponents";
 
 const CartUpsell = () => {
   // Get Upsell Data.
@@ -26,19 +26,15 @@ const CartUpsell = () => {
 
   return (
     <>
-      <div className="p-4">
-      </div>
-      <div className="flex">
-        <div className="w-full md:w-1/2">
-        <Bouton small circleClass="bg-brand-500">
-          <h2 className="text-4xl">Suggestions</h2>
-        </Bouton>
-        <p className="font-serif">Suggestions, de produits.</p>
+      <div className="flex flex-col md:flex-row">
+        <div className={`p-4`}>
+          <ThemeH3>Suggestions</ThemeH3>
+          <p className="font-serif">Suggestions, de produits.</p>
         </div>
-        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:w-1/2">
+        <div className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:flex-grow">
           {upsellProducts.length
             ? upsellProducts.map((product) => (
-                <Product key={product.id} product={product} noName />
+                <Product key={product.id} product={product} noName cover/>
               ))
             : ""}
         </div>

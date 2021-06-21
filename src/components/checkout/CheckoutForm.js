@@ -16,6 +16,7 @@ import {
   setStatesForCountry,
 } from "../../utils/checkout";
 import CheckboxField from "./form-elements/CheckboxField";
+import { ThemeBorderEffect, ThemeH5 } from "../themeComponents";
 
 // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
 // const defaultCustomerInfo = {
@@ -227,7 +228,7 @@ const CheckoutForm = ({ countriesData }) => {
             <div>
               {/*Shipping Details*/}
               <div className="billing-details">
-                <h2 className="mb-4 text-xl font-medium">Shipping Details</h2>
+                <ThemeH5>Shipping Details</ThemeH5>
                 <Address
                   states={theShippingStates}
                   countries={shippingCountries}
@@ -251,7 +252,7 @@ const CheckoutForm = ({ countriesData }) => {
               {/*Billing Details*/}
               {input?.billingDifferentThanShipping ? (
                 <div className="billing-details">
-                  <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
+                  <ThemeH5>Billing Details</ThemeH5>
                   <Address
                     states={theBillingStates}
                     countries={billingCountries}
@@ -269,14 +270,14 @@ const CheckoutForm = ({ countriesData }) => {
             {/* Order & Payments*/}
             <div className="your-orders">
               {/*	Order*/}
-              <h2 className="mb-4 text-xl font-medium">Your Order</h2>
+              <ThemeH5>Your Order</ThemeH5>
               <YourOrder cart={cart} />
 
               {/*Payment*/}
               <PaymentModes input={input} handleOnChange={handleOnChange} />
               <div className="mt-5 woo-next-place-order-btn-wrap">
                 <button
-                  className="w-auto px-5 py-3 text-white rounded-sm bg-brand-600 xl:w-full"
+                  className="w-auto px-5 py-3 text-white rounded-sm bg-brand-500 xl:w-full"
                   type="submit"
                 >
                   Place Order

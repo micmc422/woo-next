@@ -2,6 +2,7 @@ import Error from "./Error";
 import { isEmpty, map } from "lodash";
 import Abbr from "./form-elements/Abbr";
 import ArrowDown from "../icons/ArrowDown";
+import { ThemeTitre } from "../themeComponents";
 
 const CountrySelection = ({ input, handleOnChange, countries, isShipping }) => {
   const { country, errors } = input || {};
@@ -11,15 +12,17 @@ const CountrySelection = ({ input, handleOnChange, countries, isShipping }) => {
   return (
     <div className="mb-3">
       <label className="text-sm leading-7 text-gray-700" htmlFor={inputId}>
-        Country
-        <Abbr required />
+        <ThemeTitre>
+          Country
+          <Abbr required />
+        </ThemeTitre>
       </label>
       <div className="relative w-full border-none">
         <select
           onChange={handleOnChange}
           value={country}
           name="country"
-          className="inline-block w-full py-3 pl-3 pr-8 leading-tight text-gray-500 bg-gray-100 bg-opacity-50 border-gray-500 rounded appearance-none border-b-1"
+          className="inline-block w-full py-3 pl-3 pr-8 leading-tight text-gray-500 bg-gray-100 bg-opacity-50 border-0 border-b-2 border-gray-300 outline-none appearance-none focus:bg-transparent focus:border-gray-500"
           id={inputId}
         >
           <option value="">Select a country...</option>

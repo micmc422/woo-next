@@ -198,7 +198,7 @@ const CartItemsContainer = () => {
                   </tbody>
                 </table>
                 <Link href="/checkout">
-                  <button className="w-auto px-5 py-3 text-white rounded-sm bg-brand-500 xl:w-full" aria-label={t("finalisercommande")}>
+                  <button className="w-auto px-5 py-3 text-white rounded-sm cursor-pointer bg-brand-500 xl:w-full" aria-label={t("finalisercommande")}>
                     <span className="woo-next-cart-checkout-txt">
                       {t("finalisercommande")}
                     </span>

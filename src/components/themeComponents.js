@@ -30,7 +30,7 @@ const animationText = {
 export const BgPattern = ({ color = "D1D5DB" }) => {
   return (
     <div
-      className="absolute inset-0 z-0 transition-all opacity-50 animate-rtl-linear-infinite"
+      className="absolute inset-0 z-0 transition-all opacity-50 pointer-events-none animate-rtl-linear-infinite"
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${color}' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       }}
@@ -154,9 +154,6 @@ export const ThemeH3 = ({ children }) => {
 export const ThemeH4 = ({ children }) => {
   return (
     <h3
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      exit={{ x: -300 }}
       className={`p-4 mb-5 text-xl font-black uppercase lg:text-4xl md:text-3xl sm:text-2xl text-gray-600 `}
     >
       <ThemeBorderEffect>{children}</ThemeBorderEffect>
@@ -166,17 +163,22 @@ export const ThemeH4 = ({ children }) => {
 export const ThemeH5 = ({ children }) => {
   return (
     <h3
-      initial={{ x: -200 }}
-      animate={{ x: 0 }}
-      exit={{ x: -300 }}
       className={`p-4 mb-5 text-xl font-black uppercase lg:text-3xl md:text-2xl  text-gray-600 `}
     >
       <ThemeBorderEffect>{children}</ThemeBorderEffect>
     </h3>
   );
 };
+export const ThemeTitre = ({ children }) => {
+  return (
+    <div className="relative inline min-w-min">
+      {children}
+      <div className="absolute -top-px w-1 h-full rounded shadow -left-2 bg-brand-500" />
+    </div>
+  );
+};
 
-const ThemeBorderEffect = ({ children }) => {
+export const ThemeBorderEffect = ({ children }) => {
   return (
     <div className="relative inline min-w-min">
       {children}

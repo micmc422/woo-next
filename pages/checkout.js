@@ -7,12 +7,16 @@ import getMenu from "../src/get-menu-fallback";
 import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { ThemePName } from "../src/components/themeComponents";
 
-const Checkout = ({ data, page, menu }) => (
-  <Layout menu={menu}>
+const Checkout = ({ data, page, menu, footer, coupons, legal }) => (
+  <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
     <Head>{page?.seo?.fullHead ? parse(page?.seo?.fullHead) : ""}</Head>
-    <div className="container px-4 mx-auto my-32 checkout xl:px-0">
-      <h1 className="mb-5 text-2xl uppercase">Checkout Page</h1>
+    <div className="container px-4 mx-auto my-2 md:my-4 xl:px-0">
+      <ThemePName>{page?.title}</ThemePName>
+    </div>
+
+    <div className="container mx-auto mb-8 md:mb-16 lg:mb-32">
       <CheckoutForm countriesData={data?.wooCountries ?? {}} />
     </div>
   </Layout>
@@ -35,11 +39,11 @@ export async function getStaticProps({ locale, params }) {
     props: {
       data: country.data || {},
       menu,
+      legal: data?.legalmenu?.menuItems?.nodes || [],
+      footer: data?.getFooter,
+      coupons: data?.coupons.nodes,
       page: data?.page || [],
-      ...(await serverSideTranslations(locale, [
-        "common",
-        "checkout",
-      ])),
+      ...(await serverSideTranslations(locale, ["common", "checkout"])),
     },
     revalidate: 86400,
   };
