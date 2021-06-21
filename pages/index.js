@@ -12,6 +12,7 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useState } from "react";
+import { Separator, ThemeH5 } from "../src/components/themeComponents";
 
 export default function Home(props) {
   const [productsList, setProductsList] = useState("");
@@ -28,7 +29,7 @@ export default function Home(props) {
     legal,
     coupons,
   } = props;
- // console.log(legal);
+  // console.log(legal);
   const showProducts = () => {
     const liProd = [];
     products.map((p) => {
@@ -48,19 +49,18 @@ export default function Home(props) {
       <HeroCarousel heroCarousel={heroCarousel} />
       {/*Categories*/}
       <HomePageSection homepage={homepage} products={products} />
-      <div className="container px-4 mx-auto my-8 md:my-32 product-categories-container xl:px-0">
-        <h2 className="mb-5 text-xl uppercase main-title">
-          <span className="main-title-inner">Categories</span>
-        </h2>
+      <Separator>Categories</Separator>
+      <div className="container px-4 pt-8 mx-auto xl:px-0">
         <ParentCategoriesBlock productCategories={productCategories} />
       </div>
       {/*SectionSlider*/}
-      <LargeSlider products={bestSeller} />
+      <Separator>Populaires</Separator>
+      <div className="pt-8" />
+ <LargeSlider products={bestSeller} />
       {/*Products*/}
-      <div className="container px-4 mx-auto my-32 products xl:px-0">
-        <h2 className="mb-5 text-xl uppercase products-main-title main-title">
-          <span className="main-title-inner">Products</span>
-        </h2>
+
+        <Separator>Products</Separator>
+      <div className="container px-4 mx-auto my-8 products xl:px-0">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productsList}
         </div>
