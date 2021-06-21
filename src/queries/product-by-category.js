@@ -34,14 +34,14 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
       menuItems {
         nodes {
           title
-        label
+          label
           path
           url
           locations
         }
       }
     }
-   menu: menus(first: 1, where: { id: 6 }) {
+    menu: menus(first: 1, where: { id: 6 }) {
       nodes {
         menuItems {
           edges {
@@ -59,6 +59,11 @@ export const PRODUCT_BY_CATEGORY_SLUG = gql`
         nodes {
           id
           name
+          parent {
+            node {
+              name
+            }
+          }
           slug
           uri
         }

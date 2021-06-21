@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import InputRange from "react-input-range";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { FaChevronLeft } from "react-icons/fa";
 
 const animationParent = {
   initial: { x: 0, opacity: 0 },
@@ -40,7 +41,6 @@ const FilterSection = ({ categories, className }) => {
         <BlocCategoriesSelector categories={categories} />
         <BlocPriceRange min={15} max={1000} />
       </div>
-      <div>A venir</div>
     </div>
   );
 };
@@ -75,16 +75,25 @@ const BlocCategoriesSelector = ({ categories }) => {
     fetcher
   );
   */
+  const parent = categories[0]?.parent?.node?.name;
+  console.log(router?.asPath);
   return (
     <AnimatePresence>
-      {true && (
+      {parent && (
         <Link href={"/galerie-photo"} passHref>
           <motion.a
             key={`fieler-item-retour-nav`}
             className="p-1"
             variants={animationChild}
           >
-            {t("retour")}
+            <span className="inline-block pl-1 pr-2 text-white transition transform rounded-full bg-purple-500 hover:translate-x-1">
+              <span className="flex flex-row items-center">
+                <FaChevronLeft size="12" />
+                <span className="lowercase">
+                  {parent ? parent : t("retour")}
+                </span>
+              </span>
+            </span>
           </motion.a>
         </Link>
       )}
@@ -106,10 +115,10 @@ const BlocCategoriesSelector = ({ categories }) => {
                   className={`relative inline-block  transform hover:scale-110 transition-transform`}
                 >
                   <AnimatePresence exitBeforeEnter>
-                    {activeCat?.includes(item.slug) && (
+                    {router?.asPath?.includes(item.slug) && (
                       <motion.span
                         variants={animationChild}
-                        className={`neuromorphism-gray absolute inset-1 rounded-full`}
+                        className={`neuromorphism-gray absolute -inset-x-1 inset-y-0 rounded-full`}
                       ></motion.span>
                     )}
                   </AnimatePresence>
