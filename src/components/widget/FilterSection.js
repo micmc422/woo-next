@@ -86,7 +86,7 @@ const BlocCategoriesSelector = ({ categories }) => {
             className="p-1"
             variants={animationChild}
           >
-            <span className="inline-block pl-1 pr-2 text-white transition transform rounded-full bg-purple-500 hover:translate-x-1">
+            <span className="inline-block pl-1 pr-2 text-white transition transform rounded-full bg-brand-500 hover:translate-x-1">
               <span className="flex flex-row items-center">
                 <FaChevronLeft size="12" />
                 <span className="lowercase">
