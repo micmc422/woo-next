@@ -105,7 +105,7 @@ html {
     position: absolute;
     bottom: 50%;
     left: 0;
-    height: .25rem;
+    height: 0.25rem;
     width: 50%;
     background: #f5cc26;
     border-radius: 9999px;
@@ -116,14 +116,23 @@ html {
     position: absolute;
     bottom: 50%;
     right: 0;
-    height: .25rem;
+    height: 0.25rem;
     border-radius: 9999px;
     width: 50%;
     background: #d1d5db;
     z-index: -1;
   }
 }
-
+.neuro-btn-white {
+  border-radius: 50px;
+  background: linear-gradient(145deg, #d4d4d4, #fbfbfb);
+  box-shadow: 6px 6px 18px #c8c8c8, -20px -20px 60px #ffffff;
+}
+.neuro-btn-brand {
+  border-radius: 50px;
+  background: linear-gradient(145deg, #ddb822, #ffda29);
+  box-shadow: 6px 6px 18px #c8c8c8, -20px -20px 60px #ffffff;
+}
 .main-title-inner {
   background: #fff;
   padding: 0 20px;

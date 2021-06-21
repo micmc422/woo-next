@@ -89,7 +89,7 @@ const HeroCarousel = ({ heroCarousel }) => {
   let LinkJsx = false;
   useEffect(() => {
     if (content) {
-      setLinkJsx(parse(content, options))
+      setLinkJsx(parse(content, options));
     }
   }, [content]);
   const handleDrag = (event, info) => {
@@ -134,8 +134,9 @@ const HeroCarousel = ({ heroCarousel }) => {
               className="pointer-events-none"
               alt={title}
               placeholder="blur"
-              blurDataURL={image ? image?.sourceUrl : featuredImage.node.sourceUrl}
-      
+              blurDataURL={
+                image ? image?.sourceUrl : featuredImage.node.sourceUrl
+              }
             />
           </motion.div>
         </AnimatePresence>
@@ -214,13 +215,16 @@ const options = {
     console.log(type);
     if (attribs.href) {
       return (
+        <div className={`block pt-2`}>
         <Link href={attribs.href} passHref>
-          <a>
-            <Bouton small={true} circleClass={`bg-brand-500 `}>
+          <a
+            className={`inline-block transition transform neuro-btn-brand max-w-max hover:-translate-y-1`}
+          >
+            <span className="inline-block p-2 text-gray-50">
               {domToReact(children, options)}
-            </Bouton>
+            </span>
           </a>
-        </Link>
+        </Link></div>
       );
     }
     return <>{domToReact(children, options)}</>;

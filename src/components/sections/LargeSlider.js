@@ -2,7 +2,13 @@ import { isEmpty, isArray, uniqueId } from "lodash";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion";
-import { Bouton, PriceParse, ThemeH3, ThemeH4 } from "../themeComponents";
+import {
+  Bouton,
+  PriceParse,
+  Separator,
+  ThemeH3,
+  ThemeH4,
+} from "../themeComponents";
 import Image from "next/image";
 import BlocPrix from "../single-product/price/BlocPrix";
 
@@ -90,9 +96,6 @@ const LargeSlider = ({ products, cover }) => {
       prevSlide();
     }
   };
-  useEffect(() => {
-    showPagination();
-  }, [slideRef.current]);
 
   useEffect(() => {
     if (autoPlay) {
@@ -107,20 +110,6 @@ const LargeSlider = ({ products, cover }) => {
     activeIndex
   ];
   // console.log(name || title);
-  const showPagination = () => {
-    const liProd = [];
-    products.map((p, i) => {
-      liProd.push(
-        <RoundedCounter
-          onClick={() => goToSlide(i)}
-          key={uniqueId()}
-          slide={slide === i}
-        />
-      );
-    });
-    setPagination(liProd);
-  };
-
   return (
     <div
       onMouseEnter={() => setAutoPlay(false)}
@@ -137,15 +126,15 @@ const LargeSlider = ({ products, cover }) => {
           transition={{ delayChildren: 0.5, when: "afterChildren" }}
         >
           <ThemeH4>{name || title}</ThemeH4>
-          <Link href={`/galerie-photo/${slug}/`}>
-            <a className="font-semibold text-gray-800">
-              <Bouton small>
-                <div className="text-sm font-semibold text-gray-500">
+          <Separator>
+            <Link href={`/galerie-photo/${slug}/`}>
+              <a className="inline-block transition transform neuro-btn-brand max-w-max hover:-translate-y-1">
+                <span className="inline-block p-3 text-gray-50 text-lg">
                   <BlocPrix price={price} />
-                </div>
-              </Bouton>
-            </a>
-          </Link>
+                </span>
+              </a>
+            </Link>
+          </Separator>
         </motion.div>
       </AnimatePresence>
       <div className="relative mb-8 overflow-hidden banner-img sm:w-8/12">
@@ -232,6 +221,24 @@ const LargeSlider = ({ products, cover }) => {
 
 function RoundedCounter(props) {
   /*
+    useEffect(() => {
+    showPagination();
+  }, [slideRef.current]);
+  const showPagination = () => {
+    const liProd = [];
+    products.map((p, i) => {
+      liProd.push(
+        <RoundedCounter
+          onClick={() => goToSlide(i)}
+          key={uniqueId()}
+          slide={slide === i}
+        />
+      );
+    });
+    setPagination(liProd);
+  };
+
+
         <div className="absolute bottom-0 left-0 z-20 hidden px-4 md:block sm:w-4/12">
         <AnimateSharedLayout type="crossfade">
           <motion.ul

@@ -195,14 +195,17 @@ export const TitreWidget = (props) => {
     </div>
   );
 };
-export const Separator = ({children}) => {
-  return       <div className="container flex flex-row items-center justify-center w-full px-4 mx-auto mt-8 xl:px-0">
-  <div className="flex-grow h-1 bg-gray-200 rounded-full" />
-  <div className="px-4 text-2xl font-semibold text-gray-600 uppercase">{children}</div>
-  <div className="flex-grow h-1 rounded-full bg-brand-200" />
-</div>
-
-}
+export const Separator = ({ children }) => {
+  return (
+    <div className="container flex flex-row items-center justify-center w-full px-4 mx-auto mt-8 xl:px-0">
+      <div className="flex-grow h-1 bg-gray-200 rounded-full" />
+      <div className="px-4 text-2xl font-semibold text-gray-600 uppercase">
+        {children}
+      </div>
+      <div className="flex-grow h-1 rounded-full bg-brand-200" />
+    </div>
+  );
+};
 export const ChevronToBot = () => {
   return (
     <svg
