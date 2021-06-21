@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
  * GraphQL categories and products query.
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`
-  query MyQuery($search: String, $uri: ID!) {
+  query MyQuery($search: String) {
     getFooter {
       sidebarOne
       sidebarTwo
@@ -31,7 +31,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
       menuItems {
         nodes {
           title
-        label
+          label
           path
           url
           locations
@@ -104,7 +104,7 @@ const PRODUCTS_AND_CATEGORIES_QUERY = gql`
         }
       }
     }
-    seo: page(id: $uri, idType: URI) {
+    seo: page(id: 7414, idType: DATABASE_ID) {
       seo {
         fullHead
         schema {

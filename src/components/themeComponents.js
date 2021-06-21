@@ -108,7 +108,7 @@ export const ThemePName = ({ children }) => {
   return (
     <div className={`relative inline-block my-4`}>
       <div className="px-4 pt-2">
-        <h1 className="text-2xl font-black inline uppercase lg:text-6xl md:text-4xl">
+        <h1 className="inline text-2xl font-black uppercase lg:text-6xl md:text-4xl">
           {children}
           <div className="absolute top-0 left-0 w-2 h-full rounded bg-brand-500" />
           <motion.div
@@ -116,6 +116,7 @@ export const ThemePName = ({ children }) => {
             initial={{ width: "100%" }}
             animate={{ width: "0%" }}
             exit={{ width: "100%" }}
+            transition={{ duration: 1.7 }}
             className="absolute top-0 right-0 z-10 h-full bg-white"
           ></motion.div>
           <motion.div
@@ -123,6 +124,7 @@ export const ThemePName = ({ children }) => {
             initial={{ right: "100%" }}
             animate={{ right: "0%" }}
             exit={{ right: "100%" }}
+            transition={{ duration: 1.7 }}
             className="absolute top-0 right-0 z-20 w-2 h-full bg-gray-300 rounded"
           />
         </h1>

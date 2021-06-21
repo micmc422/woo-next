@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { TitreWidget } from "../themeComponents";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 
 import InputRange from "react-input-range";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { FaChevronLeft } from "react-icons/fa";
+import { uniqueId } from "lodash";
 
 const animationParent = {
   initial: { x: 0, opacity: 0 },
@@ -87,7 +88,7 @@ const BlocCategoriesSelector = ({ categories }) => {
             variants={animationChild}
           >
             <span className="inline-block pl-1 pr-2 text-white transition transform rounded-full bg-brand-500 hover:translate-x-1">
-              <span className="flex flex-row items-center">
+              <span className="flex flex-row items-center py-2 leading-3">
                 <FaChevronLeft size="12" />
                 <span className="lowercase">
                   {parent ? parent : t("retour")}
@@ -97,42 +98,45 @@ const BlocCategoriesSelector = ({ categories }) => {
           </motion.a>
         </Link>
       )}
-      {categories &&
-        categories.map((item) => {
-          return (
-            <Link
-              href={item.uri
-                .replace("https://photo.paris", "")
-                .replace("?lang=en", "")}
-              passHref
-              key={`fieler-item-${item.name}`}
-            >
-              <a
-                // onClick={() => updateQuery(item.slug, "categoryIn", router)}
-                className="p-1"
+      <AnimateSharedLayout>
+        {categories &&
+          categories.map((item) => {
+            return (
+              <Link
+                href={item.uri
+                  .replace("https://photo.paris", "")
+                  .replace("?lang=en", "")}
+                passHref
+                key={`fieler-item-${uniqueId(item.name)}`}
               >
-                <span
-                  className={`relative inline-block  transform hover:scale-110 transition-transform`}
+                <a
+                  // onClick={() => updateQuery(item.slug, "categoryIn", router)}
+                  className="p-1"
                 >
-                  <AnimatePresence exitBeforeEnter>
-                    {router?.asPath?.includes(item.slug) && (
-                      <motion.span
-                        variants={animationChild}
-                        className={`neuromorphism-gray absolute -inset-x-1 inset-y-0 rounded-full`}
-                      ></motion.span>
-                    )}
-                  </AnimatePresence>
-                  <motion.span
-                    variants={animationChild}
-                    className="relative inline-block leading-4"
+                  <span
+                    className={`relative inline-block  transform hover:scale-110 transition-transform`}
                   >
-                    {item.name}
-                  </motion.span>
-                </span>
-              </a>
-            </Link>
-          );
-        })}
+                    <AnimatePresence exitBeforeEnter>
+                      {router?.asPath?.includes(item.slug) && (
+                        <motion.span
+                          layoutId={`isActive-item-filter`}
+                          variants={animationChild}
+                          className={`neuromorphism-gray absolute -inset-x-1 inset-y-0 rounded-full`}
+                        ></motion.span>
+                      )}
+                    </AnimatePresence>
+                    <motion.span
+                      variants={animationChild}
+                      className="relative inline-block leading-4"
+                    >
+                      {item.name}
+                    </motion.span>
+                  </span>
+                </a>
+              </Link>
+            );
+          })}
+      </AnimateSharedLayout>
     </AnimatePresence>
   );
 };
