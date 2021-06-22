@@ -132,7 +132,7 @@ const AddToCart = (props) => {
     console.log({
       action: "add_to_cart",
       params: {
-        items: [{ ...product }],
+        items: product.name,
       },
     });
   };
