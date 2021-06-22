@@ -57,7 +57,7 @@ export default function Home(props) {
       setFilteredProducts(products);
     }
   }, [query, data?.products?.nodes, locale]);
-  console.log(seoData)
+ // console.log(seoData)
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
