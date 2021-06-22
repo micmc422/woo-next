@@ -215,17 +215,24 @@ const options = {
     console.log(type);
     if (attribs.href) {
       return (
-        <div className={`block pt-2`}>
-        <Link href={attribs.href} passHref>
-          <a
-            className={`inline-block transition transform neuro-btn-brand max-w-max hover:-translate-y-1`}
-          >
-            <span className="inline-block p-2 text-gray-50">
-              {domToReact(children, options)}
-            </span>
-          </a>
-        </Link></div>
+        <div className={`block pt-2 -mx-2`}>
+          <Link href={attribs.href} passHref>
+            <a
+              className={`inline-block transition transform neuro-btn-brand max-w-max hover:-translate-y-1`}
+            >
+              <span className="inline-block p-2 text-gray-50">
+                {domToReact(children, options)}
+              </span>
+            </a>
+          </Link>
+        </div>
       );
+    }
+    if (type === "text") {
+      return <>{domToReact(children, options)}</>;
+    }
+    if (name === "p") {
+      return <p className="px-4 leading-4">{domToReact(children, options)}</p>;
     }
     return <>{domToReact(children, options)}</>;
   },
