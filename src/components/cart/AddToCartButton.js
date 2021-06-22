@@ -9,6 +9,7 @@ import ADD_TO_CART from "../../mutations/add-to-cart";
 import { Bouton } from "../themeComponents";
 import { useTranslation } from "next-i18next";
 import { AnimatePresence, motion } from "framer-motion";
+import * as ga from "../../../src/lib/ga";
 
 const AddToCart = (props) => {
   const { product, children, variation } = props;
@@ -122,6 +123,18 @@ const AddToCart = (props) => {
   const handleAddToCartClick = () => {
     setRequestError(null);
     addToCart();
+    ga.event({
+      action: "add_to_cart",
+      params: {
+        items: [{ ...product }],
+      },
+    });
+    console.log({
+      action: "add_to_cart",
+      params: {
+        items: [{ ...product }],
+      },
+    });
   };
   return (
     <>

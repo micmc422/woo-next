@@ -54,7 +54,6 @@ const SearchContainer = ({ cat }) => {
         search_term: target.value
       }
     })
-
   };
   const isLoading = !data && !error && search?.length > 0;
   useEffect(() => {
