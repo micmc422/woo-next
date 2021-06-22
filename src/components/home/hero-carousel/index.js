@@ -189,9 +189,9 @@ const HeroCarousel = ({ heroCarousel }) => {
         <motion.div
           className="absolute px-4 py-0 m-4 bg-white rounded shadow-md md:relative md:bg-transparent md:px-10 banner-content sm:pt-0 sm:w-4/12 md:shadow-none md:rounded-none"
           key={`titre-slider-${slug}-${id}`}
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, x: 200 }}
+          initial={{ opacity: 0, x: -xTransition }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: xTransition }}
         >
           <ThemeH4>{name || title}</ThemeH4>
           {linkJsx ? (
