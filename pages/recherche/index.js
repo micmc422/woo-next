@@ -13,6 +13,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "../../next-i18next.config";
 import { Bouton } from "../../src/components/themeComponents";
 import { uniqueId } from "lodash";
+import * as ga from '../../src/lib/ga'
+
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 const Recherche = ({ menu, cat }) => {
@@ -46,6 +48,13 @@ const SearchContainer = ({ cat }) => {
     const { target } = event || {};
     router.query.search = target.value;
     router.replace(router);
+    ga.event({
+      action: "search",
+      params : {
+        search_term: target.value
+      }
+    })
+
   };
   const isLoading = !data && !error && search?.length > 0;
   useEffect(() => {
