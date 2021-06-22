@@ -77,7 +77,7 @@ const BlocCategoriesSelector = ({ categories }) => {
   );
   */
   const parent = categories[0]?.parent?.node?.name;
-  console.log(router?.asPath);
+ // console.log(router?.asPath);
   return (
     <>
       {parent && (

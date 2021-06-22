@@ -129,12 +129,6 @@ const AddToCart = (props) => {
         items: [{ ...product }],
       },
     });
-    console.log({
-      action: "add_to_cart",
-      params: {
-        items: product.name,
-      },
-    });
   };
   return (
     <>
