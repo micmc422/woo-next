@@ -79,7 +79,7 @@ const BlocCategoriesSelector = ({ categories }) => {
   const parent = categories[0]?.parent?.node?.name;
   console.log(router?.asPath);
   return (
-    <AnimatePresence>
+    <>
       {parent && (
         <Link href={"/galerie-photo"} passHref>
           <motion.a
@@ -98,46 +98,41 @@ const BlocCategoriesSelector = ({ categories }) => {
           </motion.a>
         </Link>
       )}
-      <AnimateSharedLayout>
-        {categories &&
-          categories.map((item) => {
-            return (
-              <Link
-                href={item.uri
-                  .replace("https://photo.paris", "")
-                  .replace("?lang=en", "")}
-                passHref
-                key={`fieler-item-${uniqueId(item.name)}`}
+      {categories &&
+        categories.map((item) => {
+          return (
+            <Link
+              href={item.uri
+                .replace("https://photo.paris", "")
+                .replace("?lang=en", "")}
+              passHref
+              key={`fieler-item-${uniqueId(item.name)}`}
+            >
+              <a
+                // onClick={() => updateQuery(item.slug, "categoryIn", router)}
+                className="p-1"
               >
-                <a
-                  // onClick={() => updateQuery(item.slug, "categoryIn", router)}
-                  className="p-1"
+                <span
+                  className={`relative inline-block  transform hover:scale-110 transition-transform`}
                 >
-                  <span
-                    className={`relative inline-block  transform hover:scale-110 transition-transform`}
-                  >
-                    <AnimatePresence exitBeforeEnter>
-                      {router?.asPath?.includes(item.slug) && (
-                        <motion.span
-                          layoutId={`isActive-item-filter`}
-                          variants={animationChild}
-                          className={`neuromorphism-gray absolute -inset-x-1 inset-y-0 rounded-full`}
-                        ></motion.span>
-                      )}
-                    </AnimatePresence>
+                  {router?.asPath?.includes(item.slug) && (
                     <motion.span
-                      variants={animationChild}
-                      className="relative inline-block leading-4"
-                    >
-                      {item.name}
-                    </motion.span>
-                  </span>
-                </a>
-              </Link>
-            );
-          })}
-      </AnimateSharedLayout>
-    </AnimatePresence>
+                      layoutId={`isActive-item-filter`}
+                      className={`neuromorphism-gray absolute -inset-x-1 inset-y-0 rounded-full`}
+                    ></motion.span>
+                  )}
+                  <motion.span
+                    variants={animationChild}
+                    className="relative inline-block leading-4"
+                  >
+                    {item.name}
+                  </motion.span>
+                </span>
+              </a>
+            </Link>
+          );
+        })}
+    </>
   );
 };
 

@@ -2,11 +2,10 @@ import Error from "./Error";
 
 const PaymentModes = ({ input, handleOnChange }) => {
   const { errors, paymentMethod } = input || {};
-
   return (
     <div className="mt-3">
       <Error errors={errors} fieldName={"paymentMethod"} />
-      {/*Direct bank transfers*/}
+      {/*Direct bank transfers
       <div className="mt-2 form-check woo-next-payment-input-container">
         <label className="form-check-label">
           <input
@@ -19,8 +18,8 @@ const PaymentModes = ({ input, handleOnChange }) => {
           />
           <span className="woo-next-payment-content">Direct Bank Transfer</span>
         </label>
-      </div>
-      {/*Pay with Paypal*/}
+      </div>*/}
+      {/*Pay with Paypal
       <div className="mt-2 form-check woo-next-payment-input-container">
         <label className="form-check-label">
           <input
@@ -33,8 +32,8 @@ const PaymentModes = ({ input, handleOnChange }) => {
           />
           <span className="woo-next-payment-content">Pay with Paypal</span>
         </label>
-      </div>
-      {/*Check Payments*/}
+      </div>*/}
+      {/*Check Payments
       <div className="mt-2 form-check woo-next-payment-input-container">
         <label className="form-check-label">
           <input
@@ -47,21 +46,22 @@ const PaymentModes = ({ input, handleOnChange }) => {
           />
           <span className="woo-next-payment-content">Check Payments</span>
         </label>
-      </div>
+      </div>*/}
       {/*Pay with Stripe*/}
       <div className="mt-2 form-check woo-next-payment-input-container">
         <label className="form-check-label">
           <input
             onChange={handleOnChange}
-            value="cod"
+            value="stripe"
             className="mr-3 form-check-input"
             name="paymentMethod"
             type="radio"
-            checked={"cod" === paymentMethod}
+            checked={"stripe" === paymentMethod}
           />
-          <span className="woo-next-payment-content">Cash on Delivery</span>
+          <span className="woo-next-payment-content">Stripe</span>
         </label>
       </div>
+      {/*
       <div className="mt-2 form-check woo-next-payment-input-container">
         <label className="form-check-label">
           <input
@@ -100,7 +100,8 @@ const PaymentModes = ({ input, handleOnChange }) => {
           />
           <span className="woo-next-payment-content">Stripe</span>
         </label>
-      </div>
+      </div>      */}
+
       {/*	Payment Instructions*/}
       <div className="mt-2 woo-next-checkout-payment-instructions">
         Please send a check to Store Name, Store Street, Store Town, Store State

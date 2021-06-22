@@ -99,6 +99,12 @@ const CheckoutForm = ({ countriesData }) => {
     },
     onError: (error) => {
       if (error) {
+        console.log({
+          data: checkoutResponse,
+          loading: checkoutLoading,
+          orderData,
+        });
+
         setRequestError(error?.graphQLErrors?.[0]?.message ?? "");
       }
     },
