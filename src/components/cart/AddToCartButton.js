@@ -183,7 +183,7 @@ const AddToCart = (props) => {
           ) : (
             <div
               onClick={handleAddToCartClick}
-              className="text-xs font-bold leading-3 text-brand-700 hover:text-brand-800"
+              className="text-xs font-bold leading-3 text-brand-500 hover:text-brand-600"
             >
               {t("ajouter-au-panier")}
               {children ? children : ""}

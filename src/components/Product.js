@@ -66,7 +66,7 @@ const Product = (props) => {
           </a>
         </Link>
         {!noName && (
-          <div className="p-1 rounded bg-gray-50 shadow">
+          <div className="p-1 rounded shadow bg-gray-50">
             <Link href={product.slug ? `/galerie-photo/${product.slug}` : "./"}>
               <h2 className="inline-block pb-4 mt-3 text-sm leading-3 text-left text-gray-600 cursor-pointer hover:text-gray-800">
                 <ThemeTitre />

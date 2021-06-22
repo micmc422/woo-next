@@ -84,10 +84,10 @@ export const PriceParse = ({ price }) => {
     <>
       {temp.length > 1 ? (
         <div>
-          <div className="text-xs font-bold leading-3 text-brand-700 hover:text-brand-800 safe">
+          <div className="text-xs font-bold leading-3 text-brand-500 hover:text-brand-600">
             {t("a-partir-de")}
           </div>{" "}
-          <div className={`text-xs`}>{parsedPrice}</div>
+          <div className={`text-xs text-gray-700`}>{parsedPrice}</div>
         </div>
       ) : (
         parsedPrice

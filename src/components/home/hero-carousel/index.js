@@ -212,7 +212,7 @@ const options = {
     if (!attribs) {
       return;
     }
-    console.log(type);
+    // console.log(type);
     if (attribs.href) {
       return (
         <div className={`block pt-2 -mx-2`}>
