@@ -123,7 +123,7 @@ const AddToCart = (props) => {
   const handleAddToCartClick = () => {
     setRequestError(null);
     addToCart();
-    ga.gaAddToCart(product.name);
+    product && ga.gaAddToCart(product);
   };
   return (
     <>

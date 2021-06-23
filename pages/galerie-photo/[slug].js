@@ -90,7 +90,7 @@ export default function Product(props) {
       variant: activeVariations?.name,
       list_position: 1,
       quantity: 1,
-      price: activeVariations.price,
+      price: activeVariations?.price || product.price,
     });
   }, [product]);
   return (
