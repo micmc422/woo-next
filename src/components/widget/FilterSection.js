@@ -87,7 +87,7 @@ const BlocCategoriesSelector = ({ categories }) => {
             className="p-1"
             variants={animationChild}
           >
-            <span className="inline-block pl-1 pr-2 text-white transition transform bg-black rounded-full hover:translate-x-1">
+            <span className="inline-block pl-1 pr-2 text-white transition transform bg-gray-800 rounded-full hover:translate-x-1">
               <span className="flex flex-row items-center py-1 leading-3 shadow">
                 <IoClose />
                 <span className="lowercase">{t("retour")}</span>

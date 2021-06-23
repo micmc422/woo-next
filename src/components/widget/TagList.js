@@ -73,13 +73,19 @@ const SideNavRoot = ({ tagList, hovered, setHovered }) => {
         </motion.div>
       ))}
       {limit === 32 ? (
-        <Bouton>
-          <div onClick={() => setLimit(100)}>Voir plus +</div>
-        </Bouton>
+        <div
+          className="px-1 text-white bg-black rounded-full"
+          onClick={() => setLimit(100)}
+        >
+          Voir plus +
+        </div>
       ) : (
-        <Bouton>
-          <div onClick={() => setLimit(32)}>Voir moins</div>
-        </Bouton>
+        <div
+          className="px-1 text-white bg-black rounded-full"
+          onClick={() => setLimit(32)}
+        >
+          Voir moins
+        </div>
       )}
     </>
   );
@@ -96,9 +102,11 @@ const NavRootItem = ({ name, slug, id, count, hovered, setHovered }) => {
           {hovered === id && (
             <motion.div
               layoutId="tag-over"
-              className="absolute z-0 rounded-full neuromorphism-gray -inset-1"
+              className="absolute inset-0 z-0 rounded-full neuromorphism-gray"
             >
-              <span className="text-purple-500">{count}</span>
+              <span className="absolute right-0 text-purple-500 -top-1">
+                {count}
+              </span>
             </motion.div>
           )}
           <span className="relative z-10">{name}</span>
