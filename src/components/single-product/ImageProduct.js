@@ -49,7 +49,7 @@ const ImageProduct = ({
     </div>
   );
 };
-const ImageContainer = ({ imgarray, base64 }) => {
+const ImageContainer = ({ imgarray }) => {
   const [selected, setSelected] = useState(imgarray[0].id || 0);
   useEffect(() => {
     setSelected(imgarray[0].id);
@@ -64,7 +64,6 @@ const ImageContainer = ({ imgarray, base64 }) => {
                 <ImageProduct
                   {...item}
                   key={uniqueId(item.id)}
-                  base64={base64}
                 />
               )
           )}
@@ -77,7 +76,6 @@ const ImageContainer = ({ imgarray, base64 }) => {
               img={img}
               setSelected={setSelected}
               key={uniqueId(img.id)}
-              base64={base64}
             />
           ))}
         </div>
@@ -89,7 +87,6 @@ const ImageContainer = ({ imgarray, base64 }) => {
 const Vignettes = ({
   img: {
     slug,
-    base64,
     title,
     name,
     id,

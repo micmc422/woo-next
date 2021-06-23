@@ -28,7 +28,6 @@ import Loading from "../../src/components/Loading";
 import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import Reviews from "../../src/components/single-product/reviews";
 import { useTranslation } from "react-i18next";
-import { getPlaiceholder } from "plaiceholder";
 import { productView } from "../../src/lib/ga";
 
 const parentListEl = {
@@ -76,24 +75,29 @@ export default function Product(props) {
     ...(product?.upsell?.nodes || []),
     ...(product?.related?.nodes || []),
   ].slice(0, 8);
+  const imgArray = product?.galleryImages?.nodes.length
+    ? [...product.galleryImages.nodes, product?.image]
+    : [product?.image];
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
+  useEffect(() => {
+    console.log(product);
+    product &&
+      productView({
+        id: product?.id,
+        name: product?.name,
+        list_name: "page produits",
+        category: product?.productCategories?.nodes[0]?.name,
+        variant: activeVariations?.name,
+        list_position: 1,
+        quantity: 1,
+        price: activeVariations?.price || product?.price,
+      });
+  }, [product]);
+
   if (router.isFallback || !product) {
     return <Loading />;
   }
-  useEffect(() => {
-    console.log(product)
-    product && productView({
-      id: product?.id,
-      name: product?.name,
-      list_name: "page produits",
-      category: product?.productCategories?.nodes[0]?.name,
-      variant: activeVariations?.name,
-      list_position: 1,
-      quantity: 1,
-      price: activeVariations?.price || product?.price,
-    });
-  }, [product]);
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>
@@ -104,10 +108,9 @@ export default function Product(props) {
         <div className="">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
             <ImageContainer
-              imgarray={[...product.galleryImages.nodes, product?.image]}
+              imgarray={imgArray}
               slug={product.slug}
               name={product.name || product.title}
-              base64={product.image.base64}
             />
             <div className="flex flex-col justify-center w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
               <motion.div
@@ -390,10 +393,7 @@ export async function getStaticProps(context) {
     variables: { slug },
   });
 
-  const { base64 } = await getPlaiceholder(data?.product.image.sourceUrl, {
-    size: 10,
-  });
-  const product = { ...data.product, image: { ...data.product.image, base64 } };
+  const product = { ...data.product };
   return {
     props: {
       menu,
