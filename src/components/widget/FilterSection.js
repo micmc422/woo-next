@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { TitreWidget } from "../themeComponents";
 import { useState } from "react";
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import InputRange from "react-input-range";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { FaChevronLeft } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import { uniqueId } from "lodash";
 
 const animationParent = {
@@ -35,7 +35,7 @@ const FilterSection = ({ categories, className }) => {
     <div
       className={`flex flex-col space-y-4 ${
         className ? className : ""
-      } bg-white`}
+      } bg-white md:bg-transparent`}
     >
       <div className="flex flex-col">
         <TitreWidget>{t("categories")}</TitreWidget>
@@ -77,7 +77,7 @@ const BlocCategoriesSelector = ({ categories }) => {
   );
   */
   const parent = categories[0]?.parent?.node?.name;
- // console.log(router?.asPath);
+  // console.log(router?.asPath);
   return (
     <>
       {parent && (
@@ -87,12 +87,10 @@ const BlocCategoriesSelector = ({ categories }) => {
             className="p-1"
             variants={animationChild}
           >
-            <span className="inline-block pl-1 pr-2 text-white transition transform rounded-full bg-brand-500 hover:translate-x-1">
-              <span className="flex flex-row items-center py-2 leading-3">
-                <FaChevronLeft size="12" />
-                <span className="lowercase">
-                  {parent ? parent : t("retour")}
-                </span>
+            <span className="inline-block pl-1 pr-2 text-white transition transform bg-black rounded-full hover:translate-x-1">
+              <span className="flex flex-row items-center py-1 leading-3 shadow">
+                <IoClose />
+                <span className="lowercase">{t("retour")}</span>
               </span>
             </span>
           </motion.a>

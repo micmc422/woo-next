@@ -86,7 +86,7 @@ export default function CategorySingle(props) {
           setPageInfo={setPageInfo}
           tagList={tagList}
         >
-          <div className="relative grid w-full grid-cols-2 gap-4 mx-auto overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="relative grid w-full grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
             <DisplayProducts
               isLoading={isLoading}
               filteredProducts={filteredProducts}
