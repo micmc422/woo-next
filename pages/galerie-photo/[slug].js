@@ -29,6 +29,7 @@ import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import Reviews from "../../src/components/single-product/reviews";
 import { useTranslation } from "react-i18next";
 import { getPlaiceholder } from "plaiceholder";
+import { productView } from "../../src/lib/ga";
 
 const parentListEl = {
   initial: {},
@@ -80,6 +81,18 @@ export default function Product(props) {
   if (router.isFallback || !product) {
     return <Loading />;
   }
+  useEffect(() => {
+    productView({
+      id: product.id,
+      name: product.name,
+      list_name: "page produits",
+      category: product?.productCategories?.nodes[0].name,
+      variant: activeVariations.name,
+      list_position: 1,
+      quantity: 1,
+      price: activeVariations.price,
+    });
+  }, [product]);
   return (
     <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
       <Head>

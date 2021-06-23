@@ -49,11 +49,10 @@ const SearchContainer = ({ cat }) => {
     router.query.search = target.value;
     router.replace(router);
     ga.event({
+      label: target.value,
       action: "search",
-      params : {
-        search_term: target.value
-      }
-    })
+      value: target.value,
+    });
   };
   const isLoading = !data && !error && search?.length > 0;
   useEffect(() => {

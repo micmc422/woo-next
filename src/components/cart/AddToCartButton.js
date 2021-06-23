@@ -123,12 +123,7 @@ const AddToCart = (props) => {
   const handleAddToCartClick = () => {
     setRequestError(null);
     addToCart();
-    ga.event({
-      action: "add_to_cart",
-      params: {
-        items: [{ ...product }],
-      },
-    });
+    ga.gaAddToCart(product.name);
   };
   return (
     <>

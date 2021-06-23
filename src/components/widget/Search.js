@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Result } from "../../../pages/recherche";
+import * as ga from '../../lib/ga'
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const Search = () => {
@@ -149,6 +150,12 @@ const QueryResponse = ({ search }) => {
     );
   }
   // return <div />;
+  ga.event({
+    label: search,
+    action: "search",
+    value: search,
+});
+
   return (
     <motion.div
       key="result"
