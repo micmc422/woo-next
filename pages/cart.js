@@ -6,15 +6,11 @@ import Head from "next/head";
 import parse from "html-react-parser";
 import { GET_PAGE_BY_URI } from "../src/queries/get-pages";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import CartUpsell from "../src/components/cart/cart-page/CartUpsell";
 
 const Cart = ({ page, menu, footer, coupons, legal }) => (
   <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
     <Head>{page?.seo?.fullHead ? parse(page?.seo?.fullHead) : ""}</Head>
     <CartItemsContainer />
-    <div className="container mx-auto mb-8 md:mb-16 lg:mb-32">
-      <CartUpsell />
-    </div>
   </Layout>
 );
 

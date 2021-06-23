@@ -12,7 +12,7 @@ import { isEmpty, uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 import { Cross } from "../../icons";
 import { FaTrashAlt } from "react-icons/fa";
-import { BgPattern } from "../../themeComponents";
+import { BgPattern, ThemePName } from "../../themeComponents";
 import Image from "next/image";
 import CartUpsell from "./CartUpsell";
 
@@ -125,9 +125,9 @@ const CartItemsContainer = () => {
       {cart ? (
         <div className="container woo-next-cart-wrapper">
           <div className="grid-cols-2 gap-4 cart-header">
-            <h1 className="mb-5 text-6xl uppercase md:text-8xl">
+            <ThemePName>
               {t("panier")}
-            </h1>
+            </ThemePName>
             {/*Clear entire cart*/}
             <div className="pb-4 text-right clear-cart">
               <button
@@ -198,7 +198,10 @@ const CartItemsContainer = () => {
                   </tbody>
                 </table>
                 <Link href="/checkout">
-                  <button className="w-auto px-5 py-3 text-white rounded-sm cursor-pointer bg-brand-500 xl:w-full" aria-label={t("finalisercommande")}>
+                  <button
+                    className="w-auto px-5 py-3 text-white rounded-sm cursor-pointer bg-brand-500 xl:w-full"
+                    aria-label={t("finalisercommande")}
+                  >
                     <span className="woo-next-cart-checkout-txt">
                       {t("finalisercommande")}
                     </span>
@@ -276,7 +279,10 @@ const CartItemsContainer = () => {
               </span>
             </span>
             <Link href="/checkout">
-              <button className="w-auto px-5 py-3 mt-5 text-white rounded-sm bg-brand-500 xl:w-full" aria-label={t("finalisercommande")}>
+              <button
+                className="w-auto px-5 py-3 mt-5 text-white rounded-sm bg-brand-500 xl:w-full"
+                aria-label={t("finalisercommande")}
+              >
                 <span className="woo-next-cart-checkout-txt">
                   {t("finalisercommande")}
                 </span>
@@ -298,7 +304,10 @@ const CartItemsContainer = () => {
         <div className="container px-4 mx-auto my-32 xl:px-0">
           <h2 className="mb-5 text-2xl">{t("pasdephoto")}</h2>
           <Link href="/">
-            <button className="px-5 py-3 text-white rounded-sm bg-brand-500" aria-label={t("ajouterphoto")}>
+            <button
+              className="px-5 py-3 text-white rounded-sm bg-brand-500"
+              aria-label={t("ajouterphoto")}
+            >
               <span className="woo-next-cart-checkout-txt">
                 {t("ajouterphoto")}
               </span>
@@ -307,6 +316,9 @@ const CartItemsContainer = () => {
           </Link>
         </div>
       )}
+      <div className="container mx-auto mb-8 md:mb-16 lg:mb-32">
+        <CartUpsell cart={cart} />
+      </div>
     </div>
   );
 };

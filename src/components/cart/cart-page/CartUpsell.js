@@ -4,18 +4,23 @@ import GET_UPSELL_QUERY from "../../../queries/get-upsell";
 import Product from "../../Product";
 import { Bouton, ThemeH3 } from "../../themeComponents";
 
-const CartUpsell = () => {
+const CartUpsell = ({ cart }) => {
   // Get Upsell Data.
+  const exclude = [];
+  cart?.products?.map((product) => exclude.push(product.productId));
   const [upsellProducts, setUpsellProduct] = useState(false);
   const { loading, error, data } = useQuery(GET_UPSELL_QUERY, {
     // notifyOnNetworkStatusChange: true,
-    variables: { first: 8 },
+    variables: { first: 8, exclude, categoryIdNotIn: 1063 },
     onCompleted: () => {
       // Update cart in the localStorage.
       // const updatedCart = getFormattedCart(data);
       // localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
       // Update cart data in React Context.
       // setCart(updatedCart);
+       console.log(data.products.nodes);
+       const upSellList = []
+       data.products.nodes.map(item=> upSellList.push(item.upsell) )
       setUpsellProduct(data.products.nodes);
     },
   });
@@ -34,7 +39,7 @@ const CartUpsell = () => {
         <div className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:flex-grow">
           {upsellProducts.length
             ? upsellProducts.map((product) => (
-                <Product key={product.id} product={product} noName cover/>
+                <Product key={product.id} product={product} noName cover />
               ))
             : ""}
         </div>

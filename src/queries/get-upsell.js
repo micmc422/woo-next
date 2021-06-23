@@ -12,10 +12,13 @@ const GET_UPSELL_QUERY = gql`
     $search: String
     $category: String
     $categoryIn: [String]
+    $categoryIdNotIn: [Int]
     $maxPrice: Float
     $minPrice: Float
     $tagIn: [String]
     $tag: String
+    $exclude: [Int]
+    $include: [Int]
   ) {
     products(
       first: $first
@@ -28,10 +31,13 @@ const GET_UPSELL_QUERY = gql`
         search: $search
         category: $category
         categoryIn: $categoryIn
+        categoryIdNotIn: $categoryIdNotIn
         tag: $tag
         tagIn: $tagIn
         maxPrice: $maxPrice
         minPrice: $minPrice
+        exclude: $exclude
+        include: $include
         orderby: { order: DESC, field: TOTAL_SALES }
       }
     ) {
