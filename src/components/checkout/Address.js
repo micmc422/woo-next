@@ -121,15 +121,15 @@ const Address = ({input, countries, states, handleOnChange, isFetchingStates, is
             />
             {/*	@TODO Create an Account */}
             {/*<div className="form-check">*/}
-            {/*	<label className="text-sm leading-7 text-gray-600" className="form-check-label">*/}
+            {/*	<label className="leading-7 text-sm text-gray-600" className="form-check-label">*/}
             {/*		<input onChange={ handleOnChange } className="form-check-input" name="createAccount" type="checkbox"/>*/}
             {/*			Create an account?*/}
             {/*	</label>*/}
             {/*</div>*/}
             {/*<h2 className="mt-4 mb-4">Additional Information</h2>*/}
             {/* @TODO Order Notes */}
-            {/*<div className="mb-3 form-group">*/}
-            {/*	<label className="text-sm leading-7 text-gray-600" htmlFor="order-notes">Order Notes</label>*/}
+            {/*<div className="form-group mb-3">*/}
+            {/*	<label className="leading-7 text-sm text-gray-600" htmlFor="order-notes">Order Notes</label>*/}
             {/*	<textarea onChange={ handleOnChange } defaultValue={ input.orderNotes } name="orderNotes" className="form-control woo-next-checkout-textarea" id="order-notes" rows="4"/>*/}
             {/*	<Error errors={ input.errors } fieldName={ 'orderNotes' }/>*/}
             {/*</div>*/}

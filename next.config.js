@@ -23,6 +23,14 @@ module.exports = withPlaiceholder({
     domains: ["photo.paris", "via.placeholder.com"],
   },
   i18n,
+  redirects: [
+    {
+      source: "https://photo.paris/commande/order-received/*",
+      destination: "/commande/order-received*",
+      permanent: true,
+
+    }
+  ],
   rewrites: [
     {
       source: "/category/:category*",

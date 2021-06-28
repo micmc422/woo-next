@@ -14,36 +14,40 @@ import ProgressState from "../src/components/checkout/ProgressState";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC);
 
-const Checkout = ({ data, page, menu, footer, coupons, legal }) => (
-  <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
-    <Head>{page?.seo?.fullHead ? parse(page?.seo?.fullHead) : ""}</Head>
-    <div className="container px-4 mx-auto my-2 md:my-4 xl:px-0">
-      <ThemePName>{page?.title}</ThemePName>
-      <ProgressState activeState={1}  />
-    </div>
-
-    <div className="container mx-auto mb-8 md:mb-16 lg:mb-32">
-      <Elements stripe={stripePromise}>
-        <InjectedCheckoutForm countriesData={data?.wooCountries ?? {}} />
-      </Elements>
-    </div>
-  </Layout>
-);
-
-const InjectedCheckoutForm = ({ countriesData }) => {
+const paiemement = ({ data, page, menu, footer, coupons, legal }) => {
   return (
-    <ElementsConsumer>
-      {({ elements, stripe }) => (
-        <CheckoutForm
-          elements={elements}
-          stripe={stripe}
-          countriesData={countriesData ?? {}}
-        />
-      )}
-    </ElementsConsumer>
+    <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
+      <Head>{page?.seo?.fullHead ? parse(page?.seo?.fullHead) : ""}</Head>
+      <div className="container px-4 mx-auto my-2 md:my-4 xl:px-0">
+        <ThemePName>{page?.title}</ThemePName>
+        <ProgressState activeState={2} />
+      </div>
+
+      <div className="container mx-auto mb-8 md:mb-16 lg:mb-32">
+        <Elements stripe={stripePromise}>
+          <InjectedCheckoutForm countriesData={data?.wooCountries ?? {}} />
+        </Elements>
+      </div>
+    </Layout>
   );
 };
-export default Checkout;
+
+const InjectedCheckoutForm = ({ countriesData }) => {
+    return (
+      <ElementsConsumer>
+        {({ elements, stripe }) => (
+          <CheckoutForm
+            elements={elements}
+            stripe={stripe}
+            countriesData={countriesData ?? {}}
+          />
+        )}
+      </ElementsConsumer>
+    );
+  };
+
+  
+export default paiemement;
 
 export async function getStaticProps({ locale, params }) {
   const country = await client.query({

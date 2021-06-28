@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import cx from "classnames";
 
 import YourOrder from "./YourOrder";
 import PaymentModes from "./PaymentModes";
@@ -13,10 +14,13 @@ import Address from "./Address";
 import {
   handleBillingDifferentThanShipping,
   handleCreateAccount,
+  handleStripeCheckout,
   setStatesForCountry,
 } from "../../utils/checkout";
 import CheckboxField from "./form-elements/CheckboxField";
-import { ThemeBorderEffect, ThemeH5 } from "../themeComponents";
+import CLEAR_CART_MUTATION from "../../mutations/clear-cart";
+import { useRouter } from "next/dist/client/router";
+import UPDATE_CUSTOMER from "../../mutations/update-customer";
 
 // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
 // const defaultCustomerInfo = {
@@ -50,6 +54,7 @@ const defaultCustomerInfo = {
 };
 
 const CheckoutForm = ({ countriesData }) => {
+  const route = useRouter();
   const { billingCountries, shippingCountries } = countriesData || {};
 
   const initialState = {
@@ -68,6 +73,7 @@ const CheckoutForm = ({ countriesData }) => {
   const [cart, setCart] = useContext(AppContext);
   const [input, setInput] = useState(initialState);
   const [orderData, setOrderData] = useState(null);
+  const [customerData, setCustomerData] = useState(null);
   const [requestError, setRequestError] = useState(null);
   const [theShippingStates, setTheShippingStates] = useState([]);
   const [isFetchingShippingStates, setIsFetchingShippingStates] = useState(
@@ -75,13 +81,18 @@ const CheckoutForm = ({ countriesData }) => {
   );
   const [theBillingStates, setTheBillingStates] = useState([]);
   const [isFetchingBillingStates, setIsFetchingBillingStates] = useState(false);
+  const [isStripeOrderProcessing, setIsStripeOrderProcessing] = useState(false);
+  const [createdOrderData, setCreatedOrderData] = useState({});
 
   // Get Cart Data.
-  const { data } = useQuery(GET_CART, {
+  const [getCart, { data }] = useLazyQuery(GET_CART, {
+    fetchPolicy: "no-cache",
+    nextFetchPolicy: "no-cache",
     notifyOnNetworkStatusChange: true,
     onCompleted: () => {
       // Update cart in the localStorage.
       const updatedCart = getFormattedCart(data);
+      console.log(data);
       localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
 
       // Update cart data in React Context.
@@ -97,12 +108,47 @@ const CheckoutForm = ({ countriesData }) => {
     variables: {
       input: orderData,
     },
+    onCompleted: (res) => {
+      console.log("checkout");
+      route.push("/paiemement");
+
+      return;
+    },
     onError: (error) => {
       if (error) {
         setRequestError(error?.graphQLErrors?.[0]?.message ?? "");
       }
     },
   });
+  function customerClean(raw) {
+    delete raw.errors;
+    delete raw.createAccount;
+    delete raw.orderNotes;
+    // setCustomerData(input.shipping);
+    console.log(raw);
+    const cleaned = raw;
+    return cleaned;
+  }
+  const [
+    customerUpdate,
+    { data: customerResponse, loading: customerLoading },
+  ] = useMutation(UPDATE_CUSTOMER, {
+    variables: {
+      input: {
+        billing: input.shipping,
+        shipping: input.shipping,
+      },
+    },
+    onError: (error) => {
+      if (error) {
+        console.log(error?.graphQLErrors);
+
+        setRequestError(error?.graphQLErrors?.[0]?.message ?? "");
+      }
+    },
+  });
+
+  const [clearCartMutation] = useMutation(CLEAR_CART_MUTATION);
 
   /*
    * Handle form submit.
@@ -111,9 +157,9 @@ const CheckoutForm = ({ countriesData }) => {
    *
    * @return {void}
    */
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    //   console.log(input.shipping);
     /**
      * Validate Billing and Shipping Details
      *
@@ -145,6 +191,24 @@ const CheckoutForm = ({ countriesData }) => {
 
       return;
     }
+    setCustomerData(customerClean(input.shipping));
+    console.log(customerData);
+
+    await customerUpdate();
+    return null;
+
+    if ("stripe-mode" === input.paymentMethod) {
+      const createdOrderData = await handleStripeCheckout(
+        input,
+        cart?.products,
+        setRequestError,
+        clearCartMutation,
+        setIsStripeOrderProcessing,
+        setCreatedOrderData
+      );
+      console.log(createdOrderData);
+      return null;
+    }
 
     const checkOutData = createCheckoutData(input);
     setRequestError(null);
@@ -153,6 +217,7 @@ const CheckoutForm = ({ countriesData }) => {
      *  because 'orderData' is added in useEffect as a dependency.
      */
     setOrderData(checkOutData);
+    return null;
   };
 
   /*
@@ -212,13 +277,49 @@ const CheckoutForm = ({ countriesData }) => {
       setIsFetchingBillingStates
     );
   };
+  const UpdateShippingData = async (target) => {
+    console.log(target);
+  };
 
   useEffect(async () => {
+    await getCart();
     if (null !== orderData) {
       // Call the checkout mutation when the value for orderData changes/updates.
-      await checkout();
+      //   const checkoutRes = await checkout();
+      // console.log(orderData);
+      // console.log(checkoutRes?.data?.checkout);
+      checkout();
     }
   }, [orderData]);
+
+  useEffect(async () => {
+    setRequestError(null);
+
+    if (customerResponse) {
+      await getCart();
+      // Call the checkout mutation when the value for orderData changes/updates.
+      //   const checkoutRes = await checkout();
+      console.log("customerResponse");
+      console.log(customerResponse);
+      // checkout();
+    }
+  }, [customerResponse]);
+
+  useEffect(async () => {
+    setRequestError(null);
+
+    if (customerResponse) {
+      await getCart();
+      // Call the checkout mutation when the value for orderData changes/updates.
+      //   const checkoutRes = await checkout();
+      console.log("customerResponse");
+      console.log(customerResponse);
+      // checkout();
+    }
+  }, [customerResponse]);
+
+  // Loading state
+  const isOrderProcessing = checkoutLoading || isStripeOrderProcessing;
 
   return (
     <>
@@ -228,7 +329,7 @@ const CheckoutForm = ({ countriesData }) => {
             <div>
               {/*Shipping Details*/}
               <div className="billing-details">
-                <ThemeH5>Shipping Details</ThemeH5>
+                <h2 className="mb-4 text-xl font-medium">Shipping Details</h2>
                 <Address
                   states={theShippingStates}
                   countries={shippingCountries}
@@ -252,7 +353,7 @@ const CheckoutForm = ({ countriesData }) => {
               {/*Billing Details*/}
               {input?.billingDifferentThanShipping ? (
                 <div className="billing-details">
-                  <ThemeH5>Billing Details</ThemeH5>
+                  <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
                   <Address
                     states={theBillingStates}
                     countries={billingCountries}
@@ -270,14 +371,19 @@ const CheckoutForm = ({ countriesData }) => {
             {/* Order & Payments*/}
             <div className="your-orders">
               {/*	Order*/}
-              <ThemeH5>Your Order</ThemeH5>
+              <h2 className="mb-4 text-xl font-medium">Your Order</h2>
               <YourOrder cart={cart} />
 
-              {/*Payment*/}
+              {/*Payment
               <PaymentModes input={input} handleOnChange={handleOnChange} />
+*/}
               <div className="mt-5 woo-next-place-order-btn-wrap">
                 <button
-                  className="w-auto px-5 py-3 text-white rounded-sm bg-brand-500 xl:w-full"
+                  disabled={isOrderProcessing}
+                  className={cx(
+                    "bg-purple-600 text-white px-5 py-3 rounded-sm w-auto xl:w-full",
+                    { "opacity-50": isOrderProcessing }
+                  )}
                   type="submit"
                 >
                   Place Order
@@ -285,17 +391,14 @@ const CheckoutForm = ({ countriesData }) => {
               </div>
 
               {/* Checkout Loading*/}
-              {checkoutLoading && <p>Processing Order...</p>}
+              {isOrderProcessing && <p>Processing Order...</p>}
               {requestError && (
                 <p>Error : {requestError} :( Please try again</p>
               )}
             </div>
           </div>
         </form>
-      ) : (
-        ""
-      )}
-
+      ) : null}
       {/*	Show message if Order Success*/}
       <OrderSuccess response={checkoutResponse} />
     </>

@@ -1,14 +1,10 @@
 import { gql } from "@apollo/client";
 
-const CHECKOUT_MUTATION = gql`
-  mutation CHECKOUT_MUTATION($input: CheckoutInput!) {
-    checkout(input: $input) {
-      result
-      redirect
+const CREATE_ORDER_MUTATION = gql`
+  mutation CREATE_ORDER_MUTATION($input: CreateOrderInput!) {
+    createOrder(input: $input) {
       clientMutationId
-      customer {
-        hasCalculatedShipping
-      }
+      orderId
       order {
         id
         orderKey
@@ -24,4 +20,4 @@ const CHECKOUT_MUTATION = gql`
   }
 `;
 
-export default CHECKOUT_MUTATION;
+export default CREATE_ORDER_MUTATION;

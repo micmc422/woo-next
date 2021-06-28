@@ -10,6 +10,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 const Cart = ({ page, menu, footer, coupons, legal }) => (
   <Layout menu={menu} footer={footer} coupons={coupons} legal={legal}>
     <Head>{page?.seo?.fullHead ? parse(page?.seo?.fullHead) : ""}</Head>
+
     <CartItemsContainer />
   </Layout>
 );

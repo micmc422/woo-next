@@ -4,13 +4,10 @@ import { CURRENCY, MIN_AMOUNT, MAX_AMOUNT } from "../../config";
 
 import Stripe from "stripe";
 import { formatAmountForStripe } from "src/utils/stripe-helpers";
-const stripe = new Stripe(
-  "sk_test_51HtCQlFIWeEGR1HAnOekDCeG8ckCfeD7URXbIjA3EZ8mEuSmJwXRF0NxCGtzHhIeNGWLqWiXqQTeIoqj65VjB7Sc00jmRM5Q82",
-  {
-    // https://github.com/stripe/stripe-node#configuration
-    apiVersion: "2020-08-27",
-  }
-);
+const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC}`, {
+  // https://github.com/stripe/stripe-node#configuration
+  apiVersion: "2020-08-27",
+});
 
 export default async function handler(
   req: NextApiRequest,

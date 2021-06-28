@@ -15,6 +15,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { BgPattern, ThemePName } from "../../themeComponents";
 import Image from "next/image";
 import CartUpsell from "./CartUpsell";
+import ProgressState from "../../checkout/ProgressState";
 
 const CartItemsContainer = () => {
   const { t } = useTranslation("panier");
@@ -124,31 +125,31 @@ const CartItemsContainer = () => {
     <div className="container px-4 mx-auto mt-8 cart product-cart-container xl:px-0">
       {cart ? (
         <div className="container woo-next-cart-wrapper">
-          <div className="grid-cols-2 gap-4 cart-header">
-            <ThemePName>
-              {t("panier")}
-            </ThemePName>
-            {/*Clear entire cart*/}
-            <div className="pb-4 text-right clear-cart">
-              <button
-                className="w-full px-4 py-1 text-white bg-gray-400 rounded md:w-auto"
-                onClick={(event) => handleClearCart(event)}
-                disabled={clearCartProcessing}
-              >
-                <span className="flex items-center py-2 space-x-2 text-center woo-next-cart">
-                  <FaTrashAlt /> <span>{t("viderpanier")}</span>
-                </span>
-              </button>
-              {clearCartProcessing ? <p>{t("vidageencour")}</p> : ""}
-              {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
+          <div className="flex flex-row items-center justify-between">
+            <ThemePName>{t("panier")}</ThemePName>
+            <div className="grid-cols-2 gap-4 cart-header">
+              {/*Clear entire cart*/}
+              <div className="text-right clear-cart">
+                <button
+                  className="w-full px-4 py-1 text-white bg-red-400 rounded md:w-auto"
+                  onClick={(event) => handleClearCart(event)}
+                  disabled={clearCartProcessing}
+                >
+                  <span className="flex items-center py-2 space-x-2 text-center woo-next-cart">
+                    <FaTrashAlt /> <span>{t("viderpanier")}</span>
+                  </span>
+                </button>
+                {clearCartProcessing ? <p>{t("vidageencour")}</p> : ""}
+                {updateCartProcessing ? <p>{t("miseajour")}</p> : null}
+              </div>
             </div>
           </div>
-          <div className="relative hidden grid-cols-1 gap-2 mb-5 md:grid xl:grid-cols-3 xl:gap-4 ">
+          <ProgressState activeState={0} />
+          <div className="relative hidden grid-cols-1 gap-2 pt-8 mb-5 md:grid xl:grid-cols-3 xl:gap-4">
             <div className="col-span-2">
               <table className="overflow-hidden text-left rounded table-fixed ring-1 ring-gray-200">
                 <thead className="relative text-left">
-                  <BgPattern color={"c9a338"} />
-                  <tr className="mb-2 bg-brand-400">
+                  <tr className="mb-2 bg-pattern-brand animate-rtl-linear-infinite bg-brand-300">
                     <th className="w-1/12" />
                     <th className="w-1/12" />
                     <th className="w-1/2 p-2">{t("photo")}</th>
