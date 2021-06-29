@@ -117,6 +117,9 @@ const CheckoutForm = ({ countriesData }) => {
     variables: {
       input: orderData,
     },
+    onCompleted: () => {
+      console.log("checkout completed");
+    },
     onError: (error) => {
       if (error) {
         setRequestError(error?.graphQLErrors?.[0]?.message ?? "");
@@ -346,7 +349,8 @@ const CheckoutForm = ({ countriesData }) => {
   useEffect(async () => {
     await getCart();
     if (null !== orderData) {
-      checkout();
+      const checkOutRes = await checkout();
+      console.log(checkOutRes);
     }
   }, [orderData]);
 
@@ -469,6 +473,7 @@ const CheckoutForm = ({ countriesData }) => {
               <StripeInput
                 amount={cart.totalProductsPrice}
                 setIsPaid={setIsPaid}
+                isValid={!isValid || isOrderProcessing}
               />
 
               <div className="mt-5 woo-next-place-order-btn-wrap">

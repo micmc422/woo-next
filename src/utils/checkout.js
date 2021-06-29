@@ -97,8 +97,8 @@ export const handleStripeCheckout = async (
 
   //  || cartCleared?.error
   if (isEmpty(createCustomerOrder?.orderId)) {
-  //  console.log("came in");
-  //  setRequestError("Clear cart failed");
+    //  console.log("came in");
+    //  setRequestError("Clear cart failed");
     return null;
   }
 
@@ -135,7 +135,7 @@ const createCheckoutSessionAndRedirect = async (products, input, orderId) => {
       stripe.redirectToCheckout({ sessionId: session.id });
     }
   } catch (error) {
-  //  console.log(error);
+    //  console.log(error);
   }
 };
 
@@ -150,7 +150,7 @@ const getStripeLineItems = (products) => {
       name: product?.name ?? "",
       images: [product?.image?.sourceUrl ?? ""],
       amount: Math.round(product?.price * 100),
-      currency: "usd",
+      currency: "eur",
     };
   });
 };

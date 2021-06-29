@@ -3,7 +3,7 @@ import { trim } from "lodash";
 import { useEffect, useState } from "react";
 // import { wp_api_rest_push_order } from "../../lib/graphql-utils";
 
-function StripeInput({ amount, commande, userInfo, setIsPaid }) {
+function StripeInput({ amount, commande, userInfo, setIsPaid, isValid }) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
@@ -40,15 +40,6 @@ function StripeInput({ amount, commande, userInfo, setIsPaid }) {
     };
   }, [amount]);
 
-  useEffect(() => {
-    if (succeeded) {
-      console.log(commande);
-      setIsPaid(true);
-      // wp_api_rest_push_order(amount, commande, userInfo, succeeded);
-    }
-    //  console.log(commande);
-    //  checkOutData(commande)
-  }, [succeeded]);
   const cardStyle = {
     style: {
       base: {
@@ -88,8 +79,10 @@ function StripeInput({ amount, commande, userInfo, setIsPaid }) {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      setIsPaid(true);
     }
   };
+  console.log(isValid);
   return (
     <>
       <form
@@ -102,7 +95,7 @@ function StripeInput({ amount, commande, userInfo, setIsPaid }) {
           onChange={handleChange}
         />
         <button
-          disabled={processing || disabled || succeeded}
+          disabled={isValid || processing || disabled || succeeded}
           id="submit"
           type="bouton"
           onClick={handleSubmit}
