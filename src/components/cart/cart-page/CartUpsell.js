@@ -18,7 +18,7 @@ const CartUpsell = ({ cart }) => {
       // localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
       // Update cart data in React Context.
       // setCart(updatedCart);
-       console.log(data.products.nodes);
+      // console.log(data.products.nodes);
        const upSellList = []
        data.products.nodes.map(item=> upSellList.push(item.upsell) )
       setUpsellProduct(data.products.nodes);

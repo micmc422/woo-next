@@ -4,7 +4,9 @@ import { CURRENCY, MIN_AMOUNT, MAX_AMOUNT } from "../../config";
 
 import Stripe from "stripe";
 import { formatAmountForStripe } from "src/utils/stripe-helpers";
-const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC}`, {
+const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_SECRET}`, {
+  //const stripe = new Stripe(  `pk_test_51HtCQlFIWeEGR1HAQFSJNZfBTbohYe6xZ8P3M4ftO5pbOUVodzBr9DNDCnlYL16wxRRy3UWEevPAXuTWhwhrnmMB007Xq5lzWP`,{
+
   // https://github.com/stripe/stripe-node#configuration
   apiVersion: "2020-08-27",
 });
@@ -15,7 +17,7 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { amount }: { amount: number } = req.body;
-
+    console.log(amount);
     try {
       // Validate the amount that was passed from the client.
       if (!(amount >= MIN_AMOUNT && amount <= MAX_AMOUNT)) {

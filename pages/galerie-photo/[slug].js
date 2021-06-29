@@ -81,7 +81,7 @@ export default function Product(props) {
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   useEffect(() => {
-    console.log(product);
+   // console.log(product);
     product &&
       productView({
         id: product?.id,

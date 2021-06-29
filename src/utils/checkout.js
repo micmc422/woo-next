@@ -97,8 +97,8 @@ export const handleStripeCheckout = async (
 
   //  || cartCleared?.error
   if (isEmpty(createCustomerOrder?.orderId)) {
-    console.log("came in");
-    setRequestError("Clear cart failed");
+  //  console.log("came in");
+  //  setRequestError("Clear cart failed");
     return null;
   }
 
@@ -132,10 +132,10 @@ const createCheckoutSessionAndRedirect = async (products, input, orderId) => {
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC);
     if (stripe) {
       console.log(session);
-      // stripe.redirectToCheckout({ sessionId: session.id });
+      stripe.redirectToCheckout({ sessionId: session.id });
     }
   } catch (error) {
-    console.log(error);
+  //  console.log(error);
   }
 };
 

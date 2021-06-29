@@ -211,6 +211,7 @@ export const removeItemFromCart = (productId) => {
  */
 export const getFormattedCart = (data) => {
   let formattedCart = null;
+  console.log({ data });
 
   if (undefined === data || !data?.cart?.contents.nodes.length) {
     return formattedCart;
@@ -247,8 +248,14 @@ export const getFormattedCart = (data) => {
     formattedCart.products.push(product);
   }
 
-  formattedCart.totalProductsCount = totalProductsCount;
   formattedCart.totalProductsPrice = data?.cart?.total ?? "";
+  formattedCart.totalProductsCount = totalProductsCount;
+  formattedCart.subtotal = data?.cart?.subtotal ?? "";
+  formattedCart.subtotalTax = data?.cart?.subtotalTax ?? "";
+  formattedCart.shippingTotal = data?.cart?.shippingTotal ?? "";
+  formattedCart.discountTax = data?.cart?.discountTax ?? "";
+  formattedCart.discountTotal = data?.cart?.discountTotal ?? "";
+  formattedCart.appliedCoupons = data?.cart?.appliedCoupons ?? "";
 
   return formattedCart;
 };

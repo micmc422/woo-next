@@ -32,8 +32,8 @@ const CartItemsList = ({ cart }) => {
       });
     }
   };
-  console.log(cart);
-  console.log(!cart?.products.length);
+ // console.log(cart);
+//  console.log(!cart?.products.length);
   if (!cart?.products.length) {
     return <div></div>;
   }

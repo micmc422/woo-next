@@ -35,7 +35,7 @@ export const getCreateOrderLineItems = (products) => {
     return [];
   }
 
-  console.log("products", products);
+  //  console.log("products", products);
 
   return products?.map(({ productId, qty: quantity }) => {
     return {
@@ -137,7 +137,7 @@ export const createTheOrder = async (
         "Something went wrong. Order creation failed. Please try again"
       );
     }
-    console.log({ result });
+    // console.log({ result });
     response.orderId = result?.orderId ?? "";
     response.total = result.total ?? "";
     response.currency = result.currency ?? "";

@@ -1,7 +1,7 @@
 import "../src/styles/style.scss";
 import "../src/styles/main.scss";
 import "tailwindcss/tailwind.css";
-
+import "../src/styles/stripe.scss";
 import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 import { appWithTranslation } from "next-i18next";
