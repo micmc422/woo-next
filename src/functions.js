@@ -211,7 +211,7 @@ export const removeItemFromCart = (productId) => {
  */
 export const getFormattedCart = (data) => {
   let formattedCart = null;
-  console.log({ data });
+//  console.log({ data });
 
   if (undefined === data || !data?.cart?.contents.nodes.length) {
     return formattedCart;
@@ -308,6 +308,7 @@ export const createCheckoutData = (order) => {
 
   return checkoutData;
 };
+
 export const createOrderData = (order) => {
   // Set the billing Data to shipping, if applicable.
   const billingData = order.billingDifferentThanShipping

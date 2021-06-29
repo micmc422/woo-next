@@ -100,12 +100,12 @@ const CheckoutForm = ({ countriesData }) => {
     onCompleted: () => {
       // Update cart in the localStorage.
       const updatedCart = getFormattedCart(data);
-      //  console.log(data);
+      // console.log({ getCard: data });
       localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
 
       // Update cart data in React Context.
-      
-      (updatedCart);
+
+      setCart(updatedCart);
     },
   });
 
@@ -350,21 +350,21 @@ const CheckoutForm = ({ countriesData }) => {
     }
   }, [orderData]);
 
-  useEffect(async () => {
+  useEffect(() => {
     setRequestError(null);
 
     if (customerResponse || applyCouponResponse) {
-      await getCart();
+      getCart();
     }
   }, [customerResponse, applyCouponResponse]);
 
-  useEffect(async () => {
-    console.log(isPaid);
+  useEffect(() => {
+    //  console.log(isPaid);
     if (isPaid) {
       const checkOutData = createCheckoutData(input);
       checkOutData.isPaid = isPaid;
       setRequestError(null);
-      console.log(checkOutData);
+      //  console.log(checkOutData);
       setOrderData(checkOutData);
     }
   }, [isPaid]);
@@ -375,8 +375,7 @@ const CheckoutForm = ({ countriesData }) => {
       theShippingStates?.length
     );
     setIsValid(shippingValidationResult.isValid);
-    console.log(shippingValidationResult);
-    if (shippingValidationResult.isValid) {
+    if (isValid) {
       setCustomerData(customerClean(input?.shipping));
       await customerUpdate();
     }
