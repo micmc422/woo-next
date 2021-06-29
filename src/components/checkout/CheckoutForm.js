@@ -104,7 +104,8 @@ const CheckoutForm = ({ countriesData }) => {
       localStorage.setItem("woo-next-cart", JSON.stringify(updatedCart));
 
       // Update cart data in React Context.
-      setCart(updatedCart);
+      
+      (updatedCart);
     },
   });
 
