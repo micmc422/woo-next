@@ -8,7 +8,7 @@ const YourOrder = ({ cart }) => {
       {cart ? (
         <Fragment>
           {/*Product Listing*/}
-          <table className="table w-full mb-10 checkout-cart table-hover">
+          <table className="table w-full mb-10 overflow-hidden rounded shadow-2xl checkout-cart table-hover">
             <thead>
               <tr className="text-left woo-next-cart-head-container">
                 <th className="woo-next-cart-heading-el" scope="col" />

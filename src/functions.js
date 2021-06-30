@@ -211,7 +211,7 @@ export const removeItemFromCart = (productId) => {
  */
 export const getFormattedCart = (data) => {
   let formattedCart = null;
-//  console.log({ data });
+  //  console.log({ data });
 
   if (undefined === data || !data?.cart?.contents.nodes.length) {
     return formattedCart;
@@ -343,7 +343,7 @@ export const createOrderData = (order) => {
       phone: billingData?.phone,
       company: billingData?.company,
     },
-    //  shipToDifferentAddress: order.billingDifferentThanShipping,
+    shipToDifferentAddress: order.billingDifferentThanShipping,
     paymentMethod: order.paymentMethod,
     isPaid: false,
   };

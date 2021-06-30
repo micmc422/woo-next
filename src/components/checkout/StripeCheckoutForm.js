@@ -3,7 +3,6 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import cx from "classnames";
 
 import YourOrder from "./YourOrder";
-import PaymentModes from "./PaymentModes";
 import { AppContext } from "../context/AppContext";
 import validateAndSanitizeCheckoutForm from "../../validator/checkout";
 import { getFormattedCart, createCheckoutData } from "../../functions";
@@ -24,6 +23,7 @@ import ADD_COUPON from "../../mutations/add-coupon";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import StripeInput from "./form-elements/stripe-checkout";
 import CouponsList from "./form-elements/CouponsList";
+import CheckoutFormStripeComplex from "./form-elements/stripe-checkout-complex";
 
 // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
 // const defaultCustomerInfo = {
@@ -56,10 +56,7 @@ const defaultCustomerInfo = {
   errors: null,
 };
 
-const CheckoutForm = ({ countriesData }) => {
-  const route = useRouter();
-  const { billingCountries, shippingCountries } = countriesData || {};
-
+const StripeCheckoutForm = ({ countriesData }) => {
   const initialState = {
     billing: {
       ...defaultCustomerInfo,
@@ -145,9 +142,12 @@ const CheckoutForm = ({ countriesData }) => {
         shipping: customerClean(input.shipping),
       },
     },
+    onCompleted: async (data) => {
+      await getCart();
+    },
     onError: (error) => {
       if (error) {
-        //  console.log(error?.graphQLErrors);
+        console.log(error?.graphQLErrors);
 
         setRequestError(error?.graphQLErrors?.[0]?.message ?? "");
       }
@@ -162,8 +162,9 @@ const CheckoutForm = ({ countriesData }) => {
         code: couponCode,
       },
     },
-    onCompleted: (res) => {
+    onCompleted: async (res) => {
       console.log(res);
+      await getCart();
     },
     onError: (error) => {
       if (error) {
@@ -183,100 +184,6 @@ const CheckoutForm = ({ countriesData }) => {
    *
    * @return {void}
    */
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
-      return;
-    }
-
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
-    const card = elements.getElement(CardElement);
-
-    if (card == null) {
-      return;
-    }
-
-    // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
-
-    if (error) {
-      console.log("[error]", error);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
-    }
-    //   console.log(input.shipping);
-    /**
-     * Validate Billing and Shipping Details
-     *
-     * Note:
-     * 1. If billing is different than shipping address, only then validate billing.
-     * 2. We are passing theBillingStates?.length and theShippingStates?.length, so that
-     * the respective states should only be mandatory, if a country has states.
-     */
-    /*
-    const billingValidationResult = input?.billingDifferentThanShipping
-      ? validateAndSanitizeCheckoutForm(
-          input?.billing,
-          theBillingStates?.length
-        )
-      : { errors: null, isValid: true };
-    const shippingValidationResult = validateAndSanitizeCheckoutForm(
-      input?.shipping,
-      theShippingStates?.length
-    );
-
-    if (!shippingValidationResult.isValid || !billingValidationResult.isValid) {
-      setInput({
-        ...input,
-        billing: { ...input.billing, errors: billingValidationResult.errors },
-        shipping: {
-          ...input.shipping,
-          errors: shippingValidationResult.errors,
-        },
-      });
-
-      return;
-    }
-    setCustomerData(customerClean(input.shipping));
-    // console.log(customerData);
-
-    await customerUpdate();
-    return null;
-
-    if ("stripe" === input.paymentMethod) {
-      const createdOrderData = await handleStripeCheckout(
-        input,
-        cart?.products,
-        setRequestError,
-        clearCartMutation,
-        setIsStripeOrderProcessing,
-        setCreatedOrderData
-      );
-      console.log(createdOrderData);
-      return null;
-    }
-    return null;
-
-    const checkOutData = createCheckoutData(input);
-    setRequestError(null);
-    */
-    /**
-     *  When order data is set, checkout mutation will automatically be called,
-     *  because 'orderData' is added in useEffect as a dependency.
-     */
-    /**
-    setOrderData(checkOutData);
-    return null;
-     */
-  };
-
   /*
    * Handle onchange input.
    *
@@ -292,10 +199,32 @@ const CheckoutForm = ({ countriesData }) => {
     isBillingOrShipping = false
   ) => {
     const { target } = event || {};
+    if (target.name === "name") {
+      const name = target.value.split(" ");
+      const newState = {
+        ...input,
+        shipping: {
+          ...input.shipping,
+          firstName: name[0],
+          lastName: name.slice(1).toString(),
+        },
+        billing: {
+          ...input.billing,
+          firstName: name[0],
+          lastName: name.slice(1).toString(),
+        },
+      };
 
+      setInput(newState);
+
+      return;
+    }
     if ("createAccount" === target.name) {
       handleCreateAccount(input, setInput, target);
-    } else if ("billingDifferentThanShipping" === target.name) {
+    } else if (
+      "billingDifferentThanShipping" === target.name &&
+      target.value === true
+    ) {
       handleBillingDifferentThanShipping(input, setInput, target);
     } else if (isBillingOrShipping) {
       if (isShipping) {
@@ -304,7 +233,10 @@ const CheckoutForm = ({ countriesData }) => {
         await handleBillingChange(target);
       }
     } else {
-      const newState = { ...input, [target.name]: target.value };
+      const newState = {
+        ...input,
+        [target.name]: target.value,
+      };
 
       setInput(newState);
     }
@@ -316,7 +248,13 @@ const CheckoutForm = ({ countriesData }) => {
       ...input,
       shipping: { ...input?.shipping, [target.name]: target.value },
     };
+    console.log(target.value);
+    !input.billingDifferentThanShipping
+      ? (newState.billing = newState.shipping)
+      : null;
+
     setInput(newState);
+    console.log(target.name);
     await setStatesForCountry(
       target,
       setTheShippingStates,
@@ -329,6 +267,7 @@ const CheckoutForm = ({ countriesData }) => {
       ...input,
       billing: { ...input?.billing, [target.name]: target.value },
     };
+    console.log({ newState });
     setInput(newState);
     await setStatesForCountry(
       target,
@@ -336,6 +275,7 @@ const CheckoutForm = ({ countriesData }) => {
       setIsFetchingBillingStates
     );
   };
+
   function handleCouponChange(e) {
     console.log(e.target.value);
     setCouponCode(e.target.value);
@@ -353,14 +293,15 @@ const CheckoutForm = ({ countriesData }) => {
       console.log(checkOutRes);
     }
   }, [orderData]);
-
-  useEffect(() => {
+  /*
+  useEffect(async () => {
     setRequestError(null);
 
     if (customerResponse || applyCouponResponse) {
-      getCart();
+      await getCart();
     }
   }, [customerResponse, applyCouponResponse]);
+   */
 
   useEffect(() => {
     //  console.log(isPaid);
@@ -374,13 +315,14 @@ const CheckoutForm = ({ countriesData }) => {
   }, [isPaid]);
 
   useEffect(async () => {
+    //   console.log(input?.shipping);
     const shippingValidationResult = validateAndSanitizeCheckoutForm(
       input?.shipping,
       theShippingStates?.length
     );
     setIsValid(shippingValidationResult.isValid);
-    if (isValid) {
-      setCustomerData(customerClean(input?.shipping));
+    setCustomerData(customerClean(input?.shipping));
+    if (shippingValidationResult.isValid) {
       await customerUpdate();
     }
   }, [input]);
@@ -388,114 +330,62 @@ const CheckoutForm = ({ countriesData }) => {
   // Loading state
   const isOrderProcessing =
     checkoutLoading || isStripeOrderProcessing || customerLoading;
-  //  console.log({ cart });
   return (
     <>
       {cart ? (
-        <form onSubmit={handleFormSubmit} className="woo-next-checkout-form">
-          <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
-            <div>
-              {/*Shipping Details*/}
-              <div className="billing-details">
-                <h2 className="mb-4 text-xl font-medium">Shipping Details</h2>
-                <Address
-                  states={theShippingStates}
-                  countries={shippingCountries}
-                  input={input?.shipping}
-                  handleOnChange={(event) => handleOnChange(event, true, true)}
-                  isFetchingStates={isFetchingShippingStates}
-                  isShipping
-                  isBillingOrShipping
-                />
-              </div>
-              <div>
-                <CheckboxField
-                  name="billingDifferentThanShipping"
-                  type="checkbox"
-                  checked={input?.billingDifferentThanShipping}
-                  handleOnChange={handleOnChange}
-                  label="Billing different than shipping"
-                  containerClassNames="mb-4 pt-4"
-                />
-              </div>
-              {/*Billing Details*/}
-              {input?.billingDifferentThanShipping ? (
-                <div className="billing-details">
-                  <h2 className="mb-4 text-xl font-medium">Billing Details</h2>
-                  <Address
-                    states={theBillingStates}
-                    countries={billingCountries}
-                    input={input?.billing}
-                    handleOnChange={(event) =>
-                      handleOnChange(event, false, true)
-                    }
-                    isFetchingStates={isFetchingBillingStates}
-                    isShipping={false}
-                    isBillingOrShipping
-                  />
-                </div>
-              ) : null}
-            </div>
-            {/* Order & Payments*/}
-            <div className="your-orders">
-              {/*	Order*/}
-              <h2 className="mb-4 text-xl font-medium">Your Order</h2>
-              <YourOrder cart={cart} />
+        <div className="woo-next-checkout-form">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <CheckoutFormStripeComplex
+              stripe={stripe}
+              amount={cart.totalProductsPrice}
+              setIsPaid={setIsPaid}
+              isValid={!isValid || isOrderProcessing}
+              countriesData={countriesData}
+              theShippingStates={theShippingStates}
+              handleOnChange={handleOnChange}
+              isShipping={true}
+              input={input}
+              isFetchingStates={isFetchingBillingStates}
+            />
+            <div className={`w-full md:w-2/3 mx-auto`}>
+              {" "}
+              <div className="your-orders">
+                {/*	Order*/}
+                <h2 className="mb-4 text-xl font-medium">Your Order</h2>
+                <YourOrder cart={cart} />
 
-              {/*Payment
+                {/*Payment
               <PaymentModes input={input} handleOnChange={handleOnChange} />
 */}
-              {cart?.appliedCoupons && (
-                <CouponsList coupons={cart?.appliedCoupons} getCart={getCart} />
-              )}
-              <div className="flex flex-row w-10/12 mx-auto my-5">
-                <input
-                  onChange={handleCouponChange}
-                  // value={inputValue}
-                  placeholder={"code"}
-                  type={"bouton"}
-                  name={"coupon"}
-                  className="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border-0 border-b-2 border-gray-300 outline-none focus:bg-transparent focus:border-gray-500"
-                  id={"coupon-field"}
-                />
-                <button
-                  disabled={applyCouponLoading}
-                  className={cx(
-                    "bg-brand-500 text-white ml-4 px-5 py-2 rounded xl:w-full max-w-max align-middle inline-block",
-                    { "opacity-50": isOrderProcessing }
-                  )}
-                  type="button"
-                  onClick={applyCouponBtn}
-                >
-                  Apply
-                </button>
-              </div>
-              <StripeInput
-                amount={cart.totalProductsPrice}
-                setIsPaid={setIsPaid}
-                isValid={!isValid || isOrderProcessing}
-              />
+                {cart?.appliedCoupons && (
+                  <CouponsList
+                    coupons={cart?.appliedCoupons}
+                    getCart={getCart}
+                  />
+                )}
 
-              <div className="mt-5 woo-next-place-order-btn-wrap">
-                <button
-                  disabled={!isValid || isOrderProcessing}
-                  className={cx(
-                    "bg-purple-600 text-white px-5 py-3 rounded-sm w-auto xl:w-full",
-                    { "opacity-50": !isValid || isOrderProcessing }
-                  )}
-                  type="submit"
-                >
-                  Place Order
-                </button>
+                <div className="mt-5 woo-next-place-order-btn-wrap">
+                  <button
+                    disabled={!isValid || isOrderProcessing}
+                    className={cx(
+                      "bg-purple-600 text-white px-5 py-3 rounded-sm w-auto xl:w-full",
+                      { "opacity-50": !isValid || isOrderProcessing }
+                    )}
+                    type="submit"
+                  >
+                    Place Order
+                  </button>
+                </div>
+                {/* Checkout Loading*/}
+                {isOrderProcessing && <p>Processing Order...</p>}
+                {requestError && (
+                  <p>Error : {requestError} :( Please try again</p>
+                )}
               </div>
-              {/* Checkout Loading*/}
-              {isOrderProcessing && <p>Processing Order...</p>}
-              {requestError && (
-                <p>Error : {requestError} :( Please try again</p>
-              )}
             </div>
+            {/* Order & Payments*/}
           </div>
-        </form>
+        </div>
       ) : null}
       {/*	Show message if Order Success*/}
       <OrderSuccess response={checkoutResponse} />
@@ -503,4 +393,4 @@ const CheckoutForm = ({ countriesData }) => {
   );
 };
 
-export default CheckoutForm;
+export default StripeCheckoutForm;

@@ -73,11 +73,13 @@ module.exports = {
   },
   variants: {
     extend: {
+      outline: ["focus"],
       ringColor: ["hover"],
     },
   },
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/aspect-ratio"),
+    require('@tailwindcss/forms'),
   ],
 };

@@ -53,6 +53,9 @@ export const handleBillingDifferentThanShipping = (input, setInput, target) => {
     ...input,
     [target.name]: !input.billingDifferentThanShipping,
   };
+  !input.billingDifferentThanShipping
+    ? (newState.billing = newState.shipping)
+    : null;
   setInput(newState);
 };
 

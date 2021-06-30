@@ -14,21 +14,20 @@ const StateSelection = ({handleOnChange, input, states, isFetchingStates, isShip
     if (isFetchingStates) {
         // Show loading component.
         return (
-            <div className="mb-3">
-                <label className="leading-7 text-sm text-gray-700">
+            <div className="FormRow">
+                <label className="FormRowLabel">
                     State/County
                     <Abbr required/>
                 </label>
-                <div className="relative w-full border-none">
                     <select
                         disabled
                         value=""
                         name="state"
-                        className="opacity-50 bg-gray-100 bg-opacity-50 border border-gray-500 text-gray-500 appearance-none inline-block py-3 pl-3 pr-8 rounded leading-tight w-full"
-                    >
+                        className="FormRowInput"
+                        onChange={onChange}
+                        >
                         <option value="">Loading...</option>
                     </select>
-                </div>
             </div>
         )
     }
@@ -38,19 +37,17 @@ const StateSelection = ({handleOnChange, input, states, isFetchingStates, isShip
     }
 
     return (
-        <div className="mb-3">
-            <label className="leading-7 text-sm text-gray-600" htmlFor={inputId}>
+        <div className="FormRow">
+            <label className="FormRowLabel" htmlFor={inputId}>
                 State/County
-                <Abbr required/>
             </label>
-            <div className="relative w-full border-none">
                 <select
                     disabled={isFetchingStates}
                     onChange={handleOnChange}
                     value={state}
                     name="state"
                     className={cx(
-                        'bg-gray-100 bg-opacity-50 border border-gray-400 text-gray-500 appearance-none inline-block py-3 pl-3 pr-8 rounded leading-tight w-full',
+                        'FormRowInput',
                         {'opacity-50': isFetchingStates}
                     )}
                     id={inputId}
@@ -62,8 +59,6 @@ const StateSelection = ({handleOnChange, input, states, isFetchingStates, isShip
                         </option>
                     ))}
                 </select>
-            </div>
-            <Error errors={errors} fieldName={'state'}/>
         </div>
     )
 }
