@@ -24,6 +24,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import StripeInput from "./form-elements/stripe-checkout";
 import CouponsList from "./form-elements/CouponsList";
 import CheckoutFormStripeComplex from "./form-elements/stripe-checkout-complex";
+import { AnimationValueChange } from "../themeComponents";
 
 // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
 // const defaultCustomerInfo = {
@@ -219,6 +220,11 @@ const StripeCheckoutForm = ({ countriesData }) => {
 
       return;
     }
+    if (target.name === "coupon") {
+      console.log(target.value);
+      setCouponCode(target.value);
+      return;
+    }
     if ("createAccount" === target.name) {
       handleCreateAccount(input, setInput, target);
     } else if (
@@ -313,6 +319,13 @@ const StripeCheckoutForm = ({ countriesData }) => {
       setOrderData(checkOutData);
     }
   }, [isPaid]);
+  useEffect(async () => {
+    //  console.log(isPaid);
+    if (couponCode !== "") {
+      await applyCoupon();
+      setRequestError(null);
+    }
+  }, [couponCode]);
 
   useEffect(async () => {
     //   console.log(input?.shipping);
@@ -346,6 +359,7 @@ const StripeCheckoutForm = ({ countriesData }) => {
         <div className="woo-next-checkout-form">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <CheckoutFormStripeComplex
+            cart={cart}
               stripe={stripe}
               amount={cart.totalProductsPrice}
               setIsPaid={setIsPaid}
@@ -363,17 +377,15 @@ const StripeCheckoutForm = ({ countriesData }) => {
                 {/*	Order*/}
                 <h2 className="mb-4 text-xl font-medium">Your Order</h2>
                 <YourOrder cart={cart} />
-
                 {/*Payment
               <PaymentModes input={input} handleOnChange={handleOnChange} />
-*/}
+                */}
                 {cart?.appliedCoupons && (
                   <CouponsList
                     coupons={cart?.appliedCoupons}
                     getCart={getCart}
                   />
                 )}
-
                 <div className="mt-5 woo-next-place-order-btn-wrap">
                   <button
                     onClick={recalculate}

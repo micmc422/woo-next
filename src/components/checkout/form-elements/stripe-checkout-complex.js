@@ -5,6 +5,7 @@
 import { CardElement } from "@stripe/react-stripe-js";
 import { uniqueId } from "lodash";
 import React from "react";
+import { AnimationValueChange } from "../../themeComponents";
 import CountrySelection from "../CountrySelection";
 import StatesSelection from "../StatesSelection";
 const { flag } = require("country-emoji");
@@ -161,6 +162,7 @@ const DEFAULT_STATE = {
   city: "",
   postcode: "",
   country: "FR",
+  coupon: "",
 };
 
 class CheckoutFormStripeComplex extends React.Component {
@@ -259,7 +261,7 @@ class CheckoutFormStripeComplex extends React.Component {
       handleOnChange,
       isValid,
       input,
-      countries,
+      cart,
       states,
       isFetchingStates,
     } = this.props;
@@ -276,74 +278,75 @@ class CheckoutFormStripeComplex extends React.Component {
         <ResetButton onClick={this.reset} />
       </div>
     ) : (
-      <form className="relative Form" onSubmit={this.handleSubmit}>
-        <fieldset className="FormGroup">
-          <Field
-            label="Name"
-            id="name"
-            type="text"
-            placeholder="Jane Doe"
-            required
-            autoComplete="name"
-            value={name}
-            onChange={(event) => {
-              this.setState({ name: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-          <Field
-            label="Email"
-            id="email"
-            type="email"
-            placeholder="janedoe@gmail.com"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(event) => {
-              this.setState({ email: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-          <Field
-            label="adresse"
-            id="address1"
-            type="textarea"
-            placeholder="votre adresse"
-            required
-            autoComplete="address"
-            value={address1}
-            onChange={(event) => {
-              this.setState({ address1: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-          <Field
-            label="Ville"
-            id="city"
-            type="text"
-            placeholder="city"
-            required
-            autoComplete="locality"
-            value={city}
-            onChange={(event) => {
-              this.setState({ city: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-          <Field
-            label="CP"
-            id="postcode"
-            type="postcode"
-            placeholder="code postal"
-            required
-            autoComplete="postal-code"
-            value={postcode}
-            onChange={(event) => {
-              this.setState({ postcode: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-          {/*
+      <>
+        <form className="relative Form" onSubmit={this.handleSubmit}>
+          <fieldset className="FormGroup">
+            <Field
+              label="Name"
+              id="name"
+              type="text"
+              placeholder="Jane Doe"
+              required
+              autoComplete="name"
+              value={name}
+              onChange={(event) => {
+                this.setState({ name: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+            <Field
+              label="Email"
+              id="email"
+              type="email"
+              placeholder="janedoe@gmail.com"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(event) => {
+                this.setState({ email: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+            <Field
+              label="adresse"
+              id="address1"
+              type="textarea"
+              placeholder="votre adresse"
+              required
+              autoComplete="address"
+              value={address1}
+              onChange={(event) => {
+                this.setState({ address1: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+            <Field
+              label="Ville"
+              id="city"
+              type="text"
+              placeholder="city"
+              required
+              autoComplete="locality"
+              value={city}
+              onChange={(event) => {
+                this.setState({ city: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+            <Field
+              label="CP"
+              id="postcode"
+              type="postcode"
+              placeholder="code postal"
+              required
+              autoComplete="postal-code"
+              value={postcode}
+              onChange={(event) => {
+                this.setState({ postcode: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+            {/*
           <DropDownField
             label="country"
             id="country"
@@ -358,80 +361,120 @@ class CheckoutFormStripeComplex extends React.Component {
             }}
           />
           */}
-          <CountrySelection
-            input={input}
-            onChange={(event) => {
-              this.setState({ country: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-            countries={shippingCountries}
-            isShipping={isShipping}
-          />
+            <CountrySelection
+              input={input}
+              onChange={(event) => {
+                this.setState({ country: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+              countries={shippingCountries}
+              isShipping={isShipping}
+            />
 
-          <StatesSelection
-            input={input}
-            onChange={(event) => {
-              this.setState({ state: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-            states={theShippingStates}
-            isShipping={isShipping}
-            isFetchingStates={isFetchingStates}
-          />
-          <Field
-            label="Phone"
-            id="phone"
-            type="tel"
-            placeholder="(941) 555-0123"
-            required
-            autoComplete="tel"
-            value={phone}
-            onChange={(event) => {
-              this.setState({ phone: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-          <Field
-            label="Code"
-            id="coupon"
-            type="text"
-            placeholder="Votre code promo"
-            // autoComplete="code-promo"
-            value={coupon}
-            onChange={(event) => {
-              this.setState({ coupon: event.target.value });
-              handleOnChange(event, true, true);
-            }}
-          />
-        </fieldset>
-        <div className="flex justify-end pb-4">
-          <button className="ResetButton ">reset</button>
-        </div>
-        <fieldset className="FormGroup">
-          <CardField
-            onChange={(event) => {
-              this.setState({
-                error: event.error,
-                cardComplete: event.complete,
-              });
-            }}
-          />
-        </fieldset>
-        {error && (
-          <ErrorMessage
-            onClick={() => {
-              this.setState({
-                error: null,
-              });
-            }}
+            <StatesSelection
+              input={input}
+              onChange={(event) => {
+                this.setState({ state: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+              states={theShippingStates}
+              isShipping={isShipping}
+              isFetchingStates={isFetchingStates}
+            />
+            <Field
+              label="Phone"
+              id="phone"
+              type="tel"
+              placeholder="(941) 555-0123"
+              required
+              autoComplete="tel"
+              value={phone}
+              onChange={(event) => {
+                this.setState({ phone: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+            <Field
+              label="Code"
+              id="coupon"
+              type="text"
+              placeholder="Votre code promo"
+              // autoComplete="code-promo"
+              value={coupon}
+              onChange={(event) => {
+                this.setState({ coupon: event.target.value });
+                handleOnChange(event, true, true);
+              }}
+            />
+          </fieldset>
+          <div className="flex justify-end pb-4">
+            <button className="ResetButton ">reset</button>
+          </div>
+          <fieldset className="FormGroup">
+            <CardField
+              onChange={(event) => {
+                this.setState({
+                  error: event.error,
+                  cardComplete: event.complete,
+                });
+              }}
+            />
+          </fieldset>
+          {error && (
+            <ErrorMessage
+              onClick={() => {
+                this.setState({
+                  error: null,
+                });
+              }}
+            >
+              {error.message}
+            </ErrorMessage>
+          )}
+          <SubmitButton
+            processing={processing}
+            error={error}
+            disabled={!stripe}
           >
-            {error.message}
-          </ErrorMessage>
-        )}
-        <SubmitButton processing={processing} error={error} disabled={!stripe}>
-          Pay {amount}
-        </SubmitButton>
-      </form>
+            Pay {amount}
+          </SubmitButton>
+        </form>
+        <div className="fixed bottom-0 z-10 block w-full px-4 bg-gray-200 shadow lg:hidden">
+          <div className="flex py-4 space-x-8 text-right">
+            <div className="flex flex-col font-semibold">
+              <div className="relative text-red-400">
+                <AnimationValueChange>
+                  {cart.shippingTotal}
+                </AnimationValueChange>
+              </div>
+              <div className="relative text-green-700">
+                <AnimationValueChange>
+                  -{cart.discountTotal}
+                </AnimationValueChange>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="relative">Total</span>
+              <div className="relative font-bold">
+                <AnimationValueChange>
+                  {cart.totalProductsPrice}
+                </AnimationValueChange>
+              </div>
+            </div>
+            <div className="flex">
+              <button
+                className={`bg-brand-500 py-2 px-6 font-bold text-white rounded shadow ${
+                  error ? "opacity-50" : ""
+                }`}
+                type="button"
+                disabled={processing || !stripe}
+              >
+                {processing ? "Processing..." : <>Pay {amount}</>}
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
 }

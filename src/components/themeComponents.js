@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { uniqueId } from "lodash";
 import { useTranslation } from "react-i18next";
 
@@ -26,6 +26,36 @@ const animationText = {
     x: 4,
   },
   exit: {},
+};
+const animateChange = {
+  initial: { opacity: 0, x: -50, position: "relative" },
+  animate: {
+    opacity: 1,
+    scale: [1, 1.1, 1],
+    x: 0,
+  },
+  exit: {
+    opacity: 0,
+    x: -25,
+    position: "absolute",
+  },
+};
+
+export const AnimationValueChange = ({ children }) => {
+  return (
+    <AnimatePresence>
+      <motion.span
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        key={children}
+        variants={animateChange}
+        className="inline-block"
+      >
+        {children}
+      </motion.span>
+    </AnimatePresence>
+  );
 };
 export const BgPattern = ({ color = "D1D5DB" }) => {
   return (
