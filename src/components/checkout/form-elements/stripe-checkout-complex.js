@@ -13,20 +13,20 @@ const CARD_OPTIONS = {
   iconStyle: "solid",
   style: {
     base: {
-      iconColor: "#c4f0ff",
-      color: "#fff",
+      iconColor: "#777",
+      color: "#111827",
       fontWeight: 500,
       fontSmoothing: "antialiased",
       ":-webkit-autofill": {
-        color: "#fce883",
+        color: "#6B7280",
       },
       "::placeholder": {
-        color: "#87BBFD",
+        color: "#9CA3AF",
       },
     },
     invalid: {
-      iconColor: "#FFC7EE",
-      color: "#FFC7EE",
+      iconColor: "#F87171",
+      color: "#F87171",
     },
   },
 };
@@ -404,6 +404,9 @@ class CheckoutFormStripeComplex extends React.Component {
             }}
           />
         </fieldset>
+        <div className="flex justify-end pb-4">
+          <button className="ResetButton ">reset</button>
+        </div>
         <fieldset className="FormGroup">
           <CardField
             onChange={(event) => {

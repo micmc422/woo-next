@@ -338,5 +338,10 @@ button {
 .ResetButton {
   border: 0;
   cursor: pointer;
-  background: transparent;
+  display: inline-block;
+  height: 40px;
+  @apply bg-gray-500 shadow text-white rounded px-2 mx-4;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+  will-change: transform, background-color, box-shadow;
 }
