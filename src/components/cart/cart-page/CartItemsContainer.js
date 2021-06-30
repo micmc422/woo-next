@@ -198,7 +198,7 @@ const CartItemsContainer = () => {
 									</tr> */}
                   </tbody>
                 </table>
-                <Link href="/checkout">
+                <Link href="/commande">
                   <button
                     className="w-auto px-5 py-3 text-white rounded-sm cursor-pointer bg-brand-500 xl:w-full"
                     aria-label={t("finalisercommande")}
@@ -279,7 +279,7 @@ const CartItemsContainer = () => {
                   : cart.totalProductsPrice}
               </span>
             </span>
-            <Link href="/checkout">
+            <Link href="/commande">
               <button
                 className="w-auto px-5 py-3 mt-5 text-white rounded-sm bg-brand-500 xl:w-full"
                 aria-label={t("finalisercommande")}

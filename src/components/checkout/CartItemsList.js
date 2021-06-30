@@ -100,7 +100,7 @@ const CartItemsList = ({ cart }) => {
             : cart.totalProductsPrice}
         </span>
       </span>
-      <Link href="/checkout">
+      <Link href="/commande">
         <button
           className="w-auto px-5 py-3 mt-5 text-white rounded-sm bg-brand-500 xl:w-full"
           aria-label={t("finalisercommande")}
