@@ -326,7 +326,17 @@ const StripeCheckoutForm = ({ countriesData }) => {
       await customerUpdate();
     }
   }, [input]);
-
+  async function recalculate() {
+    const shippingValidationResult = validateAndSanitizeCheckoutForm(
+      input?.shipping,
+      theShippingStates?.length
+    );
+    setIsValid(shippingValidationResult.isValid);
+    setCustomerData(customerClean(input?.shipping));
+    if (shippingValidationResult.isValid) {
+      await customerUpdate();
+    }
+  }
   // Loading state
   const isOrderProcessing =
     checkoutLoading || isStripeOrderProcessing || customerLoading;
@@ -366,14 +376,15 @@ const StripeCheckoutForm = ({ countriesData }) => {
 
                 <div className="mt-5 woo-next-place-order-btn-wrap">
                   <button
+                    onClick={recalculate}
                     disabled={!isValid || isOrderProcessing}
                     className={cx(
                       "bg-purple-600 text-white px-5 py-3 rounded-sm w-auto xl:w-full",
                       { "opacity-50": !isValid || isOrderProcessing }
                     )}
-                    type="submit"
+                    type="button"
                   >
-                    Place Order
+                    recalculer manuellement
                   </button>
                 </div>
                 {/* Checkout Loading*/}

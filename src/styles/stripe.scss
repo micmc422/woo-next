@@ -292,7 +292,7 @@ button {
 }
 
 .ErrorMessage {
-  color: #fff;
+  @apply text-gray-700;
   position: absolute;
   display: flex;
   justify-content: center;
