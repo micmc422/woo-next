@@ -359,7 +359,7 @@ const StripeCheckoutForm = ({ countriesData }) => {
         <div className="woo-next-checkout-form">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <CheckoutFormStripeComplex
-            cart={cart}
+              cart={cart}
               stripe={stripe}
               amount={cart.totalProductsPrice}
               setIsPaid={setIsPaid}
@@ -390,10 +390,9 @@ const StripeCheckoutForm = ({ countriesData }) => {
                   <button
                     onClick={recalculate}
                     disabled={!isValid || isOrderProcessing}
-                    className={cx(
-                      "bg-purple-600 text-white px-5 py-3 rounded-sm w-auto xl:w-full",
-                      { "opacity-50": !isValid || isOrderProcessing }
-                    )}
+                    className={cx("SubmitButton", {
+                      "opacity-50": !isValid || isOrderProcessing,
+                    })}
                     type="button"
                   >
                     recalculer manuellement

@@ -8,6 +8,8 @@ import React from "react";
 import { AnimationValueChange } from "../../themeComponents";
 import CountrySelection from "../CountrySelection";
 import StatesSelection from "../StatesSelection";
+import { FaTruck, FaHandHoldingUsd } from "react-icons/fa";
+import { AnimateSharedLayout, motion } from "framer-motion";
 const { flag } = require("country-emoji");
 
 const CARD_OPTIONS = {
@@ -54,7 +56,7 @@ const Field = ({
     </label>
     {type === "textarea" ? (
       <textarea
-        className=" FormRowInput"
+        className="FormRowInput"
         id={id}
         name={id}
         type="textarea"
@@ -79,43 +81,12 @@ const Field = ({
     )}
   </div>
 );
-const DropDownField = ({
-  label,
-  id,
-  placeholder,
-  required,
-  autoComplete,
-  value,
-  onChange,
-  enumList,
-}) => (
-  <div className="FormRow">
-    <label htmlFor={id} className="FormRowLabel">
-      {label}
-    </label>
-    <select
-      className="FormRowInput"
-      id={id}
-      name={id}
-      placeholder={placeholder}
-      required={required}
-      autoComplete={autoComplete}
-      value={value}
-      onChange={onChange}
-    >
-      {enumList?.map(({ countryCode, countryName }) => (
-        <option key={uniqueId(countryCode)} value={countryCode}>
-          {countryName} {flag(countryCode)}
-        </option>
-      ))}
-      <option value="test">test</option>
-    </select>
-  </div>
-);
 
 const SubmitButton = ({ processing, error, children, disabled }) => (
   <button
-    className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
+    className={`SubmitButton ${
+      error ? "SubmitButton--error" : ""
+    }  transition-all`}
     type="submit"
     disabled={processing || disabled}
   >
@@ -265,7 +236,7 @@ class CheckoutFormStripeComplex extends React.Component {
       states,
       isFetchingStates,
     } = this.props;
-    // console.log(theShippingStates);
+    console.log(!isValid && (processing || !stripe));
     return paymentMethod ? (
       <div className="Result">
         <div className="ResultTitle" role="alert">
@@ -439,39 +410,41 @@ class CheckoutFormStripeComplex extends React.Component {
             Pay {amount}
           </SubmitButton>
         </form>
-        <div className="fixed bottom-0 z-10 block w-full px-4 bg-gray-200 shadow lg:hidden">
-          <div className="flex py-4 space-x-8 text-right">
-            <div className="flex flex-col font-semibold">
-              <div className="relative text-red-400">
-                <AnimationValueChange>
-                  {cart.shippingTotal}
-                </AnimationValueChange>
-              </div>
-              <div className="relative text-green-700">
-                <AnimationValueChange>
-                  -{cart.discountTotal}
-                </AnimationValueChange>
+        <div className="fixed bottom-0 z-10 block w-full bg-white shadow lg:hidden">
+          <div className="flex py-1 space-x-8 text-right">
+            <SubmitButton
+              processing={processing}
+              error={error}
+              disabled={!isValid && !stripe}
+            >
+              Pay {amount}
+            </SubmitButton>
+
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col px-2 space-x-2 font-semibold text-gray-600">
+                {cart?.shippingTotal !== "0,00€" && (
+                  <div className="relative ">
+                    <AnimationValueChange>
+                      <div className="flex px-1 rounded shadow">
+                        <span className="text-xs">{cart.shippingTotal}</span>
+                        <FaTruck className="inline ml-1 text-red-400" />
+                      </div>
+                    </AnimationValueChange>
+                  </div>
+                )}
+                {cart?.discountTotal !== "0,00€" && (
+                  <div className="relative ">
+                    <AnimationValueChange>
+                      <div className="flex px-1 rounded shadow">
+                        <span className="text-xs">-{cart.discountTotal}</span>
+                        <FaHandHoldingUsd className="inline ml-1 text-green-700" />
+                      </div>
+                    </AnimationValueChange>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex flex-col">
-              <span className="relative">Total</span>
-              <div className="relative font-bold">
-                <AnimationValueChange>
-                  {cart.totalProductsPrice}
-                </AnimationValueChange>
-              </div>
-            </div>
-            <div className="flex">
-              <button
-                className={`bg-brand-500 py-2 px-6 font-bold text-white rounded shadow ${
-                  error ? "opacity-50" : ""
-                }`}
-                type="button"
-                disabled={processing || !stripe}
-              >
-                {processing ? "Processing..." : <>Pay {amount}</>}
-              </button>
-            </div>
+            <div className="w-16"></div>
           </div>
         </div>
       </>
