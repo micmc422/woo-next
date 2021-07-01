@@ -1,9 +1,12 @@
 const { i18n } = require("./next-i18next.config");
 const path = require("path");
 const { withPlaiceholder } = require("@plaiceholder/next");
+const withPWA = require("next-pwa");
+const runtimeCaching = require("next-pwa/cache");
 
 module.exports = withPlaiceholder({
   trailingSlash: true,
+
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
       poll: 1000,
@@ -16,6 +19,10 @@ module.exports = withPlaiceholder({
     webpack5: false,
   },
    */
+  pwa: {
+    dest: "public",
+    runtimeCaching,
+  },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
@@ -28,8 +35,7 @@ module.exports = withPlaiceholder({
       source: "https://photo.paris/commande/order-received/*",
       destination: "/commande/order-received*",
       permanent: true,
-
-    }
+    },
   ],
   rewrites: [
     {
