@@ -37,14 +37,11 @@ export default class MyDocument extends Document {
           <meta name="description" content="Galerie photo paris" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
-          <meta
-            name="msapplication-config"
-            content="/static/icons/browserconfig.xml"
-          />
+          <meta name="msapplication-config" content="/browserconfig.xml" />
           <meta name="msapplication-TileColor" content="#2B5797" />
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content="#f5cc26" />
-          <link rel="manifest" href="/static/manifest.json" />
+          <link rel="manifest" href="/manifest.json" />
           <link
             rel="icon"
             type="image/png"
@@ -64,14 +61,28 @@ export default class MyDocument extends Document {
             sizes="192x192"
           />
           <link
+            rel="icon"
+            type="image/png"
+            href="/iconx/android-256x256.png"
+            sizes="256x256"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/iconx/android-384x384.png"
+            sizes="384x384"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/iconx/android-512x512.png"
+            sizes="512x512"
+          />
+          <link
             rel="apple-touch-icon"
             href="/iconx/apple-touch-icon-180x180.png"
             sizes="180x180"
           />
-          <meta
-            name="msapplication-config"
-            content="/iconx/browserconfig.xml"
-          ></meta>
         </Head>
         <body>
           <Main />
