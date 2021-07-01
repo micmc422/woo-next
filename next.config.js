@@ -14,11 +14,6 @@ module.exports = withPlaiceholder({
     };
     return config;
   },
-  /*
-  future: {
-    webpack5: false,
-  },
-   */
   pwa: {
     dest: "public",
     runtimeCaching,
